@@ -1,0 +1,29 @@
+{
+  "name": "segcapstone",
+  "version": "1.0.0",
+  "description": "SEG4910/11 Capstone Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyanFitzgerald/SEGCapstone.git"
+  },
+  "author": "Ryan Fitzgerald, Cody McCoshen, David Ganim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RyanFitzgerald/SEGCapstone/issues"
+  },
+  "homepage": "https://github.com/RyanFitzgerald/SEGCapstone#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^2.0.0"
+  }
+}
