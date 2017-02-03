@@ -25,5 +25,9 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "^2.0.0"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-redux": "^5.0.2"
   }
 }
