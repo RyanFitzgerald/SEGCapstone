@@ -11,20 +11,22 @@ import NotFoundPage from './components/NotFoundPage';
 const app = new Express();
 const server = new Server(app);
 
-//
-app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // define the folder that will be used for static assets
 app.use(Express.static(path.join('../public/assets')));
 
-app.get('/', (req, res)){
-	//render home
-}
+/*************
+*Setup Routes*
+**************/
 
-app.get('api/projects', (req, res)){
+app.get('/', (req, res){
+	//render home
+});
+
+app.get('api/projects', (req, res){
 	//fetches list of all project from DB. Used in action files for redux flow.
-}
+});
 
 /*
  * Universal routing and rendering.
