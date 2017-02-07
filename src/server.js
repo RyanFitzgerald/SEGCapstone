@@ -10,13 +10,15 @@ import NotFoundPage from './components/NotFoundPage';
 // initialize the server and configure support for ejs templates
 const app = new Express();
 const server = new Server(app);
+
+//
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // define the folder that will be used for static assets
-app.use(Express.static(path.join(__dirname, 'static')));
+app.use(Express.static(path.join('../public/assets')));
 
-app.get('/home', (req, res)){
+app.get('/', (req, res)){
 	//render home
 }
 
@@ -24,10 +26,10 @@ app.get('api/projects', (req, res)){
 	//fetches list of all project from DB. Used in action files for redux flow.
 }
 
-/*  
+/*
  * Universal routing and rendering.
  * Let the react matcher handle the single-app routing.
- * There will be only few singl-apps in the system
+ * There will be only few single-apps in the system
  */
 app.get('*', (req, res) => {
   match(
@@ -62,8 +64,8 @@ app.get('*', (req, res) => {
 });
 
 // start the server
-const port = process.env.PORT || 3000;
-const env = process.env.NODE_ENV || 'production';
+const port = 3000;//process.env.PORT || 3000
+const env = 'production';//process.env.NODE_ENV || 'production'
 server.listen(port, err => {
   if (err) {
     return console.error(err);
