@@ -6,7 +6,7 @@ var rename = require('gulp-rename');
 var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('scripts', function() {
-    return gulp.src('js/scripts.js')
+    return gulp.src('public/assets/js/scripts.js')
         .pipe(plumber(plumber({
             errorHandler: function (err) {
                 console.log(err);
@@ -19,7 +19,7 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('styles', function() {
-    return gulp.src('scss/app.scss')
+    return gulp.src('public/assets/scss/app.scss')
         .pipe(plumber(plumber({
             errorHandler: function (err) {
                 console.log(err);
@@ -28,10 +28,10 @@ gulp.task('styles', function() {
         })))
         .pipe(sass())
         .pipe(autoprefixer())
-        .pipe(gulp.dest('css'));
+        .pipe(gulp.dest('public/assets/css'));
 });
 
 gulp.task('watch', ['scripts', 'styles'], function() {
-    gulp.watch('js/*.js', ['scripts']);
-    gulp.watch('scss/*.scss', ['styles']);
+    gulp.watch('public/assets/js/*.js', ['scripts']);
+    gulp.watch('public/assets/scss/*.scss', ['styles']);
 });
