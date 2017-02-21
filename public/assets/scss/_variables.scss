@@ -6,5 +6,30 @@
     --------------------------------------------------------------------------
 */
 
-$colour-main: #000;
+// Main Colours
+$colour-main: #2ecc71;
 $colour-main-hover: darken($colour-main, 10%);
+
+// Secondary Colours
+$colour-secondary: #3498db;
+$colour-secondary-hover: darken($colour-secondary, 10%);
+
+// Main Text Colours
+$colour-text-light: #fff;
+$colour-text-dark: #616c75;
+
+// Main Heading Text Colours
+$colour-heading-light: #fff;
+$colour-heading-dark: #32394a;
+
+// Main Background Colours
+$background: #fff;
+$background-alt: #f9f9f9;
+
+// Border Colours
+$colour-border: #e6e6e6;
+
+// Success / Error / Alert Colours
+$colour-success: #3ab940;
+$colour-error: #cc3e3e;
+$colour-alert: #f1c40f;
