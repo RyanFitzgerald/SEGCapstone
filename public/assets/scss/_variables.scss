@@ -1,0 +1,10 @@
+/*
+    --------------------------------------------------------------------------
+    File: _variables.scss
+    Description:
+        Defines site-wide variables such as colours for text, backgrounds, etc
+    --------------------------------------------------------------------------
+*/
+
+$colour-main: #000;
+$colour-main-hover: darken($colour-main, 10%);
