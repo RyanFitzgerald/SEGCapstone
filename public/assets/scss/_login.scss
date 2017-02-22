@@ -1,0 +1,56 @@
+/*
+    --------------------------------------------------------------------------
+    File: _login.scss
+    Description:
+        This file contains all of the login page styles
+    --------------------------------------------------------------------------
+*/
+
+#login {
+    position: absolute;
+    background: $colour-main;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+#login-branding {
+
+}
+
+#login-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 100%;
+    max-width: 500px;
+    padding: 50px;
+    overflow-y: auto;
+
+    h1 {
+        font-weight: 300;
+        margin: 0;
+        color: $colour-heading-dark;
+    }
+}
+
+.login-input {
+    padding: 5px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+
+.keep-login {
+    display: block;
+    margin-bottom: 25px;
+}
+
+.login-submit {
+    padding: 10px 50px;
+}

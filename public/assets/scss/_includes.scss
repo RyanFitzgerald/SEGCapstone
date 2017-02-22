@@ -1,0 +1,26 @@
+/*
+    --------------------------------------------------------------------------
+    File: _includes.scss
+    Description:
+        This file contains all site-wide constant styles or repeated styles
+    --------------------------------------------------------------------------
+*/
+
+body, * {
+    font-family: 'Roboto', sans-serif;
+    background: $background;
+}
+
+// Buttons
+
+.btn {
+    background: $colour-main;
+    color: #fff;
+    transition: 0.5s ease all;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        background: $colour-main-hover;
+    }
+}
