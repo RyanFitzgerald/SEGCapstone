@@ -4,8 +4,9 @@
   "description": "SEG4910/11 Capstone Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "nodemon --exec babel-node server.js --ignore public/",
+    "lint": "eslint api src",
     "dev": "webpack -wd"
   },
   "repository": {
@@ -33,6 +34,7 @@
     "gulp-livereload": "^3.8.1",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.3.2",
+    "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "webpack": "^2.2.1"
   },
