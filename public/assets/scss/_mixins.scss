@@ -5,3 +5,15 @@
         Defines mixin functions to be used in other scss files to keep SCSS DRY
     --------------------------------------------------------------------------
 */
+
+// Border Mixins
+
+@mixin border-all($size: 1px, $colour: $colour-border) {
+    border: #{$size} solid #{$colour};
+}
+
+// Transition Mixins
+
+@mixin transition($duration: 0.5s, $func: ease, $property: all) {
+    transition: #{$duration} #{$func} #{$property};
+}

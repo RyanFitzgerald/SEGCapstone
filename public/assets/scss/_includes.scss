@@ -6,8 +6,11 @@
     --------------------------------------------------------------------------
 */
 
-body, * {
+body, html, * {
     font-family: 'Roboto', sans-serif;
+}
+
+body {
     background: $background;
 }
 

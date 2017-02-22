@@ -9,19 +9,53 @@
 #login {
     position: absolute;
     background: $colour-main;
+    background-image: linear-gradient(to top right,$colour-main,$colour-main-hover);
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     width: 100%;
     min-height: 100%;
+    overflow: hidden;
+}
+
+#login-bg {
+    z-index: 22;
+    background-image: linear-gradient(to left,rgba(255, 255, 255, 0.3),rgba(255, 255, 255,0));
+    position: absolute;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    transform: skewY(-20deg);
+    opacity: .6;
+    z-index: 0;
+
+    &:before, &:after {
+        content: '';
+        position: absolute;
+        top: -25%;
+        left: 0;
+        width: 50%;
+        height: 50%;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15),rgba(0,0,0,0.1));
+    }
+
+    &:after {
+        top: 100%;
+        left: auto;
+        right: 0;
+        height: 20%;
+        background-image: linear-gradient(to left,rgba(0, 0, 0, 0.50),rgba(0,0,0,0));
+    }
 }
 
 #login-branding {
-
+    // TO DO
 }
 
 #login-panel {
+    background: $background;
     position: absolute;
     top: 0;
     right: 0;
@@ -30,11 +64,20 @@
     max-width: 500px;
     padding: 50px;
     overflow-y: auto;
+    color: $colour-text-dark;
 
     h1 {
         font-weight: 300;
         margin: 0;
         color: $colour-heading-dark;
+    }
+
+    a {
+        display: block;
+        margin-top: 10px;
+        text-decoration: none;
+        font-size: 0.85em;
+        font-weight: 300;
     }
 }
 
@@ -44,6 +87,13 @@
     max-width: 400px;
     margin-bottom: 10px;
     font-size: 0.9em;
+    @include transition();
+    @include border-all();
+
+    &:focus {
+        outline: none;
+        @include border-all(1px, $colour-main);
+    }
 }
 
 .keep-login {
