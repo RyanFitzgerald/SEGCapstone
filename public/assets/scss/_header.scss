@@ -1,0 +1,114 @@
+/*
+    --------------------------------------------------------------------------
+    File: _header.scss
+    Description:
+        This file contains all styles related to the header
+    --------------------------------------------------------------------------
+*/
+
+#header {
+    background: $background-dark;
+    color: #fff;
+
+    h1 {
+        margin: 0;
+    }
+}
+
+#header-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+#main-elements {
+    padding: 15px 0;
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        vertical-align: middle;
+        display: inline-block;
+        list-style: none;
+        margin: 0;
+    }
+}
+
+.notification-link {
+    text-decoration: none;
+    font-size: 1.25em;
+    color: #757b8c;
+    margin-right: 15px;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+#logo {
+    float: left;
+}
+
+#user-info {
+    float: right;
+    color: #757b8c;
+    font-size: 0.9em;
+    cursor: pointer;
+
+    i {
+        margin-left: 5px;
+    }
+}
+
+#page-elements {
+    margin-top: 15px;
+}
+
+#current-page {
+    float: left;
+
+    h1 {
+        font-weight: 300;
+        font-size: 1.5em;
+        margin-top: 20px;
+    }
+}
+
+#page-navigation {
+    float: right;
+
+    ul {
+        margin: 10px 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+        font-size: 1em;
+        font-weight: 300;
+        margin: 0;
+        display: inline-block;
+
+        i {
+            margin-top: -5px;
+            margin-right: 5px;
+            font-size: 1.5em;
+            vertical-align: middle;
+        }
+    }
+
+    a {
+        display: block;
+        padding: 15px;
+        color: #ebedf1;
+        text-decoration: none;
+        @include transition();
+
+        &:hover {
+            color: #fff;
+            background: rgba(0,0,0, 0.1);
+        }
+    }
+}
