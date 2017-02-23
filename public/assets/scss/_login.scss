@@ -15,7 +15,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    min-height: 100%;
+    min-height: 450px;
     overflow: hidden;
 }
 
@@ -51,7 +51,17 @@
 }
 
 #login-branding {
-    // TO DO
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    text-align: center;
+    padding-right: 500px;
+
+    h1 {
+        color: #fff;
+        font-size: 4em;
+    }
 }
 
 #login-panel {
@@ -63,7 +73,6 @@
     min-height: 100%;
     max-width: 500px;
     padding: 50px;
-    overflow-y: auto;
     color: $colour-text-dark;
 
     h1 {
@@ -82,7 +91,7 @@
 }
 
 .login-input {
-    padding: 5px;
+    padding: 8px;
     width: 100%;
     max-width: 400px;
     margin-bottom: 10px;
@@ -98,9 +107,32 @@
 
 .keep-login {
     display: block;
-    margin-bottom: 25px;
 }
 
 .login-submit {
+    margin-top: 20px;
     padding: 10px 50px;
+}
+
+// Media Queries
+
+@media screen and (max-width: 63.9375em) {
+
+    #login {
+        background: $background;
+    }
+
+    #login-bg {
+        display: none;
+    }
+
+    #login-panel {
+        left: 0;
+        margin: 0 auto;
+    }
+
+    #login-branding {
+        display: none;
+    }
+
 }
