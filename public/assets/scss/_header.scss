@@ -8,7 +8,7 @@
 
 #header {
     width: 100%;
-    background: $background;
+    background: $background-alt;
     padding: 15px;
     @include border-bottom();
 }
@@ -17,9 +17,11 @@
     float: left;
 
     h1 {
-        font-size: 1.3em;
+        line-height: 1em;
+        font-size: 1.5em;
         font-weight: 300;
-        margin: 0;
+        margin: 3px 0 0 0;
+        color: $colour-heading-dark;
     }
 }
 
@@ -36,6 +38,48 @@
         list-style: none;
         margin: 5px;
         font-size: 0.9em;
-        cursor: pointer;
+        font-weight: 700;
+    }
+
+    a {
+        color: $colour-text-dark;
+        text-decoration: none;
+
+        &:hover {
+            color: $colour-main;
+        }
+    }
+
+    i {
+        font-size: 0.9em;
+        color: $colour-main;
+    }
+}
+
+#page-navigation {
+    padding: 0 15px;
+    background: $background-alt;
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+        list-style: none;
+        @include border-bottom(3px, $background-alt);
+
+        &:hover, &.active {
+            @include border-bottom(3px, $colour-main);
+        }
+    }
+
+    a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: $colour-text-dark;
+        font-size: 0.9em;
     }
 }

@@ -7,5 +7,32 @@
 */
 
 #dashboard {
-    margin-left: 90px;
+    margin-left: 200px;
+}
+
+// Quick Actions
+
+#dashboard-actions, #dashboard-other {
+    padding: 15px 0;
+
+    h2 {
+        margin: 0 0 15px 0;
+        font-size: 1.3em;
+        font-weight: 400;
+        color: $colour-heading-dark;
+    }
+}
+
+.quick-action {
+    background: $background;
+    padding: 15px;
+}
+
+#dashboard-overview {
+    background: $background;
+    padding: 15px;
+}
+
+#dashboard-notifications {
+    @extend #dashboard-overview;
 }

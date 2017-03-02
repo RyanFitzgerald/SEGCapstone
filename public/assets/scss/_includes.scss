@@ -11,7 +11,12 @@ body, html, * {
 }
 
 body {
-    background: $background-alt;
+    background: $background-alt-dark;
+}
+
+// Set all rows to full width
+.row {
+    max-width: 100%;
 }
 
 // Buttons
@@ -26,4 +31,10 @@ body {
     &:hover {
         background: $colour-main-hover;
     }
+}
+
+// Borders
+
+.rounded {
+    border-radius: 4px;
 }

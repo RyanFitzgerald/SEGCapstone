@@ -1,6 +1,6 @@
 #sidebar {
     background: $background-dark;
-    width: 90px;
+    width: 200px;
     height: 100%;
     position: fixed;
     left: 0;
@@ -19,26 +19,29 @@
 }
 
 .sidebar-action {
-    text-align: center;
     cursor: pointer;
-    padding: 19px 0;
+    padding: 20px;
+    @include border-left(5px, $background-dark);
 
     span {
         display: block;
-        color: lighten($background-dark, 25%);
-        font-size: 0.7em;
-        font-weight: 700;
+        color: darken(#fff, 10%);
+        font-size: 0.85em;
         letter-spacing: 1px;
+        vertical-align: middle;
     }
 
     svg {
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
         fill: lighten($background-dark, 25%);
+        vertical-align: middle;
     }
 
     &:hover, &.active {
-        background: $colour-main;
+        @include border-left(5px, $colour-main);
+        background: darken($background-dark, 10%);
 
         span {
             color: #fff;
