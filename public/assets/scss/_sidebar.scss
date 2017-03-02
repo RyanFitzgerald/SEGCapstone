@@ -1,0 +1,51 @@
+#sidebar {
+    background: $background-dark;
+    width: 90px;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+
+#sidebar-logo {
+    text-align: center;
+
+    h1 {
+        color: #fff;
+        font-weight: 900;
+    }
+}
+
+.sidebar-action {
+    text-align: center;
+    cursor: pointer;
+    padding: 19px 0;
+
+    span {
+        display: block;
+        color: lighten($background-dark, 25%);
+        font-size: 0.7em;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    svg {
+        width: 30px;
+        height: 30px;
+        fill: lighten($background-dark, 25%);
+    }
+
+    &:hover, &.active {
+        background: $colour-main;
+
+        span {
+            color: #fff;
+        }
+
+        svg {
+            fill: #fff;
+        }
+    }
+}

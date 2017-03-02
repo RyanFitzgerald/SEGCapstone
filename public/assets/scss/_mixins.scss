@@ -12,6 +12,10 @@
     border: #{$size} solid #{$colour};
 }
 
+@mixin border-bottom($size: 1px, $colour: $colour-border) {
+    border-bottom: #{$size} solid #{$colour};
+}
+
 // Transition Mixins
 
 @mixin transition($duration: 0.5s, $func: ease, $property: all) {
