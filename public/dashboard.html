@@ -80,19 +80,26 @@
     <div id="dashboard">
         <div id="header" class="clearfix">
             <div id="header-page-title">
+                <a href="#" id="sidebar-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
                 <h1>Dashboard</h1>
             </div>
             <!-- End header-page-title -->
             <div id="header-user-actions">
                 <ul>
-                    <li>
+                    <li class="hide-for-small-only">
                         <a href="#">Help Center</a>
                     </li>
-                    <li>
+                    <li class="hide-for-small-only">
                         <a href="#">Notifications</a>
                     </li>
                     <li id="user-select">
                         <a href="#">Ryan Fitzgerald <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                        <ul class="rounded shadow-medium" id="user-dropdown">
+                            <li><a href="#" class="show-for-small-only">Help Center</a></li>
+                            <li><a href="#" class="show-for-small-only">Notifications</a></li>
+                            <li><a href="#">Settings</a></li>
+                            <li><a href="#">Sign Out</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -122,17 +129,26 @@
                     <div class="row small-up-1 medium-up-2 large-up-4">
                         <div class="column">
                             <div class="quick-action rounded">
-                                test
+                                <div class="qa-icon">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </div>
+                                <!-- End qa-icon -->
+                                <div class="qa-text">
+                                    <span>Search Projects</span>
+                                </div>
+                                <!-- End qa-text -->
                             </div>
                         </div>
                         <div class="column">
                             <div class="quick-action rounded">
-                                test
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="quick-action rounded">
-                                test
+                                <div class="qa-icon">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </div>
+                                <!-- End qa-icon -->
+                                <div class="qa-text">
+                                    <span>Search Customers</span>
+                                </div>
+                                <!-- End qa-text -->
                             </div>
                         </div>
                     </div>

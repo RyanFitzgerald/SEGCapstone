@@ -7,13 +7,16 @@
 */
 
 #dashboard {
+    position: relative;
+    left: 0;
     margin-left: 200px;
+    @include transition();
 }
 
 // Quick Actions
 
 #dashboard-actions, #dashboard-other {
-    padding: 15px 0;
+    padding: 15px 0 0 0;
 
     h2 {
         margin: 0 0 15px 0;
@@ -26,13 +29,65 @@
 .quick-action {
     background: $background;
     padding: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    @include transition();
+
+    &:hover {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+        .qa-text span {
+            color: $colour-main;
+        }
+    }
+}
+
+.qa-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+
+    i {
+        color: $colour-main;
+        font-size: 2em;
+    }
+}
+
+.qa-text {
+    display: inline-block;
+    vertical-align: middle;
+
+    span {
+        color: $colour-text-dark;
+        font-size: 1.3em;
+    }
 }
 
 #dashboard-overview {
     background: $background;
     padding: 15px;
+    margin-bottom: 15px;
 }
 
 #dashboard-notifications {
     @extend #dashboard-overview;
+}
+
+// Media Queries
+@media screen and (max-width: 39.9375em) {
+
+    #dashboard {
+        margin: 0;
+
+        &.active {
+            left: 200px;
+        }
+    }
+
+    .qa-text {
+        span {
+            font-size: 0.9em;
+        }
+    }
+
 }

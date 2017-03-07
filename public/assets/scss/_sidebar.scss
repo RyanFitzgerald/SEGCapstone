@@ -7,6 +7,7 @@
     top: 0;
     bottom: 0;
     overflow-y: auto;
+    @include transition();
 }
 
 #sidebar-logo {
@@ -51,4 +52,17 @@
             fill: #fff;
         }
     }
+}
+
+// Media Queries
+@media screen and (max-width: 39.9375em) {
+
+    #sidebar {
+        left: -100%;
+
+        &.active {
+            left: 0;
+        }
+    }
+
 }
