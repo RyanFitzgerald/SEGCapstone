@@ -20,6 +20,10 @@
     border-left: #{$size} solid #{$colour};
 }
 
+@mixin border-right($size: 1px, $colour: $colour-border) {
+    border-right: #{$size} solid #{$colour};
+}
+
 // Transition Mixins
 
 @mixin transition($duration: 0.5s, $func: ease, $property: all) {

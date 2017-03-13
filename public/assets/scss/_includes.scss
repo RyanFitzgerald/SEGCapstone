@@ -37,6 +37,18 @@ body {
     }
 }
 
+.btn-dark {
+    background: $background-dark;
+    color: #fff;
+    transition: 0.5s ease all;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        background: darken($background-dark, 10%);
+    }
+}
+
 // Borders
 
 .rounded {
@@ -47,4 +59,12 @@ body {
 
 .shadow-medium {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+// Dashboard block
+
+.dashboard-block {
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 15px;
 }
