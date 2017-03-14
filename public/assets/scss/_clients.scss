@@ -116,6 +116,26 @@
     }
 }
 
+// Client Add Page
+
+#client-add {
+    padding: 15px;
+}
+
+.client-text-form, .client-select-form {
+    display: block;
+    padding: 5px;
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    @include border-all(1px, $colour-border-dark);
+}
+
+#client-submit {
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
 // Media Queries
 
 // -- Medium --

@@ -112,6 +112,31 @@
     }
 }
 
+// Project Add Page
+
+#project-add {
+    padding: 15px;
+}
+
+.project-text-form, .project-select-form, .project-textarea-form, .project-upload-form {
+    display: block;
+    padding: 5px;
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    @include border-all(1px, $colour-border-dark);
+}
+
+#project-type, .project-textarea-form {
+    height: 100px;
+    resize: none;
+}
+
+#project-submit {
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
 // Media Queries
 
 // -- Medium --
