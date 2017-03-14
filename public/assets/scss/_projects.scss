@@ -116,6 +116,11 @@
 
 #project-add {
     padding: 15px;
+
+    label {
+        font-size: 0.9em;
+        color: $colour-text-dark;
+    }
 }
 
 .project-text-form, .project-select-form, .project-textarea-form, .project-upload-form {
@@ -125,6 +130,12 @@
     border-radius: 4px;
     margin-bottom: 15px;
     @include border-all(1px, $colour-border-dark);
+    @include transition();
+
+    &:focus {
+        outline: none;
+        @include border-all(1px, #000);
+    }
 }
 
 #project-type, .project-textarea-form {
