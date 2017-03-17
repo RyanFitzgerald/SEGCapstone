@@ -49,6 +49,18 @@ body {
     }
 }
 
+.btn-warn {
+    background: $colour-error;
+    color: #fff;
+    transition: 0.5s ease all;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        background: darken($colour-error, 10%);
+    }
+}
+
 // Borders
 
 .rounded {

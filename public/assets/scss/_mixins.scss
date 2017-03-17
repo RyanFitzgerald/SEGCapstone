@@ -12,6 +12,10 @@
     border: #{$size} solid #{$colour};
 }
 
+@mixin border-top($size: 1px, $colour: $colour-border) {
+    border-top: #{$size} solid #{$colour};
+}
+
 @mixin border-bottom($size: 1px, $colour: $colour-border) {
     border-bottom: #{$size} solid #{$colour};
 }

@@ -6,6 +6,104 @@
     --------------------------------------------------------------------------
 */
 
+// Individual Client Page
+
+#dashboard-client {
+    padding: 15px 0;
+
+    h2 {
+        margin: 0 0 15px 0;
+        font-size: 1.3em;
+        font-weight: 400;
+        color: $colour-heading-dark;
+    }
+}
+
+#client-info {
+    padding: 15px;
+
+    h3 {
+        margin: 0 0 15px 0;
+        font-size: 1.2em;
+        font-weight: 400;
+        color: $colour-heading-dark;
+    }
+}
+
+#client-info-basic {
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+        padding: 10px 0;
+        @include border-bottom(1px, $colour-border-dark);
+        color: $colour-text-dark;
+
+        &:first-child {
+            @include border-top(1px, $colour-border-dark);
+        }
+    }
+}
+
+#client-actions {
+    padding-top: 15px;
+
+    a {
+        display: inline-block;
+        border-radius: 4px;
+        text-decoration: none;
+        padding: 10px 20px;
+    }
+}
+
+#client-info-location {
+    text-align: center;
+
+    h3 {
+        text-align: left;
+    }
+
+    ul {
+        display: block;
+        margin: 10px 0 0 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+        margin: 0;
+        font-size: 0.9em;
+    }
+
+    a {
+        display: block;
+        margin-top: 10px;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+#client-map {
+    position: relative;
+    padding-bottom: 75%;
+    height: 0;
+    overflow: hidden;
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
 // Client Search Page
 
 #client-filter {

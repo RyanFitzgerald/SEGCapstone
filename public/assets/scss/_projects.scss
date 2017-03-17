@@ -6,6 +6,154 @@
     --------------------------------------------------------------------------
 */
 
+// Individual Client Page
+
+#dashboard-project {
+    padding: 15px 0;
+
+    h2 {
+        margin: 0 0 15px 0;
+        font-size: 1.3em;
+        font-weight: 400;
+        color: $colour-heading-dark;
+    }
+}
+
+#project-info {
+    padding: 15px;
+
+    h3 {
+        margin: 0 0 15px 0;
+        font-size: 1.2em;
+        font-weight: 400;
+        color: $colour-heading-dark;
+    }
+}
+
+#project-info-basic {
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+        padding: 10px 0;
+        @include border-bottom(1px, $colour-border-dark);
+        color: $colour-text-dark;
+
+        &:first-child {
+            @include border-top(1px, $colour-border-dark);
+        }
+    }
+
+    p {
+        margin: 0;
+    }
+}
+
+#project-actions {
+    padding-top: 15px;
+
+    a {
+        display: inline-block;
+        border-radius: 4px;
+        text-decoration: none;
+        padding: 10px 20px;
+    }
+}
+
+#project-info-location {
+    text-align: center;
+
+    h3 {
+        text-align: left;
+    }
+
+    ul {
+        display: block;
+        margin: 10px 0 0 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+        margin: 0;
+        font-size: 0.9em;
+    }
+
+    a {
+        display: block;
+        margin-top: 10px;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+#project-map {
+    position: relative;
+    padding-bottom: 75%;
+    height: 0;
+    overflow: hidden;
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+#project-photos {
+    padding: 15px;
+    text-align: center;
+
+    .row {
+        margin-left: 0;
+    }
+
+    img {
+        padding: 15px 0;
+    }
+}
+
+#project-notes {
+    padding: 15px;
+    text-align: center;
+    color: $colour-text-dark;
+
+    .row {
+        margin-left: 0;
+    }
+
+    ul {
+        text-align: left;
+        margin: 15px 0 0 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+        padding: 10px 0;
+        @include border-top(1px, $colour-border-dark);
+    }
+
+    span {
+        font-size: 0.8em;
+    }
+}
+
+#add-project-photo, #add-project-note {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
 // Project Search Page
 
 #project-filter {
