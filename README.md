@@ -2,6 +2,4 @@
 
 GitHub repo for the SEG Capstone project
 
-## To DO
-
-- Document dependencies
+## Setup Instructions

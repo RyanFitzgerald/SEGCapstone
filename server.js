@@ -1,27 +1,21 @@
-var express = require('express');
-var path = require ('path');
-var api = require('./api/index.js');
+import config from './config';
+import apiRouter from './api';
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
 
-app.get('/login', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/login.html'));
+const server = express();
+
+server.use(bodyParser.json());
+
+server.use('/api', apiRouter);
+server.use(express.static('public'));
+
+// Send all routes the index
+server.get('*', (req,res) => {
+    res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.get('/dashboard', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/dashboard.html'));
-});
-
-app.get('/login-reset', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/login-reset.html'));
-});
-
-// API routes
-app.use('/api', api);
-
-// start the server
-const port = 3000;
-app.listen(port, err => {
-  if (err) {
-    return console.error(err);
-  }
-  console.info(`Server running on http://localhost:${port}`);
+server.listen(config.port, config.host, () => {
+    console.info('Express listening on port', config.port);
 });

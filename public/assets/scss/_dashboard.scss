@@ -26,6 +26,23 @@
     }
 }
 
+.deleted-item {
+    animation-name: deleted-item-animation;
+    animation-duration: 0.6s;
+}
+
+@keyframes deleted-item-animation {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
 .quick-action {
     background: $background;
     padding: 15px;
