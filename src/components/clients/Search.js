@@ -1,6 +1,16 @@
 import React, { Component, PropTypes } from 'react';
+import {Link} from 'react-router-dom';
 
 class Search extends Component {
+
+    constructor(props) {
+        super(props);
+
+        // States
+        this.state = {
+            lastUpdated: null
+        };
+    }
 
     componentDidMount() {
         // Update page title
@@ -8,6 +18,11 @@ class Search extends Component {
 
         // Update Active Tab
         this.props.setHeaderTab(2);
+
+        //
+        this.setState({
+            lastLoaded: Math.random()
+        });
     }
 
     render() {
@@ -45,51 +60,31 @@ class Search extends Component {
                 </div>
                 <div className="row">
                     <div className="small-12 large-8 columns">
-                        <h2>Clients (20)</h2>
-                        <div className="client-result dashboard-block">
-                            <div className="row">
-                                <div className="small-12 large-9 columns">
-                                    <div className="client-result-info">
-                                        <h3>John & Jane Doe</h3>
-                                        <span><b>Location: </b>Ottawa, Ontario</span>
-                                        <span><b>Email: </b>jdoe@gmail.com</span>
-                                        <span><b>Telephone: </b>613-123-4567</span>
+                        <h2>Clients ({this.props.clients.length})</h2>
+                        {this.props.clients.map(client => {
+                            return (
+                                <div key={client.client_id} className="client-result dashboard-block">
+                                    <div className="row">
+                                        <div className="small-12 large-9 columns">
+                                            <div className="client-result-info">
+                                                <h3>{client.name}</h3>
+                                                <span><b>Location: </b>{client.city}, Ontario</span>
+                                                <span><b>Email: </b>{client.email}</span>
+                                                <span><b>Telephone: </b>{client.telephone}</span>
+                                            </div>
+                                            {/* <!-- End client-result-info --> */}
+                                        </div>
+                                        <div className="small-12 large-3 columns">
+                                            <div className="client-result-actions">
+                                                <Link className="btn-dark" to={`/clients/${client.client_id}`}>View Client</Link>
+                                                <Link className="btn-dark" to={`/clients/${client.client_id}/edit`}>Edit Client</Link>
+                                            </div>
+                                            {/* <!-- End client-result-actions --> */}
+                                        </div>
                                     </div>
-                                    {/* <!-- End client-result-info --> */}
                                 </div>
-                                <div className="small-12 large-3 columns">
-                                    <div className="client-result-actions">
-                                        <a className="btn-dark" href="#">View Client</a>
-                                        <a className="btn-dark" href="#">Edit Client</a>
-                                        <a className="btn-dark" href="#">Delete Client</a>
-                                    </div>
-                                    {/* <!-- End client-result-actions --> */}
-                                </div>
-                            </div>
-                        </div>
-                        {/* <!-- End client-result --> */}
-                        <div className="client-result dashboard-block">
-                            <div className="row">
-                                <div className="small-12 large-9 columns">
-                                    <div className="client-result-info">
-                                        <h3>John & Jane Doe</h3>
-                                        <span><b>Location: </b>Ottawa, Ontario</span>
-                                        <span><b>Email: </b>jdoe@gmail.com</span>
-                                        <span><b>Telephone: </b>613-123-4567</span>
-                                    </div>
-                                    {/* <!-- End client-result-info --> */}
-                                </div>
-                                <div className="small-12 large-3 columns">
-                                    <div className="client-result-actions">
-                                        <a className="btn-dark" href="#">View Client</a>
-                                        <a className="btn-dark" href="#">Edit Client</a>
-                                        <a className="btn-dark" href="#">Delete Client</a>
-                                    </div>
-                                    {/* <!-- End client-result-actions --> */}
-                                </div>
-                            </div>
-                        </div>
-                        {/* <!-- End client-result --> */}
+                            );
+                        })}
                     </div>
                     <div className="small-12 large-4 columns">
                         <div className="search-tips dashboard-block">
@@ -108,7 +103,8 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-    setHeaderTab: PropTypes.func.isRequired
+    setHeaderTab: PropTypes.func.isRequired,
+    clients: PropTypes.array.isRequired
 };
 
 export default Search;

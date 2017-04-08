@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import {Route, Switch, Link} from 'react-router-dom';
+import {withRouter, Route, Switch, Link} from 'react-router-dom';
+import * as api from '../api';
 
 // Import Client Components
 import Summary from '../components/clients/Summary';
@@ -15,7 +16,10 @@ class Client extends Component {
 
         // States
         this.state = {
-            headerTab: 1
+            headerTab: 1,
+            cities: null,
+            clients: null,
+            lastUpdated: null
         };
     }
 
@@ -34,6 +38,49 @@ class Client extends Component {
 
         // Update Header Title
         this.props.setHeaderTitle('Clients');
+
+        // Get cities
+        this.getCities();
+
+        // Get clients
+        this.getClients();
+    }
+
+    addClient = client => {
+        api.addClient(client).then(resp => {
+            this.getClients();
+            this.props.history.push(`/clients/${resp.clientID}`);
+        });
+    }
+
+    editClient = client => {
+        api.editClient(client).then(resp => {
+            this.getClients();
+            this.props.history.push(`/clients/${resp.clientID}`);
+        });
+    }
+
+    deleteClient = clientID => {
+        api.deleteClient(clientID).then(() => {
+            this.getClients();
+            this.props.history.push('/clients');
+        });
+    }
+
+    getCities = () => {
+        api.getCities().then(cities => {
+            this.setState({
+                cities
+            });
+        });
+    }
+
+    getClients = () => {
+        api.getClients().then(clients => {
+            this.setState({
+                clients
+            });
+        });
     }
 
     render() {
@@ -50,12 +97,6 @@ class Client extends Component {
                         <li className={(this.state.headerTab == 3) ? 'active' : ''}>
                             <Link to="/clients/add">Add</Link>
                         </li>
-                        <li>
-                            <Link to="/clients/22">View</Link>
-                        </li>
-                        <li>
-                            <Link to="/clients/22/edit">Edit</Link>
-                        </li>
                     </ul>
                 </div>
                 {/* <!-- End page-navigation --> */}
@@ -65,16 +106,16 @@ class Client extends Component {
                         <Summary setHeaderTab={this.setHeaderTab} />
                     } />
                     <Route path="/clients/search" render={() =>
-                        <Search setHeaderTab={this.setHeaderTab} />
+                        <Search setHeaderTab={this.setHeaderTab} clients={this.state.clients} />
                     } />
                     <Route path="/clients/add" render={() =>
-                        <Add setHeaderTab={this.setHeaderTab} />
+                        <Add setHeaderTab={this.setHeaderTab} addClient={this.addClient} cities={this.state.cities} />
                     } />
                     <Route path="/clients/:clientID/edit" render={({match}) =>
-                        <Edit setHeaderTab={this.setHeaderTab} match={match} />
+                        <Edit setHeaderTab={this.setHeaderTab} match={match} editClient={this.editClient} cities={this.state.cities} />
                     } />
                     <Route path="/clients/:clientID" render={({match}) =>
-                        <View setHeaderTab={this.setHeaderTab} match={match} />
+                        <View setHeaderTab={this.setHeaderTab} match={match} deleteClient={this.deleteClient} />
                     } />
                 </Switch>
             </div>
@@ -84,7 +125,8 @@ class Client extends Component {
 
 Client.propTypes = {
     setActiveTab: PropTypes.func.isRequired,
-    setHeaderTitle: PropTypes.func.isRequired
+    setHeaderTitle: PropTypes.func.isRequired,
+    history: PropTypes.any
 };
 
-export default Client;
+export default withRouter(Client);

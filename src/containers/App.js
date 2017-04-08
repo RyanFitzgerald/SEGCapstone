@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 
 // Import components
 import Sidebar from '../components/Sidebar';
@@ -62,4 +62,4 @@ App.propTypes = {
     children: PropTypes.node
 };
 
-export default App;
+export default withRouter(App);
