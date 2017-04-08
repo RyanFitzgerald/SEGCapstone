@@ -205,7 +205,8 @@ class View extends Component {
 
 View.propTypes = {
     match: PropTypes.any,
-    setHeaderTab: PropTypes.func.isRequired
+    setHeaderTab: PropTypes.func.isRequired,
+    deleteClient: PropTypes.func.isRequired
 };
 
 export default View;
