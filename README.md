@@ -4,7 +4,7 @@ This repo contains the code for the 2017 SEG4910 / SEG4911 project by Ryan Fitzg
 
 ## Setup Instructions
 
-_TO DO_
+In order to setup, clone or fork the repo and run `npm install` to install all the required dependencies. Next, setup your database and change the credentials in `config.js` to your database. Finally, run `npm start` to initial the node server and `npm run dev` to watch for changes and re-bundle with webpack.
 
 ## Additional Content
 
