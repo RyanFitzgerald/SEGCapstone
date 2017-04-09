@@ -16,14 +16,14 @@ class Summary extends Component {
                     <div className="small-12 large-6 columns">
                         <h2>Client Overview</h2>
                         <div id="dashboard-overview" className="rounded">
-                            test
+                            Content to be determined
                         </div>
                         {/* <!-- End dashboard-overview --> */}
                     </div>
                     <div className="small-12 large-6 columns">
                         <h2>Client Statistics</h2>
                         <div id="dashboard-notifications" className="rounded">
-                            test
+                            Content to be determined
                         </div>
                         {/* <!-- End dashboard-notifications --> */}
                     </div>

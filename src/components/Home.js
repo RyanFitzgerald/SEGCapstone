@@ -12,7 +12,7 @@ class Home extends Component {
         document.title = 'Dashboard';
 
         // Update Header Title
-        this.props.setHeaderTitle('Dashboard Home');
+        this.props.setHeaderTitle('Dashboard');
 
         // Update Active Tab
         this.props.setActiveTab(1);
@@ -62,14 +62,14 @@ class Home extends Component {
                         <div className="small-12 large-6 columns">
                             <h2>Project Overview</h2>
                             <div id="dashboard-overview" className="rounded">
-                                test
+                                Content to be determined
                             </div>
                             {/* <!-- End dashboard-overview --> */}
                         </div>
                         <div className="small-12 large-6 columns">
                             <h2>Client Overview</h2>
                             <div id="dashboard-notifications" className="rounded">
-                                test
+                                Content to be determined
                             </div>
                             {/* <!-- End dashboard-notifications --> */}
                         </div>

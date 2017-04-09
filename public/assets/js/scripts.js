@@ -1,5 +1,4 @@
 
-
 /*
  * Header.js
  * This file contains scripts related to the header functionality

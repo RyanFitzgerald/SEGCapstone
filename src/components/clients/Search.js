@@ -15,6 +15,11 @@ class Search extends Component {
         this.props.setHeaderTab(2);
     }
 
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.searchClients(this.refs.clientName.value);
+    }
+
     render() {
         return (
             <div id="dashboard-other">
@@ -22,28 +27,40 @@ class Search extends Component {
                     <div className="small-12 columns">
                         <h2>Filter Results</h2>
                         <div id="client-filter" className="dashboard-block">
-                            <div className="row">
-                                <div className="small-12 large-8 columns">
-                                    <div id="client-search">
-                                        <button><i className="fa fa-search" aria-hidden="true"></i></button>
-                                        <input type="text" name="searchClient" placeholder="Search for clients" />
-                                    </div>
-                                    {/* <!-- End project-search --> */}
-                                </div>
-                                <div className="small-12 large-4 columns">
-                                    <div id="client-refine">
-                                        <div className="client-refine-result">
-                                            <select>
-                                                <option>
-                                                    All Locations
-                                                </option>
-                                            </select>
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="row">
+                                    <div className="small-12 large-6 columns">
+                                        <div id="client-search">
+                                            <button><i className="fa fa-search" aria-hidden="true"></i></button>
+                                            <input type="text" ref="clientName" name="searchClient" placeholder="Search for clients" />
                                         </div>
-                                        {/* <!-- End refine-result --> */}
+                                        {/* <!-- End project-search --> */}
                                     </div>
-                                    {/* <!-- End client-refine --> */}
+                                    <div className="small-12 large-4 columns">
+                                        <div id="client-refine">
+                                            <div className="client-refine-result">
+                                                <select>
+                                                    <option>All Cities</option>
+                                                    {this.props.cities.map(city => {
+                                                        return <option key={city.city_id} value={city.city_id}>{city.city}</option>;
+                                                    })}
+                                                </select>
+                                            </div>
+                                            {/* <!-- End refine-result --> */}
+                                        </div>
+                                        {/* <!-- End client-refine --> */}
+                                    </div>
+                                    <div className="small-12 large-2 columns">
+                                        <div id="client-refine">
+                                            <div className="client-refine-result">
+                                                <input className="btn" id="client-search-submit" type="submit" name="searchClient" value="Update Results" />
+                                            </div>
+                                            {/* <!-- End refine-result --> */}
+                                        </div>
+                                        {/* <!-- End client-refine --> */}
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         {/* <!-- End dashboard-overview --> */}
                     </div>
@@ -94,7 +111,9 @@ class Search extends Component {
 
 Search.propTypes = {
     setHeaderTab: PropTypes.func.isRequired,
-    clients: PropTypes.array.isRequired
+    clients: PropTypes.array.isRequired,
+    cities: PropTypes.array.isRequired,
+    searchClients: PropTypes.func.isRequired
 };
 
 export default Search;

@@ -5,7 +5,7 @@ class Add extends Component {
 
     componentDidMount() {
         // Update page title
-        document.title = 'Add New Client';
+        document.title = 'Add New Project';
 
         // Update Active Tab
         this.props.setHeaderTab(3);
@@ -68,7 +68,7 @@ class Add extends Component {
                                     </div>
                                     <div className="small-12 medium-4 columns">
                                         <label htmlFor="project-postal-code">Postal Code <span className="required">*</span></label>
-                                        <input type="text" ref="postalCode" name="postalCode" className="project-text-form" id="project-postal-code" required />
+                                        <input type="text" ref="postalCode" name="postalCode" className="project-text-form postal-code-field" id="project-postal-code" maxLength="6" required />
                                     </div>
                                     <div className="small-12 medium-4 columns">
                                         <label htmlFor="project-city">City <span className="required">*</span></label>

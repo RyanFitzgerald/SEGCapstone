@@ -60,6 +60,7 @@
         border-radius: 4px;
         text-decoration: none;
         padding: 10px 20px;
+        margin-right: 10px;
     }
 }
 
@@ -198,8 +199,15 @@
     }
 }
 
+#project-search-submit {
+    padding: 6px;
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+}
+
 .project-refine-result {
-    width: 33.3%;
+    width: 100%;
     float: left;
     padding-left: 15px;
 }

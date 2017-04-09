@@ -10,10 +10,27 @@ const db = pgp(config.connectionString);
 
 // GET Routes
 router.get('/clients', (req, res) => {
-    let query = 'SELECT * FROM client, city WHERE client.city_id=city.city_id';
+    let query;
+    if (Object.keys(req.query).length !== 0) {
+        query = `SELECT * FROM client, city WHERE client.city_id=city.city_id AND LOWER(client.name) LIKE LOWER('%${req.query.name}%')`;
+    } else {
+        query = 'SELECT * FROM client, city WHERE client.city_id=city.city_id';
+    }
     db.any(query)
     .then(data => {
         res.send({clients: data});
+    })
+    .catch(error => {
+        console.error(error);
+        res.status(404).send('Bad Request');
+    });
+});
+
+router.get('/clients/:clientID/projects', (req, res) => {
+    let query = `SELECT * FROM project, city, project_type WHERE project.client_id=${req.params.clientID} AND project.city_id=city.city_id AND project.project_type=project_type.type_id`;
+    db.any(query)
+    .then(data => {
+        res.send({projects: data});
     })
     .catch(error => {
         console.error(error);
@@ -34,7 +51,12 @@ router.get('/clients/:clientID', (req, res) => {
 });
 
 router.get('/projects', (req, res) => {
-    let query = 'SELECT * FROM project, city, project_type WHERE project.city_id=city.city_id AND project.project_type=project_type.type_id';
+    let query;
+    if (Object.keys(req.query).length !== 0) {
+        query = `SELECT * FROM project, city, project_type WHERE project.city_id=city.city_id AND project.project_type=project_type.type_id AND LOWER(project.name) LIKE LOWER('%${req.query.name}%')`;
+    } else {
+        query = 'SELECT * FROM project, city, project_type WHERE project.city_id=city.city_id AND project.project_type=project_type.type_id';
+    }
     db.any(query)
     .then(data => {
         res.send({projects: data});

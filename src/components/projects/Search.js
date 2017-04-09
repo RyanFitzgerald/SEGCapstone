@@ -11,6 +11,11 @@ class Search extends Component {
         this.props.setHeaderTab(2);
     }
 
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.searchProjects(this.refs.projectName.value);
+    }
+
     render() {
         return (
             <div id="dashboard-other">
@@ -18,44 +23,54 @@ class Search extends Component {
                     <div className="small-12 columns">
                         <h2>Filter Results</h2>
                         <div id="project-filter" className="dashboard-block">
-                            <div className="row">
-                                <div className="small-12 large-6 columns">
-                                    <div id="project-search">
-                                        <button><i className="fa fa-search" aria-hidden="true"></i></button>
-                                        <input type="text" name="searchProject" placeholder="Search for projects" />
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="row">
+                                    <div className="small-12 large-6 columns">
+                                        <div id="project-search">
+                                            <button><i className="fa fa-search" aria-hidden="true"></i></button>
+                                            <input type="text" ref="projectName" name="searchProject" placeholder="Search for projects" />
+                                        </div>
+                                        {/* <!-- End project-search --> */}
                                     </div>
-                                    {/* <!-- End project-search --> */}
-                                </div>
-                                <div className="small-12 large-6 columns">
-                                    <div id="project-refine">
-                                        <div className="project-refine-result">
-                                            <select>
-                                                <option>
-                                                    All Locations
-                                                </option>
-                                            </select>
+                                    <div className="small-12 large-2 columns">
+                                        <div id="project-refine">
+                                            <div className="project-refine-result">
+                                                <select>
+                                                    <option>All Types</option>
+                                                    {this.props.projectTypes.map(type => {
+                                                        return <option key={type.type_id} value={type.type_id}>{type.type}</option>;
+                                                    })}
+                                                </select>
+                                            </div>
+                                            {/* <!-- End refine-result --> */}
                                         </div>
-                                        {/* <!-- End refine-result --> */}
-                                        <div className="project-refine-result">
-                                            <select>
-                                                <option>
-                                                    All Types
-                                                </option>
-                                            </select>
-                                        </div>
-                                        {/* <!-- End refine-result --> */}
-                                        <div className="project-refine-result">
-                                            <select>
-                                                <option>
-                                                    All Statuses
-                                                </option>
-                                            </select>
-                                        </div>
-                                        {/* <!-- End refine-result --> */}
+                                        {/* <!-- End project-refine --> */}
                                     </div>
-                                    {/* <!-- End project-refine --> */}
+                                    <div className="small-12 large-2 columns">
+                                        <div id="project-refine">
+                                            <div className="project-refine-result">
+                                                <select>
+                                                    <option>All Cities</option>
+                                                    {this.props.cities.map(city => {
+                                                        return <option key={city.city_id} value={city.city_id}>{city.city}</option>;
+                                                    })}
+                                                </select>
+                                            </div>
+                                            {/* <!-- End refine-result --> */}
+                                        </div>
+                                        {/* <!-- End project-refine --> */}
+                                    </div>
+                                    <div className="small-12 large-2 columns">
+                                        <div id="project-refine">
+                                            <div className="client-refine-result">
+                                                <input className="btn" id="project-search-submit" type="submit" name="searchProject" value="Update Results" />
+                                            </div>
+                                            {/* <!-- End refine-result --> */}
+                                        </div>
+                                        {/* <!-- End project-refine --> */}
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         {/* <!-- End dashboard-overview --> */}
                     </div>
@@ -75,7 +90,6 @@ class Search extends Component {
                                                 <p>
                                                     {project.description}
                                                 </p>
-
                                             </div>
                                             {/* <!-- End project-result-info --> */}
                                         </div>
@@ -109,7 +123,10 @@ class Search extends Component {
 
 Search.propTypes = {
     setHeaderTab: PropTypes.func.isRequired,
-    projects: PropTypes.array.isRequired
+    projects: PropTypes.array.isRequired,
+    cities: PropTypes.array.isRequired,
+    projectTypes: PropTypes.array.isRequired,
+    searchProjects: PropTypes.func.isRequired
 };
 
 export default Search;

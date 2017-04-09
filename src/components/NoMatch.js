@@ -1,19 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import {Link} from 'react-router-dom';
 
-// Import components
-
-class NoMatch extends Component {
-    render() {
-        return (
-            <div id="404">
-                <h1>404 Not Found</h1>
-            </div>
-        );
-    }
-}
-
-NoMatch.propTypes = {
-    children: PropTypes.node
-};
+const NoMatch = () => (
+    <div id="page404">
+        <h1>404</h1>
+        <h2>It looks like the page you were looking for cannot be found.</h2>
+        <Link to="/">Click Here To Go Back</Link>
+    </div>
+);
 
 export default NoMatch;

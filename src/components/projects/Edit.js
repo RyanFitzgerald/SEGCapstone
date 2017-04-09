@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import Pikaday from 'pikaday';
 import * as api from '../../api';
 
+import Loading from '../Loading';
+
 class Edit extends Component {
     constructor(props) {
         super(props);
@@ -20,16 +22,21 @@ class Edit extends Component {
 
         // Get Project
         this.getProject(this.props.match.params.projectID);
+    }
 
+    addDatepickers = () => {
         // Create datepickers
-        new Pikaday({ field: document.getElementById('project-start') });
-        new Pikaday({ field: document.getElementById('project-end') });
+
+        new Pikaday({ field: document.getElementById('project-edit-start') });
+        new Pikaday({ field: document.getElementById('project-edit-end') });
     }
 
     getProject = projectID => {
         api.getProjectByID(projectID).then(project => {
             this.setState({
                 project
+            }, function() {
+                this.addDatepickers();
             });
         });
     }
@@ -59,7 +66,7 @@ class Edit extends Component {
                 <div id="dashboard-other">
                     <div className="row">
                         <div className="small-12 columns">
-                            <h2>Add a New Project</h2>
+                            <h2>Update Project</h2>
                             <div id="project-add" className="dashboard-block">
                                 <form onSubmit={this.handleSubmit}>
                                     <input type="hidden" ref="projectID" name="projecT_id" value={this.state.project.project_id} />
@@ -72,7 +79,7 @@ class Edit extends Component {
                                     <div className="row">
                                         <div className="small-12 medium-6 columns">
                                             <label htmlFor="project-type">Type  <span className="required">*</span></label>
-                                            <select name="type[]" ref="projectType" className="project-select-form" id="project-type" defaultValue={this.state.project.project_type} multiple required>
+                                            <select name="type[]" ref="projectType" className="project-select-form" id="project-type" multiple defaultValue={[this.state.project.project_type]} required>
                                                 {this.props.projectTypes.map(type => {
                                                     return <option key={type.type_id} value={type.type_id}>{type.type}</option>;
                                                 })}
@@ -90,7 +97,7 @@ class Edit extends Component {
                                         </div>
                                         <div className="small-12 medium-4 columns">
                                             <label htmlFor="project-postal-code">Postal Code <span className="required">*</span></label>
-                                            <input type="text" ref="postalCode" name="postalCode" className="project-text-form" id="project-postal-code" defaultValue={this.state.project.postal_code} required />
+                                            <input onKeyPress={this.handlePostalCode} type="text" ref="postalCode" name="postalCode" className="project-text-form  postal-code-field" id="project-postal-code" defaultValue={this.state.project.postal_code} maxLength="6" required />
                                         </div>
                                         <div className="small-12 medium-4 columns">
                                             <label htmlFor="project-city">City <span className="required">*</span></label>
@@ -104,11 +111,11 @@ class Edit extends Component {
                                     <div className="row">
                                         <div className="small-12 medium-6 columns">
                                             <label htmlFor="project-start">Start Date</label>
-                                            <input type="text" ref="startDate" name="startDate" className="project-text-form" id="project-start" defaultValue={this.state.project.start_date} readOnly />
+                                            <input type="text" ref="startDate" name="startDate" className="project-text-form" id="project-edit-start" defaultValue={(this.state.project.start_date == '1990-01-01T05:00:00.000Z') ? '' : this.state.project.start_date} readOnly />
                                         </div>
                                         <div className="small-12 medium-6 columns">
                                             <label htmlFor="project-end">End Date</label>
-                                            <input type="text" ref="endDate" name="endDate" className="project-text-form" id="project-end" defaultValue={this.state.project.end_date} readOnly />
+                                            <input type="text" ref="endDate" name="endDate" className="project-text-form" id="project-edit-end" defaultValue={(this.state.project.end_date == '1990-01-01T05:00:00.000Z') ? '' : this.state.project.end_date} readOnly />
                                         </div>
                                     </div>
                                     <div className="row">
@@ -138,7 +145,7 @@ class Edit extends Component {
                                         </div>
                                     </div>
                                     <p className="required-info">Fields marked with * are required.</p>
-                                    <input type="submit" name="submit" className="btn" id="project-submit" value="Add Project" />
+                                    <input type="submit" name="submit" className="btn" id="project-submit" value="Update Project" />
                                 </form>
                             </div>
                             {/* <-- End #client-add --> */}
@@ -149,7 +156,7 @@ class Edit extends Component {
         }
 
         return (
-            <h1>Loading</h1>
+            <Loading />
         );
     }
 

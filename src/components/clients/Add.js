@@ -23,6 +23,10 @@ class Add extends Component {
         this.props.addClient(newClient);
     };
 
+    handlePhone = e => {
+        e.target.value = e.target.value.replace(/^(\d{3})(\d{3})(\d)+$/, '($1) $2-$3');
+    };
+
     render() {
         return (
             <div id="dashboard-other">
@@ -48,7 +52,7 @@ class Add extends Component {
                                     </div>
                                     <div className="small-12 medium-6 columns">
                                         <label htmlFor="client-phone">Phone Number <span className="required">*</span></label>
-                                        <input type="text" ref="phone" name="phone" className="client-text-form" id="client-phone" required />
+                                        <input type="text" ref="phone" name="phone" className="client-text-form" id="client-phone" maxLength="14" onKeyUp={this.handlePhone} required />
                                     </div>
                                 </div>
                                 <div className="row">
@@ -58,7 +62,7 @@ class Add extends Component {
                                     </div>
                                     <div className="small-12 medium-4 columns">
                                         <label htmlFor="client-postal-code">Postal Code <span className="required">*</span></label>
-                                        <input type="text" ref="postalCode" name="postalCode" className="client-text-form" id="client-postal-code" required />
+                                        <input type="text" ref="postalCode" name="postalCode" className="client-text-form postal-code-field" id="client-postal-code" maxLength="6" required />
                                     </div>
                                     <div className="small-12 medium-4 columns">
                                         <label htmlFor="client-city">City <span className="required">*</span></label>

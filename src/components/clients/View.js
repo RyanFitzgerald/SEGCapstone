@@ -2,30 +2,44 @@ import React, { Component, PropTypes } from 'react';
 import {Link} from 'react-router-dom';
 import * as api from '../../api';
 
+import Loading from '../Loading';
+import Map from '../Map';
+
 class View extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            client: null
+            client: null,
+            projects: null
         };
     }
 
     componentDidMount() {
-        // Update page title
-        document.title = `View Client ${this.props.match.params.clientID}`;
-
         // Update Active Tab (zero to hide)
         this.props.setHeaderTab(0);
 
         // Get client
         this.getClient(this.props.match.params.clientID);
+
+        // Get client projects
+        this.getProjects(this.props.match.params.clientID);
     }
 
     getClient = clientID => {
         api.getClientByID(clientID).then(client => {
             this.setState({
                 client
+            }, () => {
+                document.title = `Client - ${this.state.client.name}`;
+            });
+        });
+    }
+
+    getProjects = clientID => {
+        api.getProjectsByClientID(clientID).then(projects => {
+            this.setState({
+                projects
             });
         });
     }
@@ -36,7 +50,7 @@ class View extends Component {
     }
 
     currentContent() {
-        if (this.state.client) {
+        if (this.state.client && this.state.projects) {
             return (
                 <div id="dashboard-client">
                     <div className="row">
@@ -49,16 +63,16 @@ class View extends Component {
                                             <h3>Basic Information</h3>
                                             <ul>
                                                 <li>
-                                                    <b>Client ID: </b> {this.state.client.client_id}
+                                                    <b><i className="fa fa-hashtag" aria-hidden="true"></i> Client ID: </b> {this.state.client.client_id}
                                                 </li>
                                                 <li>
-                                                    <b>Name: </b> {this.state.client.name}
+                                                    <b><i className="fa fa-user" aria-hidden="true"></i> Name: </b> {this.state.client.name}
                                                 </li>
                                                 <li>
-                                                    <b>Email: </b> {this.state.client.email}
+                                                    <b><i className="fa fa-envelope-o" aria-hidden="true"></i> Email: </b> <a href={`mailto:${this.state.client.email}`}>{this.state.client.email}</a>
                                                 </li>
                                                 <li>
-                                                    <b>Phone Number: </b> {this.state.client.telephone}
+                                                    <b><i className="fa fa-phone" aria-hidden="true"></i> Phone Number: </b> <a href={`tel:${this.state.client.telephone}`}>{this.state.client.telephone}</a>
                                                 </li>
                                             </ul>
                                             <div id="client-actions">
@@ -73,6 +87,7 @@ class View extends Component {
                                         <div id="client-info-location">
                                             <h3>Location</h3>
                                             <div id="client-map">
+                                                <Map google={window.google} />
                                             </div>
                                             {/* <!-- End client-map --> */}
                                             <ul>
@@ -80,7 +95,7 @@ class View extends Component {
                                                     {this.state.client.street}
                                                 </li>
                                                 <li>
-                                                    {this.state.client.city}, ON {this.state.client.postal_code}
+                                                    {this.state.client.city}, ON {this.state.client.postal_code.toUpperCase()}
                                                 </li>
                                                 <li>
                                                     Canada
@@ -97,82 +112,31 @@ class View extends Component {
                     </div>
                     <div className="row">
                         <div className="small-12 large-8 columns">
-                            <h2>Client Projects (3)</h2>
-                            <div className="project-result dashboard-block">
-                                <div className="row">
-                                    <div className="small-12 large-9 columns">
-                                        <div className="project-result-info">
-                                            <h3><span className="project-result-status complete">Complete</span> Doe Family Project</h3>
-                                            <span><b>Location: </b>Ottawa, Ontario</span>
-                                            <span><b>Type: </b>Siding, Roofing</span>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a cursus augue. Sed a euismod lorem. Pellentesque posuere molestie nisi vitae viverra.
-                                            </p>
-
+                            <h2>Client Projects ({this.state.projects.length})</h2>
+                            {this.state.projects.map(project => {
+                                return (
+                                    <div key={project.project_id} className="project-result dashboard-block">
+                                        <div className="row">
+                                            <div className="small-12 large-9 columns">
+                                                <div className="project-result-info">
+                                                    <h3><span className="project-result-status complete">Complete</span> {project.name}</h3>
+                                                    <span><b>Location: </b>{project.city}, Ontario</span>
+                                                    <span><b>Type: </b>{project.type}</span>
+                                                    <p>{project.description}</p>
+                                                </div>
+                                                {/* <!-- End project-result-info --> */}
+                                            </div>
+                                            <div className="small-12 large-3 columns">
+                                                <div className="project-result-actions">
+                                                    <Link className="btn-dark" to={`/projects/${project.project_id}`}>View Project</Link>
+                                                    <Link className="btn-dark" to={`/projects/${project.project_id}/edit`}>Edit Project</Link>
+                                                </div>
+                                                {/* <!-- End project-result-actions --> */}
+                                            </div>
                                         </div>
-                                        {/* <!-- End project-result-info --> */}
                                     </div>
-                                    <div className="small-12 large-3 columns">
-                                        <div className="project-result-actions">
-                                            <a className="btn-dark" href="#">View Project</a>
-                                            <a className="btn-dark" href="#">Edit Project</a>
-                                            <a className="btn-dark" href="#">Delete Project</a>
-                                        </div>
-                                        {/* <!-- End project-result-actions --> */}
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- End project-result --> */}
-                            <div className="project-result dashboard-block">
-                                <div className="row">
-                                    <div className="small-12 large-9 columns">
-                                        <div className="project-result-info">
-                                            <h3><span className="project-result-status complete">Complete</span> Doe Family Project</h3>
-                                            <span><b>Location: </b>Ottawa, Ontario</span>
-                                            <span><b>Type: </b>Siding, Roofing</span>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a cursus augue. Sed a euismod lorem. Pellentesque posuere molestie nisi vitae viverra.
-                                            </p>
-
-                                        </div>
-                                        {/* <!-- End project-result-info --> */}
-                                    </div>
-                                    <div className="small-12 large-3 columns">
-                                        <div className="project-result-actions">
-                                            <a className="btn-dark" href="#">View Project</a>
-                                            <a className="btn-dark" href="#">Edit Project</a>
-                                            <a className="btn-dark" href="#">Delete Project</a>
-                                        </div>
-                                        {/* <!-- End project-result-actions --> */}
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- End project-result --> */}
-                            <div className="project-result dashboard-block">
-                                <div className="row">
-                                    <div className="small-12 large-9 columns">
-                                        <div className="project-result-info">
-                                            <h3><span className="project-result-status complete">Complete</span> Doe Family Project</h3>
-                                            <span><b>Location: </b>Ottawa, Ontario</span>
-                                            <span><b>Type: </b>Siding, Roofing</span>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a cursus augue. Sed a euismod lorem. Pellentesque posuere molestie nisi vitae viverra.
-                                            </p>
-
-                                        </div>
-                                        {/* <!-- End project-result-info --> */}
-                                    </div>
-                                    <div className="small-12 large-3 columns">
-                                        <div className="project-result-actions">
-                                            <a className="btn-dark" href="#">View Project</a>
-                                            <a className="btn-dark" href="#">Edit Project</a>
-                                            <a className="btn-dark" href="#">Delete Project</a>
-                                        </div>
-                                        {/* <!-- End project-result-actions --> */}
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <!-- End project-result --> */}
+                                );
+                            })}
                         </div>
                         <div className="small-12 large-4 columns">
                             <div className="search-tips dashboard-block">
@@ -189,7 +153,7 @@ class View extends Component {
         }
 
         return (
-            <h1>Loading</h1>
+            <Loading />
         );
 
     }

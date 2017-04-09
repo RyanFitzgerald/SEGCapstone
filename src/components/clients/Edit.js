@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import * as api from '../../api';
+import Loading from '../Loading';
 
 class Edit extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class Edit extends Component {
         });
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = e => {
         e.preventDefault();
         let newClient = {
             clientID: this.refs.clientID.value,
@@ -41,6 +42,10 @@ class Edit extends Component {
             cityID: this.refs.city.value
         };
         this.props.editClient(newClient);
+    };
+
+    handlePhone = e => {
+        e.target.value = e.target.value.replace(/^(\d{3})(\d{3})(\d)+$/, '($1) $2-$3');
     };
 
     currentContent() {
@@ -66,7 +71,7 @@ class Edit extends Component {
                                         </div>
                                         <div className="small-12 medium-6 columns">
                                             <label htmlFor="client-phone">Phone Number <span className="required">*</span></label>
-                                            <input type="text" ref="phone" name="phone" className="client-text-form" id="client-phone" defaultValue={this.state.client.telephone} required />
+                                            <input type="text" ref="phone" name="phone" className="client-text-form" id="client-phone" maxLength="14" onKeyUp={this.handlePhone} defaultValue={this.state.client.telephone} required />
                                         </div>
                                     </div>
                                     <div className="row">
@@ -76,7 +81,7 @@ class Edit extends Component {
                                         </div>
                                         <div className="small-12 medium-4 columns">
                                             <label htmlFor="client-postal-code">Postal Code <span className="required">*</span></label>
-                                            <input type="text" ref="postalCode" name="postalCode" className="client-text-form" id="client-postal-code" defaultValue={this.state.client.postal_code} required />
+                                            <input type="text" ref="postalCode" name="postalCode" className="client-text-form postal-code-field" id="client-postal-code" defaultValue={this.state.client.postal_code} maxLength="6" required />
                                         </div>
                                         <div className="small-12 medium-4 columns">
                                             <label htmlFor="client-city">City <span className="required">*</span></label>
@@ -99,7 +104,7 @@ class Edit extends Component {
         }
 
         return (
-            <h1>Loading</h1>
+            <Loading />
         );
     }
 

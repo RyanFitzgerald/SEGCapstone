@@ -106,6 +106,14 @@ class Project extends Component {
         });
     }
 
+    searchProjects = projectName => {
+        api.searchProjects(projectName).then(projects => {
+            this.setState({
+                projects
+            });
+        });
+    };
+
     render() {
         return (
             <div className="projects">
@@ -129,7 +137,7 @@ class Project extends Component {
                         <Summary setHeaderTab={this.setHeaderTab} />
                     } />
                     <Route path="/projects/search" render={() =>
-                        <Search setHeaderTab={this.setHeaderTab} projects={this.state.projects} />
+                        <Search setHeaderTab={this.setHeaderTab} searchProjects={this.searchProjects} projects={this.state.projects} cities={this.state.cities} projectTypes={this.state.projectTypes} />
                     } />
                     <Route path="/projects/add" render={() =>
                         <Add setHeaderTab={this.setHeaderTab} addProject={this.addProject} cities={this.state.cities} clients={this.state.clients} projectTypes={this.state.projectTypes} />

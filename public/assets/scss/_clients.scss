@@ -46,16 +46,31 @@
             @include border-top(1px, $colour-border-dark);
         }
     }
+
+    a {
+        text-decoration: none;
+        color: $colour-main-hover;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 #client-actions {
     padding-top: 15px;
 
     a {
+        color: #fff;
         display: inline-block;
         border-radius: 4px;
         text-decoration: none;
         padding: 10px 20px;
+        margin-right: 10px;
+
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 
@@ -146,6 +161,13 @@
         @include border-all(1px, $colour-border-dark);
         border-radius: 4px;
     }
+}
+
+#client-search-submit {
+    padding: 6px;
+    display: block;
+    width: 100%;
+    border-radius: 4px;
 }
 
 .client-refine-result {

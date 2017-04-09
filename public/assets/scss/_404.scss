@@ -1,0 +1,35 @@
+/*
+    --------------------------------------------------------------------------
+    File: _404.scss
+    Description:
+        Defines styles for the 404 page
+    --------------------------------------------------------------------------
+*/
+
+#page404 {
+    padding: 15px;
+    text-align: center;
+
+    h1 {
+        font-size: 10em;
+        line-height: 0.8em;
+        color: $colour-main;
+        margin: 15px 0 0 0;
+    }
+
+    h2 {
+        color: $colour-heading-dark;
+        margin: 0;
+        font-weight: 400;
+    }
+
+    a {
+        text-decoration: none;
+        color: $colour-main;
+
+        &:hover {
+            color: $colour-main-hover;
+            text-decoration: underline;
+        }
+    }
+}

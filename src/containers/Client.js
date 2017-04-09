@@ -82,6 +82,14 @@ class Client extends Component {
         });
     }
 
+    searchClients = clientName => {
+        api.searchClients(clientName).then(clients => {
+            this.setState({
+                clients
+            });
+        });
+    };
+
     render() {
         return (
             <div className="clients">
@@ -105,7 +113,7 @@ class Client extends Component {
                         <Summary setHeaderTab={this.setHeaderTab} />
                     } />
                     <Route path="/clients/search" render={() =>
-                        <Search setHeaderTab={this.setHeaderTab} clients={this.state.clients} />
+                        <Search setHeaderTab={this.setHeaderTab} searchClients={this.searchClients} clients={this.state.clients} cities={this.state.cities} />
                     } />
                     <Route path="/clients/add" render={() =>
                         <Add setHeaderTab={this.setHeaderTab} addClient={this.addClient} cities={this.state.cities} />

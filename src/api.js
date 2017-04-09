@@ -6,15 +6,33 @@ export const getClients = () => {
         .then(resp => resp.data.clients);
 };
 
+// Search clients
+export const searchClients = (clientName) => {
+    return axios.get(`/api/clients?name=${clientName}`)
+        .then(resp => resp.data.clients);
+};
+
 // Get client by ID
 export const getClientByID = clientID => {
     return axios.get(`/api/clients/${clientID}`)
         .then(resp => resp.data[0]);
 };
 
+// Get all projects by Client ID
+export const getProjectsByClientID = clientID => {
+    return axios.get(`/api/clients/${clientID}/projects`)
+        .then(resp => resp.data.projects);
+};
+
 // Get all projects
 export const getProjects = () => {
     return axios.get('/api/projects')
+        .then(resp => resp.data.projects);
+};
+
+// Search Projects
+export const searchProjects = (projectName) => {
+    return axios.get(`/api/projects?name=${projectName}`)
         .then(resp => resp.data.projects);
 };
 

@@ -90,3 +90,21 @@ body {
     color: #ff0000;
     margin: 0 0 15px 0;
 }
+
+// Loading
+#loading {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 200px;
+    right: 0;
+    background: #fff url(../images/loading.gif) 45% 50% no-repeat;
+}
+
+// Postal code fields
+.postal-code-field {
+    text-transform: uppercase;
+}
