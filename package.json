@@ -26,6 +26,7 @@
     "history": "^4.6.1",
     "json-loader": "^0.5.4",
     "method-override": "^2.3.7",
+    "pikaday": "^1.5.1",
     "pg-promise": "^5.6.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",

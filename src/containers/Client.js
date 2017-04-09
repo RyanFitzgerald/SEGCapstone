@@ -18,8 +18,7 @@ class Client extends Component {
         this.state = {
             headerTab: 1,
             cities: null,
-            clients: null,
-            lastUpdated: null
+            clients: null
         };
     }
 

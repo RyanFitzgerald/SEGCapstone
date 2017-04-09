@@ -1,17 +1,23 @@
 import React, { Component, PropTypes } from 'react';
+import {Link} from 'react-router-dom';
 
 class Home extends Component {
+
+    constructor(props) {
+        super(props);
+    }
 
     componentDidMount() {
         // Update page title
         document.title = 'Dashboard';
 
+        // Update Header Title
+        this.props.setHeaderTitle('Dashboard Home');
+
         // Update Active Tab
         this.props.setActiveTab(1);
-
-        // Update Header Title
-        this.props.setHeaderTitle('Dashboard');
     }
+
 
     render() {
         return (
@@ -22,52 +28,28 @@ class Home extends Component {
                             <h2>Quick Actions</h2>
                             <div className="row small-up-1 medium-up-2 large-up-4">
                                 <div className="column">
-                                    <div className="quick-action rounded">
+                                    <Link className="quick-action rounded" to="/projects">
                                         <div className="qa-icon">
                                             <i className="fa fa-search" aria-hidden="true"></i>
                                         </div>
                                         {/* <!-- End qa-icon --> */}
                                         <div className="qa-text">
-                                            <span>Search Projects</span>
+                                            <span>Projects Overview</span>
                                         </div>
                                         {/* <!-- End qa-text --> */}
-                                    </div>
+                                    </Link>
                                 </div>
                                 <div className="column">
-                                    <div className="quick-action rounded">
-                                        <div className="qa-icon">
-                                            <i className="fa fa-plus" aria-hidden="true"></i>
-                                        </div>
-                                        {/* <!-- End qa-icon --> */}
-                                        <div className="qa-text">
-                                            <span>Add Project</span>
-                                        </div>
-                                        {/* <!-- End qa-text --> */}
-                                    </div>
-                                </div>
-                                <div className="column">
-                                    <div className="quick-action rounded">
+                                    <Link className="quick-action rounded" to="/clients">
                                         <div className="qa-icon">
                                             <i className="fa fa-search" aria-hidden="true"></i>
                                         </div>
                                         {/* <!-- End qa-icon --> */}
                                         <div className="qa-text">
-                                            <span>Search Customers</span>
+                                            <span>Clients Overview</span>
                                         </div>
                                         {/* <!-- End qa-text --> */}
-                                    </div>
-                                </div>
-                                <div className="column">
-                                    <div className="quick-action rounded">
-                                        <div className="qa-icon">
-                                            <i className="fa fa-plus" aria-hidden="true"></i>
-                                        </div>
-                                        {/* <!-- End qa-icon --> */}
-                                        <div className="qa-text">
-                                            <span>Add Customer</span>
-                                        </div>
-                                        {/* <!-- End qa-text --> */}
-                                    </div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +84,8 @@ class Home extends Component {
 
 Home.propTypes = {
     setActiveTab: PropTypes.func.isRequired,
-    setHeaderTitle: PropTypes.func.isRequired
+    setHeaderTitle: PropTypes.func.isRequired,
+    history: PropTypes.any
 };
 
 export default Home;

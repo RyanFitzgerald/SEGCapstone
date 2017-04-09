@@ -10,7 +10,7 @@ class Add extends Component {
         this.props.setHeaderTab(3);
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = e => {
         e.preventDefault();
         let newClient = {
             clientName: `${this.refs.fName.value} ${this.refs.lName.value}`,

@@ -5,11 +5,6 @@ class Search extends Component {
 
     constructor(props) {
         super(props);
-
-        // States
-        this.state = {
-            lastUpdated: null
-        };
     }
 
     componentDidMount() {
@@ -18,11 +13,6 @@ class Search extends Component {
 
         // Update Active Tab
         this.props.setHeaderTab(2);
-
-        //
-        this.setState({
-            lastLoaded: Math.random()
-        });
     }
 
     render() {

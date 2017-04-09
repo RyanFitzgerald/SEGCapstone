@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import {Route, Switch, Link} from 'react-router-dom';
+import {withRouter, Route, Switch, Link} from 'react-router-dom';
+import * as api from '../api';
 
 // Import Client Components
 import Summary from '../components/projects/Summary';
@@ -15,7 +16,11 @@ class Project extends Component {
 
         // States
         this.state = {
-            headerTab: 1
+            headerTab: 1,
+            cities: null,
+            clients: null,
+            projects: null,
+            projectTypes: null
         };
     }
 
@@ -34,6 +39,71 @@ class Project extends Component {
 
         // Update Header Title
         this.props.setHeaderTitle('Projects');
+
+        // Get cities
+        this.getCities();
+
+        // Get clients
+        this.getClients();
+
+        // Get projects
+        this.getProjects();
+
+        // Get project types
+        this.getProjectTypes();
+    }
+
+    addProject = project => {
+        api.addProject(project).then(resp => {
+            this.getProjects();
+            this.props.history.push(`/projects/${resp.projectID}`);
+        });
+    }
+
+    editProject = project => {
+        api.editProject(project).then(resp => {
+            this.getProjects();
+            this.props.history.push(`/projects/${resp.projectID}`);
+        });
+    }
+
+    deleteProject = projectID => {
+        api.deleteProject(projectID).then(() => {
+            this.getProjects();
+            this.props.history.push('/projects');
+        });
+    }
+
+    getProjects = () => {
+        api.getProjects().then(projects => {
+            this.setState({
+                projects
+            });
+        });
+    }
+
+    getCities = () => {
+        api.getCities().then(cities => {
+            this.setState({
+                cities
+            });
+        });
+    }
+
+    getClients = () => {
+        api.getClients().then(clients => {
+            this.setState({
+                clients
+            });
+        });
+    }
+
+    getProjectTypes = () => {
+        api.getProjectTypes().then(projectTypes => {
+            this.setState({
+                projectTypes
+            });
+        });
     }
 
     render() {
@@ -50,12 +120,6 @@ class Project extends Component {
                         <li className={(this.state.headerTab == 3) ? 'active' : ''}>
                             <Link to="/projects/add">Add</Link>
                         </li>
-                        <li>
-                            <Link to="/projects/22">View</Link>
-                        </li>
-                        <li>
-                            <Link to="/projects/22/edit">Edit</Link>
-                        </li>
                     </ul>
                 </div>
                 {/* <!-- End page-navigation --> */}
@@ -65,16 +129,16 @@ class Project extends Component {
                         <Summary setHeaderTab={this.setHeaderTab} />
                     } />
                     <Route path="/projects/search" render={() =>
-                        <Search setHeaderTab={this.setHeaderTab} />
+                        <Search setHeaderTab={this.setHeaderTab} projects={this.state.projects} />
                     } />
                     <Route path="/projects/add" render={() =>
-                        <Add setHeaderTab={this.setHeaderTab} />
+                        <Add setHeaderTab={this.setHeaderTab} addProject={this.addProject} cities={this.state.cities} clients={this.state.clients} projectTypes={this.state.projectTypes} />
                     } />
                     <Route path="/projects/:projectID/edit" render={({match}) =>
-                        <Edit setHeaderTab={this.setHeaderTab} match={match} />
+                        <Edit setHeaderTab={this.setHeaderTab} match={match} editProject={this.editProject} cities={this.state.cities} clients={this.state.clients} projectTypes={this.state.projectTypes} />
                     } />
                     <Route path="/projects/:projectID" render={({match}) =>
-                        <View setHeaderTab={this.setHeaderTab} match={match} />
+                        <View setHeaderTab={this.setHeaderTab} match={match} deleteProject={this.deleteProject} />
                     } />
                 </Switch>
             </div>
@@ -84,7 +148,8 @@ class Project extends Component {
 
 Project.propTypes = {
     setActiveTab: PropTypes.func.isRequired,
-    setHeaderTitle: PropTypes.func.isRequired
+    setHeaderTitle: PropTypes.func.isRequired,
+    history: PropTypes.any
 };
 
-export default Project;
+export default withRouter(Project);

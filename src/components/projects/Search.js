@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import {Link} from 'react-router-dom';
 
 class Search extends Component {
 
@@ -61,107 +62,34 @@ class Search extends Component {
                 </div>
                 <div className="row">
                     <div className="small-12 large-8 columns">
-                        <h2>Projects (20)</h2>
-                        <div className="project-result dashboard-block">
-                            <div className="row">
-                                <div className="small-12 large-9 columns">
-                                    <div className="project-result-info">
-                                        <h3><span className="project-result-status complete">Complete</span> Doe Family Project</h3>
-                                        <span><b>Location: </b>Ottawa, Ontario</span>
-                                        <span><b>Type: </b>Siding, Roofing</span>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a cursus augue. Sed a euismod lorem. Pellentesque posuere molestie nisi vitae viverra.
-                                        </p>
+                        <h2>Projects ({this.props.projects.length})</h2>
+                        {this.props.projects.map(project => {
+                            return (
+                                <div key={project.project_id} className="project-result dashboard-block">
+                                    <div className="row">
+                                        <div className="small-12 large-9 columns">
+                                            <div className="project-result-info">
+                                                <h3><span className="project-result-status complete">Complete</span> {project.name}</h3>
+                                                <span><b>Location: </b>{project.city}, Ontario</span>
+                                                <span><b>Type: </b>{project.type}</span>
+                                                <p>
+                                                    {project.description}
+                                                </p>
 
+                                            </div>
+                                            {/* <!-- End project-result-info --> */}
+                                        </div>
+                                        <div className="small-12 large-3 columns">
+                                            <div className="project-result-actions">
+                                                <Link className="btn-dark" to={`/projects/${project.project_id}`}>View Project</Link>
+                                                <Link className="btn-dark" to={`/projects/${project.project_id}/edit`}>Edit Project</Link>
+                                            </div>
+                                            {/* <!-- End project-result-actions --> */}
+                                        </div>
                                     </div>
-                                    {/* <!-- End project-result-info --> */}
                                 </div>
-                                <div className="small-12 large-3 columns">
-                                    <div className="project-result-actions">
-                                        <a className="btn-dark" href="#">View Project</a>
-                                        <a className="btn-dark" href="#">Edit Project</a>
-                                        <a className="btn-dark" href="#">Delete Project</a>
-                                    </div>
-                                    {/* <!-- End project-result-actions --> */}
-                                </div>
-                            </div>
-                        </div>
-                        {/* <!-- End project-result --> */}
-                        <div className="project-result dashboard-block">
-                            <div className="row">
-                                <div className="small-12 large-9 columns">
-                                    <div className="project-result-info">
-                                        <h3><span className="project-result-status complete">Complete</span> Doe Family Project</h3>
-                                        <span><b>Location: </b>Ottawa, Ontario</span>
-                                        <span><b>Type: </b>Siding, Roofing</span>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a cursus augue. Sed a euismod lorem. Pellentesque posuere molestie nisi vitae viverra.
-                                        </p>
-
-                                    </div>
-                                    {/* <!-- End project-result-info --> */}
-                                </div>
-                                <div className="small-12 large-3 columns">
-                                    <div className="project-result-actions">
-                                        <a className="btn-dark" href="#">View Project</a>
-                                        <a className="btn-dark" href="#">Edit Project</a>
-                                        <a className="btn-dark" href="#">Delete Project</a>
-                                    </div>
-                                    {/* <!-- End project-result-actions --> */}
-                                </div>
-                            </div>
-                        </div>
-                        {/* <!-- End project-result --> */}
-                        <div className="project-result dashboard-block">
-                            <div className="row">
-                                <div className="small-12 large-9 columns">
-                                    <div className="project-result-info">
-                                        <h3><span className="project-result-status complete">Complete</span> Doe Family Project</h3>
-                                        <span><b>Location: </b>Ottawa, Ontario</span>
-                                        <span><b>Type: </b>Siding, Roofing</span>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a cursus augue. Sed a euismod lorem. Pellentesque posuere molestie nisi vitae viverra.
-                                        </p>
-
-                                    </div>
-                                    {/* <!-- End project-result-info --> */}
-                                </div>
-                                <div className="small-12 large-3 columns">
-                                    <div className="project-result-actions">
-                                        <a className="btn-dark" href="#">View Project</a>
-                                        <a className="btn-dark" href="#">Edit Project</a>
-                                        <a className="btn-dark" href="#">Delete Project</a>
-                                    </div>
-                                    {/* <!-- End project-result-actions --> */}
-                                </div>
-                            </div>
-                        </div>
-                        {/* <!-- End project-result --> */}
-                        <div className="project-result dashboard-block">
-                            <div className="row">
-                                <div className="small-12 large-9 columns">
-                                    <div className="project-result-info">
-                                        <h3><span className="project-result-status complete">Complete</span> Doe Family Project</h3>
-                                        <span><b>Location: </b>Ottawa, Ontario</span>
-                                        <span><b>Type: </b>Siding, Roofing</span>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a cursus augue. Sed a euismod lorem. Pellentesque posuere molestie nisi vitae viverra.
-                                        </p>
-
-                                    </div>
-                                    {/* <!-- End project-result-info --> */}
-                                </div>
-                                <div className="small-12 large-3 columns">
-                                    <div className="project-result-actions">
-                                        <a className="btn-dark" href="#">View Project</a>
-                                        <a className="btn-dark" href="#">Edit Project</a>
-                                        <a className="btn-dark" href="#">Delete Project</a>
-                                    </div>
-                                    {/* <!-- End project-result-actions --> */}
-                                </div>
-                            </div>
-                        </div>
-                        {/* <!-- End project-result --> */}
+                            );
+                        })}
                     </div>
                     <div className="small-12 large-4 columns">
                         <div className="search-tips dashboard-block">
@@ -180,7 +108,8 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-    setHeaderTab: PropTypes.func.isRequired
+    setHeaderTab: PropTypes.func.isRequired,
+    projects: PropTypes.array.isRequired
 };
 
 export default Search;
