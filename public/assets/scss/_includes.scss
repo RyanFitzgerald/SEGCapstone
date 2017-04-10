@@ -108,3 +108,21 @@ body {
 .postal-code-field {
     text-transform: uppercase;
 }
+
+// No results
+
+.no-results {
+    h2 {
+        font-weight: 300 !important;
+        margin: 0 !important;
+    }
+
+    a {
+        color: $colour-main;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

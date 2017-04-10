@@ -106,8 +106,8 @@ class Project extends Component {
         });
     }
 
-    searchProjects = projectName => {
-        api.searchProjects(projectName).then(projects => {
+    searchProjects = query => {
+        api.searchProjects(query).then(projects => {
             this.setState({
                 projects
             });

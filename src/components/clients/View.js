@@ -44,7 +44,7 @@ class View extends Component {
         });
     }
 
-    handleDelete = (e) => {
+    handleDelete = e => {
         e.preventDefault();
         this.props.deleteClient(this.props.match.params.clientID);
     }
@@ -68,9 +68,11 @@ class View extends Component {
                                                 <li>
                                                     <b><i className="fa fa-user" aria-hidden="true"></i> Name: </b> {this.state.client.name}
                                                 </li>
-                                                <li>
-                                                    <b><i className="fa fa-envelope-o" aria-hidden="true"></i> Email: </b> <a href={`mailto:${this.state.client.email}`}>{this.state.client.email}</a>
-                                                </li>
+                                                {this.state.client.email &&
+                                                    <li>
+                                                        <b><i className="fa fa-envelope-o" aria-hidden="true"></i> Email: </b> <a href={`mailto:${this.state.client.email}`}>{this.state.client.email}</a>
+                                                    </li>
+                                                }
                                                 <li>
                                                     <b><i className="fa fa-phone" aria-hidden="true"></i> Phone Number: </b> <a href={`tel:${this.state.client.telephone}`}>{this.state.client.telephone}</a>
                                                 </li>

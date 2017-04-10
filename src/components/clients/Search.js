@@ -17,7 +17,18 @@ class Search extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.searchClients(this.refs.clientName.value);
+        let query = {
+            name: this.refs.clientName.value,
+            city: this.refs.cityID.value
+        };
+        this.props.searchClients(query);
+    }
+
+    resetFilters = e => {
+        e.preventDefault();
+        this.refs.clientName.value = '';
+        this.refs.cityID.value = '0';
+        this.handleSubmit(event);
     }
 
     render() {
@@ -27,40 +38,29 @@ class Search extends Component {
                     <div className="small-12 columns">
                         <h2>Filter Results</h2>
                         <div id="client-filter" className="dashboard-block">
-                            <form onSubmit={this.handleSubmit}>
-                                <div className="row">
-                                    <div className="small-12 large-6 columns">
-                                        <div id="client-search">
-                                            <button><i className="fa fa-search" aria-hidden="true"></i></button>
-                                            <input type="text" ref="clientName" name="searchClient" placeholder="Search for clients" />
-                                        </div>
-                                        {/* <!-- End project-search --> */}
+                            <div className="row">
+                                <div className="small-12 large-8 columns">
+                                    <div id="client-search">
+                                        <button><i className="fa fa-search" aria-hidden="true"></i></button>
+                                        <input onKeyUp={this.handleSubmit} type="text" ref="clientName" name="searchClient" placeholder="Search for clients" />
                                     </div>
-                                    <div className="small-12 large-4 columns">
-                                        <div id="client-refine">
-                                            <div className="client-refine-result">
-                                                <select>
-                                                    <option>All Cities</option>
-                                                    {this.props.cities.map(city => {
-                                                        return <option key={city.city_id} value={city.city_id}>{city.city}</option>;
-                                                    })}
-                                                </select>
-                                            </div>
-                                            {/* <!-- End refine-result --> */}
-                                        </div>
-                                        {/* <!-- End client-refine --> */}
-                                    </div>
-                                    <div className="small-12 large-2 columns">
-                                        <div id="client-refine">
-                                            <div className="client-refine-result">
-                                                <input className="btn" id="client-search-submit" type="submit" name="searchClient" value="Update Results" />
-                                            </div>
-                                            {/* <!-- End refine-result --> */}
-                                        </div>
-                                        {/* <!-- End client-refine --> */}
-                                    </div>
+                                    {/* <!-- End project-search --> */}
                                 </div>
-                            </form>
+                                <div className="small-12 large-4 columns">
+                                    <div id="client-refine">
+                                        <div className="client-refine-result">
+                                            <select onChange={this.handleSubmit} ref="cityID">
+                                                <option value="0">All Cities</option>
+                                                {this.props.cities.map(city => {
+                                                    return <option key={city.city_id} value={city.city_id}>{city.city}</option>;
+                                                })}
+                                            </select>
+                                        </div>
+                                        {/* <!-- End refine-result --> */}
+                                    </div>
+                                    {/* <!-- End client-refine --> */}
+                                </div>
+                            </div>
                         </div>
                         {/* <!-- End dashboard-overview --> */}
                     </div>
@@ -68,30 +68,39 @@ class Search extends Component {
                 <div className="row">
                     <div className="small-12 large-8 columns">
                         <h2>Clients ({this.props.clients.length})</h2>
-                        {this.props.clients.map(client => {
-                            return (
-                                <div key={client.client_id} className="client-result dashboard-block">
-                                    <div className="row">
-                                        <div className="small-12 large-9 columns">
-                                            <div className="client-result-info">
-                                                <h3>{client.name}</h3>
-                                                <span><b>Location: </b>{client.city}, Ontario</span>
-                                                <span><b>Email: </b>{client.email}</span>
-                                                <span><b>Telephone: </b>{client.telephone}</span>
+                        {this.props.clients.length > 0 ? (
+                            <div className="results">
+                                {this.props.clients.map(client => {
+                                    return (
+                                        <div key={client.client_id} className="client-result dashboard-block">
+                                            <div className="row">
+                                                <div className="small-12 large-9 columns">
+                                                    <div className="client-result-info">
+                                                        <h3>{client.name}</h3>
+                                                        <span><b>Location: </b>{client.city}, Ontario</span>
+                                                        <span><b>Email: </b>{client.email}</span>
+                                                        <span><b>Telephone: </b>{client.telephone}</span>
+                                                    </div>
+                                                    {/* <!-- End client-result-info --> */}
+                                                </div>
+                                                <div className="small-12 large-3 columns">
+                                                    <div className="client-result-actions">
+                                                        <Link className="btn-dark" to={`/clients/${client.client_id}`}>View Client</Link>
+                                                        <Link className="btn-dark" to={`/clients/${client.client_id}/edit`}>Edit Client</Link>
+                                                    </div>
+                                                    {/* <!-- End client-result-actions --> */}
+                                                </div>
                                             </div>
-                                            {/* <!-- End client-result-info --> */}
                                         </div>
-                                        <div className="small-12 large-3 columns">
-                                            <div className="client-result-actions">
-                                                <Link className="btn-dark" to={`/clients/${client.client_id}`}>View Client</Link>
-                                                <Link className="btn-dark" to={`/clients/${client.client_id}/edit`}>Edit Client</Link>
-                                            </div>
-                                            {/* <!-- End client-result-actions --> */}
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            <div className="no-results">
+                                <h2>No results, please try another search.</h2>
+                                <a onClick={this.resetFilters} href="#">Reset Search Filters</a>
+                            </div>
+                        )}
                     </div>
                     <div className="small-12 large-4 columns">
                         <div className="search-tips dashboard-block">

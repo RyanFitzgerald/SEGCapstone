@@ -7,8 +7,8 @@ export const getClients = () => {
 };
 
 // Search clients
-export const searchClients = (clientName) => {
-    return axios.get(`/api/clients?name=${clientName}`)
+export const searchClients = query => {
+    return axios.get(`/api/clients?name=${query.name}&city=${query.city}`)
         .then(resp => resp.data.clients);
 };
 
@@ -31,8 +31,8 @@ export const getProjects = () => {
 };
 
 // Search Projects
-export const searchProjects = (projectName) => {
-    return axios.get(`/api/projects?name=${projectName}`)
+export const searchProjects = query => {
+    return axios.get(`/api/projects?name=${query.name}&city=${query.city}&type=${query.type}`)
         .then(resp => resp.data.projects);
 };
 

@@ -12,7 +12,12 @@ const db = pgp(config.connectionString);
 router.get('/clients', (req, res) => {
     let query;
     if (Object.keys(req.query).length !== 0) {
-        query = `SELECT * FROM client, city WHERE client.city_id=city.city_id AND LOWER(client.name) LIKE LOWER('%${req.query.name}%')`;
+        if (parseInt(req.query.city) !== 0) {
+            query = `SELECT * FROM client, city WHERE client.city_id=city.city_id AND LOWER(client.name) LIKE LOWER('%${req.query.name}%') AND client.city_id=${parseInt(req.query.city)}`;
+        } else {
+            query = `SELECT * FROM client, city WHERE client.city_id=city.city_id AND LOWER(client.name) LIKE LOWER('%${req.query.name}%')`;
+        }
+
     } else {
         query = 'SELECT * FROM client, city WHERE client.city_id=city.city_id';
     }
@@ -53,7 +58,15 @@ router.get('/clients/:clientID', (req, res) => {
 router.get('/projects', (req, res) => {
     let query;
     if (Object.keys(req.query).length !== 0) {
-        query = `SELECT * FROM project, city, project_type WHERE project.city_id=city.city_id AND project.project_type=project_type.type_id AND LOWER(project.name) LIKE LOWER('%${req.query.name}%')`;
+        if (parseInt(req.query.city) !== 0 && parseInt(req.query.type) === 0) {
+            query = `SELECT * FROM project, city, project_type WHERE project.city_id=city.city_id AND project.project_type=project_type.type_id AND LOWER(project.name) LIKE LOWER('%${req.query.name}%') AND project.city_id=${req.query.city}`;
+        } else if (parseInt(req.query.city) === 0 && parseInt(req.query.type) !== 0) {
+            query = `SELECT * FROM project, city, project_type WHERE project.city_id=city.city_id AND project.project_type=project_type.type_id AND LOWER(project.name) LIKE LOWER('%${req.query.name}%') AND project.project_type=${req.query.type}`;
+        } else if (parseInt(req.query.city) !== 0 && parseInt(req.query.type) !== 0) {
+            query = `SELECT * FROM project, city, project_type WHERE project.city_id=city.city_id AND project.project_type=project_type.type_id AND LOWER(project.name) LIKE LOWER('%${req.query.name}%') AND project.project_type=${req.query.type} AND project.city_id=${req.query.city}`;
+        } else {
+            query = `SELECT * FROM project, city, project_type WHERE project.city_id=city.city_id AND project.project_type=project_type.type_id AND LOWER(project.name) LIKE LOWER('%${req.query.name}%')`;
+        }
     } else {
         query = 'SELECT * FROM project, city, project_type WHERE project.city_id=city.city_id AND project.project_type=project_type.type_id';
     }
