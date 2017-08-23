@@ -1,10 +1,10 @@
 # SEGCapstone
 
-This repo contains the code for the 2017 SEG4910 / SEG4911 project by Ryan Fitzgerald, Cody McCoshen, and David Ganim. It was built with Foundation, React, Node, Express, and PostgreSQL.
+This repo contains the code for the 2017 SEG4910 / SEG4911 project by Ryan Fitzgerald, Cody McCoshen, and David Ganim. It was built with React, Node, Express, and MongoDB.
 
 ## Setup Instructions
 
-In order to setup, clone or fork the repo and run `npm install` to install all the required dependencies. Next, setup your database and change the credentials in `config.js` to your database. Finally, run `npm start` to initial the node server and `npm run dev` to watch for changes and re-bundle with webpack.
+In order to setup, clone or fork the repo and run `npm install` to install all the required dependencies. You will need to then create a `variables.env` file with the required credentials. Finally, run `npm start` to initial the node (backend) app and `npm start:client` to start the client (React) app.
 
 ## Additional Content
 
