@@ -42,6 +42,6 @@ class Home extends React.Component {
 
 Home.propTypes = {
   setActiveTab: PropTypes.func.isRequired
-}
+};
 
 export default Home;

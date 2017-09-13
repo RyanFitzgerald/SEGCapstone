@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 class Overview extends React.Component {
   componentDidMount() {
+    // Set title
+    document.title = 'Client Overview | Renovaction';
+
+    // Update tab
     this.props.setActiveSubtab(1);
   }
 

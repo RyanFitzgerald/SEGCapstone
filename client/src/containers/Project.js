@@ -18,7 +18,7 @@ class Project extends React.Component {
     // State
     this.state = {
       activeSubtab: 1
-    }
+    };
   }
 
   componentDidMount() {
@@ -56,6 +56,6 @@ class Project extends React.Component {
 
 Project.propTypes = {
   setActiveTab: PropTypes.func.isRequired
-}
+};
 
 export default Project;

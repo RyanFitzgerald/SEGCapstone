@@ -18,7 +18,7 @@ class Client extends React.Component {
     // State
     this.state = {
       activeSubtab: 1
-    }
+    };
   }
 
   componentDidMount() {
@@ -56,6 +56,6 @@ class Client extends React.Component {
 
 Client.propTypes = {
   setActiveTab: PropTypes.func.isRequired
-}
+};
 
 export default Client;

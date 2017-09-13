@@ -1,7 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Add extends React.Component {
   componentDidMount() {
+    // Set title
+    document.title = 'Add Client | Renovaction';
+
+    // Update tab
     this.props.setActiveSubtab(2);
   }
 
@@ -76,5 +81,9 @@ class Add extends React.Component {
     );
   }
 }
+
+Add.propTypes = {
+  setActiveSubtab: PropTypes.func.isRequired
+};
 
 export default Add;

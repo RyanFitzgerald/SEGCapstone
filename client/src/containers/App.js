@@ -19,7 +19,7 @@ class App extends Component {
     // Set state defaults
     this.state = {
       activeTab: 1
-    }
+    };
   }
 
   setActiveTab(tab) {

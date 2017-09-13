@@ -1,7 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Directory extends React.Component {
   componentDidMount() {
+    // Set title
+    document.title = 'Client Directory | Renovaction';
+
+    // Update tab
     this.props.setActiveSubtab(3);
   }
 
@@ -96,5 +101,9 @@ class Directory extends React.Component {
     );
   }
 }
+
+Directory.propTypes = {
+  setActiveSubtab: PropTypes.func.isRequired
+};
 
 export default Directory;

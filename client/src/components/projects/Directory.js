@@ -1,7 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Directory extends React.Component {
   componentDidMount() {
+    // Set title
+    document.title = 'Project Directory | Renovaction';
+
+    // Update tab
     this.props.setActiveSubtab(3);
   }
 
@@ -10,9 +15,9 @@ class Directory extends React.Component {
       <div className="content">
         <div className="row">
           <div className="column">
-            <h2 className="card-title">Filter Clients</h2>
+            <h2 className="card-title">Filter Projects</h2>
             <div className="card">
-              <input className="form-text" type="text" placeholder="Enter the client name"/>
+              <input className="form-text" type="text" placeholder="Enter the project name"/>
               <a href="#" className="advanced__toggle" id="advanced-toggle">Advanced Search</a>
               <div id="advanced-fields" className="row card__advanced">
                 <div className="md-6 column">
@@ -49,43 +54,43 @@ class Directory extends React.Component {
         </div>
         <div className="row">
           <div className="column">
-            <h2 className="card-title">3 Clients</h2>
+            <h2 className="card-title">3 Projects</h2>
             <div className="card">
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Nickname</th>
+                    <th>Type(s)</th>
+                    <th>Status</th>
+                    <th>Client</th>
                     <th>Street</th>
-                    <th>Telephone</th>
-                    <th>Email</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody className="card__tablebody">
                   <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>213 Main Street</td>
-                    <td><a href="#">613-231-2132</a></td>
-                    <td><a href="#">johndoe@gmail.com</a></td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Client</a></td>
+                    <td>John Doe Roofing</td>
+                    <td>Roofing</td>
+                    <td><span className="status status--inprogress">In Progress</span></td>                
+                    <td><a href="#">John Doe</a></td>
+                    <td>Test content</td>
+                    <td><a href="#" className="btn btn--small btn--primary">View Project</a></td>
                   </tr>
                   <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>213 Main Street</td>
-                    <td><a href="#">613-231-2132</a></td>
-                    <td><a href="#">johndoe@gmail.com</a></td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Client</a></td>
+                    <td>John Doe Roofingt</td>
+                    <td>Roofing, Windows</td>
+                    <td><span className="status status--complete">Complete</span></td>
+                    <td><a href="#">John Doe</a></td>
+                    <td>Test content</td>
+                    <td><a href="#" className="btn btn--small btn--primary">View Project</a></td>
                   </tr>
                   <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>213 Main Street</td>
-                    <td><a href="#">613-231-2132</a></td>
-                    <td><a href="#">johndoe@gmail.com</a></td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Client</a></td>
+                    <td>John Doe Roofing</td>
+                    <td>Roofing</td>
+                    <td><span className="status status--notstarted">Not Started</span></td>
+                    <td><a href="#">John Doe</a></td>
+                    <td>Test content</td>
+                    <td><a href="#" className="btn btn--small btn--primary">View Project</a></td>
                   </tr>
                 </tbody> 
               </table>
@@ -96,5 +101,9 @@ class Directory extends React.Component {
     );
   }
 }
+
+Directory.propTypes = {
+  setActiveSubtab: PropTypes.func.isRequired
+};
 
 export default Directory;
