@@ -1,5 +1,7 @@
 // Import required packages
 const express = require('express');
+const mongoose = require('mongoose');
+//const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
