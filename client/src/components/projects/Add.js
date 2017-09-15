@@ -24,6 +24,9 @@ class Add extends React.Component {
   }
 
   render() {
+    // Define variables
+    const types = this.props.types || [];
+
     return (
       <div className="content">
         <div className="row">
@@ -78,11 +81,9 @@ class Add extends React.Component {
                 <div className="md-8 column no-right">
                   <label className="form-label" htmlFor="type">Main Type <span className="form-required">*</span></label>
                   <select name="type" id="project-type">
-                    <option value="roofing">Roofing</option>
-                    <option value="siding">Siding</option>
-                    <option value="windows">Windows</option>
-                    <option value="decks">Deck</option>
-                    <option value="interior">Interior Renovation</option>
+                    {types.map((type, key) => {
+                      return <option key={key} value={type._id}>{type.name}</option>;
+                    })}
                   </select>
                   <label className="form-label" htmlFor="subtype">Sub Type</label>
                   <select name="subtype" id="project-subtype">
@@ -140,7 +141,8 @@ class Add extends React.Component {
 }
 
 Add.propTypes = {
-  setActiveSubtab: PropTypes.func.isRequired
+  setActiveSubtab: PropTypes.func.isRequired,
+  types: PropTypes.array.isRequired
 }
 
 export default Add;

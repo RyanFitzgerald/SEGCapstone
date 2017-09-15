@@ -6,7 +6,7 @@
 // Import required packages
 const fs = require('fs');
 
-// Dump is a handy debugging function we can use to sort of "console.log" our data
+// Provides a dump of the data
 exports.dump = (obj) => JSON.stringify(obj, null, 2);
 
 // Inserting an SVG

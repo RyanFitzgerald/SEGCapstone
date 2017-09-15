@@ -15,13 +15,16 @@
     "express-validator": "^3.2.1",
     "moment": "^2.18.1",
     "mongoose": "^4.11.7",
+    "mongoose-mongodb-errors": "0.0.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "validator": "^8.1.0"
   },
   "scripts": {
     "start": "node ./server/start.js",
-    "watch": "nodemon ./server/start.js"
+    "watch": "nodemon ./server/start.js",
+    "data:add": "node ./server/data/load-sample-data.js",
+    "data:remove": "node ./server/data/load-sample-data.js --delete"
   },
   "proxy": "http://localhost:7777",
   "devDependencies": {

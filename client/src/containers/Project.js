@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
+import * as api from '../api';
 
 // Import client components
 import Submenu from '../components/projects/Submenu';
@@ -14,10 +15,12 @@ class Project extends React.Component {
 
     // Bind functions
     this.setActiveSubtab = this.setActiveSubtab.bind(this);
+    this.getTypes = this.getTypes.bind(this);
 
     // State
     this.state = {
-      activeSubtab: 1
+      activeSubtab: 1,
+      types: null
     };
   }
 
@@ -27,10 +30,19 @@ class Project extends React.Component {
 
     // Update tab
     this.props.setActiveTab(2);
+
+    // Get project types
+    this.getTypes();
   }
 
   setActiveSubtab(tab) {
     this.setState({activeSubtab: tab});
+  }
+
+  getTypes() {
+    api.getTypes().then(types => {
+      this.setState({ types });
+    });
   }
 
   render() {
@@ -43,7 +55,7 @@ class Project extends React.Component {
             <Overview setActiveSubtab={this.setActiveSubtab}/>
           }/>
           <Route path="/projects/add" render={() =>
-            <Add setActiveSubtab={this.setActiveSubtab}/>
+            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types}/>
           }/>
           <Route path="/projects/list" render={() =>
             <Directory setActiveSubtab={this.setActiveSubtab}/>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import * as api from '../api';
 
 // Import components
 import Header from '../components/Header';

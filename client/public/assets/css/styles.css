@@ -647,6 +647,15 @@ a:hover {
   color: #196090;
 }
 
+.loading {
+  padding: 50px;
+  text-align: center;
+}
+
+.loading img {
+  max-width: 100px;
+}
+
 .content {
   padding: 50px 0;
 }

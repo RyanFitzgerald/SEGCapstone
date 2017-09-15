@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Directory extends React.Component {
   componentDidMount() {
@@ -11,6 +12,9 @@ class Directory extends React.Component {
   }
 
   render() {
+    // Variables
+    const clients = this.props.clients || [];
+
     return (
       <div className="content">
         <div className="row">
@@ -18,7 +22,7 @@ class Directory extends React.Component {
             <h2 className="card-title">Filter Clients</h2>
             <div className="card">
               <input className="form-text" type="text" placeholder="Enter the client name"/>
-              <a href="#" className="advanced__toggle" id="advanced-toggle">Advanced Search</a>
+              <a className="advanced__toggle" id="advanced-toggle">Advanced Search</a>
               <div id="advanced-fields" className="row card__advanced">
                 <div className="md-6 column">
                   <label className="form-label" htmlFor="postal-code">Postal Code</label>
@@ -54,7 +58,7 @@ class Directory extends React.Component {
         </div>
         <div className="row">
           <div className="column">
-            <h2 className="card-title">3 Clients</h2>
+            <h2 className="card-title">{clients.length} Clients</h2>
             <div className="card">
               <table className="card__table">
                 <thead className="card__tablehead">
@@ -68,30 +72,18 @@ class Directory extends React.Component {
                   </tr>
                 </thead>
                 <tbody className="card__tablebody">
-                  <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>213 Main Street</td>
-                    <td><a href="#">613-231-2132</a></td>
-                    <td><a href="#">johndoe@gmail.com</a></td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Client</a></td>
-                  </tr>
-                  <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>213 Main Street</td>
-                    <td><a href="#">613-231-2132</a></td>
-                    <td><a href="#">johndoe@gmail.com</a></td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Client</a></td>
-                  </tr>
-                  <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>213 Main Street</td>
-                    <td><a href="#">613-231-2132</a></td>
-                    <td><a href="#">johndoe@gmail.com</a></td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Client</a></td>
-                  </tr>
+                  {clients.map((client, key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{client.firstName}</td>
+                        <td>{client.lastName}</td>
+                        <td>{client.street}</td>
+                        <td><a href={'tel:' + client.telephone}>{client.telephone}</a></td>
+                        <td><a href={'mailto:' + client.email}>{client.email}</a></td>
+                        <td><Link to={'/clients/' + client._id} className="btn btn--small btn--primary">View Client</Link></td>
+                      </tr>
+                    );
+                  })}
                 </tbody> 
               </table>
             </div>
@@ -103,7 +95,8 @@ class Directory extends React.Component {
 }
 
 Directory.propTypes = {
-  setActiveSubtab: PropTypes.func.isRequired
+  setActiveSubtab: PropTypes.func.isRequired,
+  clients: PropTypes.array.isRequired
 };
 
 export default Directory;
