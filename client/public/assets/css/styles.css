@@ -656,6 +656,10 @@ a:hover {
   max-width: 100px;
 }
 
+.capitalize {
+  text-transform: uppercase;
+}
+
 .content {
   padding: 50px 0;
 }
@@ -708,6 +712,7 @@ a:hover {
   color: #333c4e;
   cursor: pointer;
   display: inline-block;
+  line-height: 1.5;
   padding: 8px 20px;
   text-decoration: none;
   -webkit-transition: 0.5s ease all;
@@ -829,10 +834,18 @@ a:hover {
 }
 
 .advanced__toggle {
+  background: none;
+  border: none;
   color: #3498db;
+  color: #3498db;
+  cursor: pointer;
   display: block;
-  text-align: center;
   text-decoration: none;
+  margin: 0 auto 5px auto;
+}
+
+.advanced__toggle:focus {
+  outline: none;
 }
 
 .card__table {

@@ -1,0 +1,9 @@
+// Mixin to easily add consistent transitions
+@mixin transition($time: 0.5s, $type: ease, $ele: all) {
+  transition: $time $type $ele;
+}
+
+// Mixin to easily add consistent shadows
+@mixin shadow() {
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.02), 0 1px 10px rgba(0, 0, 0, 0.1);
+}

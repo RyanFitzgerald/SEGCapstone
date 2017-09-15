@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class Directory extends React.Component {
+  constructor() {
+    super();
+
+    // Bind functions
+    this.handleAdvanced = this.handleAdvanced.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.resetForm = this.resetForm.bind(this);
+  }
+
   componentDidMount() {
     // Set title
     document.title = 'Client Directory | Renovaction';
@@ -11,9 +20,39 @@ class Directory extends React.Component {
     this.props.setActiveSubtab(3);
   }
 
+  handleAdvanced(e) {
+    e.preventDefault();
+    if (this.advanced.classList.contains('active')) {
+      this.advanced.classList.remove('active');
+    } else {
+      this.advanced.classList.add('active');
+    }
+  }
+
+  handleSearch() {
+    const query = {
+      q: this.q.value,
+      city: this.city.value,
+      postalCode: this.postalCode.value
+    };
+    this.props.searchClients(query);
+  }
+
+  resetForm() {
+    this.q.value = '';
+    this.city.value = '';
+    this.postalCode.value = '';
+  }
+
   render() {
     // Variables
     const clients = this.props.clients || [];
+    const cities = [];
+    clients.map(ele => {
+      if (cities.indexOf(ele.city) === -1) {
+        cities.push(ele.city);
+      }
+    });
 
     return (
       <div className="content">
@@ -21,33 +60,29 @@ class Directory extends React.Component {
           <div className="column">
             <h2 className="card-title">Filter Clients</h2>
             <div className="card">
-              <input className="form-text" type="text" placeholder="Enter the client name"/>
-              <a className="advanced__toggle" id="advanced-toggle">Advanced Search</a>
-              <div id="advanced-fields" className="row card__advanced">
-                <div className="md-6 column">
+              <input ref={input => this.q = input} className="form-text" type="text" placeholder="Enter the client name" onKeyUp={this.handleSearch}/>
+              <button className="advanced__toggle" id="advanced-toggle" onClick={this.resetForm}>Reset Form</button>
+              <button className="advanced__toggle" id="advanced-toggle" onClick={this.handleAdvanced}>Advanced Search</button>
+              <div ref={el => this.advanced = el} id="advanced-fields" className="row card__advanced">
+                <div className="md-6 lg-4 column">
                   <label className="form-label" htmlFor="postal-code">Postal Code</label>
-                  <input id="postal-code" name="postal-code" className="form-text" type="text" placeholder="Postal Code"/>
+                  <input ref={input => this.postalCode = input} id="postal-code" name="postal-code" className="form-text capitalize" type="text" onKeyUp={this.handleSearch}/>
                 </div>
-                <div className="md-6 column">
+                <div className="md-6 lg-4 column">
                   <label className="form-label" htmlFor="city">City</label>
                   <span className="form-select">
-                    <select id="city" name="city">
-                      <option>All Cities</option>
+                    <select ref={input => this.city = input} id="city" name="city" onChange={this.handleSearch}>
+                      <option value="">All Cities</option>
+                      {cities.map((city, key) => {
+                        return <option key={key} value={city}>{city}</option>;
+                      })}
                     </select>
                   </span>
                 </div>
-                <div className="md-6 column">
-                  <label className="form-label" htmlFor="type">Project Type</label>
-                  <span className="form-select">
-                    <select id="type" name="type">
-                      <option>All Project Types</option>
-                    </select>
-                  </span>
-                </div>
-                <div className="md-6 column">
+                <div className="lg-4 column">
                   <label className="form-label" htmlFor="salesman">Salesman</label>
                   <span className="form-select">
-                    <select id="salesman" name="salesman">
+                    <select ref={input => this.salesman = input} id="salesman" name="salesman">
                       <option>All Salesmen</option>
                     </select>
                   </span>
@@ -63,9 +98,10 @@ class Directory extends React.Component {
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Name</th>
                     <th>Street</th>
+                    <th>Postal Code</th>
+                    <th>City</th>
                     <th>Telephone</th>
                     <th>Email</th>
                     <th>Actions</th>
@@ -75,9 +111,10 @@ class Directory extends React.Component {
                   {clients.map((client, key) => {
                     return (
                       <tr key={key}>
-                        <td>{client.firstName}</td>
-                        <td>{client.lastName}</td>
+                        <td>{client.name}</td>
                         <td>{client.street}</td>
+                        <td className="capitalize">{client.postalCode}</td>
+                        <td>{client.city}</td>
                         <td><a href={'tel:' + client.telephone}>{client.telephone}</a></td>
                         <td><a href={'mailto:' + client.email}>{client.email}</a></td>
                         <td><Link to={'/clients/' + client._id} className="btn btn--small btn--primary">View Client</Link></td>
@@ -96,6 +133,7 @@ class Directory extends React.Component {
 
 Directory.propTypes = {
   setActiveSubtab: PropTypes.func.isRequired,
+  searchClients: PropTypes.func.isRequired,
   clients: PropTypes.array.isRequired
 };
 

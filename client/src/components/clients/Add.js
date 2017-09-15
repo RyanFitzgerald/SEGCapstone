@@ -11,7 +11,6 @@ class Add extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addClient = this.addClient.bind(this);
     this.handlePhone = this.handlePhone.bind(this);
-    this.handlePostalCode = this.handlePostalCode.bind(this);
 
     // Set state
     this.state = {
@@ -33,8 +32,7 @@ class Add extends React.Component {
 
     // Get form data
     const client = {
-      firstName: this.firstName.value,
-      lastName: this.lastName.value,
+      name: this.name.value,
       telephone: this.telephone.value,
       email: this.email.value,
       street: this.street.value,
@@ -48,6 +46,7 @@ class Add extends React.Component {
 
   addClient(client) {
     api.addClient(client).then(resp => {
+      this.props.addToClients(client);
       this.setState({
         redirect: `/clients/${resp}`
       });
@@ -56,10 +55,6 @@ class Add extends React.Component {
 
   handlePhone(e) {
     e.target.value = e.target.value.replace(/^(\d{3})(\d{3})(\d)+$/, '$1-$2-$3');
-  }
-
-  handlePostalCode(e) {
-    e.target.value = e.target.value.replace(/\s+/g, '').toUpperCase();
   }
 
   render() {
@@ -79,10 +74,8 @@ class Add extends React.Component {
                       </p>
                     </div>
                     <div className="md-8 column no-right">
-                      <label className="form-label" htmlFor="first-name">First Name <span className="form-required">*</span></label>
-                      <input ref={input => this.firstName = input} name="first-name" className="form-text form-text--full" type="text" required/>
-                      <label className="form-label" htmlFor="last-name">Last Name <span className="form-required">*</span></label>
-                      <input ref={input => this.lastName = input} name="last-name" className="form-text form-text--full" type="text" required/>
+                      <label className="form-label" htmlFor="name"> Name <span className="form-required">*</span></label>
+                      <input ref={input => this.name = input} name="name" className="form-text form-text--full" type="text" required/>
                       <label className="form-label" htmlFor="salesman">Sold by <span className="form-required">*</span></label>
                       <span className="form-select">
                         <select ref={input => this.soldBy = input} name="salesman" required>
@@ -116,7 +109,7 @@ class Add extends React.Component {
                       <label className="form-label" htmlFor="street">Street <span className="form-required">*</span></label>
                       <input ref={input => this.street = input} name="street" className="form-text form-text--full" type="text" required/>
                       <label className="form-label" htmlFor="postal-code">Postal Code <span className="form-required">*</span></label>
-                      <input ref={input => this.postalCode = input} name="postal-code" className="form-text form-text--full" type="text" onKeyUp={this.handlePostalCode} maxLength="6" required/>
+                      <input ref={input => this.postalCode = input} name="postal-code" className="form-text form-text--full capitalize" type="text" maxLength="6" required/>
                       <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
                       <span className="form-select">
                         <select ref={input => this.city = input} name="city" required>
@@ -143,7 +136,8 @@ class Add extends React.Component {
 }
 
 Add.propTypes = {
-  setActiveSubtab: PropTypes.func.isRequired
+  setActiveSubtab: PropTypes.func.isRequired,
+  addToClients: PropTypes.func.isRequired
 };
 
 export default Add;

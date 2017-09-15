@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as api from '../../api';
 
@@ -10,10 +11,12 @@ class View extends React.Component {
 
     // Bind functions
     this.getClient = this.getClient.bind(this);
+    this.deleteClient = this.deleteClient.bind(this);
 
     // Initial state
     this.state = {
-      client: null
+      client: null,
+      redirect: null
     }
   }
 
@@ -29,12 +32,30 @@ class View extends React.Component {
     api.getClient(id).then(client => {
       this.setState({ client }, () => {
         // Set title
-        document.title = `${this.state.client.firstName} ${this.state.client.lastName} | Renovaction`;
+        document.title = `${this.state.client.name} | Renovaction`;
       })
     });
   }
 
+  deleteClient() {
+    const id = this.props.location.match.params.id;
+    api.deleteClient(id).then(result => {
+      if (result) {
+        this.props.removeFromClients(id);
+        this.setState({
+          redirect: '/clients/list'
+        });
+      }
+    });
+  }
+
   render() {
+    if (this.state.redirect) {
+      return (
+        <Redirect to={this.state.redirect}/>
+      );
+    }
+
     if (this.state.client) {
       return (
         <div className="content">
@@ -44,15 +65,14 @@ class View extends React.Component {
               <div className="card">
                 <ul className="client-overview">
                   <li><b>Date Created:</b> January 1, 2017</li>
-                  <li><b>First Name:</b> {this.state.client.firstName}</li>
-                  <li><b>Last Name:</b> {this.state.client.lastName}</li>
+                  <li><b>Name:</b> {this.state.client.name}</li>
                   <li><b>Email:</b> <a href={'mailto:' + this.state.client.email}>{this.state.client.email}</a></li>
                   <li><b>Telephone:</b> <a href={'tel:' + this.state.client.telephone}>{this.state.client.telephone}</a></li>
                   <li><b>Sold by:</b> Joseph Doe</li>
                 </ul>
                 <div className="client-actions">
-                  <a href="#" className="btn btn--primary">Edit Client</a>
-                  <a href="#" className="btn btn--danger">Delete Client</a>
+                  <Link to="/" className="btn btn--primary">Edit Client</Link>
+                  <button className="btn btn--danger" onClick={() => {if (window.confirm('Are you sure you want to delete this client?')) {this.deleteClient()};}}>Delete Client</button>
                 </div>
               </div>
             </div>

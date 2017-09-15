@@ -18,11 +18,14 @@ class Client extends React.Component {
     // Bind functions
     this.setActiveSubtab = this.setActiveSubtab.bind(this);
     this.getClients = this.getClients.bind(this);
+    this.addToClients = this.addToClients.bind(this);
+    this.removeFromClients = this.removeFromClients.bind(this);
+    this.searchClients = this.searchClients.bind(this);
 
     // State
     this.state = {
       activeSubtab: 1,
-      redirect: false
+      clients: null
     };
   }
 
@@ -47,6 +50,26 @@ class Client extends React.Component {
     });
   }
 
+  addToClients(client) {
+    const clients = [...this.state.clients];
+    clients[this.state.clients.length] = client;
+    this.setState({ clients });
+  }
+
+  removeFromClients(id) {
+    const clients = [...this.state.clients];
+    const updated = clients.filter(el => {
+      return el._id !== id;
+    });
+    this.setState({ clients: updated });
+  }
+
+  searchClients(query) {
+    api.searchClients(query).then(clients => {
+      this.setState({ clients });
+    });
+  }
+
   render() {
     return (
       <div>
@@ -57,13 +80,13 @@ class Client extends React.Component {
             <Overview setActiveSubtab={this.setActiveSubtab}/>
           }/>
           <Route path="/clients/add" render={() =>
-            <Add setActiveSubtab={this.setActiveSubtab}/>
+            <Add setActiveSubtab={this.setActiveSubtab} addToClients={this.addToClients}/>
           }/>
           <Route path="/clients/list" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} searchClients={this.searchClients}/>
           }/>
           <Route path="/clients/:id" render={(location) =>
-            <View setActiveSubtab={this.setActiveSubtab} location={location}/>
+            <View setActiveSubtab={this.setActiveSubtab} location={location} removeFromClients={this.removeFromClients}/>
           }/>
         </Switch>
       </div>
