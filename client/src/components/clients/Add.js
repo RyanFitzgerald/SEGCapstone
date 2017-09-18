@@ -46,7 +46,13 @@ class Add extends React.Component {
 
   addClient(client) {
     api.addClient(client).then(resp => {
+      // Append id
+      client._id = resp;
+
+      // Update parent state
       this.props.addToClients(client);
+
+      // Redirect
       this.setState({
         redirect: `/clients/${resp}`
       });

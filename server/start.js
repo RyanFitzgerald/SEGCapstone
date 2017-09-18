@@ -12,6 +12,7 @@ mongoose.connection.on('error', (err) => {
 
 // Import all models
 require('./models/Client');
+require('./models/ClientNote');
 require('./models/Type');
 
 // Require app with config

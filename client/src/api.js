@@ -31,6 +31,13 @@ export const deleteClient = id => {
     .then(resp => resp.data);
 }
 
+// --- Client Notes Api ---
+export const addClientNote = note => {
+  return axios
+    .post('/api/clientnotes', note)
+    .then(resp => resp.date);
+};
+
 // --- Types API ---
 export const getTypes = () => {
   return axios

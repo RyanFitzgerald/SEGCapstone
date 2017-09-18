@@ -122,7 +122,16 @@ class View extends React.Component {
               </div>
             </div>
             <div className="md-6 column">
-              <h2 className="card-title">1 Client Note <a href="#" className="btn btn--primary btn--small">Add Note</a></h2>
+              <h2 className="card-title">1 Client Note 
+                <Link 
+                  to={{
+                    pathname: `${this.props.location.match.url}/note`,
+                    query: {name: this.state.client.name}
+                  }}
+                  className="btn btn--primary btn--small">
+                  Add Note
+                </Link>
+              </h2>
               <div className="card">
               <div className="client-note">
                 <span className="client-note__details">Posted by <b>John Doe</b> on <b>January 1, 2017</b></span>

@@ -13,14 +13,9 @@ const clientSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  firstName: {
+  name: {
     type: String,
-    required: 'A first name must be provided!',
-    trim: true
-  },
-  lastName: {
-    type: String,
-    required: 'A first name must be provided!',
+    required: 'A name must be provided!',
     trim: true
   },
   telephone: {
@@ -62,6 +57,9 @@ const clientSchema = new mongoose.Schema({
     ref: 'User',
     required: 'A salesman must be provided'
   }*/
+}, {
+  toJSON: { virtuals: true }, // Show virtuals explicitly, but not needed
+  toObject: { virtuals: true } // Show virtuals explicitly, but not needed
 });
 
 clientSchema.plugin(mongodbErrorHandler);

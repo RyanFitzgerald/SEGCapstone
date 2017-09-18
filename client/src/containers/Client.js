@@ -9,6 +9,7 @@ import Overview from '../components/clients/Overview';
 import Add from '../components/clients/Add';
 import Directory from '../components/clients/Directory';
 import View from '../components/clients/View';
+import Note from '../components/clients/Note';
 
 
 class Client extends React.Component {
@@ -84,6 +85,9 @@ class Client extends React.Component {
           }/>
           <Route path="/clients/list" render={() =>
             <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} searchClients={this.searchClients}/>
+          }/>
+          <Route path="/clients/:id/note" render={(location) =>
+            <Note setActiveSubtab={this.setActiveSubtab} location={location} />
           }/>
           <Route path="/clients/:id" render={(location) =>
             <View setActiveSubtab={this.setActiveSubtab} location={location} removeFromClients={this.removeFromClients}/>
