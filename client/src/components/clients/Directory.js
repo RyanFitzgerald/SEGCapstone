@@ -117,7 +117,7 @@ class Directory extends React.Component {
                         <td>{client.city}</td>
                         <td><a href={'tel:' + client.telephone}>{client.telephone}</a></td>
                         <td><a href={'mailto:' + client.email}>{client.email}</a></td>
-                        <td><Link to={'/clients/' + client._id} className="btn btn--small btn--primary">View Client</Link></td>
+                        <td><Link to={`/clients/${client._id}`} className="btn btn--small btn--primary">View Client</Link></td>
                       </tr>
                     );
                   })}

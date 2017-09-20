@@ -57,11 +57,11 @@ const projectSchema = new mongoose.Schema({
     ref: 'Client',
     required: 'A client must be provided'
   },
-  createdBy: {
+  /*createdBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
     required: 'A user must be provided'
-  }
+  }*/
 });
 
 module.exports = mongoose.model('Project', projectSchema);

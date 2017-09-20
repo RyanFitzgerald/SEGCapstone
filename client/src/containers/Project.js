@@ -16,11 +16,14 @@ class Project extends React.Component {
     // Bind functions
     this.setActiveSubtab = this.setActiveSubtab.bind(this);
     this.getTypes = this.getTypes.bind(this);
+    this.getClients = this.getClients.bind(this);
+    this.getProjects = this.getProjects.bind(this);
 
     // State
     this.state = {
       activeSubtab: 1,
-      types: null
+      types: null,
+      projects: null
     };
   }
 
@@ -33,6 +36,12 @@ class Project extends React.Component {
 
     // Get project types
     this.getTypes();
+
+    // Get clients
+    this.getClients();
+
+    // Get projects
+    this.getProjects();
   }
 
   setActiveSubtab(tab) {
@@ -42,6 +51,18 @@ class Project extends React.Component {
   getTypes() {
     api.getTypes().then(types => {
       this.setState({ types });
+    });
+  }
+
+  getClients() {
+    api.getClients().then(clients => {
+      this.setState({ clients });
+    });
+  }
+
+  getProjects() {
+    api.getProjects().then(projects => {
+      this.setState({ projects });
     });
   }
 
@@ -55,10 +76,10 @@ class Project extends React.Component {
             <Overview setActiveSubtab={this.setActiveSubtab}/>
           }/>
           <Route path="/projects/add" render={() =>
-            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types}/>
+            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients}/>
           }/>
           <Route path="/projects/list" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects}/>
           }/>
         </Switch>
       </div>

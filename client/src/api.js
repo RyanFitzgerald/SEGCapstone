@@ -44,6 +44,19 @@ export const addClientNote = note => {
     .then(resp => resp.date);
 };
 
+// --- Project API ---
+export const getProjects = () => {
+  return axios
+    .get('/api/projects')
+    .then(resp => resp.data);
+};
+
+export const addProject = project => {
+  return axios
+    .post('/api/projects', project)
+    .then(resp => resp.data);
+}
+
 // --- Types API ---
 export const getTypes = () => {
   return axios

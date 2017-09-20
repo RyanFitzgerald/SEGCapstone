@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Directory extends React.Component {
   componentDidMount() {
@@ -11,6 +12,15 @@ class Directory extends React.Component {
   }
 
   render() {
+    // Variables
+    const projects = this.props.projects || [];
+    const cities = [];
+    projects.map(ele => {
+      if (cities.indexOf(ele.city) === -1) {
+        cities.push(ele.city);
+      }
+    });
+
     return (
       <div className="content">
         <div className="row">
@@ -54,7 +64,7 @@ class Directory extends React.Component {
         </div>
         <div className="row">
           <div className="column">
-            <h2 className="card-title">3 Projects</h2>
+            <h2 className="card-title">{projects.length} Project(s)</h2>
             <div className="card">
               <table className="card__table">
                 <thead className="card__tablehead">
@@ -68,30 +78,18 @@ class Directory extends React.Component {
                   </tr>
                 </thead>
                 <tbody className="card__tablebody">
-                  <tr>
-                    <td>John Doe Roofing</td>
-                    <td>Roofing</td>
-                    <td><span className="status status--inprogress">In Progress</span></td>                
-                    <td><a href="#">John Doe</a></td>
-                    <td>Test content</td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Project</a></td>
-                  </tr>
-                  <tr>
-                    <td>John Doe Roofingt</td>
-                    <td>Roofing, Windows</td>
-                    <td><span className="status status--complete">Complete</span></td>
-                    <td><a href="#">John Doe</a></td>
-                    <td>Test content</td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Project</a></td>
-                  </tr>
-                  <tr>
-                    <td>John Doe Roofing</td>
-                    <td>Roofing</td>
-                    <td><span className="status status--notstarted">Not Started</span></td>
-                    <td><a href="#">John Doe</a></td>
-                    <td>Test content</td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Project</a></td>
-                  </tr>
+                  {projects.map((project, key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{project.name}</td>
+                        <td>{project.type.join(', ')}</td>
+                        <td><span className={`status status--${project.status.replace(/\s+/g, '').toLowerCase()}`}>{project.status}</span></td>                
+                        <td><Link to={`/clients/${project.client}`}>{project.client}</Link></td>
+                        <td>{project.street}</td>
+                        <td><Link to={`/projects/${project._id}`} className="btn btn--small btn--primary">View Project</Link></td>
+                      </tr>
+                    );
+                  })}
                 </tbody> 
               </table>
             </div>

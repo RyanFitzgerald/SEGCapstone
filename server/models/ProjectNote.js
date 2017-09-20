@@ -21,11 +21,11 @@ const projectNoteSchema = new mongoose.Schema({
     ref: 'Project',
     required: 'A project must be provided!'
   },
-  user: {
+  /*user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
     required: 'A user must be provided!'
-  }
+  }*/
 });
 
 module.exports = mongoose.model('ProjectNote', projectNoteSchema);

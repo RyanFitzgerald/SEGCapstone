@@ -29,6 +29,7 @@ router.post('/api/clientnotes', catchErrors(clientNoteController.addNote));
 
 // --- Project Routes ---
 router.get('/api/projects', projectController.getProjects);
+router.post('/api/projects', catchErrors(projectController.addProject));
 
 // --- Type Routes ---
 router.get('/api/types', catchErrors(typeController.getTypes));

@@ -86,8 +86,14 @@ const clientSchema = new mongoose.Schema({
 
 clientSchema.virtual('notes', {
   ref: 'ClientNote',
-  localField: '_id', // Which field on Store
-  foreignField: 'client' // which field on Review
+  localField: '_id', // Which field on client
+  foreignField: 'client' // which field on client note
+});
+
+clientSchema.virtual('projects', {
+  ref: 'Project',
+  localField: '_id', // Which field on client
+  foreignField: 'client' // which field on project
 });
 
 clientSchema.plugin(mongodbErrorHandler);

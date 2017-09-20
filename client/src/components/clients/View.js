@@ -93,7 +93,7 @@ class View extends React.Component {
           </div>
           <div className="row">
             <div className="md-6 column">
-              <h2 className="card-title">3 Client Projects <a href="#" className="btn btn--primary btn--small">Add Project</a></h2>
+              <h2 className="card-title">3 Client Project(s) <a href="#" className="btn btn--primary btn--small">Add Project</a></h2>
               <div className="card">
               <table className="card__table">
                 <thead className="card__tablehead">
