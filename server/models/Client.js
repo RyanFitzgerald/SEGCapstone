@@ -7,6 +7,14 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const validator = require('validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
+require('dotenv').config({ path: 'variables.env' });
+const NodeGeocoder  = require('node-geocoder');
+var options = {
+  provider: 'google',
+  apiKey: process.env.GEOCODE_KEY,
+  formatter: null
+};
+var geocoder = NodeGeocoder(options);
 
 const clientSchema = new mongoose.Schema({
   created: {
@@ -52,6 +60,20 @@ const clientSchema = new mongoose.Schema({
     required: 'A city must be provided!',
     trim: true
   },
+  location: {
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [-75.69719309999999, 45.4215296]
+    },
+    address: {
+      type:String,
+      default: 'Ottawa, ON, Canada'
+    }
+  },
   /*soldBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
@@ -62,6 +84,33 @@ const clientSchema = new mongoose.Schema({
   toObject: { virtuals: true } // Show virtuals explicitly, but not needed
 });
 
+clientSchema.virtual('notes', {
+  ref: 'ClientNote',
+  localField: '_id', // Which field on Store
+  foreignField: 'client' // which field on Review
+});
+
 clientSchema.plugin(mongodbErrorHandler);
+
+clientSchema.pre('save', async function(next) {
+  const street = this.street;
+  const postalCode = this.postalCode;
+
+  geocoder.geocode({address: street, country: 'Canada', zipcode: postalCode})
+    .then(res => {
+      let long = res[0].longitude;
+      let lat = res[0].latitude;
+      let address = res[0].formattedAddress;
+
+      this.location.coordinates = [long, lat];
+      this.location.address = address;
+
+      next();
+    })
+    .catch(err => {
+      console.error(err);
+      next();
+    });  
+});
 
 module.exports = mongoose.model('Client', clientSchema);

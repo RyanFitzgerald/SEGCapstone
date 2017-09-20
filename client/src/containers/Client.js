@@ -7,6 +7,7 @@ import * as api from '../api';
 import Submenu from '../components/clients/Submenu';
 import Overview from '../components/clients/Overview';
 import Add from '../components/clients/Add';
+import Edit from '../components/clients/Edit';
 import Directory from '../components/clients/Directory';
 import View from '../components/clients/View';
 import Note from '../components/clients/Note';
@@ -20,6 +21,7 @@ class Client extends React.Component {
     this.setActiveSubtab = this.setActiveSubtab.bind(this);
     this.getClients = this.getClients.bind(this);
     this.addToClients = this.addToClients.bind(this);
+    this.updateClients = this.updateClients.bind(this);
     this.removeFromClients = this.removeFromClients.bind(this);
     this.searchClients = this.searchClients.bind(this);
 
@@ -65,6 +67,13 @@ class Client extends React.Component {
     this.setState({ clients: updated });
   }
 
+  updateClients(client) {
+    const clients = [...this.state.clients];
+    const key = Object.keys(clients).find(key => clients[key]._id === client._id);
+    clients[key] = client;
+    this.setState({ clients });
+  }
+
   searchClients(query) {
     api.searchClients(query).then(clients => {
       this.setState({ clients });
@@ -88,6 +97,9 @@ class Client extends React.Component {
           }/>
           <Route path="/clients/:id/note" render={(location) =>
             <Note setActiveSubtab={this.setActiveSubtab} location={location} />
+          }/>
+          <Route path="/clients/:id/edit" render={(location) =>
+            <Edit setActiveSubtab={this.setActiveSubtab} location={location} updateClients={this.updateClients}/>
           }/>
           <Route path="/clients/:id" render={(location) =>
             <View setActiveSubtab={this.setActiveSubtab} location={location} removeFromClients={this.removeFromClients}/>

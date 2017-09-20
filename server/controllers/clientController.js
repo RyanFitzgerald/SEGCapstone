@@ -24,12 +24,12 @@ exports.getClients = async (req, res) => {
     filter.postalCode = { $regex: new RegExp(req.query.postalCode), $options: 'i' };
   }
 
-  const clients = await Client.find(filter);
+  const clients = await Client.find(filter).populate('notes');
   res.send(clients);
 };
 
 exports.getClient = async (req, res) => {
-  const client = await Client.findById(req.params.id);
+  const client = await Client.findById(req.params.id).populate('notes');
   res.send(client);
 };
 
@@ -42,7 +42,7 @@ exports.editClient = async (req, res) => {
   const client = await Client.findOneAndUpdate({ _id: req.params.id }, req.body, {
     runValidators: true
   }).exec();
-  res.send(true);
+  res.send(req.params.id);
 };
 
 exports.deleteClient = async (req, res) => {

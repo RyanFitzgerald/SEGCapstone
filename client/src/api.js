@@ -25,6 +25,12 @@ export const addClient = client => {
     .then(resp => resp.data);
 }
 
+export const updateClient = (client, id) => {
+  return axios
+    .post(`/api/clients/${id}`, client)
+    .then(resp => resp.data);
+}
+
 export const deleteClient = id => {
   return axios
     .delete(`/api/clients/${id}`)

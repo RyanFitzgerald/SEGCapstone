@@ -1,9 +1,11 @@
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import * as api from '../../api';
 
 import Loading from '../Loading';
+import Map from '../Map';
 
 class View extends React.Component {
   constructor() {
@@ -71,7 +73,7 @@ class View extends React.Component {
                   <li><b>Sold by:</b> Joseph Doe</li>
                 </ul>
                 <div className="client-actions">
-                  <Link to="/" className="btn btn--primary">Edit Client</Link>
+                  <Link to={`/clients/${this.props.location.match.params.id}/edit`} className="btn btn--primary">Edit Client</Link>
                   <button className="btn btn--danger" onClick={() => {if (window.confirm('Are you sure you want to delete this client?')) {this.deleteClient()};}}>Delete Client</button>
                 </div>
               </div>
@@ -80,11 +82,11 @@ class View extends React.Component {
               <h2 className="card-title">Client Location</h2>
               <div className="card">
                 <div id="map" className="client-map">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d359539.2053292122!2d-76.08043360352762!3d45.24981404523765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cce05b25f5113af%3A0x8a6a51e131dd15ed!2sOttawa%2C+ON!5e0!3m2!1sen!2sca!4v1505169853591" width="500" height="500" frameBorder="0" style={{"border":0}} allowFullScreen></iframe>
+                  <Map google={window.google} lat={this.state.client.location.coordinates[1]} long={this.state.client.location.coordinates[0]} />
                 </div>
                 <div className="client-location">
                   <p>{this.state.client.street}<br/>{this.state.client.city}, ON {this.state.client.postalCode}</p>
-                  <a href="#">Get Directions</a>
+                  <a href={`https://www.google.com/maps?saddr=My+Location&daddr=${encodeURI(this.state.client.street)}+${this.state.client.city}`} target="_blank">Get Directions</a>
                 </div>
               </div>
             </div>
@@ -122,7 +124,7 @@ class View extends React.Component {
               </div>
             </div>
             <div className="md-6 column">
-              <h2 className="card-title">1 Client Note 
+              <h2 className="card-title">{this.state.client.notes.length} Client Note(s) 
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/note`,
@@ -133,18 +135,16 @@ class View extends React.Component {
                 </Link>
               </h2>
               <div className="card">
-              <div className="client-note">
-                <span className="client-note__details">Posted by <b>John Doe</b> on <b>January 1, 2017</b></span>
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa dolores ipsum illum et libero, neque ducimus fugiat earum nobis quas.
-                </p>
-              </div>
-              <div className="client-note">
-                <span className="client-note__details">Posted by <b>John Doe</b> on <b>January 1, 2017</b></span>
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa dolores ipsum illum et libero, neque ducimus fugiat earum nobis quas.
-                </p>
-              </div>
+              {this.state.client.notes.map((note, key) => {
+                return (
+                  <div className="client-note" key={key}>
+                    <span className="client-note__details">Posted by <b>John Doe</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
+                    <p>
+                      {note.description}
+                    </p>
+                  </div>
+                );
+              })}
               </div>
             </div>
           </div>
