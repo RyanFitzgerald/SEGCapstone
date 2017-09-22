@@ -29,7 +29,7 @@ exports.getClients = async (req, res) => {
 };
 
 exports.getClient = async (req, res) => {
-  const client = await Client.findById(req.params.id).populate('notes');
+  const client = await Client.findById(req.params.id).populate('notes projects');
   res.send(client);
 };
 

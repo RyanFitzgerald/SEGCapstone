@@ -8,6 +8,7 @@ import Submenu from '../components/projects/Submenu';
 import Overview from '../components/projects/Overview';
 import Add from '../components/projects/Add';
 import Directory from '../components/projects/Directory';
+import View from '../components/projects/View';
 
 class Project extends React.Component {
   constructor() {
@@ -18,6 +19,8 @@ class Project extends React.Component {
     this.getTypes = this.getTypes.bind(this);
     this.getClients = this.getClients.bind(this);
     this.getProjects = this.getProjects.bind(this);
+    this.addToProjects = this.addToProjects.bind(this);
+    this.removeFromProjects = this.addToProjects.bind(this);
 
     // State
     this.state = {
@@ -66,6 +69,18 @@ class Project extends React.Component {
     });
   }
 
+  addToProjects(project) {
+    this.getProjects();
+  }
+
+  removeFromProjects(id) {
+    const projects = [...this.state.projects];
+    const updated = projects.filter(el => {
+      return el._id !== id;
+    });
+    this.setState({ projects: updated });
+  }
+
   render() {
     return (
       <div>
@@ -75,11 +90,14 @@ class Project extends React.Component {
           <Route exact path="/projects" render={() =>
             <Overview setActiveSubtab={this.setActiveSubtab}/>
           }/>
-          <Route path="/projects/add" render={() =>
-            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients}/>
+          <Route path="/projects/add" render={(location) =>
+            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} addToProjects={this.addToProjects}/>
           }/>
           <Route path="/projects/list" render={() =>
             <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects}/>
+          }/>
+          <Route path="/projects/:id" render={(location) =>
+            <View setActiveSubtab={this.setActiveSubtab} location={location} removeFromProjects={this.removeFromProjects}/>
           }/>
         </Switch>
       </div>

@@ -28,8 +28,10 @@ router.get('/api/clientnotes/:id', catchErrors(clientNoteController.getNotes));
 router.post('/api/clientnotes', catchErrors(clientNoteController.addNote));
 
 // --- Project Routes ---
-router.get('/api/projects', projectController.getProjects);
+router.get('/api/projects', catchErrors(projectController.getProjects));
+router.get('/api/projects/:id', catchErrors(projectController.getProject));
 router.post('/api/projects', catchErrors(projectController.addProject));
+router.delete('/api/projects/:id', catchErrors(projectController.deleteProject));
 
 // --- Type Routes ---
 router.get('/api/types', catchErrors(typeController.getTypes));

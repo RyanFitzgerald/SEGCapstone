@@ -66,7 +66,7 @@ class View extends React.Component {
               <h2 className="card-title">Client Overview</h2>
               <div className="card">
                 <ul className="client-overview">
-                  <li><b>Date Created:</b> January 1, 2017</li>
+                  <li><b>Date Created:</b> {moment(this.state.client.created).format('MMMM Do, YYYY')}</li>
                   <li><b>Name:</b> {this.state.client.name}</li>
                   <li><b>Email:</b> <a href={'mailto:' + this.state.client.email}>{this.state.client.email}</a></li>
                   <li><b>Telephone:</b> <a href={'tel:' + this.state.client.telephone}>{this.state.client.telephone}</a></li>
@@ -85,7 +85,7 @@ class View extends React.Component {
                   <Map google={window.google} lat={this.state.client.location.coordinates[1]} long={this.state.client.location.coordinates[0]} />
                 </div>
                 <div className="client-location">
-                  <p>{this.state.client.street}<br/>{this.state.client.city}, ON {this.state.client.postalCode}</p>
+                  <p>{this.state.client.street}<br/>{this.state.client.city}, ON <span className="capitalize">{this.state.client.postalCode}</span></p>
                   <a href={`https://www.google.com/maps?saddr=My+Location&daddr=${encodeURI(this.state.client.street)}+${this.state.client.city}`} target="_blank">Get Directions</a>
                 </div>
               </div>
@@ -93,32 +93,35 @@ class View extends React.Component {
           </div>
           <div className="row">
             <div className="md-6 column">
-              <h2 className="card-title">3 Client Project(s) <a href="#" className="btn btn--primary btn--small">Add Project</a></h2>
+              <h2 className="card-title">{this.state.client.projects.length} Client Project(s) 
+                <Link 
+                  to={{
+                    pathname: '/projects/add',
+                    query: {client: this.state.client._id}
+                  }}
+                  className="btn btn--primary btn--small">
+                  Add Project
+                </Link>
+              </h2>
               <div className="card">
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
-                    <th>Type(s)</th>
+                    <th>Nickname</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody className="card__tablebody">
-                  <tr>
-                    <td>Roofing</td>
-                    <td><span className="status status--inprogress">In Progress</span></td>             
-                    <td><a href="#" className="btn btn--small btn--primary">View Project</a></td>
-                  </tr>
-                  <tr>
-                    <td>Roofing, Windows</td>
-                    <td><span className="status status--complete">Complete</span></td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Project</a></td>
-                  </tr>
-                  <tr>
-                    <td>Roofing</td>
-                    <td><span className="status status--notstarted">Not Started</span></td>
-                    <td><a href="#" className="btn btn--small btn--primary">View Project</a></td>
-                  </tr>
+                  {this.state.client.projects.map((project, key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{project.name}</td>
+                        <td><span className={`status status--${project.status.replace(/\s+/g, '').toLowerCase()}`}>{project.status}</span></td>             
+                        <td><Link to={`/projects/${project._id}`} className="btn btn--small btn--primary">View Project</Link></td>
+                      </tr>
+                    );
+                  })}
                 </tbody> 
               </table>
               </div>

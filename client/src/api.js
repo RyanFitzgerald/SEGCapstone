@@ -51,9 +51,21 @@ export const getProjects = () => {
     .then(resp => resp.data);
 };
 
+export const getProject = id => {
+  return axios
+    .get(`/api/projects/${id}`)
+    .then(resp => resp.data);
+};
+
 export const addProject = project => {
   return axios
     .post('/api/projects', project)
+    .then(resp => resp.data);
+}
+
+export const deleteProject = id => {
+  return axios
+    .delete(`/api/projects/${id}`)
     .then(resp => resp.data);
 }
 

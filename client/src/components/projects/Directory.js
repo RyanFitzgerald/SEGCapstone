@@ -19,6 +19,7 @@ class Directory extends React.Component {
       if (cities.indexOf(ele.city) === -1) {
         cities.push(ele.city);
       }
+      return;
     });
 
     return (
@@ -79,12 +80,18 @@ class Directory extends React.Component {
                 </thead>
                 <tbody className="card__tablebody">
                   {projects.map((project, key) => {
+                    const types = [];
+                    project.type.map(ele => {
+                      types.push(ele.name);
+                      return;
+                    });
+
                     return (
                       <tr key={key}>
                         <td>{project.name}</td>
-                        <td>{project.type.join(', ')}</td>
+                        <td>{types.join(', ')}</td>
                         <td><span className={`status status--${project.status.replace(/\s+/g, '').toLowerCase()}`}>{project.status}</span></td>                
-                        <td><Link to={`/clients/${project.client}`}>{project.client}</Link></td>
+                        <td><Link to={`/clients/${project.client._id}`}>{project.client.name}</Link></td>
                         <td>{project.street}</td>
                         <td><Link to={`/projects/${project._id}`} className="btn btn--small btn--primary">View Project</Link></td>
                       </tr>

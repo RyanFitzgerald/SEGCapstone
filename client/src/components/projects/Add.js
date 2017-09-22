@@ -13,10 +13,12 @@ class Add extends React.Component {
     // Bind functions
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addProject = this.addProject.bind(this);
+    this.getTypes = this.getTypes.bind(this);
 
     // Set state
     this.state = {
-      redirect: false
+      redirect: false,
+      types: null
     }
   }
 
@@ -26,6 +28,9 @@ class Add extends React.Component {
 
     // Update tab
     this.props.setActiveSubtab(2);
+
+    // Get types
+    this.getTypes();
 
     // Create tagselector
     let projectType = new TagSelector('project-type');
@@ -72,16 +77,19 @@ class Add extends React.Component {
 
   addProject(project) {
     api.addProject(project).then(resp => {
-      // Append id
-      project._id = resp;
-
       // Update parent state
-      //this.props.addToProjects(project);
+      this.props.addToProjects();
 
       // Redirect
       this.setState({
         redirect: `/projects/${resp}`
       });
+    });
+  }
+
+  getTypes() {
+    api.getTypes().then(types => {
+      this.setState({ types });
     });
   }
 
@@ -91,6 +99,12 @@ class Add extends React.Component {
     const clients = this.props.clients || [];
 
     if (!this.state.redirect) {
+      let clientID;
+      if (this.props.location.location && this.props.location.location.query) {
+        clientID = this.props.location.location.query.client;
+      } else {
+        clientID = '';
+      }
       return (
         <div className="content">
           <div className="row">
@@ -110,7 +124,7 @@ class Add extends React.Component {
                       <input name="name" ref={input => this.name = input} className="form-text form-text--full" type="text" placeholder="E.g. Doe Roofing Project" required/>
                       <label className="form-label" htmlFor="client">Project Client <span className="form-required">*</span></label>
                       <span className="form-select">
-                        <select name="client" ref={input => this.client = input} required>
+                        <select name="client" ref={input => this.client = input} value={clientID} required>
                         {clients.map((client, key) => {
                           return <option key={key} value={client._id}>{client.name}</option>;
                         })}
