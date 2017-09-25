@@ -6,17 +6,20 @@ mongoose.connect(process.env.DATABASE);
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 
 // Get data
-//const clients = JSON.parse(fs.readFileSync(__dirname + '/clients.json', 'utf-8'));
+const clients = JSON.parse(fs.readFileSync(__dirname + '/clients.json', 'utf-8'));
+const projects = JSON.parse(fs.readFileSync(__dirname + '/projects.json', 'utf-8'));
 const types = JSON.parse(fs.readFileSync(__dirname + '/types.json', 'utf-8'));
 
 // Import required models
-//const Client = require('../models/Client');
+const Client = require('../models/Client');
+const Project = require('../models/Project');
 const Type = require('../models/Type');
 
 // Delete all sample data
 async function deleteData() {
   console.log('Deleting Data...');
-  //await Client.remove();
+  await Client.remove();
+  await Project.remove();
   await Type.remove();
   console.log('Data Deleted.');
   process.exit();
@@ -26,7 +29,8 @@ async function deleteData() {
 async function loadData() {
   try {
     console.log('Adding Data...');
-    //await Client.insertMany(clients);
+    await Client.insertMany(clients);
+    await Project.insertMany(projects);
     await Type.insertMany(types);
     console.log('Data added.');
     process.exit();

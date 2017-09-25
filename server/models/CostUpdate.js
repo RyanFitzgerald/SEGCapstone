@@ -13,19 +13,27 @@ const costUpdateSchema = new mongoose.Schema({
   },
   amount: {
     type: Number,
-    required: 'A first name must be provided!',
+    required: 'An amount must be provided!'
+  },
+  reason: {
+    type: String,
+    required: 'A reason must be provided!',
     trim: true
   },
-  client: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Client',
-    required: 'A client must be provided!'
+  type: {
+    type: String,
+    required: 'A type must be provided!'
   },
-  user: {
+  project: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Project',
+    required: 'A project must be provided!'
+  },
+  /*user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
     required: 'A user must be provided!'
-  }
+  }*/
 });
 
 module.exports = mongoose.model('CostUpdate', costUpdateSchema);

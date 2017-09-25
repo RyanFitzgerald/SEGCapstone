@@ -2,7 +2,25 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import Logo from '../logo.png';
 
-const Header = (props) => {
+function Header(props) {
+  let menu, userMenu;
+
+  function handleMenuToggle() {
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+    } else {
+      menu.classList.add('active');
+    }
+  }
+
+  function handleUserMenuToggle() {
+    if (userMenu.classList.contains('active')) {
+      userMenu.classList.remove('active');
+    } else {
+      userMenu.classList.add('active');
+    }
+  }
+
   return (
     <div className="header clearfix">
       <div className="header__logo">
@@ -10,19 +28,19 @@ const Header = (props) => {
       </div>
 
       <div className="header__user">
-        <a className="header__usertoggle" href="#">Hello, Ryan <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
+        <span className="header__usertoggle" onClick={handleUserMenuToggle}>Hello, Ryan <i className="fa fa-chevron-down" aria-hidden="true"></i></span>
 
-        <ul>
+        <ul ref={ele => userMenu = ele}>
             <li><Link to="/account">Account Settings</Link></li>
-            <li><a href="#">Logout</a></li>
+            <li><Link to="/">Logout</Link></li>
         </ul>
 
-        <span className="header__menutoggle">
+        <span className="header__menutoggle" onClick={handleMenuToggle}>
             <i className="fa fa-bars" aria-hidden="true"></i>
         </span>
       </div>
 
-      <div className="header__nav">
+      <div className="header__nav" ref={ele => menu = ele}>
         <ul>
           <li><Link className={(props.activeTab === 1) ? 'header__link header__link--active' : 'header__link'} to="/">Home</Link></li>
           <li><Link className={(props.activeTab === 2) ? 'header__link header__link--active' : 'header__link'} to="/projects">Projects</Link></li>

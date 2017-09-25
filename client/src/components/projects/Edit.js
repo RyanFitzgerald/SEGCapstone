@@ -1,36 +1,43 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import * as api from '../../api';
+import moment from 'moment';
 
 import TagSelectorWrapper from '../TagSelectorWrapper';
 import PikadayWrapper from '../PikadayWrapper';
 
 import Loading from '../Loading';
 
-class Add extends React.Component {
+class Edit extends React.Component {
   constructor() {
     super();
 
     // Bind functions
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.addProject = this.addProject.bind(this);
+    this.updateProject = this.updateProject.bind(this);
     this.getCents = this.getCents.bind(this);
+    this.getDollars = this.getDollars.bind(this);
     this.contentLoaded = this.contentLoaded.bind(this);
+    this.getProject = this.getProject.bind(this);
 
     // Set state
     this.state = {
       redirect: false,
       clients: false,
-      types: false
+      types: false,
+      project: false
     }
   }
 
   componentDidMount() {
     // Set title
-    document.title = 'Add Project | Renovaction';
+    document.title = 'Edit Project | Renovaction';
 
     // Update tab
-    this.props.setActiveSubtab(2);
+    this.props.setActiveSubtab(0);
+
+    // Get project
+    this.getProject(this.props.location.match.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,11 +79,20 @@ class Add extends React.Component {
     };
 
     // Call api
-    this.addProject(project);
+    this.updateProject(project);
   }
 
-  addProject(project) {
-    api.addProject(project).then(resp => {
+  getProject(id) {
+    api.getProject(id).then(project => {
+      this.setState({ project }, () => {
+        // Set title
+        document.title = `Edit ${this.state.project.name} | Renovaction`;
+      })
+    });
+  }
+
+  updateProject(project) {
+    api.updateProject(project, this.props.location.match.params.id).then(resp => {
       // Update parent state
       this.props.getProjects();
 
@@ -91,8 +107,19 @@ class Add extends React.Component {
     return Math.round((Math.round(dollars * 100) / 100)*100);
   }
 
+  getDollars(cents) {
+    const dollars = (cents/100).toFixed(2);
+    let dollarString = dollars.toString().split('.');
+
+    if (dollarString[0].length >= 4) {
+      dollarString[0] = dollarString[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+
+    return dollarString.join('.');
+  }
+
   contentLoaded() {
-    return this.state.clients && this.state.types;
+    return this.state.clients && this.state.types && this.state.project;
   }
 
   render() {
@@ -125,10 +152,10 @@ class Add extends React.Component {
                   </div>
                   <div className="md-8 column no-right">
                     <label className="form-label" htmlFor="name">Project Nickname <span className="form-required">*</span></label>
-                    <input name="name" ref={input => this.name = input} className="form-text form-text--full" type="text" placeholder="E.g. Doe Roofing Project" required/>
+                    <input name="name" ref={input => this.name = input} className="form-text form-text--full" type="text" placeholder="E.g. Doe Roofing Project" defaultValue={this.state.project.name} required/>
                     <label className="form-label" htmlFor="client">Project Client <span className="form-required">*</span></label>
                     <span className="form-select">
-                      <select name="client" ref={input => this.client = input} required>
+                      <select name="client" ref={input => this.client = input} defaultValue={this.state.project.client.id} required>
                       {this.state.clients.map((client, key) => {
                         return <option key={key} value={client._id}>{client.name}</option>;
                       })}
@@ -136,7 +163,7 @@ class Add extends React.Component {
                     </span>
                     <label className="form-label" htmlFor="client">Project Status <span className="form-required">*</span></label>
                     <span className="form-select">
-                      <select name="client" ref={input => this.status = input} required>
+                      <select name="client" ref={input => this.status = input} defaultValue={this.state.project.status} required>
                         <option value="Not Started">Not Started</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Complete">Complete</option>
@@ -153,12 +180,12 @@ class Add extends React.Component {
                   </div>
                   <div className="md-8 column no-right">
                     <label className="form-label" htmlFor="street">Street <span className="form-required">*</span></label>
-                    <input name="street" ref={input => this.street = input} className="form-text form-text--full" type="text" required/>
+                    <input name="street" ref={input => this.street = input} className="form-text form-text--full" type="text" defaultValue={this.state.project.street} required/>
                     <label className="form-label" htmlFor="postal-code">Postal Code <span className="form-required">*</span></label>
-                    <input name="postal-code" ref={input => this.postalCode = input} className="form-text form-text--full capitalize" maxLength="6" type="text" required/>
+                    <input name="postal-code" ref={input => this.postalCode = input} className="form-text form-text--full capitalize" maxLength="6" type="text" defaultValue={this.state.project.postalCode} required/>
                     <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
                     <span className="form-select" required>
-                      <select name="city" ref={input => this.city = input}>
+                      <select name="city" ref={input => this.city = input} defaultValue={this.state.project.city}>
                         <option value="Ottawa">Ottawa</option>
                       </select>
                     </span>
@@ -197,13 +224,13 @@ class Add extends React.Component {
                   </div>
                   <div className="md-8 column no-right">
                     <label className="form-label" htmlFor="sold-date">Sold Date <span className="form-required">*</span></label>
-                    <PikadayWrapper name="sold-date" ref={input => this.soldDate = input} id="sold-date" required="true"/>
+                    <PikadayWrapper name="sold-date" ref={input => this.soldDate = input} id="sold-date" defaultValue={moment(this.state.project.soldDate).format('MMMM DD, YY')} required="true"/>
                     <label className="form-label" htmlFor="cashin-date">Cashin Date</label>
-                    <PikadayWrapper name="cashin-date" ref={input => this.cashinDate = input} id="cashin-date" />
+                    <PikadayWrapper name="cashin-date" ref={input => this.cashinDate = input} id="cashin-date" defaultValue={(this.state.project.cashinDate) ? moment(this.state.project.cashinDate).format('MMMM DD, YY') : ''} />
                     <label className="form-label" htmlFor="start-date">Project Start Date</label> 
-                    <PikadayWrapper name="start-date" ref={input => this.startDate = input} id="start-date" />
+                    <PikadayWrapper name="start-date" ref={input => this.startDate = input} id="start-date" defaultValue={(this.state.project.startDate) ? moment(this.state.project.startDate).format('MMMM DD, YY') : ''} />
                     <label className="form-label" htmlFor="end-date">Project End Date</label>
-                    <PikadayWrapper name="end-date" ref={input => this.endDate = input} id="end-date" />
+                    <PikadayWrapper name="end-date" ref={input => this.endDate = input} id="end-date" defaultValue={(this.state.project.endDate) ? moment(this.state.project.endDate).format('MMMM DD, YY') : ''} />
                   </div>
                 </div>
                 <div className="row form-section no-border">
@@ -215,15 +242,15 @@ class Add extends React.Component {
                   </div>
                   <div className="md-8 column no-right">
                     <label className="form-label" htmlFor="labour-cost">Labour Cost</label>
-                    <input name="labour-cost" ref={input => this.labourCost = input} className="form-text form-text--full" type="number" step="0.01" />
+                    <input name="labour-cost" ref={input => this.labourCost = input} defaultValue={this.getDollars(this.state.project.labourCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
                     <label className="form-label" htmlFor="materials-cost">Materials Cost</label>
-                    <input name="materials-cost" ref={input => this.materialsCost = input} className="form-text form-text--full" type="number" step="0.01" />
+                    <input name="materials-cost" ref={input => this.materialsCost = input} defaultValue={this.getDollars(this.state.project.materialsCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
                     <label className="form-label" htmlFor="actual-cost">Actual Cost</label>
-                    <input name="actual-cost" ref={input => this.actualCost = input} className="form-text form-text--full" type="number" step="0.01" />
+                    <input name="actual-cost" ref={input => this.actualCost = input} defaultValue={this.getDollars(this.state.project.actualCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
                   </div>
                 </div>
                 <div className="text-center">
-                  <input type="submit" className="btn btn--primary btn--large" value="Add Project" />
+                  <input type="submit" className="btn btn--primary btn--large" value="Update Project" />
                 </div>
               </form>
             </div>
@@ -235,4 +262,4 @@ class Add extends React.Component {
   }
 }
 
-export default Add;
+export default Edit;

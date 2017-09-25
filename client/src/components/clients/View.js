@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as api from '../../api';
 

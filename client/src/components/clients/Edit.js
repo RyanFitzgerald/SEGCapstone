@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import * as api from '../../api';
 
 import Loading from '../Loading';
@@ -159,9 +158,5 @@ class Edit extends React.Component {
     );
   }
 }
-
-Edit.propTypes = {
-  setActiveSubtab: PropTypes.func.isRequired
-};
 
 export default Edit;

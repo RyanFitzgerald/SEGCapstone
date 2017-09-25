@@ -13,6 +13,9 @@ class View extends React.Component {
     // Bind functions
     this.getProject = this.getProject.bind(this);
     this.deleteProject = this.deleteProject.bind(this);
+    this.getDollars = this.getDollars.bind(this);
+    this.getUpdatedTotal = this.getUpdatedTotal.bind(this);
+    this.renderCostUpdateButton = this.renderCostUpdateButton.bind(this);
 
     // Initial state
     this.state = {
@@ -50,6 +53,45 @@ class View extends React.Component {
     });
   }
 
+  renderCostUpdateButton() {
+    if (this.state.project.actualCost) {
+      return (
+        <Link 
+          to={{
+            pathname: `${this.props.location.match.url}/update`,
+            query: {name: this.state.project.name}
+          }}
+          className="btn btn--primary btn--small">
+          Add Update
+        </Link>
+      );
+    }
+  }
+
+  getDollars(cents) {
+    const dollars = (cents/100).toFixed(2);
+    let dollarString = dollars.toString().split('.');
+
+    if (dollarString[0].length >= 4) {
+      dollarString[0] = dollarString[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+
+    return dollarString.join('.');
+  }
+
+  getUpdatedTotal(total) {
+    let updatedTotal = total;
+    const updates = this.state.project.updates;
+    updates.forEach(ele => {
+      if (ele.type === 'Addition') {
+        updatedTotal += ele.amount;
+      } else if (ele.type === 'Subtraction') {
+        updatedTotal -= ele.amount;
+      }
+    });
+    return this.getDollars(updatedTotal);
+  }
+
   render() {
     if (this.state.redirect) {
       return (
@@ -65,10 +107,29 @@ class View extends React.Component {
         endDate: this.state.project.endDate || false,
       };
 
+      // Cost breakdowns
+      const labourCost = this.state.project.labourCost || false;
+      const materialsCost = this.state.project.materialsCost || false;
+      const actualCost = this.state.project.actualCost || false;
+      let contractCost = false;
+      let commission = -1;
+
+      if (labourCost && materialsCost) {
+        contractCost = (labourCost + materialsCost) * 2.1;
+      }
+
+      if (actualCost && contractCost) {
+        let difference = actualCost - contractCost;
+        if (difference > 0) {
+          commission = difference;
+        } else {
+          commission = 0;
+        }
+      }
+
       const types = [];
-      this.state.project.type.map(ele => {
+      this.state.project.type.forEach(ele => {
         types.push(ele.name);
-        return;
       });
 
       return (
@@ -84,12 +145,12 @@ class View extends React.Component {
                   <li><b>Client:</b> <Link to={`/clients/${this.state.project.client._id}`}>{this.state.project.client.name}</Link></li>
                   <li><b>Sold Date:</b> {dates.soldDate} / <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
                   <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} / <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
-                  <li><b>Labour Cost:</b> $5,000.00 / <b>Materials Cost:</b> $5,000.00</li>
-                  <li><b>Contract Cost:</b> $5,000.00 / <b>Actual Cost:</b> $5,000.00</li>
-                  <li><b>Commission:</b> $5,000.00</li>
+                  <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} / <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
+                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} / <b>Actual Cost:</b> {(actualCost) ? `$${this.getUpdatedTotal(actualCost)}` : 'Not available'}</li>
+                  <li><b>Commission:</b> {(commission !== -1) ? `$${this.getDollars(commission)}` : 'Not available'}</li>
                 </ul>
                 <div className="project-actions">
-                  <Link to="/projects/list" className="btn btn--primary">Edit Project</Link>
+                  <Link to={{ pathname: `/projects/${this.props.location.match.params.id}/edit`, query: {project: this.state.project}}} className="btn btn--primary">Edit Project</Link>
                   <button className="btn btn--danger" onClick={() => {if (window.confirm('Are you sure you want to delete this project?')) {this.deleteProject()};}}>Delete Project</button>
                 </div>
               </div>
@@ -109,7 +170,7 @@ class View extends React.Component {
           </div>
           <div className="row">
             <div className="column">
-              <h2 className="card-title">0 Project Photos <a href="#" className="btn btn--primary btn--small">Add Photo</a></h2>
+              <h2 className="card-title">0 Project Photos <Link to="/projects" className="btn btn--primary btn--small">Add Photo</Link></h2>
               <div className="card">
                 No photos currently added to this project.
               </div>
@@ -117,17 +178,17 @@ class View extends React.Component {
           </div>
           <div className="row">
             <div className="md-6 column">
-              <h2 className="card-title">2 Project Files <a href="#" className="btn btn--primary btn--small">Add File</a></h2>
+              <h2 className="card-title">2 Project Files <Link to="/projects" className="btn btn--primary btn--small">Add File</Link></h2>
               <div className="card">
                 <div className="project-note">
-                  <a href="#">Some File Name</a>  
+                  <Link to="/projects">Some File Name</Link>  
                   <span className="project-note__details">Posted by <b>John Doe</b> on <b>January 1, 2017</b></span>
                   <p>
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa dolores ipsum illum et libero, neque ducimus fugiat earum nobis quas.
                   </p>
                 </div>
                 <div className="project-note">
-                  <a href="#">Some File Name</a>  
+                  <Link to="/projects">Some File Name</Link>  
                   <span className="project-note__details">Posted by <b>John Doe</b> on <b>January 1, 2017</b></span>
                   <p>
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa dolores ipsum illum et libero, neque ducimus fugiat earum nobis quas.
@@ -136,62 +197,73 @@ class View extends React.Component {
               </div>
             </div>
             <div className="md-6 column">
-              <h2 className="card-title">2 Project Notes <a href="#" className="btn btn--primary btn--small">Add Note</a></h2>
+              <h2 className="card-title">{this.state.project.notes.length} Project Note(s) 
+                <Link 
+                  to={{
+                    pathname: `${this.props.location.match.url}/note`,
+                    query: {name: this.state.project.name}
+                  }}
+                  className="btn btn--primary btn--small">
+                  Add Note
+                </Link>
+              </h2>
               <div className="card">
-                <div className="project-note">
-                  <span className="project-note__details">Posted by <b>John Doe</b> on <b>January 1, 2017</b></span>
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa dolores ipsum illum et libero, neque ducimus fugiat earum nobis quas.
-                  </p>
-                </div>
-                <div className="project-note">
-                  <span className="project-note__details">Posted by <b>John Doe</b> on <b>January 1, 2017</b></span>
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa dolores ipsum illum et libero, neque ducimus fugiat earum nobis quas.
-                  </p>
-                </div>
+              {this.state.project.notes.map((note, key) => {
+                return (
+                  <div className="client-note" key={key}>
+                    <span className="client-note__details">Posted by <b>John Doe</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
+                    <p>
+                      {note.description}
+                    </p>
+                  </div>
+                );
+              })}
               </div>
             </div>
           </div>
           <div className="row">
             <div className="md-6 column">
-              <h2 className="card-title">2 Cost Updates <a href="#" className="btn btn--primary btn--small">Add Update</a></h2>
+              <h2 className="card-title">{this.state.project.updates.length} Cost Update(s)
+                {this.renderCostUpdateButton()}
+              </h2>
               <div className="card">
-                <div className="project-update">
-                  <ul>
-                    <li><b>Amount:</b> $500</li>
-                    <li><b>Reason:</b> Some reason here</li>
-                    <li><b>Type:</b> Addition</li>
-                  </ul>
-                </div>
-                <div className="project-update">
-                  <ul>
-                    <li><b>Amount:</b> $500</li>
-                    <li><b>Reason:</b> Some reason here</li>
-                    <li><b>Type:</b> Addition</li>
-                  </ul>
-                </div>
+              {this.state.project.updates.map((update, key) => {
+                return (
+                  <div className="project-update">
+                    <ul>
+                      <li><b>Amount:</b> {`$${this.getDollars(update.amount)}`}</li>
+                      <li><b>Reason:</b> {update.reason}</li>
+                      <li><b>Type:</b> {update.type}</li>
+                    </ul>
+                  </div>
+                );
+              })}
               </div>
             </div>
             <div className="md-6 column">
-              <h2 className="card-title">2 Project Products <a href="#" className="btn btn--primary btn--small">Add Product</a></h2>
+              <h2 className="card-title">{this.state.project.products.length} Project Product(s) 
+                <Link 
+                  to={{
+                    pathname: `${this.props.location.match.url}/product`,
+                    query: {name: this.state.project.name}
+                  }}
+                  className="btn btn--primary btn--small">
+                  Add Product
+                </Link>
+              </h2>
               <div className="card">
-                <div className="project-product">
-                  <ul>
-                    <li><b>Name:</b> Something here</li>
-                    <li><b>Brand:</b> Cool brand</li>
-                    <li><b>Colour:</b> Aqua</li>
-                    <li><b>Style:</b> Really cool</li>
-                  </ul>
-                </div>
-                <div className="project-product">
-                  <ul>
-                    <li><b>Name:</b> Something here</li>
-                    <li><b>Brand:</b> Cool brand</li>
-                    <li><b>Colour:</b> Aqua</li>
-                    <li><b>Style:</b> Really cool</li>
-                  </ul>
-                </div>
+              {this.state.project.products.map((product, key) => {
+                return (
+                  <div className="project-product">
+                    <ul>
+                      <li><b>Name:</b> {product.name}</li>
+                      <li><b>Brand:</b> {product.brand}</li>
+                      <li><b>Colour:</b> {product.colour}</li>
+                      <li><b>Style:</b> {product.style}</li>
+                    </ul>
+                  </div>
+                );
+              })}
               </div>
             </div>
           </div>

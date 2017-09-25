@@ -236,6 +236,10 @@ a {
   width: 100%;
 }
 
+.card__table--max {
+  max-width: 150px;
+}
+
 .card__tablehead {
   border-bottom: 3px solid $colour-border-dark;
   color: $colour-text-dark;

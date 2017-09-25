@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 class Home extends React.Component {
   componentDidMount() {
@@ -39,9 +38,5 @@ class Home extends React.Component {
     );
   }
 }
-
-Home.propTypes = {
-  setActiveTab: PropTypes.func.isRequired
-};
 
 export default Home;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 class Overview extends React.Component {
   componentDidMount() {
@@ -39,9 +38,5 @@ class Overview extends React.Component {
     );
   }
 }
-
-Overview.propTypes = {
-  setActiveSubtab: PropTypes.func.isRequired
-};
 
 export default Overview;

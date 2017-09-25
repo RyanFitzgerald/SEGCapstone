@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import * as api from '../../api';
 
 class Add extends React.Component {
@@ -140,10 +139,5 @@ class Add extends React.Component {
     );
   }
 }
-
-Add.propTypes = {
-  setActiveSubtab: PropTypes.func.isRequired,
-  addToClients: PropTypes.func.isRequired
-};
 
 export default Add;

@@ -5,8 +5,10 @@
   border-radius: 20px;
   color: #fff;
   display: inline-block;
-  font-size: 0.9em;
+  font-size: 0.8em;
   padding: 5px 15px;
+  min-width: 90px;
+  text-align: center;
 }
 
 .status--complete {

@@ -24,7 +24,12 @@ exports.getClients = async (req, res) => {
     filter.postalCode = { $regex: new RegExp(req.query.postalCode), $options: 'i' };
   }
 
-  const clients = await Client.find(filter).populate('notes projects');
+  // Check for street
+  if (req.query.street) {
+    filter.street = { $regex: new RegExp(req.query.street), $options: 'i' };
+  }
+
+  const clients = await Client.find(filter).populate('projects');
   res.send(clients);
 };
 

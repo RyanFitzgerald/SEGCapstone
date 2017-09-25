@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class Directory extends React.Component {
@@ -33,7 +32,8 @@ class Directory extends React.Component {
     const query = {
       q: this.q.value,
       city: this.city.value,
-      postalCode: this.postalCode.value
+      postalCode: this.postalCode.value,
+      street: this.street.value
     };
     this.props.searchClients(query);
   }
@@ -42,13 +42,15 @@ class Directory extends React.Component {
     this.q.value = '';
     this.city.value = '';
     this.postalCode.value = '';
+    this.street.value = '';
+    this.handleSearch();
   }
 
   render() {
     // Variables
     const clients = this.props.clients || [];
     const cities = [];
-    clients.map(ele => {
+    clients.forEach(ele => {
       if (cities.indexOf(ele.city) === -1) {
         cities.push(ele.city);
       }
@@ -64,11 +66,15 @@ class Directory extends React.Component {
               <button className="advanced__toggle" id="advanced-toggle" onClick={this.resetForm}>Reset Form</button>
               <button className="advanced__toggle" id="advanced-toggle" onClick={this.handleAdvanced}>Advanced Search</button>
               <div ref={el => this.advanced = el} id="advanced-fields" className="row card__advanced">
-                <div className="md-6 lg-4 column">
+                <div className="md-6 column">
+                  <label className="form-label" htmlFor="street">Street</label>
+                  <input ref={input => this.street = input} id="street" name="street" className="form-text" type="text" onKeyUp={this.handleSearch}/>
+                </div>
+                <div className="md-6 column">
                   <label className="form-label" htmlFor="postal-code">Postal Code</label>
                   <input ref={input => this.postalCode = input} id="postal-code" name="postal-code" className="form-text capitalize" type="text" onKeyUp={this.handleSearch}/>
                 </div>
-                <div className="md-6 lg-4 column">
+                <div className="md-6 column">
                   <label className="form-label" htmlFor="city">City</label>
                   <span className="form-select">
                     <select ref={input => this.city = input} id="city" name="city" onChange={this.handleSearch}>
@@ -79,10 +85,10 @@ class Directory extends React.Component {
                     </select>
                   </span>
                 </div>
-                <div className="lg-4 column">
+                <div className="md-6 column">
                   <label className="form-label" htmlFor="salesman">Salesman</label>
                   <span className="form-select">
-                    <select ref={input => this.salesman = input} id="salesman" name="salesman">
+                    <select id="salesman" name="salesman">
                       <option>All Salesmen</option>
                     </select>
                   </span>
@@ -130,11 +136,5 @@ class Directory extends React.Component {
     );
   }
 }
-
-Directory.propTypes = {
-  setActiveSubtab: PropTypes.func.isRequired,
-  searchClients: PropTypes.func.isRequired,
-  clients: PropTypes.array.isRequired
-};
 
 export default Directory;

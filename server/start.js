@@ -14,6 +14,9 @@ mongoose.connection.on('error', (err) => {
 require('./models/Client');
 require('./models/ClientNote');
 require('./models/Project');
+require('./models/ProjectNote');
+require('./models/Product');
+require('./models/CostUpdate');
 require('./models/Type');
 
 // Require app with config

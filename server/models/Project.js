@@ -48,9 +48,9 @@ const projectSchema = new mongoose.Schema({
   startDate: Date,
   endDate: Date,
   cashinDate: Date,
-  labourCost: String,
-  materialsCost: String,
-  actualCost: String,
+  labourCost: Number,
+  materialsCost: Number,
+  actualCost: Number,
   status: String,
   type: [{
     type: mongoose.Schema.ObjectId,
@@ -91,6 +91,25 @@ const projectSchema = new mongoose.Schema({
 });
 
 projectSchema.plugin(mongodbErrorHandler);
+
+projectSchema.virtual('notes', {
+  ref: 'ProjectNote',
+  localField: '_id', // Which field on project
+  foreignField: 'project' // which field on note
+});
+
+projectSchema.virtual('products', {
+  ref: 'Product',
+  localField: '_id', // Which field on project
+  foreignField: 'project' // which field on product
+});
+
+projectSchema.virtual('updates', {
+  ref: 'CostUpdate',
+  localField: '_id', // Which field on project
+  foreignField: 'project' // which field on update
+});
+
 
 projectSchema.pre('save', async function(next) {
   const street = this.street;

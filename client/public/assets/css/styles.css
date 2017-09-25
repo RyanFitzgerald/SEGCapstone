@@ -855,6 +855,10 @@ a:hover {
   width: 100%;
 }
 
+.card__table--max {
+  max-width: 150px;
+}
+
 .card__tablehead {
   border-bottom: 3px solid #7f8598;
   color: #333c4e;
@@ -956,6 +960,7 @@ a:hover {
   position: relative;
   text-align: right;
   width: 20%;
+  cursor: pointer;
 }
 
 .header__user ul {
@@ -1202,8 +1207,10 @@ a:hover {
   border-radius: 20px;
   color: #fff;
   display: inline-block;
-  font-size: 0.9em;
+  font-size: 0.8em;
   padding: 5px 15px;
+  min-width: 90px;
+  text-align: center;
 }
 
 .status--complete {

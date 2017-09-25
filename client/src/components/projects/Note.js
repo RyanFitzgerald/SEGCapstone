@@ -31,7 +31,7 @@ class Note extends React.Component {
     // Get form data
     const note = {
       description: this.description.value,
-      client: this.props.location.match.params.id
+      project: this.props.location.match.params.id
     };
 
     // Call api
@@ -39,9 +39,9 @@ class Note extends React.Component {
   }
 
   addNote(note) {
-    api.addClientNote(note).then(resp => {
+    api.addProjectNote(note).then(resp => {
       this.setState({
-        redirect: `/clients/${this.props.location.match.params.id}`
+        redirect: `/projects/${this.props.location.match.params.id}`
       });      
     });
   }
@@ -91,7 +91,7 @@ class Note extends React.Component {
     }
     
     return (
-      <Redirect to="/clients"/>
+      <Redirect to="/projects"/>
     );
   }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import * as api from '../api';
 
@@ -9,6 +8,10 @@ import Overview from '../components/projects/Overview';
 import Add from '../components/projects/Add';
 import Directory from '../components/projects/Directory';
 import View from '../components/projects/View';
+import Edit from '../components/projects/Edit';
+import Note from '../components/projects/Note';
+import Product from '../components/projects/Product';
+import CostUpdate from '../components/projects/CostUpdate';
 
 class Project extends React.Component {
   constructor() {
@@ -19,13 +22,15 @@ class Project extends React.Component {
     this.getTypes = this.getTypes.bind(this);
     this.getClients = this.getClients.bind(this);
     this.getProjects = this.getProjects.bind(this);
-    this.addToProjects = this.addToProjects.bind(this);
-    this.removeFromProjects = this.addToProjects.bind(this);
+    this.removeFromProjects = this.removeFromProjects.bind(this);
+    this.searchProjects = this.searchProjects.bind(this);
+    this.contentLoaded = this.contentLoaded.bind(this);
 
     // State
     this.state = {
       activeSubtab: 1,
       types: null,
+      clients: null,
       projects: null
     };
   }
@@ -69,16 +74,22 @@ class Project extends React.Component {
     });
   }
 
-  addToProjects(project) {
-    this.getProjects();
-  }
-
   removeFromProjects(id) {
     const projects = [...this.state.projects];
     const updated = projects.filter(el => {
       return el._id !== id;
     });
     this.setState({ projects: updated });
+  }
+
+  searchProjects(query) {
+    api.searchProjects(query).then(projects => {
+      this.setState({ projects });
+    });
+  }
+
+  contentLoaded() {
+    return this.state.clients && this.state.projects && this.state.types;
   }
 
   render() {
@@ -91,10 +102,22 @@ class Project extends React.Component {
             <Overview setActiveSubtab={this.setActiveSubtab}/>
           }/>
           <Route path="/projects/add" render={(location) =>
-            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} addToProjects={this.addToProjects}/>
+            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} getProjects={this.getProjects}/>
           }/>
           <Route path="/projects/list" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} searchProjects={this.searchProjects}/>
+          }/>
+          <Route path="/projects/:id/edit" render={(location) =>
+            <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} getProjects={this.getProjects}/>
+          }/>
+          <Route path="/projects/:id/note" render={(location) =>
+            <Note setActiveSubtab={this.setActiveSubtab} location={location} />
+          }/>
+          <Route path="/projects/:id/product" render={(location) =>
+            <Product setActiveSubtab={this.setActiveSubtab} location={location} />
+          }/>
+          <Route path="/projects/:id/update" render={(location) =>
+            <CostUpdate setActiveSubtab={this.setActiveSubtab} location={location} />
           }/>
           <Route path="/projects/:id" render={(location) =>
             <View setActiveSubtab={this.setActiveSubtab} location={location} removeFromProjects={this.removeFromProjects}/>
@@ -104,9 +127,5 @@ class Project extends React.Component {
     );
   }
 }
-
-Project.propTypes = {
-  setActiveTab: PropTypes.func.isRequired
-};
 
 export default Project;
