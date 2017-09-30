@@ -35,7 +35,6 @@ exports.getProjects = async (req, res) => {
 
   // Check for type
   if (req.query.type) {
-    console.log(req.query.type)
     filter.type = req.query.type;
   }
 

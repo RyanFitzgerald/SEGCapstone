@@ -23,12 +23,13 @@
   },
   "scripts": {
     "start": "node ./server/start.js",
-    "watch": "nodemon ./server/start.js",
+    "watch": "concurrently \"nodemon ./server/start.js\" \"cd client && npm start\"",
     "data:add": "node ./server/data/load-sample-data.js",
     "data:remove": "node ./server/data/load-sample-data.js --delete"
   },
   "proxy": "http://localhost:7777",
   "devDependencies": {
+    "concurrently": "^3.5.0",
     "nodemon": "^1.11.0"
   }
 }

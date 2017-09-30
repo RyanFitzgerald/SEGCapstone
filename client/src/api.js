@@ -58,14 +58,12 @@ export const getProject = id => {
 };
 
 export const searchProjects = query => {
-  console.log(query)
   return axios
     .get(`/api/projects?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&type=${query.type}&status=${query.status}`)
     .then(resp => resp.data);
 };
 
 export const addProject = project => {
-  console.log(project)
   return axios
     .post('/api/projects', project)
     .then(resp => resp.data);

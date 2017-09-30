@@ -1,0 +1,26 @@
+[
+    {
+        "_id": "59ced716d13a1319b426c7e0",
+        "description": "Client has requested no work done at the house for the next 2 days.",
+        "client": "59beae6d8047be31c02d2dd1",
+        "created": "2017-09-29 19:28:22.792"
+    },
+    {
+        "_id": "59ced723d13a1319b426c7e1",
+        "description": "Client will be out of the town the next 2 weeks.",
+        "client": "59c1d0d3fc750f1d1082b7a8",
+        "created": "2017-09-29 19:28:35.057"
+    },
+    {
+        "_id": "59ced728d13a1319b426c7e2",
+        "description": "Client mentioned that the gate to the left of the house should be used when entering the backyard as the right-side one is broken.",
+        "client": "59c1d0d3fc750f1d1082b7a8",
+        "created": "2017-09-29 19:28:40.727"
+    },
+    {
+        "_id": "59ced76cd13a1319b426c7e3",
+        "description": "Client will be paying the full amount due next week",
+        "client": "59c846e4aa442d126c3e0ba5",
+        "created": "2017-09-29 19:29:48.579"
+    }
+]
