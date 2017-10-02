@@ -12,8 +12,10 @@ const errorHandlers = require('./handlers/errorHandlers');
 // create our Express app
 const app = express();
 
-// Serve up static files from the public folder
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve up static files from the client build folder
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../client/build"));
+}
 
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
