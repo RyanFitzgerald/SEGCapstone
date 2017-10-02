@@ -1,0 +1,280 @@
+// --- Main Site Wide Styles ---
+html {
+  font-family: 'Lato', arial, sans-serif;
+}
+
+body {
+  background: $colour-bg-alt;
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: $colour-alt;
+  text-decoration: none;
+
+  &:hover {
+    color: $colour-alt-hover;
+  }
+}
+
+.loading {
+  padding: 50px;
+  text-align: center;
+   
+  img {
+    max-width: 100px;
+  }
+}
+
+.capitalize {
+  text-transform: uppercase;
+}
+
+.content {
+  padding: 50px 0;
+}
+
+.card {
+  background: $colour-bg-main;
+  border-radius: 4px;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  padding: 15px;
+  @include shadow();
+}
+
+.card--nopad {
+  padding: 0;
+}
+
+.card-title {
+  color: $colour-text-dark;
+  font-size: 2em;
+  font-weight: 400;
+
+  .btn {
+    font-size: 0.7em;
+    float: right;
+  }
+}
+
+.no-border {
+  border: none !important;
+}
+
+.no-left {
+  padding-left: 0;
+}
+
+.no-right {
+  padding-right: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+// --- Button Styles ---
+
+.btn {
+  background: none;
+  border: 1px solid $colour-border-alt;
+  border-radius: 20px;
+  color: $colour-text-dark;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1.5;
+  padding: 8px 20px;
+  text-decoration: none;
+  transition: 0.5s ease all;
+
+  &:focus,
+  &:hover {
+    outline: none;
+    border: 1px solid #000;
+  }
+}
+
+.btn--primary {
+  background: $colour-alt;
+  border: 1px solid $colour-alt;
+  color: #fff;
+
+  &:focus,
+  &:hover {
+    background: $colour-alt-hover;
+    border: 1px solid $colour-alt-hover;
+    color: #fff;
+  }
+}
+
+.btn--danger {
+  background: $colour-warn;
+  border: 1px solid $colour-warn;
+  color: #fff;
+
+  &:focus,
+  &:hover {
+    background: darken($colour-warn, 15%);
+    border: 1px solid darken($colour-warn, 15%);
+    color: #fff;
+  }
+}
+
+.btn--small {
+  font-size: 0.9em;
+  padding: 5px 15px;
+}
+
+.btn--large {
+  border-radius: 50px;
+  padding: 12px 50px;
+}
+
+.btn--full {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+
+// --- Flash Styles ---
+
+.flash {
+  background: #fff;
+  border-radius: 4px;
+  color: $colour-text-medium;
+  font-size: 1.5em;
+  padding: 25px 15px;
+  position: relative;
+  margin-top: 30px;
+  margin-bottom: -20px;
+  text-align: center;
+  @include shadow();
+  @include transition();
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: $colour-text-medium;
+  }
+}
+
+.flash--fade {
+  opacity: 0;
+}
+
+.flash__close {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.flash--warn {
+  background: $colour-warn;
+  color: #fff;
+
+  a {
+    color: #fff;
+  }
+}
+
+.flash--info {
+  background: $colour-info;
+  color: $colour-text-medium;
+}
+
+.flash--success {
+  background: $colour-success;
+  color: #fff;
+
+  a {
+    color: #fff;
+  }
+}
+
+// --- Advanced Search Styles ---
+
+.card__advanced {
+  border: 1px solid $colour-border-alt;
+  border-radius: 4px;
+  display: none;
+  padding-top: 15px;
+
+  &.active {
+    display: block;
+  }
+}
+
+.advanced__toggle {
+  background: none;
+  border: none;
+  color: $colour-alt;
+  color: #3498db;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  margin: 0 auto 5px auto;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// --- Table Styles ---
+
+.card__table {
+  border-collapse: collapse;
+  color: $colour-text-medium;
+  text-align: left;
+  width: 100%;
+}
+
+.card__table--max {
+  max-width: 150px;
+}
+
+.card__tablehead {
+  border-bottom: 3px solid $colour-border-dark;
+  color: $colour-text-dark;
+  
+  th {
+    padding: 0 15px 15px 15px;
+  }
+}
+
+.card__tablebody {
+  font-size: 0.9em;
+
+  td {
+    padding: 15px;
+  }
+
+  tr {
+    border-bottom: 1px solid $colour-border-alt;
+
+    &:hover {
+      background: #eee;
+    }
+  }
+}
+
+// --- Media Queries ---
+
+@media only screen and (max-width: 639px) {
+
+  .no-left {
+    padding-right: 0;
+  }
+
+  .no-right {
+    padding-left: 0;
+  }
+
+}

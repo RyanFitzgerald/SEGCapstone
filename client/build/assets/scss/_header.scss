@@ -1,0 +1,224 @@
+// --- Header Styles ---
+
+.header {
+  background: #fff;
+  border-bottom: 1px solid $colour-border-main;
+  border-top: 5px solid $colour-main;
+  padding: 0 15px;
+  width: 100%;
+}
+
+.header__logo {
+  float: left;
+  margin-top: 10px;
+  width: 20%;
+
+  img {
+    max-width: 200px;
+  }
+}
+
+.header__nav {
+  float: left;
+  text-align: center;
+  width: 60%;
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    font-size: 1.4em;
+    list-style: none;
+  }
+
+  &.active {
+    display: block;
+  }
+}
+
+.header__link {
+  border-bottom: 4px solid #fff;
+  color: $colour-text-light;
+  display: block;
+  font-weight: 700;
+  padding: 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  @include transition(0.2s, ease, all);
+
+  &:hover {
+    border-bottom: 4px solid $colour-main;
+    color: $colour-text-dark;
+  }
+}
+
+.header__link--active {
+  border-bottom: 4px solid $colour-main;
+  color: $colour-text-dark;
+}
+
+.header__user {
+  float: right;
+  margin-top: 20px;
+  position: relative;
+  text-align: right;
+  width: 20%;
+  cursor: pointer;
+
+  ul {
+    background: #fff;
+    border: 1px solid $colour-border-main;
+    display: none;
+    font-size: 1.5em;
+    margin: 0;
+    width: 150px;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 25px;
+    @include shadow();
+
+    &.active {
+      display: block;
+    }
+  }
+
+  li {
+    list-style: none;
+    margin-bottom: 5px;
+
+    a {
+      color: $colour-text-medium;
+      text-decoration: none;
+
+      &:hover {
+        color: $colour-main;
+      }
+    }
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+.header__usertoggle {
+  color: $colour-text-dark;
+  font-size: 1.35em;
+  font-weight: 700;
+  text-decoration: none;
+
+  &:hover {
+    color: $colour-main;
+  }
+}
+
+.header__menutoggle {
+  cursor: pointer;
+  display: none;
+  font-size: 1.8em;
+  margin-left: 15px;
+}
+
+// --- Sub Menu Styles ---
+
+.submenu {
+  @extend .header;
+  border-top: none;
+}
+
+.submenu__actions {
+  ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  li {
+    display: inline-block;
+    list-style: none;
+  }
+}
+
+.submenu__action {
+  color: $colour-text-medium;
+  display: block;
+  font-size: 1.4em;
+  font-weight: 700;
+  padding: 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  i {
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  &:hover {
+    color: $colour-main;
+  }
+}
+
+.submenu__action--active {
+  color: $colour-main;
+}
+
+// --- Media Queries ---
+
+@media only screen and (max-width: 1023px) {
+  
+  .header__logo {
+    width: 50%;
+  }
+
+  .header__nav {
+    clear: both;
+    display: none;
+    float: none;
+    width: 100%;
+    
+    li {
+      display: block;
+      border-bottom: 1px solid $colour-border-alt;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .header__link {
+    border-bottom: none;
+    color: $colour-text-light;
+    display: block;
+    font-weight: 700;
+    padding: 20px;
+    text-decoration: none;
+    text-transform: uppercase;
+    @include transition(0.2s, ease, all);
+
+    &:hover {
+      border-bottom: none;
+      color: $colour-text-dark;
+    }
+  }
+
+  .header__link--active {
+    border-bottom: none;
+    color: $colour-text-dark;
+  }
+
+  .header__user {
+    margin-top: 10px;
+    width: 50%;
+  }
+
+  .header__menutoggle {
+    display: inline-block;
+  }
+
+}
