@@ -22,7 +22,7 @@
     "validator": "^8.1.0"
   },
   "scripts": {
-    "start": "node ./server/start.js",
+    "start": "node server/start.js",
     "watch": "concurrently \"nodemon ./server/start.js\" \"cd client && npm start\"",
     "data:add": "node ./server/data/load-sample-data.js",
     "data:remove": "node ./server/data/load-sample-data.js --delete"
