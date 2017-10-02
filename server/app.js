@@ -14,7 +14,7 @@ const app = express();
 
 // Serve up static files from the client build folder
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../client/build"));
+  app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
 }
 
 // Takes the raw requests and turns them into usable properties on req.body
