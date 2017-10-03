@@ -4,7 +4,7 @@ This repo contains the code for the 2017 SEG4910 / SEG4911 project by Ryan Fitzg
 
 ## Setup Instructions
 
-In order to setup, clone or fork the repo and run `npm install` to install all the required dependencies. You will need to then create a `variables.env` file with the required credentials. Finally, run `npm start` to initial the node (backend) app and `npm start:client` to start the client (React) app.
+In order to setup, clone or fork the repo and run `npm install` to install all the required dependencies in the root. You must also run `npm install` under the `client` directory. You will need to then create a `variables.env` file with the required credentials and keys. Finally, run `npm run watch` from the root in order to concurrently run the Node developement server and the client React server.
 
 ## Additional Content
 
@@ -28,9 +28,17 @@ Explains the development environments used throughout this project and how they 
 
 Explains the general architecture for the system that was developed for this project.
 
-### [Feature List](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Feature-List)
+### [System Design Interaction Examples](https://github.com/RyanFitzgerald/SEGCapstone/wiki/System-Design-Interaction-Examples)
 
-Lists all the proposed features of the system.
+Shows example design interactions for major system components.
+
+### [Project Plan](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Project-Plan)
+
+Explains each release / milestone and the features associated with them.
+
+### [Quality Assurance Report](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Quality-Assurance-Report)
+
+Showcases all tests needed for the system and their current state (pass / fail).
 
 ### [Database Schema](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Database-Schema)
 
