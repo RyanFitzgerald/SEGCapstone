@@ -12,6 +12,8 @@ import Edit from '../components/projects/Edit';
 import Note from '../components/projects/Note';
 import Product from '../components/projects/Product';
 import CostUpdate from '../components/projects/CostUpdate';
+import Photo from '../components/projects/Photo';
+import File from '../components/projects/File';
 
 class Project extends React.Component {
   constructor() {
@@ -23,7 +25,6 @@ class Project extends React.Component {
     this.getClients = this.getClients.bind(this);
     this.getProjects = this.getProjects.bind(this);
     this.removeFromProjects = this.removeFromProjects.bind(this);
-    this.searchProjects = this.searchProjects.bind(this);
     this.contentLoaded = this.contentLoaded.bind(this);
 
     // State
@@ -31,7 +32,8 @@ class Project extends React.Component {
       activeSubtab: 1,
       types: null,
       clients: null,
-      projects: null
+      projects: null,
+      projectCount: null
     };
   }
 
@@ -49,7 +51,7 @@ class Project extends React.Component {
     this.getClients();
 
     // Get projects
-    this.getProjects();
+    this.getProjects(false, 1);
   }
 
   setActiveSubtab(tab) {
@@ -68,9 +70,11 @@ class Project extends React.Component {
     });
   }
 
-  getProjects() {
-    api.getProjects().then(projects => {
-      this.setState({ projects });
+  getProjects(query, page) {
+    api.getProjects(query, page).then(result => {
+      const projects = result.projects;
+      const projectCount = result.count;
+      this.setState({ projects, projectCount });
     });
   }
 
@@ -80,12 +84,6 @@ class Project extends React.Component {
       return el._id !== id;
     });
     this.setState({ projects: updated });
-  }
-
-  searchProjects(query) {
-    api.searchProjects(query).then(projects => {
-      this.setState({ projects });
-    });
   }
 
   contentLoaded() {
@@ -105,7 +103,7 @@ class Project extends React.Component {
             <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} getProjects={this.getProjects}/>
           }/>
           <Route path="/projects/list" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} searchProjects={this.searchProjects}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} projectCount={this.state.projectCount} types={this.state.types} getProjects={this.getProjects}/>
           }/>
           <Route path="/projects/:id/edit" render={(location) =>
             <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} getProjects={this.getProjects}/>
@@ -115,6 +113,12 @@ class Project extends React.Component {
           }/>
           <Route path="/projects/:id/product" render={(location) =>
             <Product setActiveSubtab={this.setActiveSubtab} location={location} />
+          }/>
+          <Route path="/projects/:id/photo" render={(location) =>
+            <Photo setActiveSubtab={this.setActiveSubtab} location={location} />
+          }/>
+          <Route path="/projects/:id/file" render={(location) =>
+            <File setActiveSubtab={this.setActiveSubtab} location={location} />
           }/>
           <Route path="/projects/:id/update" render={(location) =>
             <CostUpdate setActiveSubtab={this.setActiveSubtab} location={location} />

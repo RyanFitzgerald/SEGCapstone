@@ -16,12 +16,8 @@ const fileSchema = new mongoose.Schema({
     required: 'A name must be provided!',
     trim: true
   },
-  description: {
-    type: String,
-    required: 'A description must be provided!',
-    trim: true
-  },
-  link: {
+  description: String,
+  file: {
     type: String,
     required: 'A link must be provided!',
     trim: true

@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import moment from 'moment';
 import * as api from '../../api';
+import Lightbox from 'react-images';
 
 import Loading from '../Loading';
 import Map from '../Map';
@@ -170,52 +171,20 @@ class View extends React.Component {
           </div>
           <div className="row">
             <div className="column">
-              <h2 className="card-title">0 Project Photos <Link to="/projects" className="btn btn--primary btn--small">Add Photo</Link></h2>
-              <div className="card">
-                No photos currently added to this project.
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="md-6 column">
-              <h2 className="card-title">2 Project Files <Link to="/projects" className="btn btn--primary btn--small">Add File</Link></h2>
-              <div className="card">
-                <div className="project-note">
-                  <Link to="/projects">Some File Name</Link>  
-                  <span className="project-note__details">Posted by <b>John Doe</b> on <b>January 1, 2017</b></span>
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa dolores ipsum illum et libero, neque ducimus fugiat earum nobis quas.
-                  </p>
-                </div>
-                <div className="project-note">
-                  <Link to="/projects">Some File Name</Link>  
-                  <span className="project-note__details">Posted by <b>John Doe</b> on <b>January 1, 2017</b></span>
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa dolores ipsum illum et libero, neque ducimus fugiat earum nobis quas.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="md-6 column">
-              <h2 className="card-title">{this.state.project.notes.length} Project Note(s) 
+              <h2 className="card-title">{this.state.project.photos.length} Project Photo(s) 
                 <Link 
                   to={{
-                    pathname: `${this.props.location.match.url}/note`,
+                    pathname: `${this.props.location.match.url}/photo`,
                     query: {name: this.state.project.name}
                   }}
                   className="btn btn--primary btn--small">
-                  Add Note
+                  Add Photo
                 </Link>
               </h2>
               <div className="card">
-              {this.state.project.notes.map((note, key) => {
+              {this.state.project.photos.map((photo, key) => {
                 return (
-                  <div className="client-note" key={key}>
-                    <span className="client-note__details">Posted by <b>John Doe</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
-                    <p>
-                      {note.description}
-                    </p>
-                  </div>
+                  <img key={key} src={`../../uploads/photos/${photo.photo}`}/>
                 );
               })}
               </div>
@@ -261,6 +230,55 @@ class View extends React.Component {
                       <li><b>Colour:</b> {product.colour}</li>
                       <li><b>Style:</b> {product.style}</li>
                     </ul>
+                  </div>
+                );
+              })}
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="md-6 column">
+              <h2 className="card-title">{this.state.project.files.length} Project File(s)
+                <Link 
+                  to={{
+                    pathname: `${this.props.location.match.url}/file`,
+                    query: {name: this.state.project.name}
+                  }}
+                  className="btn btn--primary btn--small">
+                  Add File
+                </Link>
+              </h2>
+              <div className="card">
+                {this.state.project.files.map((file, key) => {
+                  return (
+                    <div key={key} className="project-note">
+                      <a href={`../../uploads/files/${file.file}`} download>{file.name}</a>  
+                      <span className="project-note__details">Posted by <b>John Doe</b> on <b>{moment(file.created).format('MMMM Do, YYYY')}</b></span>
+                      <p>{file.description}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="md-6 column">
+              <h2 className="card-title">{this.state.project.notes.length} Project Note(s) 
+                <Link 
+                  to={{
+                    pathname: `${this.props.location.match.url}/note`,
+                    query: {name: this.state.project.name}
+                  }}
+                  className="btn btn--primary btn--small">
+                  Add Note
+                </Link>
+              </h2>
+              <div className="card">
+              {this.state.project.notes.map((note, key) => {
+                return (
+                  <div className="client-note" key={key}>
+                    <span className="client-note__details">Posted by <b>John Doe</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
+                    <p>
+                      {note.description}
+                    </p>
                   </div>
                 );
               })}

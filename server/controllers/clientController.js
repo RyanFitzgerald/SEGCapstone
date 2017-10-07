@@ -8,6 +8,7 @@ const Client = mongoose.model('Client');
 
 exports.getClients = async (req, res) => {
   const filter = {};
+  let skip = 0;
 
   //Check for name search
   if (req.query.q) {
@@ -29,8 +30,16 @@ exports.getClients = async (req, res) => {
     filter.street = { $regex: new RegExp(req.query.street), $options: 'i' };
   }
 
-  const clients = await Client.find(filter).populate('projects');
-  res.send(clients);
+  // Check for page
+  if (req.query.page) {
+    skip = (req.query.page - 1) * 10;
+  }
+
+  const clientsPromise = await Client.find(filter).populate('projects').sort({ 'created': -1 }).limit(10).skip(skip);
+  const countPromise = Client.find(filter).count();
+
+  const [clients, count] = await Promise.all([clientsPromise, countPromise]);
+  res.send({clients, count});
 };
 
 exports.getClient = async (req, res) => {

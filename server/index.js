@@ -17,6 +17,8 @@ require('./models/Project');
 require('./models/ProjectNote');
 require('./models/Product');
 require('./models/CostUpdate');
+require('./models/Photo');
+require('./models/File');
 require('./models/Type');
 
 // Require app with config

@@ -11,6 +11,8 @@ const projectNoteController = require('../controllers/projectNoteController');
 const productController = require('../controllers/productController');
 const costUpdateController = require('../controllers/costUpdateController');
 const userController = require('../controllers/userController');
+const photoController = require('../controllers/photoController');
+const fileController = require('../controllers/fileController');
 const typeController = require('../controllers/typeController');
 
 // --- Static Routes ---
@@ -36,6 +38,8 @@ router.delete('/api/projects/:id', catchErrors(projectController.deleteProject))
 router.post('/api/projects/:id/notes', catchErrors(projectNoteController.addNote));
 router.post('/api/projects/:id/products', catchErrors(productController.addProduct));
 router.post('/api/projects/:id/updates', catchErrors(costUpdateController.addUpdate));
+router.post('/api/projects/:id/photos', photoController.uploadPhoto, catchErrors(photoController.resize), catchErrors(photoController.addPhoto));
+router.post('/api/projects/:id/files', fileController.uploadFile, catchErrors(fileController.write), catchErrors(fileController.addFile));
 
 // --- Type Routes ---
 router.get('/api/types', catchErrors(typeController.getTypes));

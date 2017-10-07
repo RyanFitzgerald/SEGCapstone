@@ -22,12 +22,12 @@ class Client extends React.Component {
     this.addToClients = this.addToClients.bind(this);
     this.updateClients = this.updateClients.bind(this);
     this.removeFromClients = this.removeFromClients.bind(this);
-    this.searchClients = this.searchClients.bind(this);
 
     // State
     this.state = {
       activeSubtab: 1,
-      clients: null
+      clients: null,
+      clientsCount: null
     };
   }
 
@@ -46,9 +46,11 @@ class Client extends React.Component {
     this.setState({activeSubtab: tab});
   }
 
-  getClients() {
-    api.getClients().then(clients => {
-      this.setState({ clients });
+  getClients(query, page) {
+    api.getClients(query, page).then(result => {
+      const clients = result.clients;
+      const clientsCount = result.count;
+      this.setState({ clients, clientsCount });
     });
   }
 
@@ -73,12 +75,6 @@ class Client extends React.Component {
     this.setState({ clients });
   }
 
-  searchClients(query) {
-    api.searchClients(query).then(clients => {
-      this.setState({ clients });
-    });
-  }
-
   render() {
     return (
       <div>
@@ -92,7 +88,7 @@ class Client extends React.Component {
             <Add setActiveSubtab={this.setActiveSubtab} addToClients={this.addToClients}/>
           }/>
           <Route path="/clients/list" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} searchClients={this.searchClients}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} clientsCount={this.state.clientsCount} getClients={this.getClients}/>
           }/>
           <Route path="/clients/:id/note" render={(location) =>
             <Note setActiveSubtab={this.setActiveSubtab} location={location} />

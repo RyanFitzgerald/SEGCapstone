@@ -110,6 +110,17 @@ projectSchema.virtual('updates', {
   foreignField: 'project' // which field on update
 });
 
+projectSchema.virtual('photos', {
+  ref: 'Photo',
+  localField: '_id', // Which field on project
+  foreignField: 'project' // which field on update
+});
+
+projectSchema.virtual('files', {
+  ref: 'File',
+  localField: '_id', // Which field on project
+  foreignField: 'project' // which field on update
+});
 
 projectSchema.pre('save', async function(next) {
   const street = this.street;

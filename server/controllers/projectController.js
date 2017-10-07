@@ -7,6 +7,7 @@ const Project = mongoose.model('Project');
 
 exports.getProjects = async (req, res) => {
   const filter = {};
+  let skip = 0;
 
   //Check for name search
   if (req.query.q) {
@@ -38,12 +39,21 @@ exports.getProjects = async (req, res) => {
     filter.type = req.query.type;
   }
 
-  const projects = await Project.find(filter).populate('client type', '_id name');
-  res.send(projects);
+  // Check for page
+  if (req.query.page) {
+    skip = (req.query.page - 1) * 10;
+  }
+
+  const projectsPromise = Project.find(filter).populate('client type', '_id name').sort({ 'created': -1 }).limit(10).skip(skip);
+  const countPromise = Project.find(filter).count();
+
+  const [projects, count] = await Promise.all([projectsPromise, countPromise]);
+
+  res.send({projects, count});
 };
 
 exports.getProject = async (req, res) => {
-  const project = await Project.findById(req.params.id).populate('client type', '_id name').populate('notes products updates');
+  const project = await Project.findById(req.params.id).populate('client type', '_id name').populate('notes products updates photos files');
   res.send(project);
 };
 
@@ -58,7 +68,6 @@ exports.editProject = async (req, res) => {
   }).exec();
   res.send(req.params.id);
 };
-
 
 exports.deleteProject = async (req, res) => {
   const project = await Project.findById(req.params.id);

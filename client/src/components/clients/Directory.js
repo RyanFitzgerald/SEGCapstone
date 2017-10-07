@@ -9,6 +9,11 @@ class Directory extends React.Component {
     this.handleAdvanced = this.handleAdvanced.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.resetForm = this.resetForm.bind(this);
+    this.renderPagination = this.renderPagination.bind(this);
+
+    this.state = {
+      activePage: 1
+    };
   }
 
   componentDidMount() {
@@ -35,7 +40,20 @@ class Directory extends React.Component {
       postalCode: this.postalCode.value,
       street: this.street.value
     };
-    this.props.searchClients(query);
+    this.props.getClients(query, 1);
+  }
+
+  handlePagination(page) {
+    this.setState({
+      activePage: page
+    });
+    const query = {
+      q: this.q.value,
+      city: this.city.value,
+      postalCode: this.postalCode.value,
+      street: this.street.value
+    };
+    this.props.getClients(query, page);
   }
 
   resetForm() {
@@ -46,9 +64,35 @@ class Directory extends React.Component {
     this.handleSearch();
   }
 
+  renderPagination(count) {
+    const pages = Math.ceil(count / 10);
+
+    if (pages < 2) {
+      return;
+    }
+
+    let items = [];
+    for (let i = 1; i <= pages; i++) {
+      items.push(
+        <li key={i} className={this.state.activePage === i ? 'card__pagination-btn card__pagination-btn--active' : 'card__pagination-btn'} onClick={this.handlePagination.bind(this, i)}>
+          {i}
+        </li>
+      );
+    }
+
+    return (
+      <div className="card__pagination">
+        <ul>
+          {items}
+        </ul>
+      </div>
+    );
+  }
+
   render() {
     // Variables
     const clients = this.props.clients || [];
+    const count = this.props.clientsCount || 0;
     const cities = [];
     clients.forEach(ele => {
       if (cities.indexOf(ele.city) === -1) {
@@ -99,7 +143,7 @@ class Directory extends React.Component {
         </div>
         <div className="row">
           <div className="column">
-            <h2 className="card-title">{clients.length} Clients</h2>
+            <h2 className="card-title">{count} Client(s)</h2>
             <div className="card">
               <table className="card__table">
                 <thead className="card__tablehead">
@@ -129,6 +173,7 @@ class Directory extends React.Component {
                   })}
                 </tbody> 
               </table>
+              {this.renderPagination(count)}
             </div>
           </div>
         </div>

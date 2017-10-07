@@ -195,23 +195,15 @@ class Edit extends React.Component {
                   <div className="md-4 column form-section__title no-left">
                     <h3>Project Type</h3>
                     <p>
-                      Enter all information about this project's type and associated subtypes (if applicable)
+                      Enter all information about this project's type(s)
                     </p>
                   </div>
                   <div className="md-8 column no-right">
-                    <label className="form-label" htmlFor="type">Main Type <span className="form-required">*</span></label>
+                    <label className="form-label" htmlFor="type">Type(s) <span className="form-required">*</span></label>
                     <TagSelectorWrapper name="type" id="project-type" ref={input => this.projectType = input} required="true">
                       {this.state.types.map((type, key) => {
                         return <option key={key} value={type._id}>{type.name}</option>;
                       })}
-                    </TagSelectorWrapper>
-                    <label className="form-label" htmlFor="subtype">Sub Type</label>
-                    <TagSelectorWrapper name="subtype" id="project-subtype">
-                      <option value="1">Kitchen</option>
-                      <option value="2">Bathroom</option>
-                      <option value="3">Baseroom</option>
-                      <option value="4">Flooring</option>
-                      <option value="5">Miscellaneous</option>                
                     </TagSelectorWrapper>
                   </div>
                 </div>

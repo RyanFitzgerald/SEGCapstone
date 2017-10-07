@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 // --- Client API ---
-export const getClients = () => {
-  return axios
-    .get('/api/clients')
-    .then(resp => resp.data);
-};
-
-export const searchClients = query => {
-  return axios
-    .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}`)
-    .then(resp => resp.data);
+export const getClients = (query, page) => {
+  if (query) {
+    return axios
+      .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&page=${page}`)
+      .then(resp => resp.data);
+  } else {
+    return axios
+      .get(`/api/clients?page=${page}`)
+      .then(resp => resp.data);
+  }
 };
 
 export const getClient = id => {
@@ -45,21 +45,21 @@ export const addClientNote = note => {
 };
 
 // --- Project API ---
-export const getProjects = () => {
-  return axios
-    .get('/api/projects')
+export const getProjects = (query, page) => {
+  if (query) {
+    return axios
+      .get(`/api/projects?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&type=${query.type}&status=${query.status}&page=${page}`)
+      .then(resp => resp.data);
+  } else {
+    return axios
+    .get(`/api/projects?page=${page}`)
     .then(resp => resp.data);
+  }
 };
 
 export const getProject = id => {
   return axios
     .get(`/api/projects/${id}`)
-    .then(resp => resp.data);
-};
-
-export const searchProjects = query => {
-  return axios
-    .get(`/api/projects?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&type=${query.type}&status=${query.status}`)
     .then(resp => resp.data);
 };
 
@@ -101,6 +101,33 @@ export const addUpdate = update => {
     .post(`/api/projects/${update.project}/updates`, update)
     .then(resp => resp.data);
 };
+
+// --- Photo API ---
+export const addPhoto = photo => {
+  let data = new FormData();
+  data.append('name', photo.name);
+  data.append('description', photo.description);
+  data.append('photo', photo.photo);
+  data.append('project', photo.project);
+
+  return axios
+    .post(`/api/projects/${photo.project}/photos`, data)
+    .then(resp => resp.data);
+};
+
+// --- File API ---
+export const addFile = file => {
+  let data = new FormData();
+  data.append('name', file.name);
+  data.append('description', file.description);
+  data.append('file', file.file);
+  data.append('project', file.project);
+
+  return axios
+    .post(`/api/projects/${file.project}/files`, data)
+    .then(resp => resp.data);
+};
+
 
 // --- Types API ---
 export const getTypes = () => {
