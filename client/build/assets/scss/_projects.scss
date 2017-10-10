@@ -93,6 +93,12 @@
     border: none;
     padding-bottom: 0;
   }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
+  }
 }
 
 .project-note__details {
@@ -122,6 +128,12 @@
     border: none;
     padding-bottom: 0;
   }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
+  }
 }
 
 .project-product {
@@ -146,5 +158,11 @@
   &:last-child {
     border: none;
     padding-bottom: 0;
+  }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
   }
 }
