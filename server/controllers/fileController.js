@@ -48,3 +48,9 @@ exports.addFile = async (req, res) => {
   const file = await (new File(req.body)).save();
   res.send(file);
 };
+
+exports.deleteFile = async (req, res) => {
+  const file = await File.findById(req.params.file);
+  file.remove();
+  res.send(true);
+};

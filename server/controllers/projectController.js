@@ -8,6 +8,7 @@ const Project = mongoose.model('Project');
 exports.getProjects = async (req, res) => {
   const filter = {};
   let skip = 0;
+  let limit = 10;
 
   //Check for name search
   if (req.query.q) {
@@ -42,9 +43,12 @@ exports.getProjects = async (req, res) => {
   // Check for page
   if (req.query.page) {
     skip = (req.query.page - 1) * 10;
+    if (req.query.page === 'all') {
+      limit = 999999;
+    }
   }
 
-  const projectsPromise = Project.find(filter).populate('client type', '_id name').sort({ 'created': -1 }).limit(10).skip(skip);
+  const projectsPromise = Project.find(filter).populate('client type', '_id name').sort({ 'created': -1 }).limit(limit).skip(skip);
   const countPromise = Project.find(filter).count();
 
   const [projects, count] = await Promise.all([projectsPromise, countPromise]);

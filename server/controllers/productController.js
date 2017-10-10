@@ -10,3 +10,9 @@ exports.addProduct = async (req, res) => {
   const product = await (new Product(req.body)).save();
   res.send(true);
 };
+
+exports.deleteProduct = async (req, res) => {
+  const product = await Product.findById(req.params.product);
+  product.remove();
+  res.send(true);
+};

@@ -11,3 +11,9 @@ exports.addUpdate = async (req, res) => {
   const update = await (new CostUpdate(req.body)).save();
   res.send(true);
 };
+
+exports.deleteUpdate = async (req, res) => {
+  const update = await CostUpdate.findById(req.params.update);
+  update.remove();
+  res.send(true);
+};

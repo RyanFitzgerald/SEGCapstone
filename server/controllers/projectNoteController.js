@@ -10,3 +10,9 @@ exports.addNote = async (req, res) => {
   const note = await (new ProjectNote(req.body)).save();
   res.send(true);
 };
+
+exports.deleteNote = async (req, res) => {
+  const note = await ProjectNote.findById(req.params.note);
+  note.remove();
+  res.send(true);
+};

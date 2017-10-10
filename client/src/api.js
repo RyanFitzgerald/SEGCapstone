@@ -44,6 +44,12 @@ export const addClientNote = note => {
     .then(resp => resp.data);
 };
 
+export const deleteClientNote = note => {
+  return axios
+    .delete(`/api/clients/${note.client}/notes/${note.id}`)
+    .then(resp => resp.data);
+}
+
 // --- Project API ---
 export const getProjects = (query, page) => {
   if (query) {

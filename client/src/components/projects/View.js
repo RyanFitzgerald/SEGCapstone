@@ -15,6 +15,10 @@ class View extends React.Component {
     this.getProject = this.getProject.bind(this);
     this.deleteProject = this.deleteProject.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
+    this.deleteUpdate = this.deleteUpdate.bind(this);
+    this.deletePhoto = this.deletePhoto.bind(this);
+    this.deleteProduct = this.deleteProduct.bind(this);
+    this.deleteFile = this.deleteFile.bind(this);
     this.getDollars = this.getDollars.bind(this);
     this.getUpdatedTotal = this.getUpdatedTotal.bind(this);
     this.renderCostUpdateButton = this.renderCostUpdateButton.bind(this);

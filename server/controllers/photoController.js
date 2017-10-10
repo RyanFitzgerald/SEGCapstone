@@ -46,3 +46,9 @@ exports.addPhoto = async (req, res) => {
   const photo = await (new Photo(req.body)).save();
   res.send(photo);
 };
+
+exports.deletePhoto = async (req, res) => {
+  const photo = await Photo.findById(req.params.photo);
+  photo.remove();
+  res.send(true);
+};

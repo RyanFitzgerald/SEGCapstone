@@ -50,6 +50,18 @@ class View extends React.Component {
     });
   }
 
+  deleteNote(id) {
+    const note = {
+      id,
+      client: this.props.location.match.params.id
+    };
+    api.deleteClientNote(note).then(result => {
+      if (result) {
+        this.getClient(this.props.location.match.params.id);
+      }
+    });
+  }
+
   render() {
     if (this.state.redirect) {
       return (
@@ -144,6 +156,7 @@ class View extends React.Component {
                     <p>
                       {note.description}
                     </p>
+                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
                   </div>
                 );
               })}
