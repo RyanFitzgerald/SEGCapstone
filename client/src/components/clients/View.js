@@ -44,7 +44,7 @@ class View extends React.Component {
       if (result) {
         this.props.removeFromClients(id);
         this.setState({
-          redirect: '/clients/list'
+          redirect: '/clients'
         });
       }
     });

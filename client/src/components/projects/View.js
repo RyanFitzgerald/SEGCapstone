@@ -53,7 +53,7 @@ class View extends React.Component {
       if (result) {
         this.props.removeFromProjects(id);
         this.setState({
-          redirect: '/projects/list'
+          redirect: '/projects'
         });
       }
     });
