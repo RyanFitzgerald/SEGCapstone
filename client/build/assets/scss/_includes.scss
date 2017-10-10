@@ -141,6 +141,21 @@ a {
   width: 100%;
 }
 
+.delete-small {
+  background: none;
+  border: 1px solid $colour-text-medium;
+  border-radius: 10px;
+  color: $colour-text-medium;
+  cursor: pointer;
+  display: none;
+  font-size: 0.9em;
+  padding: 2px 10px;
+
+  &:hover {
+    border: 1px solid $colour-warn;
+  }
+}
+
 // --- Flash Styles ---
 
 .flash {
@@ -262,6 +277,48 @@ a {
     &:hover {
       background: #eee;
     }
+  }
+}
+
+// --- Pagination Styles ---
+
+.card__pagination {
+  font-size: 1.2em;
+  padding: 30px 0;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    text-align: center;  
+  }
+}
+
+.card__pagination-title {
+  display: inline-block;
+  font-weight: 700;
+  list-style: none;
+  margin-right: 10px;
+}
+
+.card__pagination-btn {
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  list-style: none;
+  margin: 0 5px;
+  padding: 5px 15px;
+
+  &:hover {
+    background: #eee;
+  }
+}
+
+.card__pagination-btn--active {
+  background: $colour-main;
+  color: #fff;
+
+  &:hover {
+    background: $colour-main;
   }
 }
 
