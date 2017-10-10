@@ -14,7 +14,7 @@
     "react-images": "^0.5.8",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13",
-    "tagselector": "^0.1.1"
+    "tagselector": "^0.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

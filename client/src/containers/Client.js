@@ -4,7 +4,6 @@ import * as api from '../api';
 
 // Import client components
 import Submenu from '../components/clients/Submenu';
-import Overview from '../components/clients/Overview';
 import Add from '../components/clients/Add';
 import Edit from '../components/clients/Edit';
 import Directory from '../components/clients/Directory';
@@ -82,13 +81,10 @@ class Client extends React.Component {
 
         <Switch>
           <Route exact path="/clients" render={() =>
-            <Overview setActiveSubtab={this.setActiveSubtab}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} clientsCount={this.state.clientsCount} getClients={this.getClients}/>
           }/>
           <Route path="/clients/add" render={() =>
             <Add setActiveSubtab={this.setActiveSubtab} addToClients={this.addToClients}/>
-          }/>
-          <Route path="/clients/list" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} clientsCount={this.state.clientsCount} getClients={this.getClients}/>
           }/>
           <Route path="/clients/:id/note" render={(location) =>
             <Note setActiveSubtab={this.setActiveSubtab} location={location} />

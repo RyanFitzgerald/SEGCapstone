@@ -141,6 +141,21 @@ a {
   width: 100%;
 }
 
+.delete-small {
+  background: none;
+  border: 1px solid $colour-text-medium;
+  border-radius: 10px;
+  color: $colour-text-medium;
+  cursor: pointer;
+  display: none;
+  font-size: 0.9em;
+  padding: 2px 10px;
+
+  &:hover {
+    border: 1px solid $colour-warn;
+  }
+}
+
 // --- Flash Styles ---
 
 .flash {

@@ -88,6 +88,12 @@ export const addProjectNote = note => {
     .then(resp => resp.data);
 };
 
+export const deleteProjectNote = note => {
+  return axios
+    .delete(`/api/projects/${note.project}/notes/${note.id}`)
+    .then(resp => resp.data);
+}
+
 // --- Project Products Api ---
 export const addProduct = product => {
   return axios
@@ -95,12 +101,24 @@ export const addProduct = product => {
     .then(resp => resp.data);
 };
 
+export const deleteProduct = product => {
+  return axios
+    .delete(`/api/projects/${product.project}/products/${product.id}`)
+    .then(resp => resp.data);
+}
+
 // --- Project Cost Update Api ---
 export const addUpdate = update => {
   return axios
     .post(`/api/projects/${update.project}/updates`, update)
     .then(resp => resp.data);
 };
+
+export const deleteUpdate = update => {
+  return axios
+    .delete(`/api/projects/${update.project}/updates/${update.id}`)
+    .then(resp => resp.data);
+}
 
 // --- Photo API ---
 export const addPhoto = photo => {
@@ -115,6 +133,12 @@ export const addPhoto = photo => {
     .then(resp => resp.data);
 };
 
+export const deletePhoto = photo => {
+  return axios
+    .delete(`/api/projects/${photo.project}/photos/${photo.id}`)
+    .then(resp => resp.data);
+}
+
 // --- File API ---
 export const addFile = file => {
   let data = new FormData();
@@ -128,6 +152,11 @@ export const addFile = file => {
     .then(resp => resp.data);
 };
 
+export const deleteFile = file => {
+  return axios
+    .delete(`/api/projects/${file.project}/files/${file.id}`)
+    .then(resp => resp.data);
+}
 
 // --- Types API ---
 export const getTypes = () => {

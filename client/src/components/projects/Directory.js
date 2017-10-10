@@ -21,7 +21,7 @@ class Directory extends React.Component {
     document.title = 'Project Directory | Renovaction';
 
     // Update tab
-    this.props.setActiveSubtab(3);
+    this.props.setActiveSubtab(1);
   }
 
   handleAdvanced(e) {

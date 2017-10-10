@@ -4,7 +4,6 @@ import * as api from '../api';
 
 // Import client components
 import Submenu from '../components/projects/Submenu';
-import Overview from '../components/projects/Overview';
 import Add from '../components/projects/Add';
 import Directory from '../components/projects/Directory';
 import View from '../components/projects/View';
@@ -65,8 +64,8 @@ class Project extends React.Component {
   }
 
   getClients() {
-    api.getClients().then(clients => {
-      this.setState({ clients });
+    api.getClients(false, 'all').then(result => {
+      this.setState({ clients: result.clients });
     });
   }
 
@@ -97,13 +96,10 @@ class Project extends React.Component {
 
         <Switch>
           <Route exact path="/projects" render={() =>
-            <Overview setActiveSubtab={this.setActiveSubtab}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} projectCount={this.state.projectCount} types={this.state.types} getProjects={this.getProjects}/>
           }/>
           <Route path="/projects/add" render={(location) =>
             <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} getProjects={this.getProjects}/>
-          }/>
-          <Route path="/projects/list" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} projectCount={this.state.projectCount} types={this.state.types} getProjects={this.getProjects}/>
           }/>
           <Route path="/projects/:id/edit" render={(location) =>
             <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} getProjects={this.getProjects}/>

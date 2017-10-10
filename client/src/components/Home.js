@@ -14,7 +14,7 @@ class Home extends React.Component {
       <div className="content">
         <div className="row">
           <div className="column">
-            <h2 className="card-title">Placeholder Title</h2>
+            <h2 className="card-title">Quick Actions</h2>
             <div className="card">
               Content to be determined
             </div>
@@ -22,13 +22,13 @@ class Home extends React.Component {
         </div>
         <div className="row">
           <div className="md-6 column">
-            <h2 className="card-title">Placeholder Title</h2>
+            <h2 className="card-title">Projects Summary</h2>
             <div className="card">
               Content to be determined
             </div>
           </div>
           <div className="md-6 column">
-            <h2 className="card-title">Placeholder Title</h2>
+            <h2 className="card-title">Clients Summary</h2>
             <div className="card">
               Content to be determined
             </div>

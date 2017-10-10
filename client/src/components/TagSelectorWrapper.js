@@ -12,7 +12,7 @@ class TagSelectorWrapper extends React.Component {
 
   render() {
     return (
-      <select name={this.props.name} id={this.props.id} ref={ele => this.selectField = ele} required={(this.props.required) ? true : false}>
+      <select name={this.props.name} id={this.props.id} ref={ele => this.selectField = ele} required={(this.props.required) ? true : false} multiple>
         {this.props.children}
       </select>
     );

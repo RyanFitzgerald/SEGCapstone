@@ -764,6 +764,21 @@ a:hover {
   width: 100%;
 }
 
+.delete-small {
+  background: none;
+  border: 1px solid #637280;
+  border-radius: 10px;
+  color: #637280;
+  cursor: pointer;
+  display: none;
+  font-size: 0.9em;
+  padding: 2px 10px;
+}
+
+.delete-small:hover {
+  border: 1px solid #f76d5f;
+}
+
 .flash {
   background: #fff;
   border-radius: 4px;
@@ -1335,6 +1350,10 @@ a:hover {
   padding-bottom: 0;
 }
 
+.project-note:hover .delete-small {
+  display: block;
+}
+
 .project-note__details {
   display: block;
 }
@@ -1364,6 +1383,10 @@ a:hover {
   padding-bottom: 0;
 }
 
+.project-update:hover .delete-small {
+  display: block;
+}
+
 .project-product {
   border-bottom: 1px solid #e2e2e2;
   padding: 15px 0;
@@ -1387,6 +1410,10 @@ a:hover {
 .project-product:last-child {
   border: none;
   padding-bottom: 0;
+}
+
+.project-product:hover .delete-small {
+  display: block;
 }
 
 .client-overview {
@@ -1451,4 +1478,8 @@ a:hover {
 .client-note:last-child {
   border: none;
   padding-bottom: 0;
+}
+
+.client-note:hover .delete-small {
+  display: block;
 }

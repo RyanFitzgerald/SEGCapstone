@@ -14,6 +14,7 @@ class View extends React.Component {
     // Bind functions
     this.getProject = this.getProject.bind(this);
     this.deleteProject = this.deleteProject.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
     this.getDollars = this.getDollars.bind(this);
     this.getUpdatedTotal = this.getUpdatedTotal.bind(this);
     this.renderCostUpdateButton = this.renderCostUpdateButton.bind(this);
@@ -50,6 +51,66 @@ class View extends React.Component {
         this.setState({
           redirect: '/projects/list'
         });
+      }
+    });
+  }
+
+  deleteNote(id) {
+    const note = {
+      id,
+      project: this.props.location.match.params.id
+    };
+    api.deleteProjectNote(note).then(result => {
+      if (result) {
+        this.getProject(this.props.location.match.params.id);
+      }
+    });
+  }
+
+  deleteUpdate(id) {
+    const update = {
+      id,
+      project: this.props.location.match.params.id
+    };
+    api.deleteUpdate(update).then(result => {
+      if (result) {
+        this.getProject(this.props.location.match.params.id);
+      }
+    });
+  }
+
+  deletePhoto(id) {
+    const photo = {
+      id,
+      project: this.props.location.match.params.id
+    };
+    api.deletePhoto(photo).then(result => {
+      if (result) {
+        this.getProject(this.props.location.match.params.id);
+      }
+    });
+  }
+
+  deleteProduct(id) {
+    const product = {
+      id,
+      project: this.props.location.match.params.id
+    };
+    api.deleteProduct(product).then(result => {
+      if (result) {
+        this.getProject(this.props.location.match.params.id);
+      }
+    });
+  }
+
+  deleteFile(id) {
+    const file = {
+      id,
+      project: this.props.location.match.params.id
+    };
+    api.deleteFile(file).then(result => {
+      if (result) {
+        this.getProject(this.props.location.match.params.id);
       }
     });
   }
@@ -198,12 +259,13 @@ class View extends React.Component {
               <div className="card">
               {this.state.project.updates.map((update, key) => {
                 return (
-                  <div className="project-update">
+                  <div key={key} className="project-update">
                     <ul>
                       <li><b>Amount:</b> {`$${this.getDollars(update.amount)}`}</li>
                       <li><b>Reason:</b> {update.reason}</li>
                       <li><b>Type:</b> {update.type}</li>
                     </ul>
+                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this update?')) {this.deleteUpdate(update._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
                   </div>
                 );
               })}
@@ -223,13 +285,14 @@ class View extends React.Component {
               <div className="card">
               {this.state.project.products.map((product, key) => {
                 return (
-                  <div className="project-product">
+                  <div key={key} className="project-product">
                     <ul>
                       <li><b>Name:</b> {product.name}</li>
                       <li><b>Brand:</b> {product.brand}</li>
                       <li><b>Colour:</b> {product.colour}</li>
                       <li><b>Style:</b> {product.style}</li>
                     </ul>
+                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this product?')) {this.deleteProduct(product._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
                   </div>
                 );
               })}
@@ -255,6 +318,7 @@ class View extends React.Component {
                       <a href={`../../uploads/files/${file.file}`} download>{file.name}</a>  
                       <span className="project-note__details">Posted by <b>John Doe</b> on <b>{moment(file.created).format('MMMM Do, YYYY')}</b></span>
                       <p>{file.description}</p>
+                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this file?')) {this.deleteFile(file._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
                     </div>
                   );
                 })}
@@ -274,11 +338,12 @@ class View extends React.Component {
               <div className="card">
               {this.state.project.notes.map((note, key) => {
                 return (
-                  <div className="client-note" key={key}>
-                    <span className="client-note__details">Posted by <b>John Doe</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
+                  <div className="project-note" key={key}>
+                    <span className="project-note__details">Posted by <b>John Doe</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
                     <p>
                       {note.description}
                     </p>
+                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
                   </div>
                 );
               })}
