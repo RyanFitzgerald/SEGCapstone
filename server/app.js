@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 //const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const expressValidator = require('express-validator');
 const routes = require('./routes/index');
 const helpers = require('../helpers');
@@ -24,9 +25,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Exposes a bunch of methods for validating data
 app.use(expressValidator());
 
+// Setup Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Pass variables to templates and all requests
 app.use((req, res, next) => {
   res.locals.h = helpers;
+  res.locals.user = req.user || null;
   res.locals.currentPath = req.path;
   next();
 });

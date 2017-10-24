@@ -20,6 +20,7 @@ require('./models/CostUpdate');
 require('./models/Photo');
 require('./models/File');
 require('./models/Type');
+require('./models/User');
 
 // Require app with config
 const app = require('./app');
