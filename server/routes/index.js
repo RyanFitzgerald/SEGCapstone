@@ -14,9 +14,9 @@ const userController = require('../controllers/userController');
 const photoController = require('../controllers/photoController');
 const fileController = require('../controllers/fileController');
 const typeController = require('../controllers/typeController');
+const authController = require('../controllers/authController');
 
 // --- Static Routes ---
-
 router.get('/', (req, res) => {
   res.send('Server');
 });
@@ -51,7 +51,12 @@ router.delete('/api/projects/:id/files/:file', catchErrors(fileController.delete
 router.get('/api/types', catchErrors(typeController.getTypes));
 
 // --- User Routes ---
-router.get('/api/account', userController.getUser)
+router.get('/api/account', userController.getUser);
+router.get('/api/getUser', userController.getUser);
+router.post('/api/addUser', catchErrors(userController.register));
+router.get('/api/isLoggedIn', authController.isLoggedIn);
+router.post('/api/login', authController.login);
+router.get('/api/logout', authController.logout);
 
 // Export the router
 module.exports = router;

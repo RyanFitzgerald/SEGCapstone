@@ -11,6 +11,7 @@ const clientNotes = JSON.parse(fs.readFileSync(__dirname + '/clients-notes.json'
 const projects = JSON.parse(fs.readFileSync(__dirname + '/projects.json', 'utf-8'));
 const projectNotes = JSON.parse(fs.readFileSync(__dirname + '/projects-notes.json', 'utf-8'));
 const types = JSON.parse(fs.readFileSync(__dirname + '/types.json', 'utf-8'));
+const users = JSON.parse(fs.readFileSync(__dirname + '/users.json', 'utf-8'));
 
 // Import required models
 const Client = require('../models/Client');
@@ -18,17 +19,25 @@ const ClientNote = require('../models/ClientNote');
 const Project = require('../models/Project');
 const ProjectNote = require('../models/ProjectNote');
 const Type = require('../models/Type');
+const User = require('../models/User');
 
 // Delete all sample data
 async function deleteData() {
-  console.log('Deleting Data...');
-  await Client.remove();
-  await ClientNote.remove();
-  await Project.remove();
-  await ProjectNote.remove();
-  await Type.remove();
-  console.log('Data Deleted.');
-  process.exit();
+  try {
+    console.log('Deleting Data...');
+    await Client.remove();
+    await ClientNote.remove();
+    await Project.remove();
+    await ProjectNote.remove();
+    await Type.remove();
+    await User.remove();
+    console.log('🖒 Data Deleted. 🖒');
+    process.exit();
+  } catch(e) {
+    console.log('🖓 A Problem Occurred Deleting Data 🖓');
+    console.log(e);
+    process.exit();
+  }
 }
 
 // Add all sample data
@@ -40,10 +49,11 @@ async function loadData() {
     await ClientNote.insertMany(clientNotes);
     await Project.insertMany(projects);
     await ProjectNote.insertMany(projectNotes);
-    console.log('Data added.');
+    await User.insertMany(users);
+    console.log('🖒 Data added. 🖒');
     process.exit();
   } catch(e) {
-    console.log('Error! The sample data could not be added.');
+    console.log('🖓 Error! The sample data could not be added. 🖓');
     console.log(e);
     process.exit();
   }

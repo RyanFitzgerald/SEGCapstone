@@ -1,5 +1,8 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Logo from '../logo.png';
+import * as api from '../api';
+import LoadingGif from '../loading.gif';
 
 class Login extends React.Component {
   constructor() {
@@ -10,20 +13,46 @@ class Login extends React.Component {
 
     // Set state
     this.state = {
-      redirect: false
+      redirect: false,
+      loading: false
     }
+  }
+
+  componentDidMount() {
+    // Set title
+    document.title = 'Login | Renovaction';
+
+    // Update active tab
+    this.props.setActiveTab(1);
   }
 
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
 
-    // TO DO
-    // Call Passport using API to login and then redirect them by
-    // rendering Redirect prop from react router
+    // Retrieve user credentials from form
+    const userCredentials = {
+      email: this.username.value,
+      password: this.password.value
+    };
+    this.setState({loading:true});
+    // Attempt to validate user credentials for login
+    this.login(userCredentials);
+  }
+
+  login(userCredentials) {
+    api.login(userCredentials).then(
+      this.props.loginAttempt
+    );
   }
 
   render() {
+    
+    let loadIcon = <div></div>;
+    if(this.state.loading) {
+      loadIcon = <div className="loading"><img src={LoadingGif} alt="Loading..."/></div>;
+    }
+
     return (
       <div className="login card">
         <img src={Logo} alt="Renovaction" />
@@ -32,6 +61,7 @@ class Login extends React.Component {
           <input className="form-text" type="password" ref={input => this.password = input} placeholder="Password" />
           <input className="btn btn--primary btn--small" type="submit" value="Login"/>
         </form>
+        {loadIcon}
       </div>
     );
   }

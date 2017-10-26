@@ -170,3 +170,32 @@ export const getTypes = () => {
     .get('/api/types')
     .then(resp => resp.data);
 };
+
+// --- User API ---
+export const getUser = () => {
+  return axios
+    .get(`/api/getUser`)
+    .then(resp => resp.data);
+};
+
+export const addUser = user => {
+  return axios
+    .post(`/api/addUser`, user)
+    .then(resp => resp.data);
+};
+
+export const isLoggedIn = () => {
+  return axios
+    .get(`/api/isLoggedIn`)
+    .then(resp => resp.data);
+};
+
+export const login = userCredentials => {
+  return axios
+    .post(`/api/login`, userCredentials);
+};
+
+export const logout = () => {
+  return axios
+    .get(`/api/logout`);
+};

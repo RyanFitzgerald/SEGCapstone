@@ -1,7 +1,8 @@
 // Import required packages
 const express = require('express');
+const session = require('express-session');
 const mongoose = require('mongoose');
-//const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -9,6 +10,7 @@ const expressValidator = require('express-validator');
 const routes = require('./routes/index');
 const helpers = require('../helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+require('./handlers/passport');
 
 // create our Express app
 const app = express();
@@ -24,6 +26,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Exposes a bunch of methods for validating data
 app.use(expressValidator());
+
+app.use(session({
+  secret: process.env.SECRET,
+  key: process.env.KEY,
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
 
 // Setup Passport
 app.use(passport.initialize());
