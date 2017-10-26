@@ -8,8 +8,6 @@ const Client = mongoose.model('Client');
 
 exports.getClients = async (req, res) => {
   const filter = {};
-  let skip = 0;
-  let limit = 10;
 
   //Check for name search
   if (req.query.q) {
@@ -31,19 +29,9 @@ exports.getClients = async (req, res) => {
     filter.street = { $regex: new RegExp(req.query.street), $options: 'i' };
   }
 
-  // Check for page
-  if (req.query.page) {
-    skip = (req.query.page - 1) * 10;
-    if (req.query.page === 'all') {
-      limit = 999999;
-    }
-  }
+  const clients = await Client.find(filter).populate('projects').sort({ 'created': -1 });
 
-  const clientsPromise = await Client.find(filter).populate('projects').sort({ 'created': -1 }).limit(limit).skip(skip);
-  const countPromise = Client.find(filter).count();
-
-  const [clients, count] = await Promise.all([clientsPromise, countPromise]);
-  res.send({clients, count});
+  res.send(clients);
 };
 
 exports.getClient = async (req, res) => {

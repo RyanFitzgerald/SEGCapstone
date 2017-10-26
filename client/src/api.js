@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 // --- Client API ---
-export const getClients = (query, page) => {
+export const getClients = (query) => {
   if (query) {
     return axios
-      .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&page=${page}`)
+      .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}`)
       .then(resp => resp.data);
   } else {
     return axios
-      .get(`/api/clients?page=${page}`)
+      .get('/api/clients')
       .then(resp => resp.data);
   }
 };
@@ -22,13 +22,15 @@ export const getClient = id => {
 export const addClient = client => {
   return axios
     .post('/api/clients', client)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 }
 
 export const updateClient = (client, id) => {
   return axios
     .post(`/api/clients/${id}`, client)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 }
 
 export const deleteClient = id => {
@@ -41,7 +43,8 @@ export const deleteClient = id => {
 export const addClientNote = note => {
   return axios
     .post(`/api/clients/${note.client}/notes`, note)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 };
 
 export const deleteClientNote = note => {
@@ -51,14 +54,14 @@ export const deleteClientNote = note => {
 }
 
 // --- Project API ---
-export const getProjects = (query, page) => {
+export const getProjects = (query) => {
   if (query) {
     return axios
-      .get(`/api/projects?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&type=${query.type}&status=${query.status}&page=${page}`)
+      .get(`/api/projects?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&type=${query.type}&status=${query.status}`)
       .then(resp => resp.data);
   } else {
     return axios
-    .get(`/api/projects?page=${page}`)
+    .get('/api/projects')
     .then(resp => resp.data);
   }
 };
@@ -72,13 +75,15 @@ export const getProject = id => {
 export const addProject = project => {
   return axios
     .post('/api/projects', project)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 }
 
 export const updateProject = (project, id) => {
   return axios
     .post(`/api/projects/${id}`, project)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 }
 
 export const deleteProject = id => {
@@ -91,7 +96,8 @@ export const deleteProject = id => {
 export const addProjectNote = note => {
   return axios
     .post(`/api/projects/${note.project}/notes`, note)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 };
 
 export const deleteProjectNote = note => {
@@ -104,7 +110,8 @@ export const deleteProjectNote = note => {
 export const addProduct = product => {
   return axios
     .post(`/api/projects/${product.project}/products`, product)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 };
 
 export const deleteProduct = product => {
@@ -117,7 +124,8 @@ export const deleteProduct = product => {
 export const addUpdate = update => {
   return axios
     .post(`/api/projects/${update.project}/updates`, update)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 };
 
 export const deleteUpdate = update => {
@@ -136,7 +144,8 @@ export const addPhoto = photo => {
 
   return axios
     .post(`/api/projects/${photo.project}/photos`, data)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 };
 
 export const deletePhoto = photo => {
@@ -155,7 +164,8 @@ export const addFile = file => {
 
   return axios
     .post(`/api/projects/${file.project}/files`, data)
-    .then(resp => resp.data);
+    .then(resp => resp.data)
+    .catch(error => error.response);
 };
 
 export const deleteFile = file => {

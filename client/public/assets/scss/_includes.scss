@@ -156,19 +156,20 @@ a {
   }
 }
 
+.toastify {
+  font-size: 1.5em;
+}
+
 // --- Flash Styles ---
 
 .flash {
   background: #fff;
   border-radius: 4px;
   color: $colour-text-medium;
-  font-size: 1.5em;
-  padding: 25px 15px;
+  font-size: 1.25em;
+  padding: 15px;
   position: relative;
-  margin-top: 30px;
-  margin-bottom: -20px;
   text-align: center;
-  @include shadow();
   @include transition();
 
   p {

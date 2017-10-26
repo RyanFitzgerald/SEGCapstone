@@ -57,10 +57,6 @@ const projectSchema = new mongoose.Schema({
     ref: 'Type',
     required: 'A type must be provided'
   }],
-  subtype: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'SubType'
-  }],
   client: {
     type: mongoose.Schema.ObjectId,
     ref: 'Client',

@@ -2,9 +2,9 @@ import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import moment from 'moment';
 import * as api from '../../api';
-import Lightbox from 'react-images';
-
+import Gallery from './Gallery';
 import Loading from '../Loading';
+import {Marker} from 'google-maps-react';
 import Map from '../Map';
 
 class View extends React.Component {
@@ -22,10 +22,12 @@ class View extends React.Component {
     this.getDollars = this.getDollars.bind(this);
     this.getUpdatedTotal = this.getUpdatedTotal.bind(this);
     this.renderCostUpdateButton = this.renderCostUpdateButton.bind(this);
+    this.closeLightbox = this.closeLightbox.bind(this);
 
     // Initial state
     this.state = {
       project: null,
+      lightboxIsOpen: false,
       redirect: null
     }
   }
@@ -35,7 +37,7 @@ class View extends React.Component {
     this.props.setActiveSubtab(0);
 
     // Get client
-    this.getProject(this.props.location.match.params.id);
+    this.getProject(this.props.location.match.params.id);    
   }
 
   getProject(id) {
@@ -52,6 +54,7 @@ class View extends React.Component {
     api.deleteProject(id).then(result => {
       if (result) {
         this.props.removeFromProjects(id);
+        this.props.addNotification('Successfully deleted project!', 'success');        
         this.setState({
           redirect: '/projects'
         });
@@ -66,6 +69,7 @@ class View extends React.Component {
     };
     api.deleteProjectNote(note).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted note!', 'success');
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -78,6 +82,7 @@ class View extends React.Component {
     };
     api.deleteUpdate(update).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted cost update!', 'success');        
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -90,6 +95,7 @@ class View extends React.Component {
     };
     api.deletePhoto(photo).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted photo!', 'success');        
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -102,6 +108,7 @@ class View extends React.Component {
     };
     api.deleteProduct(product).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted product!', 'success');        
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -114,6 +121,7 @@ class View extends React.Component {
     };
     api.deleteFile(file).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted file!', 'success');        
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -156,6 +164,12 @@ class View extends React.Component {
       }
     });
     return this.getDollars(updatedTotal);
+  }
+
+  closeLightbox () {
+		this.setState({
+			lightboxIsOpen: false
+		});
   }
 
   render() {
@@ -225,7 +239,12 @@ class View extends React.Component {
               <h2 className="card-title">Project Location</h2>
               <div className="card">
                 <div id="map" className="project-map">
-                  <Map google={window.google} lat={this.state.project.location.coordinates[1]} long={this.state.project.location.coordinates[0]} />
+                  <Map google={window.google} lat={this.state.project.location.coordinates[1]} long={this.state.project.location.coordinates[0]}>
+                    <Marker 
+                      title={this.state.project.name}
+                      position={{lat: this.state.project.location.coordinates[1], lng: this.state.project.location.coordinates[0]}} 
+                    />
+                  </Map>
                 </div>
                 <div className="project-location">
                   <p>{this.state.project.street}<br/>{this.state.project.city}, ON <span className="capitalize">{this.state.project.postalCode}</span></p>
@@ -247,11 +266,13 @@ class View extends React.Component {
                 </Link>
               </h2>
               <div className="card">
-              {this.state.project.photos.map((photo, key) => {
-                return (
-                  <img key={key} src={`../../uploads/photos/${photo.photo}`}/>
-                );
-              })}
+              <Gallery images={this.state.project.photos.map((photo, key) => ({
+                src: `../../uploads/photos/${photo.photo}`,
+                thumbnail: `../../uploads/photos/${photo.thumb}`,
+                caption: `${photo.name} - ${photo.description}`,
+                orientation: 'landscape',
+                useForDemo: true
+              }))} />
               </div>
             </div>
           </div>

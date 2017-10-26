@@ -21,7 +21,8 @@ class Add extends React.Component {
     this.state = {
       redirect: false,
       clients: false,
-      types: false
+      types: false,
+      formError: false
     }
   }
 
@@ -77,6 +78,13 @@ class Add extends React.Component {
 
   addProject(project) {
     api.addProject(project).then(resp => {
+      if (resp.status === 500) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+
       // Update parent state
       this.props.getProjects();
 
@@ -98,6 +106,7 @@ class Add extends React.Component {
   render() {
 
     if (this.state.redirect) {
+      this.props.addNotification('Successfully added project!', 'success');      
       return (
         <Redirect to={this.state.redirect}/>
       );
@@ -115,6 +124,7 @@ class Add extends React.Component {
           <div className="column">
             <h2 className="card-title">Add a New Project</h2>
             <div className="card">
+            {this.props.renderError(this.state.formError)}
               <form onSubmit={this.handleSubmit}>
                 <div className="row form-section">
                   <div className="md-4 column form-section__title no-left">

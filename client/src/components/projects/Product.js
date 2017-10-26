@@ -12,7 +12,8 @@ class Note extends React.Component {
 
     // Set state
     this.state = {
-      redirect: null
+      redirect: null,
+      formError: false
     };
   }
 
@@ -43,6 +44,13 @@ class Note extends React.Component {
 
   addProduct(product) {
     api.addProduct(product).then(resp => {
+      if (resp.status === 500) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+
       this.setState({
         redirect: `/projects/${this.props.location.match.params.id}`
       });      
@@ -57,6 +65,7 @@ class Note extends React.Component {
     }
 
     if (this.state.redirect) {
+      this.props.addNotification('Successfully added product!', 'success');
       return (
         <Redirect to={this.state.redirect} />
       );
@@ -69,6 +78,7 @@ class Note extends React.Component {
             <div className="column">
               <h2 className="card-title">Add Product For <b>{name}</b></h2>
               <div className="card">
+              {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit}>
                   <div className="row">
                     <div className="md-4 column form-section__title no-left">
