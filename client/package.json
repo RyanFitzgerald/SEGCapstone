@@ -9,6 +9,7 @@
     "font-awesome": "^4.7.0",
     "google-maps-react": "^1.1.0",
     "history": "^4.7.2",
+    "json2csv": "^3.11.5",
     "pikaday": "^1.6.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",

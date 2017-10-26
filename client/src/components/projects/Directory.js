@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {Marker} from 'google-maps-react';
 import Map from '../Map';
+import json2csv from 'json2csv';
 
 class Directory extends React.Component {
   constructor() {
@@ -12,6 +13,7 @@ class Directory extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.resetForm = this.resetForm.bind(this);
     this.renderPagination = this.renderPagination.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
 
     this.state = {
       activePage: 1
@@ -51,6 +53,38 @@ class Directory extends React.Component {
     this.setState({
       activePage: page
     });
+  }
+
+  handleDownload() {
+    // Get projects
+    const projects = this.props.projects || [];
+
+    // Turn types nested object to string
+    projects.forEach((project, index) => {
+      let types = [];
+      project.type.forEach((item, i) => {
+        types.push(item.name);
+      });
+      projects[index].type = types.toString();
+    });
+
+    // Get fields needed
+    const fields = ['name', 'type', 'street', 'postalCode', 'city', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'actualCost', 'labourCost', 'materialCost'];
+
+    // Convert to csv
+    const csvContent = json2csv({data: projects, fields});
+
+    // Create link and name
+    const downloadLink = document.createElement('a');
+    const blob = new Blob(['\ufeff', csvContent]);
+    const url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = 'project-list.csv';
+    
+    // Trigger download then delete
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   }
 
   resetForm() {
@@ -193,6 +227,7 @@ class Directory extends React.Component {
                 </tbody> 
               </table>
               {this.renderPagination(projects.length)}
+              <button className="advanced__toggle" onClick={this.handleDownload}>Download Project List (CSV)</button>
             </div>
           </div>
         </div>

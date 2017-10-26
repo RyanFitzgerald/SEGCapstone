@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {Marker} from 'google-maps-react';
 import Map from '../Map';
+import json2csv from 'json2csv';
 
 class Directory extends React.Component {
   constructor() {
@@ -12,6 +13,7 @@ class Directory extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.resetForm = this.resetForm.bind(this);
     this.renderPagination = this.renderPagination.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
 
     this.state = {
       activePage: 1
@@ -49,6 +51,29 @@ class Directory extends React.Component {
     this.setState({
       activePage: page
     });
+  }
+
+  handleDownload() {
+    // Get clients
+    const clients = this.props.clients || [];
+
+    // Get fields needed
+    const fields = ['name', 'email', 'telephone', 'street', 'postalCode', 'city', 'created'];
+
+    // Convert to csv
+    const csvContent = json2csv({data: clients, fields});
+
+    // Create link and name
+    const downloadLink = document.createElement('a');
+    const blob = new Blob(['\ufeff', csvContent]);
+    const url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = 'client-list.csv';
+    
+    // Trigger download then delete
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   }
 
   resetForm() {
@@ -171,6 +196,7 @@ class Directory extends React.Component {
                 </tbody> 
               </table>
               {this.renderPagination(count)}
+              <button className="advanced__toggle" onClick={this.handleDownload}>Download Client List (CSV)</button>
             </div>
           </div>
         </div>
