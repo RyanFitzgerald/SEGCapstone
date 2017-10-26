@@ -4,6 +4,7 @@ import moment from 'moment';
 import * as api from '../../api';
 
 import Loading from '../Loading';
+import {Marker} from 'google-maps-react';
 import Map from '../Map';
 
 class View extends React.Component {
@@ -46,6 +47,8 @@ class View extends React.Component {
         this.setState({
           redirect: '/clients'
         });
+      } else {
+        this.props.addNotification('A problem was encountered when trying to delete the client', 'warn');
       }
     });
   }
@@ -57,6 +60,7 @@ class View extends React.Component {
     };
     api.deleteClientNote(note).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted note!', 'success');        
         this.getClient(this.props.location.match.params.id);
       }
     });
@@ -64,6 +68,7 @@ class View extends React.Component {
 
   render() {
     if (this.state.redirect) {
+      this.props.addNotification('Successfully deleted client!', 'success');
       return (
         <Redirect to={this.state.redirect}/>
       );
@@ -93,7 +98,12 @@ class View extends React.Component {
               <h2 className="card-title">Client Location</h2>
               <div className="card">
                 <div id="map" className="client-map">
-                  <Map google={window.google} lat={this.state.client.location.coordinates[1]} long={this.state.client.location.coordinates[0]} />
+                  <Map google={window.google} lat={this.state.client.location.coordinates[1]} long={this.state.client.location.coordinates[0]}>
+                    <Marker 
+                      title={this.state.client.name}
+                      position={{lat: this.state.client.location.coordinates[1], lng: this.state.client.location.coordinates[0]}} 
+                    />
+                  </Map>
                 </div>
                 <div className="client-location">
                   <p>{this.state.client.street}<br/>{this.state.client.city}, ON <span className="capitalize">{this.state.client.postalCode}</span></p>

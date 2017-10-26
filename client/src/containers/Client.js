@@ -9,7 +9,8 @@ import Edit from '../components/clients/Edit';
 import Directory from '../components/clients/Directory';
 import View from '../components/clients/View';
 import Note from '../components/clients/Note';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class Client extends React.Component {
   constructor() {
@@ -21,12 +22,12 @@ class Client extends React.Component {
     this.addToClients = this.addToClients.bind(this);
     this.updateClients = this.updateClients.bind(this);
     this.removeFromClients = this.removeFromClients.bind(this);
-
+    this.renderError = this.renderError.bind(this);
+    
     // State
     this.state = {
       activeSubtab: 1,
-      clients: null,
-      clientsCount: null
+      clients: null
     };
   }
 
@@ -45,11 +46,10 @@ class Client extends React.Component {
     this.setState({activeSubtab: tab});
   }
 
-  getClients(query, page) {
-    api.getClients(query, page).then(result => {
-      const clients = result.clients;
-      const clientsCount = result.count;
-      this.setState({ clients, clientsCount });
+  getClients(query) {
+    api.getClients(query).then(result => {
+      const clients = result;
+      this.setState({ clients });
     });
   }
 
@@ -74,26 +74,48 @@ class Client extends React.Component {
     this.setState({ clients });
   }
 
+  addNotification(message, type) {
+    toast(message, { type });
+  }
+
+  renderError(formError) {
+    if (!formError) return;
+    return (
+      <div className="flash flash--warn">
+        <p>{formError}</p>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
+        <ToastContainer 
+          position="top-right"
+          type="success"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+        />
         <Submenu activeSubtab={this.state.activeSubtab} />
 
         <Switch>
           <Route exact path="/clients" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} clientsCount={this.state.clientsCount} getClients={this.getClients}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients}/>
           }/>
           <Route path="/clients/add" render={() =>
-            <Add setActiveSubtab={this.setActiveSubtab} addToClients={this.addToClients}/>
+            <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} addToClients={this.addToClients}/>
           }/>
           <Route path="/clients/:id/note" render={(location) =>
-            <Note setActiveSubtab={this.setActiveSubtab} location={location} />
+            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
           }/>
           <Route path="/clients/:id/edit" render={(location) =>
-            <Edit setActiveSubtab={this.setActiveSubtab} location={location} updateClients={this.updateClients}/>
+            <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients}/>
           }/>
           <Route path="/clients/:id" render={(location) =>
-            <View setActiveSubtab={this.setActiveSubtab} location={location} removeFromClients={this.removeFromClients}/>
+            <View setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} location={location} removeFromClients={this.removeFromClients}/>
           }/>
         </Switch>
       </div>

@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {Marker} from 'google-maps-react';
+import Map from '../Map';
+import json2csv from 'json2csv';
 
 class Directory extends React.Component {
   constructor() {
@@ -10,6 +13,7 @@ class Directory extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.resetForm = this.resetForm.bind(this);
     this.renderPagination = this.renderPagination.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
 
     this.state = {
       activePage: 1
@@ -42,22 +46,45 @@ class Directory extends React.Component {
       status: this.status.value,
       type: this.type.value
     };
-    this.props.getProjects(query, 1);
+    this.props.getProjects(query);
   }
 
   handlePagination(page) {
     this.setState({
       activePage: page
     });
-    const query = {
-      q: this.q.value,
-      city: this.city.value,
-      postalCode: this.postalCode.value,
-      street: this.street.value,
-      status: this.status.value,
-      type: this.type.value
-    };
-    this.props.getProjects(query, page);
+  }
+
+  handleDownload() {
+    // Get projects
+    const projects = this.props.projects || [];
+
+    // Turn types nested object to string
+    projects.forEach((project, index) => {
+      let types = [];
+      project.type.forEach((item, i) => {
+        types.push(item.name);
+      });
+      projects[index].type = types.toString();
+    });
+
+    // Get fields needed
+    const fields = ['name', 'type', 'street', 'postalCode', 'city', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'actualCost', 'labourCost', 'materialCost'];
+
+    // Convert to csv
+    const csvContent = json2csv({data: projects, fields});
+
+    // Create link and name
+    const downloadLink = document.createElement('a');
+    const blob = new Blob(['\ufeff', csvContent]);
+    const url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = 'project-list.csv';
+    
+    // Trigger download then delete
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   }
 
   resetForm() {
@@ -98,7 +125,6 @@ class Directory extends React.Component {
   render() {
     // Variables
     const projects = this.props.projects || [];
-    const count = this.props.projectCount || 0;
     const cities = [];
     projects.forEach(ele => {
       if (cities.indexOf(ele.city) === -1) {
@@ -106,6 +132,7 @@ class Directory extends React.Component {
       }
     });
     const types = this.props.types || [];
+    const visibleProjects = projects.slice(((this.state.activePage - 1) * 10), this.state.activePage * 10);
 
     return (
       <div className="content">
@@ -114,8 +141,7 @@ class Directory extends React.Component {
             <h2 className="card-title">Filter Projects</h2>
             <div className="card">
               <input ref={input => this.q = input} className="form-text" type="text" placeholder="Enter the project name" onKeyUp={this.handleSearch}/>
-              <button className="advanced__toggle" id="advanced-toggle" onClick={this.resetForm}>Reset Form</button>
-              <button className="advanced__toggle" id="advanced-toggle" onClick={this.handleAdvanced}>Advanced Search</button>
+              <button className="advanced__toggle" id="advanced-toggle" onClick={this.handleAdvanced}>Toggle Advanced Search</button>
               <div ref={el => this.advanced = el} id="advanced-fields" className="row card__advanced">
                 <div className="md-4 column">
                   <label className="form-label" htmlFor="street">Street</label>
@@ -158,13 +184,14 @@ class Directory extends React.Component {
                     </select>
                   </span>
                 </div>
+                <button className="advanced__toggle" id="advanced-toggle" onClick={this.resetForm}>Reset Form</button>
               </div>
             </div>
           </div>
         </div>
         <div className="row">
           <div className="column">
-            <h2 className="card-title">{count} Project(s)</h2>
+            <h2 className="card-title">{projects.length} Project(s)</h2>
             <div className="card">
               <table className="card__table">
                 <thead className="card__tablehead">
@@ -179,7 +206,7 @@ class Directory extends React.Component {
                   </tr>
                 </thead>
                 <tbody className="card__tablebody">
-                  {projects.map((project, key) => {
+                  {visibleProjects.map((project, key) => {
                     const types = [];
                     project.type.forEach(ele => {
                       types.push(ele.name);
@@ -199,7 +226,28 @@ class Directory extends React.Component {
                   })}
                 </tbody> 
               </table>
-              {this.renderPagination(count)}
+              {this.renderPagination(projects.length)}
+              <button className="advanced__toggle" onClick={this.handleDownload}>Download Project List (CSV)</button>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="column">
+            <h2 className="card-title">Map</h2>
+            <div className="card">
+              <div id="map" className="project-map project-map--small">
+                <Map google={window.google} zoom={10} lat={45.4215296} long={-75.69719309999999}>
+                  {visibleProjects.map((project, key) => {
+                    return (
+                      <Marker 
+                        key={key}
+                        title={project.name}
+                        position={{lat: project.location.coordinates[1], lng: project.location.coordinates[0]}} 
+                      />
+                    );
+                  })}                  
+                </Map>
+              </div>
             </div>
           </div>
         </div>

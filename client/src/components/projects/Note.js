@@ -12,7 +12,8 @@ class Note extends React.Component {
 
     // Set state
     this.state = {
-      redirect: null
+      redirect: null,
+      formError: false
     };
   }
 
@@ -40,6 +41,13 @@ class Note extends React.Component {
 
   addNote(note) {
     api.addProjectNote(note).then(resp => {
+      if (resp.status === 500) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+
       this.setState({
         redirect: `/projects/${this.props.location.match.params.id}`
       });      
@@ -54,8 +62,9 @@ class Note extends React.Component {
     }
 
     if (this.state.redirect) {
+      this.props.addNotification('Successfully added note!', 'success');
       return (
-        <Redirect to={this.state.redirect} />
+        <Redirect to={this.state.redirect}/>
       );
     }
     
@@ -66,6 +75,7 @@ class Note extends React.Component {
             <div className="column">
               <h2 className="card-title">Add Note For <b>{name}</b></h2>
               <div className="card">
+                {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit}>
                   <div className="row">
                     <div className="md-4 column form-section__title no-left">
@@ -76,7 +86,7 @@ class Note extends React.Component {
                     </div>
                     <div className="md-8 column no-right">
                       <label className="form-label" htmlFor="description">Note Description <span className="form-required">*</span></label>
-                      <textarea ref={input => this.description = input} name="description" className="form-textarea"></textarea>
+                      <textarea ref={input => this.description = input} name="description" className="form-textarea" required></textarea>
                     </div>
                   </div>
                   <div className="text-center">

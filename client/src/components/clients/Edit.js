@@ -17,7 +17,8 @@ class Edit extends React.Component {
     // Set state
     this.state = {
       redirect: false,
-      client: null
+      client: null,
+      formError: false
     }
   }
 
@@ -58,6 +59,13 @@ class Edit extends React.Component {
 
   updateClient(client) {
     api.updateClient(client, this.props.location.match.params.id).then(resp => {
+      if (resp.status === 500) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+
       // Append id
       client._id = resp;
 
@@ -77,6 +85,7 @@ class Edit extends React.Component {
 
   render() {
     if (this.state.redirect) {
+      this.props.addNotification('Successfully updated client!', 'success');      
       return (
         <Redirect to={this.state.redirect}/>
       );
@@ -89,6 +98,7 @@ class Edit extends React.Component {
             <div className="column">
               <h2 className="card-title">Add a New Client</h2>
               <div className="card">
+                {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit}>
                   <div className="row form-section">
                     <div className="md-4 column form-section__title no-left">

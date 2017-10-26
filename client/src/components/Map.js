@@ -5,9 +5,8 @@ require('dotenv').config({ path: 'variables.env' });
 class MapContainer extends React.Component {
   render() {
     return (
-      <Map google={this.props.google} zoom={14} clickableIcons={false} initialCenter={{lat: this.props.lat, lng: this.props.long}}>
-        <Marker
-          position={{lat: this.props.lat, lng: this.props.long}} />
+      <Map google={this.props.google} zoom={this.props.zoom} clickableIcons={true} initialCenter={{lat: this.props.lat, lng: this.props.long}}>
+        {this.props.children}
       </Map>
     );
   }

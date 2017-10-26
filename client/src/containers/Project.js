@@ -13,6 +13,8 @@ import Product from '../components/projects/Product';
 import CostUpdate from '../components/projects/CostUpdate';
 import Photo from '../components/projects/Photo';
 import File from '../components/projects/File';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class Project extends React.Component {
   constructor() {
@@ -25,14 +27,15 @@ class Project extends React.Component {
     this.getProjects = this.getProjects.bind(this);
     this.removeFromProjects = this.removeFromProjects.bind(this);
     this.contentLoaded = this.contentLoaded.bind(this);
+    this.addNotification = this.addNotification.bind(this);
+    this.renderError = this.renderError.bind(this);
 
     // State
     this.state = {
       activeSubtab: 1,
       types: null,
       clients: null,
-      projects: null,
-      projectCount: null
+      projects: null
     };
   }
 
@@ -64,16 +67,15 @@ class Project extends React.Component {
   }
 
   getClients() {
-    api.getClients(false, 'all').then(result => {
-      this.setState({ clients: result.clients });
+    api.getClients(false).then(result => {
+      this.setState({ clients: result });
     });
   }
 
-  getProjects(query, page) {
-    api.getProjects(query, page).then(result => {
-      const projects = result.projects;
-      const projectCount = result.count;
-      this.setState({ projects, projectCount });
+  getProjects(query) {
+    api.getProjects(query).then(result => {
+      const projects = result;
+      this.setState({ projects });
     });
   }
 
@@ -85,6 +87,19 @@ class Project extends React.Component {
     this.setState({ projects: updated });
   }
 
+  addNotification(message, type) {
+    toast(message, { type });
+  }
+
+  renderError(formError) {
+    if (!formError) return;
+    return (
+      <div className="flash flash--warn">
+        <p>{formError}</p>
+      </div>
+    );
+  }
+
   contentLoaded() {
     return this.state.clients && this.state.projects && this.state.types;
   }
@@ -92,35 +107,44 @@ class Project extends React.Component {
   render() {
     return (
       <div>
+        <ToastContainer 
+          position="top-right"
+          type="success"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+        />
         <Submenu activeSubtab={this.state.activeSubtab} />
 
         <Switch>
           <Route exact path="/projects" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} projectCount={this.state.projectCount} types={this.state.types} getProjects={this.getProjects}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects}/>
           }/>
           <Route path="/projects/add" render={(location) =>
-            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} getProjects={this.getProjects}/>
+            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects}/>
           }/>
           <Route path="/projects/:id/edit" render={(location) =>
-            <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} location={location} getProjects={this.getProjects}/>
+            <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects}/>
           }/>
           <Route path="/projects/:id/note" render={(location) =>
-            <Note setActiveSubtab={this.setActiveSubtab} location={location} />
+            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
           }/>
           <Route path="/projects/:id/product" render={(location) =>
-            <Product setActiveSubtab={this.setActiveSubtab} location={location} />
+            <Product setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
           }/>
           <Route path="/projects/:id/photo" render={(location) =>
-            <Photo setActiveSubtab={this.setActiveSubtab} location={location} />
+            <Photo setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
           }/>
           <Route path="/projects/:id/file" render={(location) =>
-            <File setActiveSubtab={this.setActiveSubtab} location={location} />
+            <File setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
           }/>
           <Route path="/projects/:id/update" render={(location) =>
-            <CostUpdate setActiveSubtab={this.setActiveSubtab} location={location} />
+            <CostUpdate setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
           }/>
           <Route path="/projects/:id" render={(location) =>
-            <View setActiveSubtab={this.setActiveSubtab} location={location} removeFromProjects={this.removeFromProjects}/>
+            <View setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} location={location} removeFromProjects={this.removeFromProjects}/>
           }/>
         </Switch>
       </div>

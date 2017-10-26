@@ -4,16 +4,19 @@
   "private": true,
   "proxy": "http://localhost:7777",
   "dependencies": {
+    "aphrodite": "^1.2.5",
     "axios": "^0.16.2",
     "font-awesome": "^4.7.0",
     "google-maps-react": "^1.1.0",
     "history": "^4.7.2",
+    "json2csv": "^3.11.5",
     "pikaday": "^1.6.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-images": "^0.5.8",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13",
+    "react-toastify": "^2.1.5",
     "tagselector": "^0.2.0"
   },
   "scripts": {

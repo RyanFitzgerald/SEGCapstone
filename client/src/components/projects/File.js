@@ -12,7 +12,8 @@ class File extends React.Component {
 
     // Set state
     this.state = {
-      redirect: null
+      redirect: null,
+      formError: false
     };
   }
 
@@ -42,6 +43,13 @@ class File extends React.Component {
 
   addFile(file) {
     api.addFile(file).then(resp => {
+      if (resp.status === 500) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+
       this.setState({
         redirect: `/projects/${this.props.location.match.params.id}`
       });      
@@ -56,6 +64,7 @@ class File extends React.Component {
     }
 
     if (this.state.redirect) {
+      this.props.addNotification('Successfully added file!', 'success');
       return (
         <Redirect to={this.state.redirect} />
       );
@@ -68,6 +77,7 @@ class File extends React.Component {
             <div className="column">
               <h2 className="card-title">Add File For <b>{name}</b></h2>
               <div className="card">
+              {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit} encType="multipart/form-data">
                 <div className="row">
                   <div className="md-4 column form-section__title no-left">
