@@ -6,6 +6,21 @@ This repo contains the code for the 2017 SEG4910 / SEG4911 project by Ryan Fitzg
 
 In order to setup, clone or fork the repo and run `npm install` to install all the required dependencies in the root. You must also run `npm install` under the `client` directory. You will need to then create a `variables.env` file with the required credentials and keys. Finally, run `npm run watch` from the root in order to concurrently run the Node developement server and the client React server.
 
+## Test Accounts
+*Here are several test accounts:*
+
+username: david@example.com
+password: david
+
+username: ryan@example.com
+password: ryan
+
+username: cody@example.com
+password: cody
+
+username: admin@example.com
+password: admin
+
 ## Additional Content
 
 ### [Project Proposal](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Project-Proposal)

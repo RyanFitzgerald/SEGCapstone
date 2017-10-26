@@ -28,11 +28,11 @@ function Header(props) {
       </div>
 
       <div className="header__user">
-        <span className="header__usertoggle" onClick={handleUserMenuToggle}>Hello, Ryan <i className="fa fa-chevron-down" aria-hidden="true"></i></span>
+        <span className="header__usertoggle" onClick={handleUserMenuToggle}>Hello, {props.user.name} <i className="fa fa-chevron-down" aria-hidden="true"></i></span>
 
         <ul ref={ele => userMenu = ele}>
             <li><Link to="/account">Account Settings</Link></li>
-            <li><Link to="/">Logout</Link></li>
+            <li onClick={props.logout}><Link to="/">Logout</Link></li>
         </ul>
 
         <span className="header__menutoggle" onClick={handleMenuToggle}>
