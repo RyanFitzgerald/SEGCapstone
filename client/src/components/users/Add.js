@@ -1,9 +1,9 @@
 import React from 'react';
-import Logo from '../logo.png';
+import Logo from '../../logo.png';
 import { Redirect } from 'react-router-dom';
-import * as api from '../api';
+import * as api from '../../api';
 
-class AddUser extends React.Component {
+class Add extends React.Component {
   constructor() {
     super();
 
@@ -13,7 +13,8 @@ class AddUser extends React.Component {
 
     // Set state
     this.state = {
-      redirect: false
+      redirect: false,
+      formError: false
     }
   }
 
@@ -22,7 +23,7 @@ class AddUser extends React.Component {
     document.title = 'Add User | Renovaction';
 
     // Update active tab
-    this.props.setActiveTab(1);
+    this.props.setActiveSubtab(2);
   }
 
   handleSubmit(e) {
@@ -40,17 +41,29 @@ class AddUser extends React.Component {
   }
 
   addUser(user) {
-    api.addUser(user).then(
+    api.addUser(user).then(resp => {
+      if (resp.status === 500) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+      // Append id
+      //user._id = resp;
+
+      // Update parent state
+      this.props.addToUsers(user);
+
       // Redirect
       this.setState({
-        redirect: `/projects`
-      })
-    );
+        redirect: `/users`
+      });
+    });
   }
 
   render() {
-
 		if (this.state.redirect) {
+      this.props.addNotification('Successfully added user!', 'success');
       return (
         <Redirect to={this.state.redirect}/>
       );
@@ -70,4 +83,4 @@ class AddUser extends React.Component {
   }
 }
 
-export default AddUser;
+export default Add;

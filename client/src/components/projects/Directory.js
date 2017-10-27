@@ -16,7 +16,8 @@ class Directory extends React.Component {
     this.handleDownload = this.handleDownload.bind(this);
 
     this.state = {
-      activePage: 1
+      activePage: 1,
+      projectsPerPage: 10
     };
   }
 
@@ -97,8 +98,9 @@ class Directory extends React.Component {
     this.handleSearch();
   }
 
+  // TODO Allow user to decide number of items per page by settting projectsPerPage
   renderPagination(count) {
-    const pages = Math.ceil(count / 10);
+    const pages = Math.ceil(count / this.state.projectsPerPage);
 
     if (pages < 2) {
       return;
@@ -132,7 +134,7 @@ class Directory extends React.Component {
       }
     });
     const types = this.props.types || [];
-    const visibleProjects = projects.slice(((this.state.activePage - 1) * 10), this.state.activePage * 10);
+    const visibleProjects = projects.slice(((this.state.activePage - 1) * this.state.projectsPerPage), this.state.activePage * this.state.projectsPerPage);
 
     return (
       <div className="content">

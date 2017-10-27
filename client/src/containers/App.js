@@ -8,9 +8,9 @@ import Header from '../components/Header';
 import Home from '../components/Home';
 import Client from './Client';
 import Project from './Project';
+import User from './User';
 import NoMatch from '../components/NoMatch';
 import Login from '../components/Login';
-import AddUser from '../components/AddUser'
 
 class App extends Component {
   constructor() {
@@ -84,8 +84,8 @@ class App extends Component {
             <Route path="/projects" render={() =>
               <Project setActiveTab={this.setActiveTab}/>
             } />
-            <Route path="/users/add" render={() =>
-              <AddUser setActiveTab={this.setActiveTab}/>
+            <Route path="/users" render={() =>
+              <User setActiveTab={this.setActiveTab}/>
             } />
             <Route component={NoMatch}/>
           </Switch>

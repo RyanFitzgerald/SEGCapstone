@@ -10,8 +10,27 @@ exports.getUser = (req, res) => {
   res.send(req.user);
 };
 
-exports.register = async(req, res) => {
+exports.addUser = async(req, res) => {
   const user = new User({ email: req.body.email, name: req.body.name });
-  const register = promisify(User.register, User);
-  await register(user, req.body.password);
+  const addUser = promisify(User.register, User);
+  await addUser(user, req.body.password);
+  res.send(user._id);
+};
+
+exports.getUsers = async (req, res) => {
+  const filter = {};
+
+  //Check for name search
+  if (req.query.name) {
+    filter.name = { $regex: new RegExp(req.query.name), $options: 'i' };
+  }
+
+  // Check for city
+  if (req.query.email) {
+    filter.email = { $regex: new RegExp(req.query.email), $options: 'i' };;
+  }
+  console.log(filter);
+  const users = await User.find(filter);
+  
+  res.send(users);
 };

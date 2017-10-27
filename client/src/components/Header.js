@@ -45,8 +45,9 @@ function Header(props) {
           <li><Link className={(props.activeTab === 1) ? 'header__link header__link--active' : 'header__link'} to="/">Home</Link></li>
           <li><Link className={(props.activeTab === 2) ? 'header__link header__link--active' : 'header__link'} to="/projects">Projects</Link></li>
           <li><Link className={(props.activeTab === 3) ? 'header__link header__link--active' : 'header__link'} to="/clients">Clients</Link></li>
-          <li><Link className={(props.activeTab === 4) ? 'header__link header__link--active' : 'header__link'} to="/stats">Statistics</Link></li>
-          <li><Link className={(props.activeTab === 5) ? 'header__link header__link--active' : 'header__link'} to="/settings">Settings</Link></li>
+          <li><Link className={(props.activeTab === 4) ? 'header__link header__link--active' : 'header__link'} to="/users">Users</Link></li>
+          <li><Link className={(props.activeTab === 5) ? 'header__link header__link--active' : 'header__link'} to="/stats">Statistics</Link></li>
+          <li><Link className={(props.activeTab === 6) ? 'header__link header__link--active' : 'header__link'} to="/settings">Settings</Link></li>
         </ul>
       </div>
     </div>

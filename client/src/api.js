@@ -181,19 +181,7 @@ export const getTypes = () => {
     .then(resp => resp.data);
 };
 
-// --- User API ---
-export const getUser = () => {
-  return axios
-    .get(`/api/getUser`)
-    .then(resp => resp.data);
-};
-
-export const addUser = user => {
-  return axios
-    .post(`/api/addUser`, user)
-    .then(resp => resp.data);
-};
-
+// --- User Authentication API ---
 export const isLoggedIn = () => {
   return axios
     .get(`/api/isLoggedIn`)
@@ -209,3 +197,29 @@ export const logout = () => {
   return axios
     .get(`/api/logout`);
 };
+
+// --- User API ---
+export const getUser = () => {
+  return axios
+    .get(`/api/getUser`)
+    .then(resp => resp.data);
+};
+
+export const getUsers = (query) => {
+  if (query) {
+    return axios
+      .get(`/api/users?name=${query.name}&email=${query.email}&role=${query.role}`)
+      .then(resp => resp.data);
+  } else {
+    return axios
+    .get('/api/users')
+    .then(resp => resp.data);
+  }
+};
+
+export const addUser = user => {
+  return axios
+    .post(`/api/addUser`, user)
+    .then(resp => resp.data);
+};
+

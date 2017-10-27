@@ -16,7 +16,8 @@ class Directory extends React.Component {
     this.handleDownload = this.handleDownload.bind(this);
 
     this.state = {
-      activePage: 1
+      activePage: 1,
+      clientsPerPage: 10
     };
   }
 
@@ -84,8 +85,9 @@ class Directory extends React.Component {
     this.handleSearch();
   }
 
+  // TODO Allow user to decide number of items per page by settting clientsPerPage
   renderPagination(count) {
-    const pages = Math.ceil(count / 10);
+    const pages = Math.ceil(count / this.state.clientsPerPage);
 
     if (pages < 2) {
       return;
@@ -112,7 +114,6 @@ class Directory extends React.Component {
   render() {
     // Variables
     const clients = this.props.clients || [];
-    const count = this.props.clientsCount || 0;
     const cities = [];
     clients.forEach(ele => {
       if (cities.indexOf(ele.city) === -1) {
@@ -120,7 +121,7 @@ class Directory extends React.Component {
       }
     });
 
-    const visibleClients = clients.slice(((this.state.activePage - 1) * 10), this.state.activePage * 10);
+    const visibleClients = clients.slice(((this.state.activePage - 1) * this.state.clientsPerPage), this.state.activePage * this.state.clientsPerPage);
 
     return (
       <div className="content">
@@ -195,7 +196,7 @@ class Directory extends React.Component {
                   })}
                 </tbody> 
               </table>
-              {this.renderPagination(count)}
+              {this.renderPagination(clients.length)}
               <button className="advanced__toggle" onClick={this.handleDownload}>Download Client List (CSV)</button>
             </div>
           </div>
