@@ -98,7 +98,7 @@ class Directory extends React.Component {
     this.handleSearch();
   }
 
-  // TODO Allow user to decide number of items per page by settting projectsPerPage
+  // TODO Allow user to decide number of items per page by setting projectsPerPage
   renderPagination(count) {
     const pages = Math.ceil(count / this.state.projectsPerPage);
 

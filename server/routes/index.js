@@ -50,14 +50,18 @@ router.delete('/api/projects/:id/files/:file', catchErrors(fileController.delete
 // --- Type Routes ---
 router.get('/api/types', catchErrors(typeController.getTypes));
 
-// --- User Routes ---
-router.get('/api/account', userController.getUser);
-router.get('/api/getUser', userController.getUser);
-router.get('/api/users', userController.getUsers);
-router.post('/api/addUser', catchErrors(userController.addUser));
+// --- Authenticaiton Routes ---
 router.get('/api/isLoggedIn', authController.isLoggedIn);
 router.post('/api/login', authController.login);
 router.get('/api/logout', authController.logout);
+router.get('/api/getCurrentUser', authController.getCurrentUser);
+
+// --- User Routes ---
+router.get('/api/users', catchErrors(userController.getUsers));
+router.get('/api/users/:id', catchErrors(userController.getUser));
+router.post('/api/users', catchErrors(userController.addUser));
+router.post('/api/users/:id', catchErrors(userController.editUser));
+router.delete('/api/users/:id',catchErrors(userController.deleteUser));
 
 // Export the router
 module.exports = router;

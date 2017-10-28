@@ -24,20 +24,20 @@ export const addClient = client => {
     .post('/api/clients', client)
     .then(resp => resp.data)
     .catch(error => error.response);
-}
+};
 
 export const updateClient = (client, id) => {
   return axios
     .post(`/api/clients/${id}`, client)
     .then(resp => resp.data)
     .catch(error => error.response);
-}
+};
 
 export const deleteClient = id => {
   return axios
     .delete(`/api/clients/${id}`)
     .then(resp => resp.data);
-}
+};
 
 // --- Client Notes Api ---
 export const addClientNote = note => {
@@ -51,7 +51,7 @@ export const deleteClientNote = note => {
   return axios
     .delete(`/api/clients/${note.client}/notes/${note.id}`)
     .then(resp => resp.data);
-}
+};
 
 // --- Project API ---
 export const getProjects = (query) => {
@@ -77,20 +77,20 @@ export const addProject = project => {
     .post('/api/projects', project)
     .then(resp => resp.data)
     .catch(error => error.response);
-}
+};
 
 export const updateProject = (project, id) => {
   return axios
     .post(`/api/projects/${id}`, project)
     .then(resp => resp.data)
     .catch(error => error.response);
-}
+};
 
 export const deleteProject = id => {
   return axios
     .delete(`/api/projects/${id}`)
     .then(resp => resp.data);
-}
+};
 
 // --- Project Notes Api ---
 export const addProjectNote = note => {
@@ -104,7 +104,7 @@ export const deleteProjectNote = note => {
   return axios
     .delete(`/api/projects/${note.project}/notes/${note.id}`)
     .then(resp => resp.data);
-}
+};
 
 // --- Project Products Api ---
 export const addProduct = product => {
@@ -118,7 +118,7 @@ export const deleteProduct = product => {
   return axios
     .delete(`/api/projects/${product.project}/products/${product.id}`)
     .then(resp => resp.data);
-}
+};
 
 // --- Project Cost Update Api ---
 export const addUpdate = update => {
@@ -132,7 +132,7 @@ export const deleteUpdate = update => {
   return axios
     .delete(`/api/projects/${update.project}/updates/${update.id}`)
     .then(resp => resp.data);
-}
+};
 
 // --- Photo API ---
 export const addPhoto = photo => {
@@ -152,7 +152,7 @@ export const deletePhoto = photo => {
   return axios
     .delete(`/api/projects/${photo.project}/photos/${photo.id}`)
     .then(resp => resp.data);
-}
+};
 
 // --- File API ---
 export const addFile = file => {
@@ -172,7 +172,7 @@ export const deleteFile = file => {
   return axios
     .delete(`/api/projects/${file.project}/files/${file.id}`)
     .then(resp => resp.data);
-}
+};
 
 // --- Types API ---
 export const getTypes = () => {
@@ -190,18 +190,26 @@ export const isLoggedIn = () => {
 
 export const login = userCredentials => {
   return axios
-    .post(`/api/login`, userCredentials);
+    .post(`/api/login`, userCredentials)
+    .then(resp => resp.data);
 };
 
 export const logout = () => {
   return axios
-    .get(`/api/logout`);
+    .get(`/api/logout`)
+    .then(resp => resp.data);
+};
+
+export const getCurrentUser = () => {
+  return axios
+    .get(`/api/getCurrentUser`)
+    .then(resp => resp.data);
 };
 
 // --- User API ---
-export const getUser = () => {
+export const getUser = (id) => {
   return axios
-    .get(`/api/getUser`)
+    .get(`/api/users/${id}`)
     .then(resp => resp.data);
 };
 
@@ -219,7 +227,22 @@ export const getUsers = (query) => {
 
 export const addUser = user => {
   return axios
-    .post(`/api/addUser`, user)
-    .then(resp => resp.data);
+    .post(`/api/users`, user)
+    .then(resp => resp.data)
+    .catch(error => error.response);
+};
+
+export const updateUser = (user, id) => {
+  return axios
+    .post(`/api/users/${id}`, user)
+    .then(resp => resp.data)
+    .catch(error => error.response);
+};
+
+export const deleteUser = id => {
+  return axios
+    .delete(`/api/users/${id}`)
+    .then(resp => resp.data)
+    .catch(error => error.response);
 };
 

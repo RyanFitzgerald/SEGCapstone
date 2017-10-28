@@ -32,7 +32,7 @@ class Add extends React.Component {
 
     // Get form data
     const user = {
-			email: this.username.value,
+			email: this.email.value,
 			name: this.name.value,
 			password: this.password.value
 		};
@@ -49,14 +49,15 @@ class Add extends React.Component {
         return;
       }
       // Append id
-      //user._id = resp;
+      user._id = resp;
 
       // Update parent state
       this.props.addToUsers(user);
-
+      
+      // TODO redirect to the user's profile
       // Redirect
       this.setState({
-        redirect: `/users`
+        redirect: `/users/${resp}`
       });
     });
   }
@@ -70,14 +71,36 @@ class Add extends React.Component {
     }
 
     return (
-      <div className="login card">
-        <img src={Logo} alt="Renovaction" />
-        <form onSubmit={this.handleSubmit}>
-          <input className="form-text" required ref={input => this.username = input} type="email" placeholder="Email" />
-          <input className="form-text" required ref={input => this.name = input} type="text" placeholder="Name" />
-          <input className="form-text" required  ref={input => this.password = input} type="password" placeholder="Password" />
-          <input className="btn btn--primary btn--small" type="submit" value="Add User"/>
-        </form>
+      <div className="content">
+        <div className="row">
+          <div className="md-6 md-center column">
+            <h2 className="card-title">Add New User</h2>
+            <div className="card">
+              {this.props.renderError(this.state.formError)}
+              <form onSubmit={this.handleSubmit}>
+                <div className="row form-section">
+                  <div className="md-12  column form-section__title no-left">
+                    <h3>Basic Information</h3>
+                    <p>
+                      Enter all the basic information about this user
+                    </p>
+                  </div>
+                  <div className="md-12 column no-right">
+                    <label className="form-label" htmlFor="name"> Name <span className="form-required">*</span></label>
+                    <input ref={input => this.name = input} name="name" className="form-text form-text--full" type="text" placeholder="Name" required />
+                    <label className="form-label" htmlFor="email">Email <span className="form-required">*</span></label>
+                    <input ref={input => this.email = input} name="email" className="form-text form-text--full" type="email" placeholder="Email" required/>
+                    <label className="form-label" htmlFor="password">Password <span className="form-required">*</span></label>
+                    <input ref={input => this.password = input} name="password" className="form-text form-text--full" type="password" placeholder="Password" required/>
+                  </div>
+                </div>
+                <div className="text-center">
+                    <input type="submit" className="btn btn--primary btn--large" value="Add User"/>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

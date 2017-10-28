@@ -6,10 +6,9 @@ import * as api from '../api';
 // Import client components
 import Submenu from '../components/users/Submenu';
 import Add from '../components/users/Add';
-//import Edit from '../components/users/Edit';
+import Edit from '../components/users/Edit';
 import Directory from '../components/users/Directory';
-//import View from '../components/clients/View';
-//import Note from '../components/clients/Note';
+import View from '../components/users/View';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -23,7 +22,9 @@ class User extends React.Component {
 			this.setActiveSubtab = this.setActiveSubtab.bind(this);
       this.getUsers = this.getUsers.bind(this);
 			this.addToUsers = this.addToUsers.bind(this);
-			this.renderError = this.renderError.bind(this);
+      this.renderError = this.renderError.bind(this);
+      this.removeFromUsers = this.removeFromUsers.bind(this);
+      this.updateUsers = this.updateUsers.bind(this);
       
       // State
       this.state = {
@@ -58,6 +59,21 @@ class User extends React.Component {
 			const users = [...this.state.users];
 			users[this.state.users.length] = user;
 			this.setState({ users });
+		}
+
+		removeFromUsers(id) {
+			const users = [...this.state.users];
+			const updated = users.filter(el => {
+				return el._id !== id;
+			});
+			this.setState({ users: updated });
+    }
+    
+    updateUsers(user) {
+      const users = [...this.state.users];
+      const key = Object.keys(users).find(key => users[key]._id === user._id);
+      users[key] = user;
+      this.setState({ users });
     }
 
     addNotification(message, type) {
@@ -94,15 +110,12 @@ class User extends React.Component {
             <Route path="/users/add" render={() =>
               <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} addToUsers={this.addToUsers}/>
             }/>
-            {/* <Route path="/clients/:id/note" render={(location) =>
-              <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
-            }/>
-            <Route path="/clients/:id/edit" render={(location) =>
-              <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients}/>
-            }/>
-            <Route path="/clients/:id" render={(location) =>
-              <View setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} location={location} removeFromClients={this.removeFromClients}/>
-            }/> */}
+            <Route path="/users/:id/edit" render={(location) =>
+              <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateUsers={this.updateUsers}/>
+						}/>
+            <Route path="/users/:id" render={(location) =>
+              <View setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} location={location} removeFromUsers={this.removeFromUsers}/>
+            }/> 
           </Switch>
         </div>
       );

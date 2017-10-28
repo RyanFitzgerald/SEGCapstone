@@ -10,7 +10,7 @@ import Client from './Client';
 import Project from './Project';
 import User from './User';
 import NoMatch from '../components/NoMatch';
-import Login from '../components/Login';
+import Login from './Login';
 
 class App extends Component {
   constructor() {
@@ -20,8 +20,7 @@ class App extends Component {
     this.setActiveTab = this.setActiveTab.bind(this);
     this.isLoggedIn = this.isLoggedIn.bind(this);
     this.logout = this.logout.bind(this);
-    this.getUser = this.getUser.bind(this);
-    this.loginAttempt = this.loginAttempt.bind(this);
+    this.getCurrentUser = this.getCurrentUser.bind(this);
 
     // Set state defaults
     this.state = {
@@ -39,7 +38,7 @@ class App extends Component {
     this.isLoggedIn();
 
     // TODO get user only when logged in
-    this.getUser();
+    this.getCurrentUser();
   }
 
   isLoggedIn() {
@@ -56,16 +55,11 @@ class App extends Component {
   }
 
   // Retrieve user information
-  getUser() {
-    api.getUser().then(result => {
+  getCurrentUser() {
+    api.getCurrentUser().then(result => {
         const user = result;
         this.setState({user});
     });
-  }
-
-  // Reload App container on login attempt
-  loginAttempt() {
-    window.location.reload();
   }
 
   render() {
@@ -94,7 +88,7 @@ class App extends Component {
     } else {
       return (
         <div className="app">
-          <Login loginAttempt={this.loginAttempt} setActiveTab={this.setActiveTab}/>
+          <Login />
         </div>
       );  
     }  
