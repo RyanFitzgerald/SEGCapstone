@@ -104,15 +104,12 @@ clientSchema.pre('save', async function(next) {
 
   geocoder.geocode({address: street, country: 'Canada', zipcode: postalCode})
     .then(res => {
-      console.log(res);
       let long = res[0].longitude;
       let lat = res[0].latitude;
       let address = res[0].formattedAddress;
 
       this.location.coordinates = [long, lat];
       this.location.address = address;
-
-      console.log(this.location.coordinates);
 
       next();
     })
