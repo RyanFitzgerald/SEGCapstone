@@ -9,11 +9,11 @@ const Project = mongoose.model('Project');
 
 exports.addUpdate = async (req, res) => {
   const update = await (new CostUpdate(req.body)).save();
-  res.send(true);
+  res.send(update);
 };
 
 exports.deleteUpdate = async (req, res) => {
   const update = await CostUpdate.findById(req.params.update);
   update.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true}); 
 };
