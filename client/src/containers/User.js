@@ -2,6 +2,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import * as api from '../api';
+import arraySort from 'array-sort';
 
 // Import client components
 import Submenu from '../components/users/Submenu';
@@ -25,11 +26,16 @@ class User extends React.Component {
       this.renderError = this.renderError.bind(this);
       this.removeFromUsers = this.removeFromUsers.bind(this);
       this.updateUsers = this.updateUsers.bind(this);
+      this.sortByKey = this.sortByKey.bind(this);
       
       // State
       this.state = {
         activeSubtab: 1,
-        users: null
+        users: null,     
+        sort: {
+          name: null,
+          email: null
+        }
       };
     }
   
@@ -79,6 +85,37 @@ class User extends React.Component {
     addNotification(message, type) {
       toast(message, { type });
     }
+
+    sortByKey(array, key) {
+      let asc = 'asc';
+      let desc = 'desc'
+      let sortOrder = {name: null, email: null};
+      const arr = Object.keys(array).map((k) => array[k]);
+      var sortedArray = [];
+  
+      if (key === 'name') {
+        if(this.state.sort.name === asc) {
+          sortOrder.name = desc;
+          sortedArray = arraySort(arr, key, {reverse: true});
+        }
+        else {
+          sortOrder.name = asc;
+          sortedArray = arraySort(arr, key);
+        }
+      }
+      else if (key === 'email') {
+        if(this.state.sort.email === asc) {
+          sortOrder.email = desc;
+          sortedArray = arraySort(arr, key, {reverse: true});
+        }
+        else {
+          sortOrder.email = asc;
+          sortedArray = arraySort(arr, key);;
+        }
+      }
+      
+      this.setState({users: sortedArray, sort: sortOrder});
+    }
   
     renderError(formError) {
       if (!formError) return;
@@ -105,7 +142,7 @@ class User extends React.Component {
   
           <Switch>
             <Route exact path="/users" render={() =>
-              <Directory setActiveSubtab={this.setActiveSubtab} users={this.state.users} getUsers={this.getUsers}/>
+              <Directory setActiveSubtab={this.setActiveSubtab} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey}/>
             }/>
             <Route path="/users/add" render={() =>
               <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} addToUsers={this.addToUsers}/>

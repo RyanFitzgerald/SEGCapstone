@@ -171,12 +171,12 @@ class Directory extends React.Component {
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
-                    <th>Name</th>
+                    <th onClick={() => this.props.sortByKey(clients, 'name')}>Name</th>
                     <th>Street</th>
                     <th>Postal Code</th>
-                    <th>City</th>
+                    <th onClick={() => this.props.sortByKey(clients, 'city')}>City</th>
                     <th>Telephone</th>
-                    <th>Email</th>
+                    <th onClick={() => this.props.sortByKey(clients, 'email')}>Email</th>
                     <th>Actions</th>
                   </tr>
                 </thead>

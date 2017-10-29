@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import * as api from '../api';
+import arraySort from 'array-sort';
 
 // Import client components
 import Submenu from '../components/clients/Submenu';
@@ -23,11 +24,17 @@ class Client extends React.Component {
     this.updateClients = this.updateClients.bind(this);
     this.removeFromClients = this.removeFromClients.bind(this);
     this.renderError = this.renderError.bind(this);
+    this.sortByKey = this.sortByKey.bind(this);
     
     // State
     this.state = {
       activeSubtab: 1,
-      clients: null
+      clients: null,     
+      sort: {
+        name: null,
+        email: null,
+        city: null
+      }
     };
   }
 
@@ -78,6 +85,47 @@ class Client extends React.Component {
     toast(message, { type });
   }
 
+  sortByKey(array, key) {
+    let asc = 'asc';
+    let desc = 'desc'
+    let sortOrder = {name: null, email: null, city: null};
+    const arr = Object.keys(array).map((k) => array[k]);
+    var sortedArray = [];
+
+    if (key === 'name') {
+      if(this.state.sort.name === asc) {
+        sortOrder.name = desc;
+        sortedArray = arraySort(arr, key, {reverse: true});
+      }
+      else {
+        sortOrder.name = asc;
+        sortedArray = arraySort(arr, key);
+      }
+    }
+    else if (key === 'email') {
+      if(this.state.sort.email === asc) {
+        sortOrder.email = desc;
+        sortedArray = arraySort(arr, key, {reverse: true});
+      }
+      else {
+        sortOrder.email = asc;
+        sortedArray = arraySort(arr, key);;
+      }
+    }
+    else if (key === 'city') {
+      if(this.state.sort.city === asc) {
+        sortOrder.city = desc;
+        sortedArray = arraySort(arr, key, {reverse: true});
+      }
+      else {
+        sortOrder.city = asc;
+        sortedArray = arraySort(arr, key);;
+      }
+    }
+    
+    this.setState({clients: sortedArray, sort: sortOrder});
+  }
+
   renderError(formError) {
     if (!formError) return;
     return (
@@ -103,7 +151,7 @@ class Client extends React.Component {
 
         <Switch>
           <Route exact path="/clients" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sortByKey={this.sortByKey} />
           }/>
           <Route path="/clients/add" render={() =>
             <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} addToClients={this.addToClients}/>

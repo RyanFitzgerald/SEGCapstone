@@ -15,11 +15,10 @@ exports.login = (req, res, next) => { passport.authenticate('local',
 	 	successRedirect: '/'
 	}, 
 	function(err, user, info) {
-		if (err) { console.log('Error!!'); return next(err); }
-		if (!user) { console.log('No User!!'); return res.send(false); }
+		if (err) { return next(err); }
+		if (!user) { return res.send(false); }
 		req.logIn(user, function(err) {
-			if (err) {console.log('Success!!'); return next(err); }
-			console.log('Success!');
+			if (err) { return next(err); }
 			return res.send(true);
 	});
 })(req, res, next);

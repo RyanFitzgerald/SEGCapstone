@@ -18,7 +18,6 @@ exports.getUsers = async (req, res) => {
   if (req.query.email) {
     filter.email = { $regex: new RegExp(req.query.email), $options: 'i' };;
   }
-  console.log(filter);
   const users = await User.find(filter);
   
   res.send(users);

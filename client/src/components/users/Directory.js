@@ -16,7 +16,7 @@ class Directory extends React.Component {
 
     this.state = {
 			activePage: 1,
-			usersPerPage: 10
+      usersPerPage: 10
     };
   }
 
@@ -58,7 +58,7 @@ class Directory extends React.Component {
     this.role.value = '';
     this.handleSearch();
 	}
-	
+  
 	// TODO Allow user to decide number of items per page by setting usersPerPage
   renderPagination(count) {
     const pages = Math.ceil(count / this.state.usersPerPage);
@@ -127,8 +127,8 @@ class Directory extends React.Component {
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th onClick={() => this.props.sortByKey(users, 'name')}>Name</th>
+                    <th onClick={() => this.props.sortByKey(users, 'email')}>Email</th>
                     <th>Actions</th>
                   </tr>
                 </thead>

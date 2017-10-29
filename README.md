@@ -9,17 +9,23 @@ In order to setup, clone or fork the repo and run `npm install` to install all t
 ## Test Accounts
 *Here are several test accounts:*
 
-username: david@example.com
+email: david@example.com
 password: david
 
-username: ryan@example.com
+email: ryan@example.com
 password: ryan
 
-username: cody@example.com
+email: cody@example.com
 password: cody
 
-username: admin@example.com
+email: admin@example.com
 password: admin
+
+Also a set of users 1-20.
+For UserN where 21 > N > 0:
+
+email: userN@example.com
+password: user
 
 ## Additional Content
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import * as api from '../api';
+import arraySort from 'array-sort';
 
 // Import client components
 import Submenu from '../components/projects/Submenu';
@@ -29,13 +30,19 @@ class Project extends React.Component {
     this.contentLoaded = this.contentLoaded.bind(this);
     this.addNotification = this.addNotification.bind(this);
     this.renderError = this.renderError.bind(this);
+    this.sortByKey = this.sortByKey.bind(this);
 
     // State
     this.state = {
       activeSubtab: 1,
       types: null,
       clients: null,
-      projects: null
+      projects: null,
+      sort: {
+        name: null,
+        client: null,
+        status: null
+      }
     };
   }
 
@@ -91,6 +98,47 @@ class Project extends React.Component {
     toast(message, { type });
   }
 
+  sortByKey(array, key) {
+    let asc = 'asc';
+    let desc = 'desc'
+    let sortOrder = {name: null, client: null, status: null};
+    const arr = Object.keys(array).map((k) => array[k]);
+    var sortedArray = [];
+
+    if (key === 'name') {
+      if(this.state.sort.name === asc) {
+        sortOrder.name = desc;
+        sortedArray = arraySort(arr, key, {reverse: true});
+      }
+      else {
+        sortOrder.name = asc;
+        sortedArray = arraySort(arr, key);
+      }
+    }
+    else if (key === 'client.name') {
+      if(this.state.sort.client === asc) {
+        sortOrder.client = desc;
+        sortedArray = arraySort(arr, key, {reverse: true});
+      }
+      else {
+        sortOrder.client = asc;
+        sortedArray = arraySort(arr, key);;
+      }
+    }
+    else if (key === 'status') {
+      if(this.state.sort.status === asc) {
+        sortOrder.status = desc;
+        sortedArray = arraySort(arr, key, {reverse: true});
+      }
+      else {
+        sortOrder.status = asc;
+        sortedArray = arraySort(arr, key);;
+      }
+    }
+    console.log(sortedArray);
+    this.setState({projects: sortedArray, sort: sortOrder});
+  }
+
   renderError(formError) {
     if (!formError) return;
     return (
@@ -120,7 +168,7 @@ class Project extends React.Component {
 
         <Switch>
           <Route exact path="/projects" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sortByKey={this.sortByKey} />
           }/>
           <Route path="/projects/add" render={(location) =>
             <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects}/>
