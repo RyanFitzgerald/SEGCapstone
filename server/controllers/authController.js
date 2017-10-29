@@ -35,5 +35,9 @@ exports.isLoggedIn = (req, res) => {
 };
 
 exports.getCurrentUser = (req, res) => {
-	res.send(req.user);
+	if(req.user) {
+		res.send(req.user);
+	} else {
+		res.send(false);
+	}
 };

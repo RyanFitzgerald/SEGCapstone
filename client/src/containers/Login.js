@@ -1,6 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import * as api from '../api';
 
 // Import client components

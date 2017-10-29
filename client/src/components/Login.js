@@ -27,7 +27,8 @@ class Login extends React.Component {
       email: this.email.value,
       password: this.password.value
     };
-    this.setState({loading:true});
+
+    this.setState({ loading:true });
     // Attempt to validate user credentials for login
     this.login(userCredentials);
   }
@@ -38,14 +39,16 @@ class Login extends React.Component {
   }
 
   login(userCredentials) {
-    api.login(userCredentials).then(isFailedLogin =>{
+    api.login(userCredentials).then(isFailedLogin => {
+        // If user failed to login, prep notification, and redirect to re-render this component
         if(!isFailedLogin) {
           this.props.failedLogin(true);
-          this.props.addNotification('Wrong user name or password!', 'error');
+          this.props.addNotification('Wrong email or password!', 'error');
           this.setState({
             redirect: `/`
           });
         }
+        // User logged-in successfully, refresh the application
         else {
           this.loginAttempt();
         }

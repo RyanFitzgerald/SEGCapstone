@@ -6,10 +6,10 @@ import * as api from '../api';
 // Import components
 import Header from '../components/Header';
 import Home from '../components/Home';
+import NoMatch from '../components/NoMatch';
 import Client from './Client';
 import Project from './Project';
 import User from './User';
-import NoMatch from '../components/NoMatch';
 import Login from './Login';
 
 class App extends Component {
@@ -80,6 +80,10 @@ class App extends Component {
             } />
             <Route path="/users" render={() =>
               <User setActiveTab={this.setActiveTab}/>
+            } />
+            {/* Already logged-in so redirect to root path */}
+            <Route path="/login" render={() =>
+              <Redirect to="/"/> 
             } />
             <Route component={NoMatch}/>
           </Switch>
