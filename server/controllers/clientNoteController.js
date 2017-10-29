@@ -8,11 +8,11 @@ const ClientNote = mongoose.model('ClientNote');
 
 exports.addNote = async (req, res) => {
   const note = await (new ClientNote(req.body)).save();
-  res.send(true);
+  res.send(note);
 };
 
 exports.deleteNote = async (req, res) => {
   const note = await ClientNote.findById(req.params.note);
   note.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});
 };

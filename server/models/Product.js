@@ -9,7 +9,6 @@ mongoose.Promise = global.Promise;
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     required: 'A name must be provided!',
     trim: true
   },

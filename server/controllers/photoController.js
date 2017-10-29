@@ -54,5 +54,5 @@ exports.addPhoto = async (req, res) => {
 exports.deletePhoto = async (req, res) => {
   const photo = await Photo.findById(req.params.photo);
   photo.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});  
 };
