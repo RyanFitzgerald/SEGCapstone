@@ -110,7 +110,57 @@ describe('Clients', () => {
           done();
         });
       });
-
     });
-});
+  });
+
+  // Update a specific client
+  describe('/POST/:id client', () => {
+    it('it should UPDATE a client by the given id', (done) => {
+      let client = new Client({
+        name: 'Tom Doe',
+        telephone: '613-123-4567',
+        email: 'tom_doe@test.com',
+        street: '123 Main Street',
+        postalCode: 'K1A2M5',
+        city: 'Ottawa'
+      });
+      client.save((err, client) => {
+        chai.request(server)
+        .post(`/api/clients/${client.id}`)
+        .send({name: 'Tommy Doe'})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('name').eql('Tommy Doe');
+          res.body.should.have.property('_id').eql(client.id);
+          done();
+        });
+      });
+    });
+  });
+
+  // Delete a specific client
+  describe('/DELETE/:id client', () => {
+    it('it should DELETE a client by the given id', (done) => {
+      let client = new Client({
+        name: 'Martha Doe',
+        telephone: '613-123-4567',
+        email: 'martha_doe@test.com',
+        street: '123 Main Street',
+        postalCode: 'K1A2M5',
+        city: 'Ottawa'
+      });
+      client.save((err, client) => {
+        chai.request(server)
+        .delete(`/api/clients/${client.id}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Deleted Successfully!');
+          res.body.should.have.property('deleted').eql(true);
+          done();
+        });
+      });
+    });
+  });
 });

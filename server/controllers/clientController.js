@@ -46,13 +46,14 @@ exports.addClient = async (req, res) => {
 
 exports.editClient = async (req, res) => {
   const client = await Client.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    new: true,
     runValidators: true
   }).exec();
-  res.send(req.params.id);
+  res.send(client);
 };
 
 exports.deleteClient = async (req, res) => {
   const client = await Client.findById(req.params.id);
   client.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});
 }

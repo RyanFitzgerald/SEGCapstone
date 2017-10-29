@@ -55,13 +55,14 @@ exports.addProject = async (req, res) => {
 
 exports.editProject = async (req, res) => {
   const project = await Project.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    new: true,
     runValidators: true
   }).exec();
-  res.send(req.params.id);
+  res.send(project);
 };
 
 exports.deleteProject = async (req, res) => {
   const project = await Project.findById(req.params.id);
   project.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});
 }
