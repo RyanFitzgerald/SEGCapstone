@@ -56,7 +56,7 @@ class Client extends React.Component {
   getClients(query) {
     api.getClients(query).then(result => {
       const clients = result;
-      this.setState({ clients });
+      this.setState({ clients, sort:{name:null, email:null, city:null} });
     });
   }
 
@@ -119,7 +119,7 @@ class Client extends React.Component {
       }
       else {
         sortOrder.city = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     }
     
@@ -151,7 +151,7 @@ class Client extends React.Component {
 
         <Switch>
           <Route exact path="/clients" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sortByKey={this.sortByKey} />
+            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sort={this.state.sort} sortByKey={this.sortByKey} />
           }/>
           <Route path="/clients/add" render={() =>
             <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} addToClients={this.addToClients}/>

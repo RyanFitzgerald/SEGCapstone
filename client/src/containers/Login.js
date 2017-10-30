@@ -29,7 +29,6 @@ class Login extends React.Component {
 
   failedLogin(bool) {
     this.setState({failedLogin: bool});
-    console.log(this.state.failedLogin);
   }
 
   addNotification(message, type) {

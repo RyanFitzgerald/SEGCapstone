@@ -82,7 +82,7 @@ class Project extends React.Component {
   getProjects(query) {
     api.getProjects(query).then(result => {
       const projects = result;
-      this.setState({ projects });
+      this.setState({ projects, sort:{name:null, client:null, status:null} });
     });
   }
 
@@ -132,10 +132,10 @@ class Project extends React.Component {
       }
       else {
         sortOrder.status = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     }
-    console.log(sortedArray);
+
     this.setState({projects: sortedArray, sort: sortOrder});
   }
 
@@ -168,7 +168,7 @@ class Project extends React.Component {
 
         <Switch>
           <Route exact path="/projects" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sortByKey={this.sortByKey} />
+            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sort={this.state.sort} sortByKey={this.sortByKey} />
           }/>
           <Route path="/projects/add" render={(location) =>
             <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects}/>

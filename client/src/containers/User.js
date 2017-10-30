@@ -57,7 +57,7 @@ class User extends React.Component {
     getUsers(query) {
       api.getUsers(query).then(result => {
         const users = result;
-        this.setState({ users });
+        this.setState({ users, sort:{name:null, email:null} });
       });
     }
   
@@ -110,7 +110,7 @@ class User extends React.Component {
         }
         else {
           sortOrder.email = asc;
-          sortedArray = arraySort(arr, key);;
+          sortedArray = arraySort(arr, key);
         }
       }
       
@@ -142,7 +142,7 @@ class User extends React.Component {
   
           <Switch>
             <Route exact path="/users" render={() =>
-              <Directory setActiveSubtab={this.setActiveSubtab} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey}/>
+              <Directory setActiveSubtab={this.setActiveSubtab} users={this.state.users} getUsers={this.getUsers} sort={this.state.sort} sortByKey={this.sortByKey}/>
             }/>
             <Route path="/users/add" render={() =>
               <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} addToUsers={this.addToUsers}/>
