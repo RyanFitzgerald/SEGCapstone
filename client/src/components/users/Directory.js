@@ -1,8 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {Marker} from 'google-maps-react';
-import Map from '../Map';
-import json2csv from 'json2csv';
 
 class Directory extends React.Component {
   constructor() {
@@ -25,7 +22,7 @@ class Directory extends React.Component {
     document.title = 'User Directory | Renovaction';
 
     // Update tab
-    this.props.setActiveSubtab(1);
+    this.props.setActiveSubtab(2);
   }
 
   handleAdvanced(e) {
@@ -88,6 +85,7 @@ class Directory extends React.Component {
   render() {
     // Variables
     const users = this.props.users || [];
+    const roles = this.props.roles || [];
 
     const visibleUsers = users.slice(((this.state.activePage - 1) * this.state.usersPerPage), this.state.activePage * this.state.usersPerPage);
 
@@ -109,9 +107,9 @@ class Directory extends React.Component {
                   <span className="form-select">
                     <select ref={input => this.role = input} id="role" name="role" id="role" onChange={this.handleSearch}>
 											<option value="">All Roles</option>
-                      <option value="Admin">Admin</option>
-                      <option value="Salesman">Salesman</option>
-                      <option value="SuperAdmin">Super Admin</option>
+                      {roles.map((role, key) => {
+                        return <option key={key} value={role._id}>{role.name}</option>;
+                      })}
                     </select>
                   </span>
                 </div>
@@ -129,6 +127,7 @@ class Directory extends React.Component {
                   <tr>
                     <th onClick={() => this.props.sortByKey(users, 'name')}>Name</th>
                     <th onClick={() => this.props.sortByKey(users, 'email')}>Email</th>
+                    <th onClick={() => this.props.sortByKey(users, 'role.name')}>Role</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -138,7 +137,8 @@ class Directory extends React.Component {
                       <tr key={key}>
                         <td>{user.name}</td>
                         <td><a href={'mailto:' + user.email}>{user.email}</a></td>
-                        <td><Link to={`/users/${user._id}`} className="btn btn--small btn--primary">View User</Link></td>
+                        <td>{user.role.name}</td>
+                        <td><Link to={`/settings/users/${user._id}`} className="btn btn--small btn--primary">View User</Link></td>
                       </tr>
                     );
                   })}

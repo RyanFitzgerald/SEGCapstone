@@ -26,6 +26,22 @@ class Add extends React.Component {
     this.props.setActiveSubtab(2);
   }
 
+  componentWillMount() {
+    if (!this.props.checkLevel(this.props.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/clients/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this.setState({ redirect: false });
+  }
+
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
@@ -61,7 +77,11 @@ class Add extends React.Component {
 
       // Redirect
       this.setState({
-        redirect: `/clients/${resp}`
+        redirect: {
+          location: `/clients/${resp}`,
+          message: 'Successfully added client!',
+          type: 'success'
+        }
       });
     });
   }
@@ -72,9 +92,9 @@ class Add extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      this.props.addNotification('Successfully added client!', 'success');
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect}/>
+        <Redirect to={this.state.redirect.location}/>
       );
     }
 

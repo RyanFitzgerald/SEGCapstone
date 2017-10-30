@@ -25,6 +25,7 @@ require('./models/Photo');
 require('./models/File');
 require('./models/Type');
 require('./models/User');
+require('./models/Role');
 
 // Require app with config
 const app = require('./app');

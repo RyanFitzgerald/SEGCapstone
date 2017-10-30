@@ -9,7 +9,7 @@ const promisify = require('es6-promisify');
 exports.getUsers = async (req, res) => {
   const filter = {};
 
-  //Check for name
+  // Check for name
   if (req.query.name) {
     filter.name = { $regex: new RegExp(req.query.name), $options: 'i' };
   }
@@ -18,18 +18,21 @@ exports.getUsers = async (req, res) => {
   if (req.query.email) {
     filter.email = { $regex: new RegExp(req.query.email), $options: 'i' };;
   }
-  const users = await User.find(filter);
+
+  // Get users
+  const users = await User.find(filter).populate('role');
   
+  // Return users
   res.send(users);
 };
 
 exports.getUser = async (req, res) => {
-  const user = await User.findOne({ _id: req.params.id });
+  const user = await User.findById({ _id: req.params.id }).populate('role');
   res.send(user);
 };
 
 exports.addUser = async (req, res) => {
-  const user = new User({ email: req.body.email, name: req.body.name });
+  const user = new User({ email: req.body.email, name: req.body.name, role: req.body.role });
   const addUser = promisify(User.register, User);
   await addUser(user, req.body.password);
   res.send(user._id);
@@ -40,7 +43,7 @@ exports.editUser = async (req, res) => {
     runValidators: true
   }).exec();
 
-  if(req.body.password){
+  if (req.body.password) {
     const setPassword = promisify(user.setPassword, user);
     await setPassword(req.body.password);
     await user.save();
@@ -52,5 +55,5 @@ exports.editUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   const user = await User.findById(req.params.id);
   user.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});
 };

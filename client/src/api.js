@@ -184,19 +184,19 @@ export const getTypes = () => {
 // --- User Authentication API ---
 export const isLoggedIn = () => {
   return axios
-    .get(`/api/isLoggedIn`)
+    .get('/api/isLoggedIn')
     .then(resp => resp.data);
 };
 
 export const login = userCredentials => {
   return axios
-    .post(`/api/login`, userCredentials)
+    .post('/api/login', userCredentials)
     .then(resp => resp.data);
 };
 
 export const logout = () => {
   return axios
-    .get(`/api/logout`)
+    .get('/api/logout')
     .then(resp => resp.data);
 };
 
@@ -227,7 +227,7 @@ export const getUsers = (query) => {
 
 export const addUser = user => {
   return axios
-    .post(`/api/users`, user)
+    .post('/api/users', user)
     .then(resp => resp.data)
     .catch(error => error.response);
 };
@@ -246,3 +246,9 @@ export const deleteUser = id => {
     .catch(error => error.response);
 };
 
+// --- Roles API ---
+export const getRoles = () => {
+  return axios
+    .get('/api/roles')
+    .then(resp => resp.data);
+};

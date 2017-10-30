@@ -9,24 +9,34 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 // const promisify = require('es6-promisify');
 
-exports.login = (req, res, next) => { passport.authenticate('local', 
-	{
-	 	failureRedirect: '/',
-	 	successRedirect: '/'
-	}, 
-	function(err, user, info) {
-		if (err) { return next(err); }
-		if (!user) { return res.send(false); }
-		req.logIn(user, function(err) {
-			if (err) { return next(err); }
-			return res.send(true);
-	});
-})(req, res, next);
+exports.login = (req, res, next) => {
+	
+	passport.authenticate('local', {
+			failureRedirect: '/',
+			successRedirect: '/'
+		}, (err, user, info) => {
+			if (err) { 
+				return next(err);
+			}
+
+			if (!user) {
+				return res.send(false);
+			}
+
+			req.logIn(user, function(err) {
+				if (err) {
+					return next(err);
+				}
+
+				return res.send(true);
+			});
+		}
+	)(req, res, next);
 };
 
 exports.logout = (req, res) => {
 	req.logout();
-	res.send('Log out successful');
+	res.send({message: 'Log out successful'});
 };
 
 exports.isLoggedIn = (req, res) => {
@@ -34,7 +44,7 @@ exports.isLoggedIn = (req, res) => {
 };
 
 exports.getCurrentUser = (req, res) => {
-	if(req.user) {
+	if (req.user) {
 		res.send(req.user);
 	} else {
 		res.send(false);

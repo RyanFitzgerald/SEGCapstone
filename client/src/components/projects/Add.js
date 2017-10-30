@@ -34,6 +34,22 @@ class Add extends React.Component {
     this.props.setActiveSubtab(2);
   }
 
+  componentWillMount() {
+    if (!this.props.checkLevel(this.props.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/projects/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
+  }
+  
+  componentWillUnmount() {
+    this.setState({ redirect: false });
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.clients !== null && nextProps.clients !== this.state.clients) {
       this.setState({ clients: nextProps.clients });
@@ -90,7 +106,11 @@ class Add extends React.Component {
 
       // Redirect
       this.setState({
-        redirect: `/projects/${resp}`
+        redirect: {
+          location: `/projects/${resp}`,
+          message: 'Successfully added project!',
+          type: 'success'
+        }
       });
     });
   }
@@ -106,9 +126,9 @@ class Add extends React.Component {
   render() {
 
     if (this.state.redirect) {
-      this.props.addNotification('Successfully added project!', 'success');      
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);      
       return (
-        <Redirect to={this.state.redirect}/>
+        <Redirect to={this.state.redirect.location}/>
       );
     }
 

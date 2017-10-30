@@ -9,7 +9,7 @@ const Client = mongoose.model('Client');
 exports.getClients = async (req, res) => {
   const filter = {};
 
-  //Check for name search
+  // Check for name search
   if (req.query.q) {
     filter.name = { $regex: new RegExp(req.query.q), $options: 'i' };
   }
@@ -28,7 +28,7 @@ exports.getClients = async (req, res) => {
   if (req.query.street) {
     filter.street = { $regex: new RegExp(req.query.street), $options: 'i' };
   }
-  console.log(filter);
+
   const clients = await Client.find(filter).populate('projects').sort({ 'created': -1 });
 
   res.send(clients);

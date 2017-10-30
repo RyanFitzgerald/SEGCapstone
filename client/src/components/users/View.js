@@ -67,10 +67,10 @@ class View extends React.Component {
                 <h2 className="card-title">User Overview</h2>
                 <div className="card">
                   <ul className="client-overview">
-                    {/* <li><b>Date Created:</b> {moment(this.state.client.created).format('MMMM Do, YYYY')}</li> */}
+                    <li><b>Date Created:</b> {moment(this.state.user.created).format('MMMM Do, YYYY')}</li>
                     <li><b>Name:</b> {this.state.user.name}</li>
                     <li><b>Email:</b> <a href={'mailto:' + this.state.user.email}>{this.state.user.email}</a></li>
-                    <li><b>Role:</b> TODO</li>
+                    <li><b>Role:</b> {this.state.user.role.name}</li>
                   </ul>
                   <div className="client-actions">
                     <Link to={`/users/${this.props.location.match.params.id}/edit`} className="btn btn--primary">Edit User</Link>

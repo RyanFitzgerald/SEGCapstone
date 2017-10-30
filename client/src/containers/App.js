@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import * as api from '../api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 // Import components
 import Header from '../components/Header';
@@ -9,7 +11,7 @@ import Home from '../components/Home';
 import NoMatch from '../components/NoMatch';
 import Client from './Client';
 import Project from './Project';
-import User from './User';
+import Settings from './Settings';
 import Login from './Login';
 
 class App extends Component {
@@ -21,12 +23,15 @@ class App extends Component {
     this.isLoggedIn = this.isLoggedIn.bind(this);
     this.logout = this.logout.bind(this);
     this.getCurrentUser = this.getCurrentUser.bind(this);
+    this.addNotification = this.addNotification.bind(this);
+    this.checkLevel = this.checkLevel.bind(this);
 
     // Set state defaults
     this.state = {
       activeTab: 1,
       isLoggedIn: false,
-      user: false
+      user: false,
+      userLevel: false
     };
   }
 
@@ -37,14 +42,17 @@ class App extends Component {
   componentDidMount() {
     this.isLoggedIn();
 
-    // TODO get user only when logged in
     this.getCurrentUser();
+  }
+
+  addNotification(message, type) {
+    toast(message, { type });
   }
 
   isLoggedIn() {
     api.isLoggedIn().then(result => {
       const isLoggedIn = result;
-      this.setState({isLoggedIn});
+      this.setState({ isLoggedIn });
     });
   }
 
@@ -54,11 +62,20 @@ class App extends Component {
     );
   }
 
+  checkLevel(current, required) {
+    return (current >= required);
+  }
+
   // Retrieve user information
   getCurrentUser() {
     api.getCurrentUser().then(result => {
         const user = result;
-        this.setState({user});
+        let userLevel = null;
+        if (result.role) {
+          userLevel = result.role.level;
+        }
+        
+        this.setState({ user, userLevel });
     });
   }
 
@@ -66,6 +83,15 @@ class App extends Component {
     if (this.state.isLoggedIn) {
       return (
         <div className="app">
+          <ToastContainer 
+            position="top-right"
+            type="success"
+            autoClose={3000}
+            hideProgressBar
+            newestOnTop
+            closeOnClick
+            pauseOnHover
+          />
           <Header user={this.state.user} logout={this.logout} activeTab={this.state.activeTab}/>
   
           <Switch>
@@ -73,13 +99,13 @@ class App extends Component {
               <Home setActiveTab={this.setActiveTab}/>
             } />
             <Route path="/clients" render={() =>
-              <Client setActiveTab={this.setActiveTab}/>
+              <Client setActiveTab={this.setActiveTab} addNotification={this.addNotification} level={this.state.userLevel} checkLevel={this.checkLevel}/>
             } />
             <Route path="/projects" render={() =>
-              <Project setActiveTab={this.setActiveTab}/>
+              <Project setActiveTab={this.setActiveTab} addNotification={this.addNotification} level={this.state.userLevel} checkLevel={this.checkLevel}/>
             } />
-            <Route path="/users" render={() =>
-              <User setActiveTab={this.setActiveTab}/>
+            <Route path="/settings" render={() =>
+              <Settings setActiveTab={this.setActiveTab} addNotification={this.addNotification} level={this.state.userLevel} checkLevel={this.checkLevel}/>
             } />
             {/* Already logged-in so redirect to root path */}
             <Route path="/login" render={() =>

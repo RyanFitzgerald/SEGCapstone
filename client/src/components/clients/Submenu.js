@@ -7,7 +7,9 @@ const Submenu = (props) => {
       <div className="submenu__actions">
         <ul>
           <li><Link className={(props.activeSubtab === 1) ? 'submenu__action submenu__action--active' : 'submenu__action'} to="/clients"><i className="fa fa-list" aria-hidden="true"></i> Client Directory</Link></li>
+          {props.checkLevel(props.level, 2) &&
           <li><Link className={(props.activeSubtab === 2) ? 'submenu__action submenu__action--active' : 'submenu__action'} to="/clients/add"><i className="fa fa-plus" aria-hidden="true"></i> Add Client</Link></li>
+          }
         </ul>
       </div>
     </div>

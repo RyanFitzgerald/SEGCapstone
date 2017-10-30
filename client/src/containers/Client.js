@@ -10,8 +10,6 @@ import Edit from '../components/clients/Edit';
 import Directory from '../components/clients/Directory';
 import View from '../components/clients/View';
 import Note from '../components/clients/Note';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
 
 class Client extends React.Component {
   constructor() {
@@ -81,10 +79,6 @@ class Client extends React.Component {
     this.setState({ clients });
   }
 
-  addNotification(message, type) {
-    toast(message, { type });
-  }
-
   sortByKey(array, key) {
     let asc = 'asc';
     let desc = 'desc'
@@ -138,32 +132,23 @@ class Client extends React.Component {
   render() {
     return (
       <div>
-        <ToastContainer 
-          position="top-right"
-          type="success"
-          autoClose={3000}
-          hideProgressBar
-          newestOnTop
-          closeOnClick
-          pauseOnHover
-        />
-        <Submenu activeSubtab={this.state.activeSubtab} />
+        <Submenu activeSubtab={this.state.activeSubtab} level={this.props.level} checkLevel={this.props.checkLevel}/>
 
         <Switch>
           <Route exact path="/clients" render={() =>
             <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sortByKey={this.sortByKey} />
           }/>
           <Route path="/clients/add" render={() =>
-            <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} addToClients={this.addToClients}/>
+            <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} addToClients={this.addToClients} level={this.props.level} checkLevel={this.props.checkLevel}/>
           }/>
           <Route path="/clients/:id/note" render={(location) =>
-            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
+            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
           }/>
           <Route path="/clients/:id/edit" render={(location) =>
-            <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients}/>
+            <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients}/>
           }/>
           <Route path="/clients/:id" render={(location) =>
-            <View setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} location={location} removeFromClients={this.removeFromClients}/>
+            <View setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} location={location} removeFromClients={this.removeFromClients}/>
           }/>
         </Switch>
       </div>

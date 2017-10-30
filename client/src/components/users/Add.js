@@ -3,6 +3,8 @@ import Logo from '../../logo.png';
 import { Redirect } from 'react-router-dom';
 import * as api from '../../api';
 
+import Loading from '../Loading';
+
 class Add extends React.Component {
   constructor() {
     super();
@@ -23,7 +25,17 @@ class Add extends React.Component {
     document.title = 'Add User | Renovaction';
 
     // Update active tab
-    this.props.setActiveSubtab(2);
+    this.props.setActiveSubtab(3);
+
+    if (!this.props.checkLevel(this.props.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
   }
 
   handleSubmit(e) {
@@ -34,7 +46,8 @@ class Add extends React.Component {
     const user = {
 			email: this.email.value,
 			name: this.name.value,
-			password: this.password.value
+			password: this.password.value,
+			role: this.role.value
 		};
 		
 		this.addUser(user);
@@ -48,50 +61,64 @@ class Add extends React.Component {
         })
         return;
       }
+
       // Append id
       user._id = resp;
 
       // Update parent state
       this.props.addToUsers(user);
       
-      // TODO redirect to the user's profile
       // Redirect
       this.setState({
-        redirect: `/users/${resp}`
+        redirect: {
+          location: `/settings/users/${resp}`,
+          message: 'Successfully added user!',
+          type: 'success'
+        }
       });
     });
   }
 
   render() {
+    const roles = this.props.roles || [];
+
 		if (this.state.redirect) {
-      this.props.addNotification('Successfully added user!', 'success');
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect}/>
+        <Redirect to={this.state.redirect.location}/>
       );
     }
 
     return (
       <div className="content">
         <div className="row">
-          <div className="md-6 md-center column">
+          <div className="column">
             <h2 className="card-title">Add New User</h2>
             <div className="card">
               {this.props.renderError(this.state.formError)}
               <form onSubmit={this.handleSubmit}>
-                <div className="row form-section">
-                  <div className="md-12  column form-section__title no-left">
+                <div className="row">
+                  <div className="md-4 column form-section__title no-left">
                     <h3>Basic Information</h3>
                     <p>
                       Enter all the basic information about this user
                     </p>
                   </div>
-                  <div className="md-12 column no-right">
+                  <div className="md-8 column no-right">
                     <label className="form-label" htmlFor="name"> Name <span className="form-required">*</span></label>
                     <input ref={input => this.name = input} name="name" className="form-text form-text--full" type="text" placeholder="Name" required />
                     <label className="form-label" htmlFor="email">Email <span className="form-required">*</span></label>
                     <input ref={input => this.email = input} name="email" className="form-text form-text--full" type="email" placeholder="Email" required/>
                     <label className="form-label" htmlFor="password">Password <span className="form-required">*</span></label>
                     <input ref={input => this.password = input} name="password" className="form-text form-text--full" type="password" placeholder="Password" required/>
+                    <label className="form-label" htmlFor="role">Role <span className="form-required">*</span></label>
+                    <span className="form-select" required>
+                      <select name="role" ref={input => this.role = input}>
+                      {roles.map((role, key) => {
+                        return <option key={key} value={role._id}>{role.name}</option>;
+                      })}
+                      </select>
+                    </span>
                   </div>
                 </div>
                 <div className="text-center">
