@@ -16,7 +16,12 @@ exports.getUsers = async (req, res) => {
 
   // Check for email
   if (req.query.email) {
-    filter.email = { $regex: new RegExp(req.query.email), $options: 'i' };;
+    filter.email = { $regex: new RegExp(req.query.email), $options: 'i' };
+  }
+
+  // Check for role
+  if (req.query.role) {
+    filter.role = req.query.role;
   }
 
   // Get users

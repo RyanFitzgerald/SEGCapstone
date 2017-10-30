@@ -74,11 +74,11 @@ const clientSchema = new mongoose.Schema({
       default: 'Ottawa, ON, Canada'
     }
   },
-  /*soldBy: {
+  addedBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    required: 'A salesman must be provided'
-  }*/
+    required: 'A user must be provided'
+  }
 }, {
   toJSON: { virtuals: true }, // Show virtuals explicitly, but not needed
   toObject: { virtuals: true } // Show virtuals explicitly, but not needed

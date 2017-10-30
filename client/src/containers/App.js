@@ -11,6 +11,7 @@ import Home from '../components/Home';
 import NoMatch from '../components/NoMatch';
 import Client from './Client';
 import Project from './Project';
+import Stats from './Stats';
 import Settings from './Settings';
 import Login from './Login';
 
@@ -30,8 +31,7 @@ class App extends Component {
     this.state = {
       activeTab: 1,
       isLoggedIn: false,
-      user: false,
-      userLevel: false
+      user: false
     };
   }
 
@@ -57,9 +57,10 @@ class App extends Component {
   }
 
   logout() {
-    api.logout().then(
-      window.location.reload()
-    );
+    api.logout().then(() => {
+      sessionStorage.removeItem('user');
+      window.location.reload();
+    });
   }
 
   checkLevel(current, required) {
@@ -69,13 +70,9 @@ class App extends Component {
   // Retrieve user information
   getCurrentUser() {
     api.getCurrentUser().then(result => {
-        const user = result;
-        let userLevel = null;
-        if (result.role) {
-          userLevel = result.role.level;
-        }
-        
-        this.setState({ user, userLevel });
+      const user = result;
+      sessionStorage.setItem('user', JSON.stringify(user));
+      this.setState({ user });
     });
   }
 
@@ -92,20 +89,23 @@ class App extends Component {
             closeOnClick
             pauseOnHover
           />
-          <Header user={this.state.user} logout={this.logout} activeTab={this.state.activeTab}/>
+          <Header user={this.state.user} logout={this.logout} activeTab={this.state.activeTab} level={this.state.user.level} checkLevel={this.checkLevel}/>
   
           <Switch>
             <Route exact path="/" render={() =>
               <Home setActiveTab={this.setActiveTab}/>
             } />
             <Route path="/clients" render={() =>
-              <Client setActiveTab={this.setActiveTab} addNotification={this.addNotification} level={this.state.userLevel} checkLevel={this.checkLevel}/>
+              <Client setActiveTab={this.setActiveTab} addNotification={this.addNotification} checkLevel={this.checkLevel}/>
             } />
             <Route path="/projects" render={() =>
-              <Project setActiveTab={this.setActiveTab} addNotification={this.addNotification} level={this.state.userLevel} checkLevel={this.checkLevel}/>
+              <Project setActiveTab={this.setActiveTab} addNotification={this.addNotification} checkLevel={this.checkLevel}/>
+            } />
+            <Route path="/stats" render={() =>
+              <Stats setActiveTab={this.setActiveTab} addNotification={this.addNotification} checkLevel={this.checkLevel}/>
             } />
             <Route path="/settings" render={() =>
-              <Settings setActiveTab={this.setActiveTab} addNotification={this.addNotification} level={this.state.userLevel} checkLevel={this.checkLevel}/>
+              <Settings setActiveTab={this.setActiveTab} addNotification={this.addNotification} checkLevel={this.checkLevel}/>
             } />
             {/* Already logged-in so redirect to root path */}
             <Route path="/login" render={() =>

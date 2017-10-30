@@ -30,6 +30,18 @@ class Edit extends React.Component {
     this.getClient(this.props.location.match.params.id);
   }
 
+  componentWillMount() {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/clients/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
+  }
+
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
@@ -74,7 +86,11 @@ class Edit extends React.Component {
 
       // Redirect
       this.setState({
-        redirect: `/clients/${resp}`
+        redirect: {
+          location: `/clients/${resp}`,
+          message: 'Successfully updated client!',
+          type: 'success'
+        }
       });
     });
   }
@@ -85,9 +101,9 @@ class Edit extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      this.props.addNotification('Successfully updated client!', 'success');      
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect}/>
+        <Redirect to={this.state.redirect.location}/>
       );
     }
 

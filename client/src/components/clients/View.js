@@ -87,6 +87,7 @@ class View extends React.Component {
                   <li><b>Email:</b> <a href={'mailto:' + this.state.client.email}>{this.state.client.email}</a></li>
                   <li><b>Telephone:</b> <a href={'tel:' + this.state.client.telephone}>{this.state.client.telephone}</a></li>
                   <li><b>Sold by:</b> Joseph Doe</li>
+                  <li><b>Added by:</b> {this.state.client.addedBy.name}</li>
                 </ul>
                 <div className="client-actions">
                   <Link to={`/clients/${this.props.location.match.params.id}/edit`} className="btn btn--primary">Edit Client</Link>

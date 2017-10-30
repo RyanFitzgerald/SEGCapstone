@@ -41,6 +41,18 @@ class Edit extends React.Component {
     this.getProject(this.props.location.match.params.id);
   }
 
+  componentWillMount() {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/projects/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.clients !== null && nextProps.clients !== this.state.clients) {
       this.setState({ clients: nextProps.clients });
@@ -106,7 +118,11 @@ class Edit extends React.Component {
 
       // Redirect
       this.setState({
-        redirect: `/projects/${resp}`
+        redirect: {
+          location: `/projects/${resp}`,
+          message: 'Successfully updated project!',
+          type: 'success'
+        }
       });
     });
   }
@@ -133,9 +149,9 @@ class Edit extends React.Component {
   render() {
 
     if (this.state.redirect) {
-      this.props.addNotification('Successfully updated project!', 'success');      
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect}/>
+        <Redirect to={this.state.redirect.location} />
       );
     }
 

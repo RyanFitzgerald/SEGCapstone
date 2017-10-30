@@ -223,11 +223,12 @@ class View extends React.Component {
                   <li><b>Nickname:</b> {this.state.project.name}  <span className={`status status--${this.state.project.status.replace(/\s+/g, '').toLowerCase()}`}>{this.state.project.status}</span></li>
                   <li><b>Type:</b> {types.join(', ')}</li>
                   <li><b>Client:</b> <Link to={`/clients/${this.state.project.client._id}`}>{this.state.project.client.name}</Link></li>
-                  <li><b>Sold Date:</b> {dates.soldDate} / <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
-                  <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} / <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
-                  <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} / <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
-                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} / <b>Actual Cost:</b> {(actualCost) ? `$${this.getUpdatedTotal(actualCost)}` : 'Not available'}</li>
+                  <li><b>Sold Date:</b> {dates.soldDate} &#8226; <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
+                  <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} &#8226; <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
+                  <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} &#8226; <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
+                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} &#8226; <b>Actual Cost:</b> {(actualCost) ? `$${this.getUpdatedTotal(actualCost)}` : 'Not available'}</li>
                   <li><b>Commission:</b> {(commission !== -1) ? `$${this.getDollars(commission)}` : 'Not available'}</li>
+                  <li><b>Added by:</b> {this.state.project.addedBy.name}</li>
                 </ul>
                 <div className="project-actions">
                   <Link to={{ pathname: `/projects/${this.props.location.match.params.id}/edit`, query: {project: this.state.project}}} className="btn btn--primary">Edit Project</Link>
@@ -256,6 +257,7 @@ class View extends React.Component {
           <div className="row">
             <div className="column">
               <h2 className="card-title">{this.state.project.photos.length} Project Photo(s) 
+              {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/photo`,
@@ -264,6 +266,7 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add Photo
                 </Link>
+              }
               </h2>
               <div className="card">
               <Gallery images={this.state.project.photos.map((photo, key) => ({
@@ -279,7 +282,9 @@ class View extends React.Component {
           <div className="row">
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.updates.length} Cost Update(s)
-                {this.renderCostUpdateButton()}
+              {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
+                this.renderCostUpdateButton()
+              }
               </h2>
               <div className="card">
               {this.state.project.updates.map((update, key) => {
@@ -297,7 +302,8 @@ class View extends React.Component {
               </div>
             </div>
             <div className="md-6 column">
-              <h2 className="card-title">{this.state.project.products.length} Project Product(s) 
+              <h2 className="card-title">{this.state.project.products.length} Project Product(s)
+                {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/product`,
@@ -306,6 +312,7 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add Product
                 </Link>
+                }
               </h2>
               <div className="card">
               {this.state.project.products.map((product, key) => {
@@ -327,6 +334,7 @@ class View extends React.Component {
           <div className="row">
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.files.length} Project File(s)
+              {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/file`,
@@ -335,6 +343,7 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add File
                 </Link>
+              }
               </h2>
               <div className="card">
                 {this.state.project.files.map((file, key) => {
@@ -351,6 +360,7 @@ class View extends React.Component {
             </div>
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.notes.length} Project Note(s) 
+              {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/note`,
@@ -359,6 +369,7 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add Note
                 </Link>
+              }
               </h2>
               <div className="card">
               {this.state.project.notes.map((note, key) => {

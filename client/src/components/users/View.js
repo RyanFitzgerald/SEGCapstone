@@ -27,6 +27,18 @@ class View extends React.Component {
       // Get User
       this.getUser(this.props.location.match.params.id);
     }
+
+    componentWillMount() {
+      if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
+        this.setState({
+          redirect: {
+            location: '/',
+            message: 'You do not have access to that.',
+            type: 'error'
+          }
+        });
+      }
+    }
   
     getUser(id) {
       api.getUser(id).then(user => {
@@ -43,7 +55,11 @@ class View extends React.Component {
         if (result) {
           this.props.removeFromUsers(id);
           this.setState({
-            redirect: '/users'
+            redirect: {
+              location: '/users',
+              message: 'Successfully deleted user!',
+              type: 'success'
+            }
           });
         } else {
           this.props.addNotification('A problem was encountered when trying to delete the client', 'warn');
@@ -53,9 +69,9 @@ class View extends React.Component {
   
     render() {
       if (this.state.redirect) {
-        this.props.addNotification('Successfully deleted user!', 'success');
+        this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
         return (
-          <Redirect to={this.state.redirect}/>
+          <Redirect to={this.state.redirect.location}/>
         );
       }
   
@@ -73,7 +89,7 @@ class View extends React.Component {
                     <li><b>Role:</b> {this.state.user.role.name}</li>
                   </ul>
                   <div className="client-actions">
-                    <Link to={`/users/${this.props.location.match.params.id}/edit`} className="btn btn--primary">Edit User</Link>
+                    <Link to={`/settings/users/${this.props.location.match.params.id}/edit`} className="btn btn--primary">Edit User</Link>
                     <button className="btn btn--danger" onClick={() => {if (window.confirm('Are you sure you want to delete this user?')) {this.deleteUser()};}}>Delete User</button>
                   </div>
                 </div>

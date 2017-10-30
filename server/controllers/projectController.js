@@ -44,7 +44,7 @@ exports.getProjects = async (req, res) => {
 };
 
 exports.getProject = async (req, res) => {
-  const project = await Project.findById(req.params.id).populate('client type', '_id name').populate('notes products updates photos files');
+  const project = await Project.findById(req.params.id).populate('client type', '_id name').populate('notes products updates photos files addedBy');
   res.send(project);
 };
 

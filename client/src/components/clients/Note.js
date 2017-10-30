@@ -25,6 +25,18 @@ class Note extends React.Component {
     document.title = 'Add Note | Renovaction';
   }
 
+  componentWillMount() {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/clients/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
+  }
+
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
@@ -49,7 +61,11 @@ class Note extends React.Component {
       }
 
       this.setState({
-        redirect: `/clients/${this.props.location.match.params.id}`
+        redirect: {
+          location: `/clients/${this.props.location.match.params.id}`,
+          message: 'Successfully added note!',
+          type: 'success'
+        }
       });      
     });
   }
@@ -62,9 +78,9 @@ class Note extends React.Component {
     }
 
     if (this.state.redirect) {
-      this.props.addNotification('Successfully added note!', 'success');      
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect} />
+        <Redirect to={this.state.redirect.location}/>
       );
     }
     

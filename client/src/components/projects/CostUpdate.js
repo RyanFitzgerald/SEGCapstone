@@ -26,6 +26,18 @@ class CostUpdate extends React.Component {
     document.title = 'Add Product | Renovaction';
   }
 
+  componentWillMount() {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/projects/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
+  }
+
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
@@ -52,7 +64,11 @@ class CostUpdate extends React.Component {
       }
 
       this.setState({
-        redirect: `/projects/${this.props.location.match.params.id}`
+        redirect: {
+          location: `/projects/${this.props.location.match.params.id}`,
+          message: 'Successfully added cost update!',
+          type: 'success'
+        }
       });      
     });
   }
@@ -69,9 +85,9 @@ class CostUpdate extends React.Component {
     }
 
     if (this.state.redirect) {
-      this.props.addNotification('Successfully added cost update!', 'success');
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect} />
+        <Redirect to={this.state.redirect.location} />
       );
     }
     

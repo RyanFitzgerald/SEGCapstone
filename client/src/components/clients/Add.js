@@ -27,7 +27,7 @@ class Add extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.checkLevel(this.props.level, 2)) {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
       this.setState({
         redirect: {
           location: '/clients/',
@@ -53,7 +53,8 @@ class Add extends React.Component {
       email: this.email.value,
       street: this.street.value,
       postalCode: this.postalCode.value,
-      city: this.city.value
+      city: this.city.value,
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id
     };
 
     // Call api

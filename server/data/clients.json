@@ -6,7 +6,8 @@
     "email": "chogarth@gmail.com",
     "street": "800 King Edward Avenue",
     "postalCode": "K1N6N5",
-    "city": "Ottawa"
+    "city": "Ottawa",
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59beb0c6a34cca325454209a",
@@ -15,7 +16,8 @@
     "email": "evonne_farnham@yahoo.ca",
     "street": "912 Bank Street",
     "postalCode": "K1S3W4",
-    "city": "Ottawa"
+    "city": "Ottawa",
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59beb1179f0a52193c42bf7a",
@@ -24,7 +26,8 @@
     "email": "the_tony_ibbott@hotmail.com",
     "street": "234 Wellington Street West",
     "postalCode": "K1A0G9",
-    "city": "Ottawa"
+    "city": "Ottawa",
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c1d0d3fc750f1d1082b7a8",
@@ -33,7 +36,8 @@
     "email": "jennab@gmail.com",
     "street": "4416 Innes Road",
     "postalCode": "K4A3W3",
-    "city": "Orleans"
+    "city": "Orleans",
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c846e4aa442d126c3e0ba5",
@@ -42,6 +46,7 @@
     "email": "ronaldwalker10@gmail.com",
     "street": "4220 Innes Road",
     "postalCode": "K4A5E6",
-    "city": "Orleans"
+    "city": "Orleans",
+    "addedBy": "59f10b411426df3398e31ad7"
   }
 ]

@@ -14,7 +14,8 @@
     "actualCost": "",
     "status": "Not Started",
     "client": "59beae6d8047be31c02d2dd1",
-    "type": ["59bad64bdc33910f9c652a21"]
+    "type": ["59bad64bdc33910f9c652a21"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c45413ceabab24f06ea7b1",
@@ -31,7 +32,8 @@
     "actualCost": "",
     "status": "In Progress",
     "client": "59beae6d8047be31c02d2dd1",
-    "type": ["59bad64bdc33910f9c652a22"]
+    "type": ["59bad64bdc33910f9c652a22"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c4546b9ccdb50e3496e63d",
@@ -48,7 +50,8 @@
     "actualCost": "",
     "status": "Not Started",
     "client": "59beb0c6a34cca325454209a",
-    "type": ["59bad64bdc33910f9c652a22", "59bad64bdc33910f9c652a24"]
+    "type": ["59bad64bdc33910f9c652a22", "59bad64bdc33910f9c652a24"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c5e09dc3593727b448c999",
@@ -65,7 +68,8 @@
     "actualCost": "2501981",
     "status": "Complete",
     "client": "59beb0c6a34cca325454209a",
-    "type": ["59bad64bdc33910f9c652a21"]
+    "type": ["59bad64bdc33910f9c652a21"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c7164b425e4800d468571a",
@@ -82,7 +86,8 @@
     "actualCost": "",
     "status": "Not Started",
     "client": "59beb1179f0a52193c42bf7a",
-    "type": ["59bad64bdc33910f9c652a24"]
+    "type": ["59bad64bdc33910f9c652a24"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c84aa9aa442d126c3e0ba7",
@@ -99,7 +104,8 @@
     "actualCost": "",
     "status": "In Progress",
     "client": "59beb1179f0a52193c42bf7a",
-    "type": ["59bad64bdc33910f9c652a20"]
+    "type": ["59bad64bdc33910f9c652a20"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c84ab0aa442d126c3e0ba8",
@@ -116,7 +122,8 @@
     "actualCost": "12996328",
     "status": "Complete",
     "client": "59beb1179f0a52193c42bf7a",
-    "type": ["59bad64bdc33910f9c652a21"]
+    "type": ["59bad64bdc33910f9c652a21"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c84ab7aa442d126c3e0ba9",
@@ -133,7 +140,8 @@
     "actualCost": "782910",
     "status": "Complete",
     "client": "59c1d0d3fc750f1d1082b7a8",
-    "type": ["59bad64bdc33910f9c652a23"]
+    "type": ["59bad64bdc33910f9c652a23"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c84ac6aa442d126c3e0baa",
@@ -150,7 +158,8 @@
     "actualCost": "",
     "status": "Not Started",
     "client": "59c1d0d3fc750f1d1082b7a8",
-    "type": ["59bad64bdc33910f9c652a21", "59bad64bdc33910f9c652a20"]
+    "type": ["59bad64bdc33910f9c652a21", "59bad64bdc33910f9c652a20"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c84accaa442d126c3e0bab",
@@ -167,7 +176,8 @@
     "actualCost": "",
     "status": "Not Started",
     "client": "59c846e4aa442d126c3e0ba5",
-    "type": ["59bad64bdc33910f9c652a22"]
+    "type": ["59bad64bdc33910f9c652a22"],
+    "addedBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59c84ad0aa442d126c3e0bac",
@@ -184,6 +194,7 @@
     "actualCost": "",
     "status": "In Progress",
     "client": "59c846e4aa442d126c3e0ba5",
-    "type": ["59bad64bdc33910f9c652a20"]
+    "type": ["59bad64bdc33910f9c652a20"],
+    "addedBy": "59f10b411426df3398e31ad7"
   }
 ]

@@ -29,6 +29,18 @@ class Edit extends React.Component {
     this.getUser(this.props.location.match.params.id);
   }
 
+  componentWillMount() {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
+  }
+
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
@@ -70,16 +82,20 @@ class Edit extends React.Component {
 
       // Redirect
       this.setState({
-        redirect: `/users/${resp}`
+        redirect: {
+          location: `/users/${resp}`,
+          message: 'Successfully updated user!',
+          type: 'success'
+        }
       });
     });
   }
 
   render() {
     if (this.state.redirect) {
-      this.props.addNotification('Successfully updated user!', 'success');      
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect}/>
+        <Redirect to={this.state.redirect.location}/>
       );
     }
 
@@ -87,19 +103,19 @@ class Edit extends React.Component {
       return (
         <div className="content">
           <div className="row">
-            <div className="md-6 md-center column">
+            <div className="column">
               <h2 className="card-title">Edit User</h2>
               <div className="card">
                 {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit}>
-                  <div className="row form-section">
-                    <div className="md-12 column form-section__title no-left">
+                  <div className="row">
+                    <div className="md-4 column form-section__title no-left">
                       <h3>Basic Information</h3>
                       <p>
                         Enter all the basic information about this user
                       </p>
                     </div>
-                    <div className="md-12 column no-right">
+                    <div className="md-8 column no-right">
                       <label className="form-label" htmlFor="name"> Name <span className="form-required">*</span></label>
                       <input ref={input => this.name = input} name="name" className="form-text form-text--full" type="text" defaultValue={this.state.user.name} required />
                       <label className="form-label" htmlFor="email">Email <span className="form-required">*</span></label>

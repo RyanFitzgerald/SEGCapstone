@@ -25,6 +25,18 @@ class File extends React.Component {
     document.title = 'Add File | Renovaction';
   }
 
+  componentWillMount() {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/projects/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
+  }
+
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
@@ -51,7 +63,11 @@ class File extends React.Component {
       }
 
       this.setState({
-        redirect: `/projects/${this.props.location.match.params.id}`
+        redirect: {
+          location: `/projects/${this.props.location.match.params.id}`,
+          message: 'Successfully added file!',
+          type: 'success'
+        }
       });      
     });
   }
@@ -64,9 +80,9 @@ class File extends React.Component {
     }
 
     if (this.state.redirect) {
-      this.props.addNotification('Successfully added file!', 'success');
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect} />
+        <Redirect to={this.state.redirect.location} />
       );
     }
     

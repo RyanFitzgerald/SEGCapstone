@@ -31,7 +31,7 @@ function Header(props) {
         <span className="header__usertoggle" onClick={handleUserMenuToggle}>Hello, {props.user.name} <i className="fa fa-chevron-down" aria-hidden="true"></i></span>
 
         <ul ref={ele => userMenu = ele}>
-            <li><Link to="/account">Account Settings</Link></li>
+            <li><Link to='/account'>Account Settings</Link></li>
             <li onClick={props.logout}><Link to="/">Logout</Link></li>
         </ul>
 
@@ -45,8 +45,12 @@ function Header(props) {
           <li><Link className={(props.activeTab === 1) ? 'header__link header__link--active' : 'header__link'} to="/">Home</Link></li>
           <li><Link className={(props.activeTab === 2) ? 'header__link header__link--active' : 'header__link'} to="/projects">Projects</Link></li>
           <li><Link className={(props.activeTab === 3) ? 'header__link header__link--active' : 'header__link'} to="/clients">Clients</Link></li>
+          {props.checkLevel(props.level, 2) &&
           <li><Link className={(props.activeTab === 4) ? 'header__link header__link--active' : 'header__link'} to="/stats">Statistics</Link></li>
+          }
+          {props.checkLevel(props.level, 2) &&
           <li><Link className={(props.activeTab === 5) ? 'header__link header__link--active' : 'header__link'} to="/settings">Settings</Link></li>
+          }
         </ul>
       </div>
     </div>

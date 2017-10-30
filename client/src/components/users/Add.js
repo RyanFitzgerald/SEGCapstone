@@ -26,8 +26,10 @@ class Add extends React.Component {
 
     // Update active tab
     this.props.setActiveSubtab(3);
+  }
 
-    if (!this.props.checkLevel(this.props.level, 2)) {
+  componentWillMount() {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
       this.setState({
         redirect: {
           location: '/',

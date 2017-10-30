@@ -151,28 +151,28 @@ class Project extends React.Component {
             <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sortByKey={this.sortByKey} />
           }/>
           <Route path="/projects/add" render={(location) =>
-            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.props.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects} level={this.props.level} checkLevel={this.props.checkLevel}/>
+            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.props.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects} checkLevel={this.props.checkLevel}/>
           }/>
           <Route path="/projects/:id/edit" render={(location) =>
-            <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.props.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects}/>
+            <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.props.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects} checkLevel={this.props.checkLevel}/>
           }/>
           <Route path="/projects/:id/note" render={(location) =>
-            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
           }/>
           <Route path="/projects/:id/product" render={(location) =>
-            <Product setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            <Product setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
           }/>
           <Route path="/projects/:id/photo" render={(location) =>
-            <Photo setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            <Photo setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
           }/>
           <Route path="/projects/:id/file" render={(location) =>
-            <File setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            <File setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
           }/>
           <Route path="/projects/:id/update" render={(location) =>
-            <CostUpdate setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            <CostUpdate setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
           }/>
           <Route path="/projects/:id" render={(location) =>
-            <View setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} location={location} removeFromProjects={this.removeFromProjects}/>
+            <View setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} location={location} removeFromProjects={this.removeFromProjects} checkLevel={this.props.checkLevel}/>
           }/>
         </Switch>
       </div>

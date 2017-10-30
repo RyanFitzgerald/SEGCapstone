@@ -72,15 +72,15 @@ const projectSchema = new mongoose.Schema({
       default: [-75.69719309999999, 45.4215296]
     },
     address: {
-      type:String,
+      type: String,
       default: 'Ottawa, ON, Canada'
     }
-  }
-  /*createdBy: {
+  },
+  addedBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
     required: 'A user must be provided'
-  }*/
+  }
 }, {
   toJSON: { virtuals: true }, // Show virtuals explicitly, but not needed
   toObject: { virtuals: true } // Show virtuals explicitly, but not needed

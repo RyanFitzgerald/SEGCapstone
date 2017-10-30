@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class Directory extends React.Component {
   constructor() {
@@ -13,7 +13,8 @@ class Directory extends React.Component {
 
     this.state = {
 			activePage: 1,
-      usersPerPage: 10
+      usersPerPage: 10,
+      redirect: false
     };
   }
 
@@ -23,6 +24,18 @@ class Directory extends React.Component {
 
     // Update tab
     this.props.setActiveSubtab(2);
+  }
+
+  componentWillMount() {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
+      this.setState({
+        redirect: {
+          location: '/',
+          message: 'You do not have access to that.',
+          type: 'error'
+        }
+      });
+    }
   }
 
   handleAdvanced(e) {
@@ -83,6 +96,13 @@ class Directory extends React.Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
+      return (
+        <Redirect to={this.state.redirect.location}/>
+      );
+    }
+
     // Variables
     const users = this.props.users || [];
     const roles = this.props.roles || [];

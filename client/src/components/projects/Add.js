@@ -35,7 +35,7 @@ class Add extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.checkLevel(this.props.level, 2)) {
+    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
       this.setState({
         redirect: {
           location: '/projects/',
@@ -85,7 +85,8 @@ class Add extends React.Component {
       actualCost: this.getCents(this.actualCost.value),
       status: this.status.value,
       type: types,
-      client: this.client.value
+      client: this.client.value,
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id
     };
 
     // Call api
