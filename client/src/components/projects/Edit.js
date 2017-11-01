@@ -41,18 +41,6 @@ class Edit extends React.Component {
     this.getProject(this.props.location.match.params.id);
   }
 
-  componentWillMount() {
-    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
-      this.setState({
-        redirect: {
-          location: '/projects/',
-          message: 'You do not have access to that.',
-          type: 'error'
-        }
-      });
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.clients !== null && nextProps.clients !== this.state.clients) {
       this.setState({ clients: nextProps.clients });

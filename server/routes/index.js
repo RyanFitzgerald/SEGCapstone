@@ -52,10 +52,9 @@ router.delete('/api/projects/:id/files/:file', catchErrors(fileController.delete
 router.get('/api/types', catchErrors(typeController.getTypes));
 
 // --- Authenticaiton Routes ---
-router.get('/api/isLoggedIn', authController.isLoggedIn);
-router.post('/api/login', authController.login);
-router.get('/api/logout', authController.logout);
-router.get('/api/getCurrentUser', authController.getCurrentUser);
+router.get('/auth/isLoggedIn', authController.isLoggedIn);
+router.post('/auth/login', authController.login);
+router.get('/auth/logout', authController.logout);
 
 // --- User Routes ---
 router.get('/api/users', catchErrors(userController.getUsers));

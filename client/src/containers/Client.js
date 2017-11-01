@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import * as api from '../api';
 import arraySort from 'array-sort';
 
@@ -130,6 +130,7 @@ class Client extends React.Component {
   }
 
   render() {
+    const level = JSON.parse(sessionStorage.getItem('user')).role.level;
     return (
       <div>
         <Submenu activeSubtab={this.state.activeSubtab} level={this.props.level} checkLevel={this.props.checkLevel}/>
@@ -138,15 +139,27 @@ class Client extends React.Component {
           <Route exact path="/clients" render={() =>
             <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sortByKey={this.sortByKey} />
           }/>
-          <Route path="/clients/add" render={() =>
-            <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} addToClients={this.addToClients} level={this.props.level} checkLevel={this.props.checkLevel}/>
-          }/>
-          <Route path="/clients/:id/note" render={(location) =>
-            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
-          }/>
-          <Route path="/clients/:id/edit" render={(location) =>
-            <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients}/>
-          }/>
+          <Route path="/clients/add" render={() => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} addToClients={this.addToClients} level={this.props.level} checkLevel={this.props.checkLevel}/>
+            )
+          )}/>
+          <Route path="/clients/:id/note" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            )
+          )}/>
+          <Route path="/clients/:id/edit" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients}/>
+            )
+          )}/>
           <Route path="/clients/:id" render={(location) =>
             <View setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} location={location} removeFromClients={this.removeFromClients}/>
           }/>

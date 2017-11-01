@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import * as api from '../api';
 import arraySort from 'array-sort';
 
@@ -142,6 +142,8 @@ class Settings extends React.Component {
   }
   
   render() {
+    const level = JSON.parse(sessionStorage.getItem('user')).role.level;
+
     return (
       <div>
         <ToastContainer 
@@ -156,21 +158,41 @@ class Settings extends React.Component {
         <Submenu activeSubtab={this.state.activeSubtab} level={this.props.level} checkLevel={this.props.checkLevel}/>
 
         <Switch>
-          <Route exact path="/settings" render={() =>
-            <Options setActiveSubtab={this.setActiveSubtab}/>
-          }/>
-          <Route path="/settings/users/add" render={() =>
-            <Add setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} addNotification={this.addNotification} renderError={this.renderError} addToUsers={this.addToUsers} level={this.props.level} checkLevel={this.props.checkLevel}/>
-          }/>
-          <Route path="/settings/users/:id/edit" render={(location) =>
-            <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateUsers={this.updateUsers} level={this.props.level} checkLevel={this.props.checkLevel}/>
-          }/>
-          <Route path="/settings/users/:id" render={(location) =>
-            <View setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} location={location} removeFromUsers={this.removeFromUsers} level={this.props.level} checkLevel={this.props.checkLevel}/>
-          }/> 
-          <Route path="/settings/users" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey} level={this.props.level} checkLevel={this.props.checkLevel}/>
-          }/>
+          <Route exact path="/settings" render={() => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Options setActiveSubtab={this.setActiveSubtab}/>
+            )
+          )}/>
+          <Route path="/settings/users/add" render={() => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Add setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} addNotification={this.addNotification} renderError={this.renderError} addToUsers={this.addToUsers} level={this.props.level} checkLevel={this.props.checkLevel}/>
+            )
+          )}/>
+          <Route path="/settings/users/:id/edit" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateUsers={this.updateUsers} level={this.props.level} checkLevel={this.props.checkLevel}/>
+            )
+          )}/>
+          <Route path="/settings/users/:id" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <View setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} location={location} removeFromUsers={this.removeFromUsers} level={this.props.level} checkLevel={this.props.checkLevel}/>
+            )
+          )}/> 
+          <Route path="/settings/users" render={() => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Directory setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey} level={this.props.level} checkLevel={this.props.checkLevel}/>
+            )
+          )}/>
         </Switch>
       </div>
     );

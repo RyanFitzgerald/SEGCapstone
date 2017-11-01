@@ -29,18 +29,6 @@ class Edit extends React.Component {
     this.getUser(this.props.location.match.params.id);
   }
 
-  componentWillMount() {
-    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
-      this.setState({
-        redirect: {
-          location: '/',
-          message: 'You do not have access to that.',
-          type: 'error'
-        }
-      });
-    }
-  }
-
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();

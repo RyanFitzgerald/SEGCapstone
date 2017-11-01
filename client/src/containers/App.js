@@ -13,7 +13,8 @@ import Client from './Client';
 import Project from './Project';
 import Stats from './Stats';
 import Settings from './Settings';
-import Login from './Login';
+import Account from './Account';
+import LoginForm from '../components/LoginForm';
 
 class App extends Component {
   constructor() {
@@ -23,15 +24,13 @@ class App extends Component {
     this.setActiveTab = this.setActiveTab.bind(this);
     this.isLoggedIn = this.isLoggedIn.bind(this);
     this.logout = this.logout.bind(this);
-    this.getCurrentUser = this.getCurrentUser.bind(this);
     this.addNotification = this.addNotification.bind(this);
-    this.checkLevel = this.checkLevel.bind(this);
+    this.loggedIn = this.loggedIn.bind(this);
 
     // Set state defaults
     this.state = {
       activeTab: 1,
-      isLoggedIn: false,
-      user: false
+      isLoggedIn: false
     };
   }
 
@@ -41,8 +40,6 @@ class App extends Component {
 
   componentDidMount() {
     this.isLoggedIn();
-
-    this.getCurrentUser();
   }
 
   addNotification(message, type) {
@@ -50,9 +47,20 @@ class App extends Component {
   }
 
   isLoggedIn() {
-    api.isLoggedIn().then(result => {
-      const isLoggedIn = result;
+    api.isLoggedIn().then(isLoggedIn => {
       this.setState({ isLoggedIn });
+    });
+  }
+
+  loggedIn(user) {
+
+    console.log('here')
+    user.token = 
+
+    sessionStorage.setItem('user', JSON.stringify(user));
+
+    this.setState({
+      isLoggedIn: true
     });
   }
 
@@ -60,19 +68,6 @@ class App extends Component {
     api.logout().then(() => {
       sessionStorage.removeItem('user');
       window.location.reload();
-    });
-  }
-
-  checkLevel(current, required) {
-    return (current >= required);
-  }
-
-  // Retrieve user information
-  getCurrentUser() {
-    api.getCurrentUser().then(result => {
-      const user = result;
-      sessionStorage.setItem('user', JSON.stringify(user));
-      this.setState({ user });
     });
   }
 
@@ -89,39 +84,59 @@ class App extends Component {
             closeOnClick
             pauseOnHover
           />
-          <Header user={this.state.user} logout={this.logout} activeTab={this.state.activeTab} level={this.state.user.level} checkLevel={this.checkLevel}/>
+          <Header logout={this.logout} activeTab={this.state.activeTab} />
   
           <Switch>
             <Route exact path="/" render={() =>
               <Home setActiveTab={this.setActiveTab}/>
             } />
             <Route path="/clients" render={() =>
-              <Client setActiveTab={this.setActiveTab} addNotification={this.addNotification} checkLevel={this.checkLevel}/>
+              <Client setActiveTab={this.setActiveTab} addNotification={this.addNotification} />
             } />
             <Route path="/projects" render={() =>
-              <Project setActiveTab={this.setActiveTab} addNotification={this.addNotification} checkLevel={this.checkLevel}/>
+              <Project setActiveTab={this.setActiveTab} addNotification={this.addNotification} />
             } />
             <Route path="/stats" render={() =>
-              <Stats setActiveTab={this.setActiveTab} addNotification={this.addNotification} checkLevel={this.checkLevel}/>
+              <Stats setActiveTab={this.setActiveTab} addNotification={this.addNotification} />
             } />
             <Route path="/settings" render={() =>
-              <Settings setActiveTab={this.setActiveTab} addNotification={this.addNotification} checkLevel={this.checkLevel}/>
+              <Settings setActiveTab={this.setActiveTab} addNotification={this.addNotification} />
+            } />
+            <Route path="/account" render={() =>
+              <Account addNotification={this.addNotification} />
             } />
             {/* Already logged-in so redirect to root path */}
             <Route path="/login" render={() =>
-              <Redirect to="/"/> 
+              <Redirect to='/'/>
             } />
             <Route component={NoMatch}/>
           </Switch>
         </div>
       );
-    } else {
-      return (
-        <div className="app">
-          <Login />
-        </div>
-      );  
-    }  
+    }
+
+    return (
+      <div className="app">
+        <ToastContainer 
+            position="top-right"
+            type="success"
+            autoClose={3000}
+            hideProgressBar
+            newestOnTop
+            closeOnClick
+            pauseOnHover
+          />
+
+        <Switch>
+          <Route path="/login" render={() =>
+            <LoginForm addNotification={this.addNotification} loggedIn={this.loggedIn} />
+          }/>
+          <Route render={() =>
+            <Redirect to='/login'/>
+          }/>
+        </Switch>
+      </div>
+    );   
   }
 }
 

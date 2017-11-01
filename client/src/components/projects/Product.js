@@ -25,18 +25,6 @@ class Note extends React.Component {
     document.title = 'Add Product | Renovaction';
   }
 
-  componentWillMount() {
-    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
-      this.setState({
-        redirect: {
-          location: '/projects/',
-          message: 'You do not have access to that.',
-          type: 'error'
-        }
-      });
-    }
-  }
-
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
@@ -47,7 +35,8 @@ class Note extends React.Component {
       brand: this.brand.value,
       colour: this.colour.value,
       style: this.style.value,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id
     };
 
     // Call api

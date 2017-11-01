@@ -25,18 +25,6 @@ class File extends React.Component {
     document.title = 'Add File | Renovaction';
   }
 
-  componentWillMount() {
-    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
-      this.setState({
-        redirect: {
-          location: '/projects/',
-          message: 'You do not have access to that.',
-          type: 'error'
-        }
-      });
-    }
-  }
-
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
@@ -46,7 +34,8 @@ class File extends React.Component {
       name: this.name.value,
       description: this.description.value,
       file: this.file.files[0],
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id
     };
 
     // Call api
@@ -55,7 +44,7 @@ class File extends React.Component {
 
   addFile(file) {
     api.addFile(file).then(resp => {
-      if (resp.status === 500) {
+      if (resp.error) {
         this.setState({
           formError: 'There was an error when submitting the form, please try again.'
         })

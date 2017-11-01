@@ -26,18 +26,6 @@ class Add extends React.Component {
     this.props.setActiveSubtab(2);
   }
 
-  componentWillMount() {
-    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
-      this.setState({
-        redirect: {
-          location: '/clients/',
-          message: 'You do not have access to that.',
-          type: 'error'
-        }
-      });
-    }
-  }
-
   componentWillUnmount() {
     this.setState({ redirect: false });
   }

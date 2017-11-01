@@ -7,32 +7,46 @@ const passport = require('passport');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-// const promisify = require('es6-promisify');
+const jwt = require('jwt-simple');
+require('dotenv').config({ path: 'variables.env' });
+
+function genToken(user) {
+  var expires = expiresIn(7); // 7 days
+  var token = jwt.encode({
+    exp: expires
+  }, process.env.JWT);
+ 
+  return {
+    token: token,
+    expires: expires
+  };
+}
+ 
+function expiresIn(numDays) {
+  var dateObj = new Date();
+  return dateObj.setDate(dateObj.getDate() + numDays);
+}
 
 exports.login = (req, res, next) => {
-	
-	passport.authenticate('local', {
-			failureRedirect: '/',
-			successRedirect: '/'
-		}, (err, user, info) => {
-			if (err) { 
+	passport.authenticate('local', function(err, user, info) {
+		if (err) { 
+			return next(err);
+		}
+		
+    // Redirect if it fails
+    if (!user) { 
+			res.send(false);
+			return;
+		}
+
+		req.login(user, function(err) {
+			if (err) {
 				return next(err);
 			}
-
-			if (!user) {
-				return res.send(false);
-			}
-
-			req.logIn(user, function(err) {
-				if (err) {
-					return next(err);
-				}
-
-				return res.send(true);
-			});
-		}
-	)(req, res, next);
-};
+			res.send({user, access: genToken()});
+		});
+  })(req, res, next);
+}
 
 exports.logout = (req, res) => {
 	req.logout();
@@ -43,10 +57,3 @@ exports.isLoggedIn = (req, res) => {
 	res.send(req.isAuthenticated());
 };
 
-exports.getCurrentUser = (req, res) => {
-	if (req.user) {
-		res.send(req.user);
-	} else {
-		res.send(false);
-	}
-};

@@ -39,6 +39,10 @@ const userSchema = new Schema({
     ref: 'Role',
     required: 'A role must be provided!'
   }
+}, {
+  toJSON: {
+    virtuals: true
+  }
 });
 
 userSchema.plugin(passportLocalMongoose, { 

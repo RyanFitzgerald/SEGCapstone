@@ -10,6 +10,7 @@ const expressValidator = require('express-validator');
 const routes = require('./routes/index');
 const helpers = require('../helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+const validateHandler = require('./handlers/validateHandler');
 require('./handlers/passport');
 
 // create our Express app
@@ -46,6 +47,23 @@ app.use((req, res, next) => {
   res.locals.currentPath = req.path;
   next();
 });
+
+// Setup some basic security
+app.all('/*', function(req, res, next) {
+  // CORS headers
+  res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  // Set custom headers for CORS
+  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+  if (req.method == 'OPTIONS') {
+    res.status(200).end();
+  } else {
+    next();
+  }
+});
+
+// Auth middleware
+app.all('/api/*', [validateHandler]);
 
 // After all middleware, handle routes
 app.use('/', routes);

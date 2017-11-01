@@ -2,13 +2,13 @@ import axios from 'axios';
 
 // --- Client API ---
 export const getClients = (query) => {
-  if (query) {
+  if (query.search) {
     return axios
-      .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}`)
+      .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&access_token=${query.access_token}`)
       .then(resp => resp.data);
   } else {
     return axios
-      .get('/api/clients')
+      .get(`/api/clients?access_token=${query.access_token}`)
       .then(resp => resp.data);
   }
 };
@@ -55,13 +55,13 @@ export const deleteClientNote = note => {
 
 // --- Project API ---
 export const getProjects = (query) => {
-  if (query) {
+  if (query.search) {
     return axios
-      .get(`/api/projects?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&type=${query.type}&status=${query.status}`)
+      .get(`/api/projects?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&type=${query.type}&status=${query.status}&access_token=${query.access_token}`)
       .then(resp => resp.data);
   } else {
     return axios
-    .get('/api/projects')
+    .get(`/api/projects?access_token=${query.access_token}`)
     .then(resp => resp.data);
   }
 };
@@ -141,6 +141,7 @@ export const addPhoto = photo => {
   data.append('description', photo.description);
   data.append('photo', photo.photo);
   data.append('project', photo.project);
+  data.append('addedBy', photo.addedBy);
 
   return axios
     .post(`/api/projects/${photo.project}/photos`, data)
@@ -161,6 +162,7 @@ export const addFile = file => {
   data.append('description', file.description);
   data.append('file', file.file);
   data.append('project', file.project);
+  data.append('addedBy', file.addedBy);
 
   return axios
     .post(`/api/projects/${file.project}/files`, data)
@@ -175,34 +177,28 @@ export const deleteFile = file => {
 };
 
 // --- Types API ---
-export const getTypes = () => {
+export const getTypes = query => {
   return axios
-    .get('/api/types')
+    .get(`/api/types?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
 // --- User Authentication API ---
 export const isLoggedIn = () => {
   return axios
-    .get('/api/isLoggedIn')
+    .get('/auth/isLoggedIn')
     .then(resp => resp.data);
 };
 
 export const login = userCredentials => {
   return axios
-    .post('/api/login', userCredentials)
+    .post('/auth/login', userCredentials)
     .then(resp => resp.data);
 };
 
 export const logout = () => {
   return axios
-    .get('/api/logout')
-    .then(resp => resp.data);
-};
-
-export const getCurrentUser = () => {
-  return axios
-    .get(`/api/getCurrentUser`)
+    .get('/auth/logout')
     .then(resp => resp.data);
 };
 

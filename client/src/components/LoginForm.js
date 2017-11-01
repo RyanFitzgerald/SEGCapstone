@@ -2,9 +2,8 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Logo from '../logo.png';
 import * as api from '../api';
-import LoadingGif from '../loading.gif';
 
-class Login extends React.Component {
+class LoginForm extends React.Component {
   constructor() {
     super();
 
@@ -28,7 +27,6 @@ class Login extends React.Component {
       password: this.password.value
     };
 
-    this.setState({ loading:true });
     // Attempt to validate user credentials for login
     this.login(userCredentials);
   }
@@ -39,21 +37,20 @@ class Login extends React.Component {
   }
 
   login(userCredentials) {
-    api.login(userCredentials).then(isFailedLogin => {
-        // If user failed to login, prep notification, and redirect to re-render this component
-        if(!isFailedLogin) {
-          this.props.failedLogin(true);
-          this.props.addNotification('Wrong email or password!', 'error');
-          this.setState({
-            redirect: `/`
-          });
-        }
-        // User logged-in successfully, refresh the application
-        else {
-          this.loginAttempt();
-        }
+    api.login(userCredentials).then(result => {
+      // If user failed to login, prep notification, and redirect to re-render this component
+      if (!result) {
+        this.props.addNotification('Wrong email or password!', 'error');
+        return;
       }
-    );
+
+      const user = result.user;
+      user.access_token = result.access.token;
+      user.token_expiry = result.access.expires;
+
+      // Send user
+      this.props.loggedIn(user);
+    });
   }
 
   render() {
@@ -61,11 +58,6 @@ class Login extends React.Component {
       return (
         <Redirect to={this.state.redirect}/>
       );
-    }
-
-    let loadIcon = <div></div>;
-    if(this.state.loading) {
-      loadIcon = <div className="loading"><img src={LoadingGif} alt="Loading..."/></div>;
     }
 
     return (
@@ -76,10 +68,9 @@ class Login extends React.Component {
           <input className="form-text" type="password" ref={input => this.password = input} placeholder="Password" />
           <input className="btn btn--primary btn--small" type="submit" value="Login"/>
         </form>
-        {loadIcon}
       </div>
     );
   }
 }
 
-export default Login;
+export default LoginForm;

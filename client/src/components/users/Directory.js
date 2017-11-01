@@ -25,19 +25,7 @@ class Directory extends React.Component {
     // Update tab
     this.props.setActiveSubtab(2);
   }
-
-  componentWillMount() {
-    if (!this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2)) {
-      this.setState({
-        redirect: {
-          location: '/',
-          message: 'You do not have access to that.',
-          type: 'error'
-        }
-      });
-    }
-  }
-
+  
   handleAdvanced(e) {
     e.preventDefault();
     if (this.advanced.classList.contains('active')) {

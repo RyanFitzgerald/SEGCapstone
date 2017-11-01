@@ -44,7 +44,37 @@ exports.getProjects = async (req, res) => {
 };
 
 exports.getProject = async (req, res) => {
-  const project = await Project.findById(req.params.id).populate('client type', '_id name').populate('notes products updates photos files addedBy');
+  const project = await Project.findById(req.params.id).populate('client type addedBy', '_id name').populate([{
+    path: 'notes',
+    model: 'ProjectNote',
+    populate: {
+      path: 'addedBy',
+      select: 'name',
+      model: 'User'
+    }
+  }, {
+    path: 'products',
+    model: 'Product'
+  }, {
+    path: 'updates',
+    model: 'CostUpdate'
+  }, {
+    path: 'photos',
+    model: 'Photo',
+    populate: {
+      path: 'addedBy',
+      select: 'name',
+      model: 'User'
+    }
+  }, {
+    path: 'files',
+    model: 'File',
+    populate: {
+      path: 'addedBy',
+      select: 'name',
+      model: 'User'
+    }
+  }]);
   res.send(project);
 };
 

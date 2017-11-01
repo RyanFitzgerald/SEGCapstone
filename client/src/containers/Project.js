@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import * as api from '../api';
 import arraySort from 'array-sort';
 
@@ -54,10 +54,10 @@ class Project extends React.Component {
     this.getTypes();
 
     // Get clients
-    this.getClients();
+    this.getClients({search: false});
 
     // Get projects
-    this.getProjects(false);
+    this.getProjects({search: false});
   }
 
   setActiveSubtab(tab) {
@@ -65,18 +65,24 @@ class Project extends React.Component {
   }
 
   getTypes() {
-    api.getTypes().then(types => {
+    api.getTypes({access_token: JSON.parse(sessionStorage.getItem('user')).access_token}).then(types => {
       this.setState({ types });
     });
   }
 
-  getClients() {
-    api.getClients(false).then(result => {
+  getClients(query) {
+    // Append access token
+    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+
+    api.getClients(query).then(result => {
       this.setState({ clients: result });
     });
   }
 
   getProjects(query) {
+    // Append access token
+    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+
     api.getProjects(query).then(result => {
       const projects = result;
       this.setState({ projects });
@@ -142,37 +148,67 @@ class Project extends React.Component {
   }
 
   render() {
+    const level = JSON.parse(sessionStorage.getItem('user')).role.level;
+    
     return (
       <div>
         <Submenu activeSubtab={this.state.activeSubtab} level={this.props.level} checkLevel={this.props.checkLevel}/>
 
         <Switch>
-          <Route exact path="/projects" render={() =>
+          <Route exact path="/projects" render={() => 
             <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sortByKey={this.sortByKey} />
           }/>
-          <Route path="/projects/add" render={(location) =>
-            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.props.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects} checkLevel={this.props.checkLevel}/>
-          }/>
-          <Route path="/projects/:id/edit" render={(location) =>
-            <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.props.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects} checkLevel={this.props.checkLevel}/>
-          }/>
-          <Route path="/projects/:id/note" render={(location) =>
-            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
-          }/>
-          <Route path="/projects/:id/product" render={(location) =>
-            <Product setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
-          }/>
-          <Route path="/projects/:id/photo" render={(location) =>
-            <Photo setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
-          }/>
-          <Route path="/projects/:id/file" render={(location) =>
-            <File setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
-          }/>
-          <Route path="/projects/:id/update" render={(location) =>
-            <CostUpdate setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} checkLevel={this.props.checkLevel}/>
-          }/>
+          <Route path="/projects/add" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.props.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects} />
+            )
+          )}/>
+          <Route path="/projects/:id/edit" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.props.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects} />
+            )
+          )}/>
+          <Route path="/projects/:id/note" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            )
+          )}/>
+          <Route path="/projects/:id/product" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+            <Product setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            )
+          )}/>
+          <Route path="/projects/:id/photo" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+            <Photo setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            )
+          )}/>
+          <Route path="/projects/:id/file" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+            <File setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            )
+          )}/>
+          <Route path="/projects/:id/update" render={(location) => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+            <CostUpdate setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            )
+          )}/>
           <Route path="/projects/:id" render={(location) =>
-            <View setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} location={location} removeFromProjects={this.removeFromProjects} checkLevel={this.props.checkLevel}/>
+            <View setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} location={location} removeFromProjects={this.removeFromProjects} />
           }/>
         </Switch>
       </div>

@@ -4,6 +4,8 @@ import {Marker} from 'google-maps-react';
 import Map from '../Map';
 import json2csv from 'json2csv';
 
+import Loading from '../Loading';
+
 class Directory extends React.Component {
   constructor() {
     super();
@@ -122,6 +124,12 @@ class Directory extends React.Component {
     });
 
     const visibleClients = clients.slice(((this.state.activePage - 1) * this.state.clientsPerPage), this.state.activePage * this.state.clientsPerPage);
+
+    if (clients.length < 1) {
+      return (
+        <Loading/>
+      )
+    }
 
     return (
       <div className="content">

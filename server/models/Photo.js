@@ -31,6 +31,11 @@ const photoSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Project',
     required: 'A project must be provided!'
+  },
+  addedBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'A user must be provided'
   }
 });
 

@@ -20,12 +20,12 @@ const clientNoteSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Client',
     required: 'A client must be provided!'
-  }
-  /*user: {
+  },
+  addedBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    required: 'A user must be provided!'
-  }*/
+    required: 'A user must be provided'
+  }
 });
 
 module.exports = mongoose.model('ClientNote', clientNoteSchema);

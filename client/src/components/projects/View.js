@@ -231,8 +231,12 @@ class View extends React.Component {
                   <li><b>Added by:</b> {this.state.project.addedBy.name}</li>
                 </ul>
                 <div className="project-actions">
+                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
                   <Link to={{ pathname: `/projects/${this.props.location.match.params.id}/edit`, query: {project: this.state.project}}} className="btn btn--primary">Edit Project</Link>
+                }
+                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
                   <button className="btn btn--danger" onClick={() => {if (window.confirm('Are you sure you want to delete this project?')) {this.deleteProject()};}}>Delete Project</button>
+                }
                 </div>
               </div>
             </div>
@@ -257,7 +261,7 @@ class View extends React.Component {
           <div className="row">
             <div className="column">
               <h2 className="card-title">{this.state.project.photos.length} Project Photo(s) 
-              {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/photo`,
@@ -272,7 +276,7 @@ class View extends React.Component {
               <Gallery images={this.state.project.photos.map((photo, key) => ({
                 src: `../../uploads/photos/${photo.photo}`,
                 thumbnail: `../../uploads/photos/${photo.thumb}`,
-                caption: `${photo.name} - ${photo.description}`,
+                caption: `${photo.name} - ${photo.description} - Added by ${photo.addedBy.name}`,
                 orientation: 'landscape',
                 useForDemo: true
               }))} />
@@ -282,7 +286,7 @@ class View extends React.Component {
           <div className="row">
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.updates.length} Cost Update(s)
-              {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
                 this.renderCostUpdateButton()
               }
               </h2>
@@ -295,7 +299,9 @@ class View extends React.Component {
                       <li><b>Reason:</b> {update.reason}</li>
                       <li><b>Type:</b> {update.type}</li>
                     </ul>
-                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this update?')) {this.deleteUpdate(update._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
+                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this update?')) {this.deleteUpdate(update._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    }
                   </div>
                 );
               })}
@@ -303,7 +309,7 @@ class View extends React.Component {
             </div>
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.products.length} Project Product(s)
-                {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
+                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/product`,
@@ -324,7 +330,9 @@ class View extends React.Component {
                       <li><b>Colour:</b> {product.colour}</li>
                       <li><b>Style:</b> {product.style}</li>
                     </ul>
-                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this product?')) {this.deleteProduct(product._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
+                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this product?')) {this.deleteProduct(product._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    }
                   </div>
                 );
               })}
@@ -334,7 +342,7 @@ class View extends React.Component {
           <div className="row">
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.files.length} Project File(s)
-              {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/file`,
@@ -350,9 +358,11 @@ class View extends React.Component {
                   return (
                     <div key={key} className="project-note">
                       <a href={`../../uploads/files/${file.file}`} download>{file.name}</a>  
-                      <span className="project-note__details">Posted by <b>John Doe</b> on <b>{moment(file.created).format('MMMM Do, YYYY')}</b></span>
+                      <span className="project-note__details">Posted by <b>{file.addedBy.name}</b> on <b>{moment(file.created).format('MMMM Do, YYYY')}</b></span>
                       <p>{file.description}</p>
-                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this file?')) {this.deleteFile(file._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                      {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
+                        <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this file?')) {this.deleteFile(file._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                      }
                     </div>
                   );
                 })}
@@ -360,7 +370,7 @@ class View extends React.Component {
             </div>
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.notes.length} Project Note(s) 
-              {this.props.checkLevel(JSON.parse(sessionStorage.getItem('user')).role.level, 2) &&
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/note`,
@@ -375,11 +385,13 @@ class View extends React.Component {
               {this.state.project.notes.map((note, key) => {
                 return (
                   <div className="project-note" key={key}>
-                    <span className="project-note__details">Posted by <b>John Doe</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
+                    <span className="project-note__details">Posted by <b>{note.addedBy.name}</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
                     <p>
                       {note.description}
                     </p>
-                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 || this.state.project.status === 'Complete' &&
+                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    }
                   </div>
                 );
               })}
