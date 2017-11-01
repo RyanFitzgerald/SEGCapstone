@@ -47,7 +47,7 @@ class Settings extends React.Component {
     this.props.setActiveTab(5);
 
     // Get users
-    this.getUsers();
+    this.getUsers({search: false});
 
     // Get roles
     this.getRoles();
@@ -58,13 +58,16 @@ class Settings extends React.Component {
   }
 
   getRoles() {
-    api.getRoles().then(result => {
+    api.getRoles({access_token: JSON.parse(sessionStorage.getItem('user')).access_token}).then(result => {
       const roles = result;
       this.setState({ roles });
     });
   }
 
   getUsers(query) {
+    // Append access token
+    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+
     api.getUsers(query).then(result => {
       const users = result;
       this.setState({ users });
@@ -169,28 +172,28 @@ class Settings extends React.Component {
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-              <Add setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} addNotification={this.addNotification} renderError={this.renderError} addToUsers={this.addToUsers} level={this.props.level} checkLevel={this.props.checkLevel}/>
+              <Add setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} addNotification={this.addNotification} renderError={this.renderError} addToUsers={this.addToUsers}/>
             )
           )}/>
           <Route path="/settings/users/:id/edit" render={(location) => (
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-              <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateUsers={this.updateUsers} level={this.props.level} checkLevel={this.props.checkLevel}/>
+              <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateUsers={this.updateUsers}/>
             )
           )}/>
           <Route path="/settings/users/:id" render={(location) => (
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-              <View setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} location={location} removeFromUsers={this.removeFromUsers} level={this.props.level} checkLevel={this.props.checkLevel}/>
+              <View setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} location={location} removeFromUsers={this.removeFromUsers}/>
             )
           )}/> 
           <Route path="/settings/users" render={() => (
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-              <Directory setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey} level={this.props.level} checkLevel={this.props.checkLevel}/>
+              <Directory setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey}/>
             )
           )}/>
         </Switch>

@@ -12,6 +12,8 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../index');
 let should = chai.should();
+const helpers = require('../../helpers');
+const token = helpers.genToken();
 
 chai.use(chaiHttp);
 describe('Cost Updates', () => {
@@ -35,7 +37,9 @@ describe('Cost Updates', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       project.save((err, project) => {
         chai.request(server)
@@ -43,7 +47,9 @@ describe('Cost Updates', () => {
         .send({
           amount: 1000,
           reason: 'Some reason',
-          project: project.id
+          project: project.id,
+          addedBy: '59f10b411426df3398e31ad7',
+          access_token: token
         })
         .end((err, res) => {
           res.should.have.status(500);
@@ -65,7 +71,9 @@ describe('Cost Updates', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       project.save((err, project) => {
         chai.request(server)
@@ -74,7 +82,9 @@ describe('Cost Updates', () => {
           amount: 1000,
           reason: 'Some reason',
           type: 'Addition',
-          project: project.id
+          project: project.id,
+          addedBy: '59f10b411426df3398e31ad7',
+          access_token: token
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -100,7 +110,9 @@ describe('Cost Updates', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       project.save((err, project) => {
         chai.request(server)
@@ -110,6 +122,8 @@ describe('Cost Updates', () => {
           amount: 1000,
           reason: 'Some reason',
           type: 'Addition',
+          addedBy: '59f10b411426df3398e31ad7',
+          access_token: token
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -120,7 +134,7 @@ describe('Cost Updates', () => {
           res.body.should.have.property('project').eql(project.id);
 
           chai.request(server)
-          .delete(`/api/projects/${project.id}/updates/${res.body._id}`)
+          .delete(`/api/projects/${project.id}/updates/${res.body._id}?access_token=${token}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');

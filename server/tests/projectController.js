@@ -3,14 +3,16 @@ process.env.NODE_ENV = 'test';
 process.env.PORT = 8888;
 
 // Pull in mongoose and the model
-let mongoose = require("mongoose");
-let Project = require('../models/Project');
+const mongoose = require("mongoose");
+const Project = require('../models/Project');
 
 // Pull in other dependencies
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../index');
-let should = chai.should();
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../index');
+const should = chai.should();
+const helpers = require('../../helpers');
+const token = helpers.genToken();
 
 chai.use(chaiHttp);
 describe('Projects', () => {
@@ -25,7 +27,7 @@ describe('Projects', () => {
   describe('/GET projects', () => {
     it('it should GET all the projects', (done) => {
       chai.request(server)
-        .get('/api/projects')
+        .get(`/api/projects?access_token=${token}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
@@ -45,7 +47,9 @@ describe('Projects', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       };
       chai.request(server)
       .post('/api/projects')
@@ -69,7 +73,9 @@ describe('Projects', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       };
       chai.request(server)
       .post('/api/projects')
@@ -93,11 +99,13 @@ describe('Projects', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       project.save((err, project) => {
         chai.request(server)
-        .get(`/api/projects/${project.id}`)
+        .get(`/api/projects/${project.id}?access_token=${token}`)
         .send(project)
         .end((err, res) => {
           res.should.have.status(200);
@@ -117,6 +125,7 @@ describe('Projects', () => {
           res.body.should.have.property('updates');
           res.body.should.have.property('photos');
           res.body.should.have.property('files');
+          res.body.should.have.property('addedBy');
           res.body.should.have.property('_id').eql(project.id);
           done();
         });
@@ -135,12 +144,14 @@ describe('Projects', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       project.save((err, project) => {
         chai.request(server)
         .post(`/api/projects/${project.id}`)
-        .send({startDate: '2017-09-23T04:00:00.000Z'})
+        .send({startDate: '2017-09-23T04:00:00.000Z', access_token: token})
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
@@ -163,11 +174,13 @@ describe('Projects', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       project.save((err, project) => {
         chai.request(server)
-        .delete(`/api/projects/${project.id}`)
+        .delete(`/api/projects/${project.id}?access_token=${token}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');

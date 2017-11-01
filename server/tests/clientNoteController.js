@@ -3,15 +3,17 @@ process.env.NODE_ENV = 'test';
 process.env.PORT = 8888;
 
 // Pull in mongoose and the model
-let mongoose = require("mongoose");
-let Client = require('../models/Client');
-let ClientNote = require('../models/ClientNote');
+const mongoose = require("mongoose");
+const Client = require('../models/Client');
+const ClientNote = require('../models/ClientNote');
 
 // Pull in other dependencies
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../index');
-let should = chai.should();
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../index');
+const should = chai.should();
+const helpers = require('../../helpers');
+const token = helpers.genToken();
 
 chai.use(chaiHttp);
 describe('Client Notes', () => {
@@ -31,13 +33,17 @@ describe('Client Notes', () => {
         email: 'john_doe@test.com',
         street: '123 Main Street',
         postalCode: 'K1A2M5',
-        city: 'Ottawa'
+        city: 'Ottawa',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       client.save((err, client) => {
         chai.request(server)
         .post(`/api/clients/${client.id}/notes`)
         .send({
-          client: client.id
+          client: client.id,
+          addedBy: '59f10b411426df3398e31ad7',
+          access_token: token
         })
         .end((err, res) => {
           res.should.have.status(500);
@@ -57,14 +63,18 @@ describe('Client Notes', () => {
         email: 'j_doe@test.com',
         street: '123 Main Street',
         postalCode: 'K1A2M5',
-        city: 'Ottawa'
+        city: 'Ottawa',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       client.save((err, client) => {
         chai.request(server)
         .post(`/api/clients/${client.id}/notes`)
         .send({
           client: client.id,
-          description: 'Some note here!'
+          description: 'Some note here!',
+          addedBy: '59f10b411426df3398e31ad7',
+          access_token: token
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -86,14 +96,18 @@ describe('Client Notes', () => {
         email: 'marcus_doe@test.com',
         street: '123 Main Street',
         postalCode: 'K1A2M5',
-        city: 'Ottawa'
+        city: 'Ottawa',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       client.save((err, client) => {
         chai.request(server)
         .post(`/api/clients/${client.id}/notes`)
         .send({
           client: client.id,
-          description: 'Some note here!'
+          description: 'Some note here!',
+          addedBy: '59f10b411426df3398e31ad7',
+          access_token: token
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -102,7 +116,7 @@ describe('Client Notes', () => {
           res.body.should.have.property('client').eql(client.id);
 
           chai.request(server)
-          .delete(`/api/clients/${client.id}/notes/${res.body._id}`)
+          .delete(`/api/clients/${client.id}/notes/${res.body._id}?access_token=${token}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');

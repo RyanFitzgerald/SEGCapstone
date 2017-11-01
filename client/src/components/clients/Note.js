@@ -33,7 +33,8 @@ class Note extends React.Component {
     const note = {
       description: this.description.value,
       client: this.props.location.match.params.id,
-      addedBy: JSON.parse(sessionStorage.getItem('user'))._id
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api

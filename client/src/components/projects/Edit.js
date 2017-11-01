@@ -76,7 +76,8 @@ class Edit extends React.Component {
       actualCost: this.getCents(this.actualCost.value),
       status: this.status.value,
       type: types,
-      client: this.client.value
+      client: this.client.value,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -84,7 +85,12 @@ class Edit extends React.Component {
   }
 
   getProject(id) {
-    api.getProject(id).then(project => {
+    const query = {
+      id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.getProject(query).then(project => {
       this.setState({ project }, () => {
         // Set title
         document.title = `Edit ${this.state.project.name} | Renovaction`;

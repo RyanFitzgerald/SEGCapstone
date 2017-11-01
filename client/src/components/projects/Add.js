@@ -70,7 +70,8 @@ class Add extends React.Component {
       status: this.status.value,
       type: types,
       client: this.client.value,
-      addedBy: JSON.parse(sessionStorage.getItem('user'))._id
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -87,7 +88,7 @@ class Add extends React.Component {
       }
 
       // Update parent state
-      this.props.getProjects();
+      this.props.getProjects({search: false});
 
       // Redirect
       this.setState({

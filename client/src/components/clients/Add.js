@@ -42,7 +42,8 @@ class Add extends React.Component {
       street: this.street.value,
       postalCode: this.postalCode.value,
       city: this.city.value,
-      addedBy: JSON.parse(sessionStorage.getItem('user'))._id
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api

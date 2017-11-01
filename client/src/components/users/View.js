@@ -29,7 +29,12 @@ class View extends React.Component {
   }
   
   getUser(id) {
-    api.getUser(id).then(user => {
+    const query = {
+      id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.getUser(query).then(user => {
       this.setState({ user }, () => {
         // Set title
         document.title = `${this.state.user.name} | Renovaction`;
@@ -38,13 +43,17 @@ class View extends React.Component {
   }
 
   deleteUser() {
-    const id = this.props.location.match.params.id;
-    api.deleteUser(id).then(result => {
+    const query = {
+      id: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.deleteUser(query).then(result => {
       if (result) {
-        this.props.removeFromUsers(id);
+        this.props.removeFromUsers(query.id);
         this.setState({
           redirect: {
-            location: '/users',
+            location: '/settings/users',
             message: 'Successfully deleted user!',
             type: 'success'
           }

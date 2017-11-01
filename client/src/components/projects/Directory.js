@@ -15,6 +15,7 @@ class Directory extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.resetForm = this.resetForm.bind(this);
     this.renderPagination = this.renderPagination.bind(this);
+    this.renderLoading = this.renderLoading.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
 
     this.state = {
@@ -47,7 +48,8 @@ class Directory extends React.Component {
       postalCode: this.postalCode.value,
       street: this.street.value,
       status: this.status.value,
-      type: this.type.value
+      type: this.type.value,
+      search: true
     };
     this.props.getProjects(query);
   }
@@ -126,6 +128,14 @@ class Directory extends React.Component {
     );
   }
 
+  renderLoading(projects) {
+    if (projects.length < 1) {
+      return (
+        <Loading/>
+      )
+    }
+  }
+
   render() {
     // Variables
     const projects = this.props.projects || [];
@@ -137,12 +147,6 @@ class Directory extends React.Component {
     });
     const types = this.props.types || [];
     const visibleProjects = projects.slice(((this.state.activePage - 1) * this.state.projectsPerPage), this.state.activePage * this.state.projectsPerPage);
-
-    if (projects.length < 1) {
-      return (
-        <Loading/>
-      )
-    }
 
     return (
       <div className="content">
@@ -236,6 +240,7 @@ class Directory extends React.Component {
                   })}
                 </tbody> 
               </table>
+              {this.renderLoading(projects)}
               {this.renderPagination(projects.length)}
               <button className="advanced__toggle" onClick={this.handleDownload}>Download Project List (CSV)</button>
             </div>

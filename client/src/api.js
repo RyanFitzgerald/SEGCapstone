@@ -13,9 +13,9 @@ export const getClients = (query) => {
   }
 };
 
-export const getClient = id => {
+export const getClient = query => {
   return axios
-    .get(`/api/clients/${id}`)
+    .get(`/api/clients/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -33,9 +33,9 @@ export const updateClient = (client, id) => {
     .catch(error => error.response);
 };
 
-export const deleteClient = id => {
+export const deleteClient = query => {
   return axios
-    .delete(`/api/clients/${id}`)
+    .delete(`/api/clients/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -47,9 +47,9 @@ export const addClientNote = note => {
     .catch(error => error.response);
 };
 
-export const deleteClientNote = note => {
+export const deleteClientNote = query => {
   return axios
-    .delete(`/api/clients/${note.client}/notes/${note.id}`)
+    .delete(`/api/clients/${query.client}/notes/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -66,9 +66,9 @@ export const getProjects = (query) => {
   }
 };
 
-export const getProject = id => {
+export const getProject = query => {
   return axios
-    .get(`/api/projects/${id}`)
+    .get(`/api/projects/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -86,9 +86,9 @@ export const updateProject = (project, id) => {
     .catch(error => error.response);
 };
 
-export const deleteProject = id => {
+export const deleteProject = query => {
   return axios
-    .delete(`/api/projects/${id}`)
+    .delete(`/api/projects/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -100,9 +100,9 @@ export const addProjectNote = note => {
     .catch(error => error.response);
 };
 
-export const deleteProjectNote = note => {
+export const deleteProjectNote = query => {
   return axios
-    .delete(`/api/projects/${note.project}/notes/${note.id}`)
+    .delete(`/api/projects/${query.project}/notes/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -114,9 +114,9 @@ export const addProduct = product => {
     .catch(error => error.response);
 };
 
-export const deleteProduct = product => {
+export const deleteProduct = query => {
   return axios
-    .delete(`/api/projects/${product.project}/products/${product.id}`)
+    .delete(`/api/projects/${query.project}/products/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -128,9 +128,9 @@ export const addUpdate = update => {
     .catch(error => error.response);
 };
 
-export const deleteUpdate = update => {
+export const deleteUpdate = query => {
   return axios
-    .delete(`/api/projects/${update.project}/updates/${update.id}`)
+    .delete(`/api/projects/${query.project}/updates/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -142,6 +142,7 @@ export const addPhoto = photo => {
   data.append('photo', photo.photo);
   data.append('project', photo.project);
   data.append('addedBy', photo.addedBy);
+  data.append('access_token', photo.access_token);
 
   return axios
     .post(`/api/projects/${photo.project}/photos`, data)
@@ -149,9 +150,9 @@ export const addPhoto = photo => {
     .catch(error => error.response);
 };
 
-export const deletePhoto = photo => {
+export const deletePhoto = query => {
   return axios
-    .delete(`/api/projects/${photo.project}/photos/${photo.id}`)
+    .delete(`/api/projects/${query.project}/photos/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -163,6 +164,7 @@ export const addFile = file => {
   data.append('file', file.file);
   data.append('project', file.project);
   data.append('addedBy', file.addedBy);
+  data.append('access_token', file.access_token);
 
   return axios
     .post(`/api/projects/${file.project}/files`, data)
@@ -170,9 +172,9 @@ export const addFile = file => {
     .catch(error => error.response);
 };
 
-export const deleteFile = file => {
+export const deleteFile = query => {
   return axios
-    .delete(`/api/projects/${file.project}/files/${file.id}`)
+    .delete(`/api/projects/${query.project}/files/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
@@ -203,20 +205,20 @@ export const logout = () => {
 };
 
 // --- User API ---
-export const getUser = (id) => {
+export const getUser = query => {
   return axios
-    .get(`/api/users/${id}`)
+    .get(`/api/users/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
 
 export const getUsers = (query) => {
-  if (query) {
+  if (query.search) {
     return axios
-      .get(`/api/users?name=${query.name}&email=${query.email}&role=${query.role}`)
+      .get(`/api/users?name=${query.name}&email=${query.email}&role=${query.role}&access_token=${query.access_token}`)
       .then(resp => resp.data);
   } else {
     return axios
-    .get('/api/users')
+    .get(`/api/users?access_token=${query.access_token}`)
     .then(resp => resp.data);
   }
 };
@@ -235,16 +237,16 @@ export const updateUser = (user, id) => {
     .catch(error => error.response);
 };
 
-export const deleteUser = id => {
+export const deleteUser = query => {
   return axios
-    .delete(`/api/users/${id}`)
+    .delete(`/api/users/${query.id}?access_token=${query.access_token}`)
     .then(resp => resp.data)
     .catch(error => error.response);
 };
 
 // --- Roles API ---
-export const getRoles = () => {
+export const getRoles = query => {
   return axios
-    .get('/api/roles')
+    .get(`/api/roles?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };

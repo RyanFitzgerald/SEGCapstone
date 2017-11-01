@@ -36,7 +36,8 @@ class Note extends React.Component {
       colour: this.colour.value,
       style: this.style.value,
       project: this.props.location.match.params.id,
-      addedBy: JSON.parse(sessionStorage.getItem('user'))._id
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api

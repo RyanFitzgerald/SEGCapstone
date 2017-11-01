@@ -53,10 +53,6 @@ class App extends Component {
   }
 
   loggedIn(user) {
-
-    console.log('here')
-    user.token = 
-
     sessionStorage.setItem('user', JSON.stringify(user));
 
     this.setState({

@@ -39,7 +39,8 @@ class Directory extends React.Component {
     const query = {
       name: this.name.value,
       email: this.email.value,
-      role: this.role.value
+      role: this.role.value,
+      search: true
     };
     this.props.getUsers(query);
   }

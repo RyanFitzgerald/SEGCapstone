@@ -44,7 +44,7 @@ class Client extends React.Component {
     this.props.setActiveTab(3);
 
     // Get clients
-    this.getClients();
+    this.getClients({search: false});
   }
 
   setActiveSubtab(tab) {
@@ -52,6 +52,9 @@ class Client extends React.Component {
   }
 
   getClients(query) {
+    // Append access token
+    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+    
     api.getClients(query).then(result => {
       const clients = result;
       this.setState({ clients });

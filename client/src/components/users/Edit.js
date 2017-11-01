@@ -37,7 +37,8 @@ class Edit extends React.Component {
     const user = {
       name: this.name.value,
       email: this.email.value,
-      password: this.password.value
+      password: this.password.value,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -45,7 +46,12 @@ class Edit extends React.Component {
   }
 
   getUser(id) {
-    api.getUser(id).then(user => {
+    const query = {
+      id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.getUser(query).then(user => {
       this.setState({ user }, () => {
         // Set title
         document.title = `Edit ${this.state.user.name} | Renovaction`;
@@ -71,7 +77,7 @@ class Edit extends React.Component {
       // Redirect
       this.setState({
         redirect: {
-          location: `/users/${resp}`,
+          location: `/settings/users/${resp}`,
           message: 'Successfully updated user!',
           type: 'success'
         }

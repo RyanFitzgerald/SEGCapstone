@@ -26,7 +26,6 @@ module.exports = function(req, res, next) {
       // Authorize the user to see if s/he can access our resources
       if (true) {
  
-        console.log('logged in');
         if (true) {
           next(); // To move to next middleware
         } else {

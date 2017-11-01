@@ -3,15 +3,17 @@ process.env.NODE_ENV = 'test';
 process.env.PORT = 8888;
 
 // Pull in mongoose and the model
-let mongoose = require("mongoose");
-let Project = require('../models/Project');
-let Product = require('../models/Product');
+const mongoose = require("mongoose");
+const Project = require('../models/Project');
+const Product = require('../models/Product');
 
 // Pull in other dependencies
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../index');
-let should = chai.should();
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../index');
+const should = chai.should();
+const helpers = require('../../helpers');
+const token = helpers.genToken();
 
 chai.use(chaiHttp);
 describe('Products', () => {
@@ -35,7 +37,9 @@ describe('Products', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       project.save((err, project) => {
         chai.request(server)
@@ -44,7 +48,9 @@ describe('Products', () => {
           name: 'Some product',
           brand: 'Some brand',
           colour: 'Some colour',
-          project: project.id
+          project: project.id,
+          addedBy: '59f10b411426df3398e31ad7',
+          access_token: token
         })
         .end((err, res) => {
           res.should.have.status(500);
@@ -66,7 +72,9 @@ describe('Products', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       project.save((err, project) => {
         chai.request(server)
@@ -76,7 +84,9 @@ describe('Products', () => {
           brand: 'Some brand',
           colour: 'Some colour',
           style: 'Some style',
-          project: project.id
+          project: project.id,
+          addedBy: '59f10b411426df3398e31ad7',
+          access_token: token
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -103,7 +113,9 @@ describe('Products', () => {
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
         type: ['59bad64bdc33910f9c652a20'],
-        client: '59c846e4aa442d126c3e0ba5'
+        client: '59c846e4aa442d126c3e0ba5',
+        addedBy: '59f10b411426df3398e31ad7',
+        access_token: token
       });
       project.save((err, project) => {
         chai.request(server)
@@ -114,6 +126,8 @@ describe('Products', () => {
           brand: 'Some brand',
           colour: 'Some colour',
           style: 'Some style',
+          addedBy: '59f10b411426df3398e31ad7',
+          access_token: token
         })
         .end((err, res) => {
           res.should.have.status(200);
@@ -125,7 +139,7 @@ describe('Products', () => {
           res.body.should.have.property('project').eql(project.id);
 
           chai.request(server)
-          .delete(`/api/projects/${project.id}/products/${res.body._id}`)
+          .delete(`/api/projects/${project.id}/products/${res.body._id}?access_token=${token}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');

@@ -41,7 +41,12 @@ class View extends React.Component {
   }
 
   getProject(id) {
-    api.getProject(id).then(project => {
+    const query = {
+      id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.getProject(query).then(project => {
       this.setState({ project }, () => {
         // Set title
         document.title = `${this.state.project.name} | Renovaction`;
@@ -50,10 +55,14 @@ class View extends React.Component {
   }
 
   deleteProject() {
-    const id = this.props.location.match.params.id;
-    api.deleteProject(id).then(result => {
+    const query = {
+      id: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.deleteProject(query).then(result => {
       if (result) {
-        this.props.removeFromProjects(id);
+        this.props.removeFromProjects(query.id);
         this.props.addNotification('Successfully deleted project!', 'success');        
         this.setState({
           redirect: '/projects'
@@ -65,8 +74,10 @@ class View extends React.Component {
   deleteNote(id) {
     const note = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deleteProjectNote(note).then(result => {
       if (result) {
         this.props.addNotification('Successfully deleted note!', 'success');
@@ -78,8 +89,10 @@ class View extends React.Component {
   deleteUpdate(id) {
     const update = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deleteUpdate(update).then(result => {
       if (result) {
         this.props.addNotification('Successfully deleted cost update!', 'success');        
@@ -91,8 +104,10 @@ class View extends React.Component {
   deletePhoto(id) {
     const photo = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deletePhoto(photo).then(result => {
       if (result) {
         this.props.addNotification('Successfully deleted photo!', 'success');        
@@ -104,8 +119,10 @@ class View extends React.Component {
   deleteProduct(id) {
     const product = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deleteProduct(product).then(result => {
       if (result) {
         this.props.addNotification('Successfully deleted product!', 'success');        
@@ -117,7 +134,8 @@ class View extends React.Component {
   deleteFile(id) {
     const file = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
     api.deleteFile(file).then(result => {
       if (result) {
@@ -389,7 +407,7 @@ class View extends React.Component {
                     <p>
                       {note.description}
                     </p>
-                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 || this.state.project.status === 'Complete' &&
+                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
                       <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
                     }
                   </div>

@@ -31,7 +31,12 @@ class View extends React.Component {
   }
 
   getClient(id) {
-    api.getClient(id).then(client => {
+    const query = {
+      id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.getClient(query).then(client => {
       this.setState({ client }, () => {
         // Set title
         document.title = `${this.state.client.name} | Renovaction`;
@@ -40,10 +45,14 @@ class View extends React.Component {
   }
 
   deleteClient() {
-    const id = this.props.location.match.params.id;
-    api.deleteClient(id).then(result => {
+    const query = {
+      id: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.deleteClient(query).then(result => {
       if (result) {
-        this.props.removeFromClients(id);
+        this.props.removeFromClients(query.id);
         this.setState({
           redirect: '/clients'
         });
@@ -56,8 +65,10 @@ class View extends React.Component {
   deleteNote(id) {
     const note = {
       id,
-      client: this.props.location.match.params.id
+      client: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deleteClientNote(note).then(result => {
       if (result) {
         this.props.addNotification('Successfully deleted note!', 'success');        
