@@ -25,7 +25,8 @@ class Edit extends React.Component {
       redirect: false,
       clients: false,
       types: false,
-      project: false
+      project: false,
+      formError: false
     }
   }
 
@@ -75,7 +76,8 @@ class Edit extends React.Component {
       actualCost: this.getCents(this.actualCost.value),
       status: this.status.value,
       type: types,
-      client: this.client.value
+      client: this.client.value,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -83,7 +85,12 @@ class Edit extends React.Component {
   }
 
   getProject(id) {
-    api.getProject(id).then(project => {
+    const query = {
+      id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.getProject(query).then(project => {
       this.setState({ project }, () => {
         // Set title
         document.title = `Edit ${this.state.project.name} | Renovaction`;
@@ -93,12 +100,23 @@ class Edit extends React.Component {
 
   updateProject(project) {
     api.updateProject(project, this.props.location.match.params.id).then(resp => {
+      if (resp.status === 500) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+
       // Update parent state
       this.props.getProjects();
 
       // Redirect
       this.setState({
-        redirect: `/projects/${resp}`
+        redirect: {
+          location: `/projects/${resp}`,
+          message: 'Successfully updated project!',
+          type: 'success'
+        }
       });
     });
   }
@@ -125,8 +143,9 @@ class Edit extends React.Component {
   render() {
 
     if (this.state.redirect) {
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect}/>
+        <Redirect to={this.state.redirect.location} />
       );
     }
 
@@ -142,6 +161,7 @@ class Edit extends React.Component {
           <div className="column">
             <h2 className="card-title">Add a New Project</h2>
             <div className="card">
+              {this.props.renderError(this.state.formError)}
               <form onSubmit={this.handleSubmit}>
                 <div className="row form-section">
                   <div className="md-4 column form-section__title no-left">
@@ -200,7 +220,7 @@ class Edit extends React.Component {
                   </div>
                   <div className="md-8 column no-right">
                     <label className="form-label" htmlFor="type">Type(s) <span className="form-required">*</span></label>
-                    <TagSelectorWrapper name="type" id="project-type" ref={input => this.projectType = input} required="true">
+                    <TagSelectorWrapper name="type" id="project-type" ref={input => this.projectType = input} defaultValue={this.state.project.type}>
                       {this.state.types.map((type, key) => {
                         return <option key={key} value={type._id}>{type.name}</option>;
                       })}

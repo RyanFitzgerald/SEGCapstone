@@ -52,5 +52,5 @@ exports.addFile = async (req, res) => {
 exports.deleteFile = async (req, res) => {
   const file = await File.findById(req.params.file);
   file.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});  
 };

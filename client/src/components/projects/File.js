@@ -12,7 +12,8 @@ class File extends React.Component {
 
     // Set state
     this.state = {
-      redirect: null
+      redirect: null,
+      formError: false
     };
   }
 
@@ -33,7 +34,9 @@ class File extends React.Component {
       name: this.name.value,
       description: this.description.value,
       file: this.file.files[0],
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -42,8 +45,19 @@ class File extends React.Component {
 
   addFile(file) {
     api.addFile(file).then(resp => {
+      if (resp.error) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+
       this.setState({
-        redirect: `/projects/${this.props.location.match.params.id}`
+        redirect: {
+          location: `/projects/${this.props.location.match.params.id}`,
+          message: 'Successfully added file!',
+          type: 'success'
+        }
       });      
     });
   }
@@ -56,8 +70,9 @@ class File extends React.Component {
     }
 
     if (this.state.redirect) {
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect} />
+        <Redirect to={this.state.redirect.location} />
       );
     }
     
@@ -68,6 +83,7 @@ class File extends React.Component {
             <div className="column">
               <h2 className="card-title">Add File For <b>{name}</b></h2>
               <div className="card">
+              {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit} encType="multipart/form-data">
                 <div className="row">
                   <div className="md-4 column form-section__title no-left">

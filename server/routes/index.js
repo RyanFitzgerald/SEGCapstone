@@ -14,9 +14,10 @@ const userController = require('../controllers/userController');
 const photoController = require('../controllers/photoController');
 const fileController = require('../controllers/fileController');
 const typeController = require('../controllers/typeController');
+const authController = require('../controllers/authController');
+const roleController = require('../controllers/roleController');
 
 // --- Static Routes ---
-
 router.get('/', (req, res) => {
   res.send('Server');
 });
@@ -50,8 +51,20 @@ router.delete('/api/projects/:id/files/:file', catchErrors(fileController.delete
 // --- Type Routes ---
 router.get('/api/types', catchErrors(typeController.getTypes));
 
+// --- Authenticaiton Routes ---
+router.get('/auth/isLoggedIn', authController.isLoggedIn);
+router.post('/auth/login', authController.login);
+router.get('/auth/logout', authController.logout);
+
 // --- User Routes ---
-router.get('/api/account', userController.getUser)
+router.get('/api/users', catchErrors(userController.getUsers));
+router.get('/api/users/:id', catchErrors(userController.getUser));
+router.post('/api/users', catchErrors(userController.addUser));
+router.post('/api/users/:id', catchErrors(userController.editUser));
+router.delete('/api/users/:id',catchErrors(userController.deleteUser));
+
+// --- Role Roles ---
+router.get('/api/roles', catchErrors(roleController.getRoles));
 
 // Export the router
 module.exports = router;

@@ -7,8 +7,6 @@ const Project = mongoose.model('Project');
 
 exports.getProjects = async (req, res) => {
   const filter = {};
-  let skip = 0;
-  let limit = 10;
 
   //Check for name search
   if (req.query.q) {
@@ -40,24 +38,43 @@ exports.getProjects = async (req, res) => {
     filter.type = req.query.type;
   }
 
-  // Check for page
-  if (req.query.page) {
-    skip = (req.query.page - 1) * 10;
-    if (req.query.page === 'all') {
-      limit = 999999;
-    }
-  }
+  const projects = await Project.find(filter).populate('client type', '_id name').sort({ 'created': -1 });
 
-  const projectsPromise = Project.find(filter).populate('client type', '_id name').sort({ 'created': -1 }).limit(limit).skip(skip);
-  const countPromise = Project.find(filter).count();
-
-  const [projects, count] = await Promise.all([projectsPromise, countPromise]);
-
-  res.send({projects, count});
+  res.send(projects);
 };
 
 exports.getProject = async (req, res) => {
-  const project = await Project.findById(req.params.id).populate('client type', '_id name').populate('notes products updates photos files');
+  const project = await Project.findById(req.params.id).populate('client type addedBy', '_id name').populate([{
+    path: 'notes',
+    model: 'ProjectNote',
+    populate: {
+      path: 'addedBy',
+      select: 'name',
+      model: 'User'
+    }
+  }, {
+    path: 'products',
+    model: 'Product'
+  }, {
+    path: 'updates',
+    model: 'CostUpdate'
+  }, {
+    path: 'photos',
+    model: 'Photo',
+    populate: {
+      path: 'addedBy',
+      select: 'name',
+      model: 'User'
+    }
+  }, {
+    path: 'files',
+    model: 'File',
+    populate: {
+      path: 'addedBy',
+      select: 'name',
+      model: 'User'
+    }
+  }]);
   res.send(project);
 };
 
@@ -68,13 +85,14 @@ exports.addProject = async (req, res) => {
 
 exports.editProject = async (req, res) => {
   const project = await Project.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    new: true,
     runValidators: true
   }).exec();
-  res.send(req.params.id);
+  res.send(project);
 };
 
 exports.deleteProject = async (req, res) => {
   const project = await Project.findById(req.params.id);
   project.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});
 }

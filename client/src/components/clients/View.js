@@ -4,6 +4,7 @@ import moment from 'moment';
 import * as api from '../../api';
 
 import Loading from '../Loading';
+import {Marker} from 'google-maps-react';
 import Map from '../Map';
 
 class View extends React.Component {
@@ -30,7 +31,12 @@ class View extends React.Component {
   }
 
   getClient(id) {
-    api.getClient(id).then(client => {
+    const query = {
+      id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.getClient(query).then(client => {
       this.setState({ client }, () => {
         // Set title
         document.title = `${this.state.client.name} | Renovaction`;
@@ -39,13 +45,19 @@ class View extends React.Component {
   }
 
   deleteClient() {
-    const id = this.props.location.match.params.id;
-    api.deleteClient(id).then(result => {
+    const query = {
+      id: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.deleteClient(query).then(result => {
       if (result) {
-        this.props.removeFromClients(id);
+        this.props.removeFromClients(query.id);
         this.setState({
           redirect: '/clients'
         });
+      } else {
+        this.props.addNotification('A problem was encountered when trying to delete the client', 'warn');
       }
     });
   }
@@ -53,10 +65,13 @@ class View extends React.Component {
   deleteNote(id) {
     const note = {
       id,
-      client: this.props.location.match.params.id
+      client: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deleteClientNote(note).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted note!', 'success');        
         this.getClient(this.props.location.match.params.id);
       }
     });
@@ -64,6 +79,7 @@ class View extends React.Component {
 
   render() {
     if (this.state.redirect) {
+      this.props.addNotification('Successfully deleted client!', 'success');
       return (
         <Redirect to={this.state.redirect}/>
       );
@@ -82,10 +98,15 @@ class View extends React.Component {
                   <li><b>Email:</b> <a href={'mailto:' + this.state.client.email}>{this.state.client.email}</a></li>
                   <li><b>Telephone:</b> <a href={'tel:' + this.state.client.telephone}>{this.state.client.telephone}</a></li>
                   <li><b>Sold by:</b> Joseph Doe</li>
+                  <li><b>Added by:</b> {this.state.client.addedBy.name}</li>
                 </ul>
                 <div className="client-actions">
+                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                   <Link to={`/clients/${this.props.location.match.params.id}/edit`} className="btn btn--primary">Edit Client</Link>
+                }
+                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                   <button className="btn btn--danger" onClick={() => {if (window.confirm('Are you sure you want to delete this client?')) {this.deleteClient()};}}>Delete Client</button>
+                }
                 </div>
               </div>
             </div>
@@ -93,7 +114,12 @@ class View extends React.Component {
               <h2 className="card-title">Client Location</h2>
               <div className="card">
                 <div id="map" className="client-map">
-                  <Map google={window.google} lat={this.state.client.location.coordinates[1]} long={this.state.client.location.coordinates[0]} />
+                  <Map google={window.google} lat={this.state.client.location.coordinates[1]} long={this.state.client.location.coordinates[0]}>
+                    <Marker 
+                      title={this.state.client.name}
+                      position={{lat: this.state.client.location.coordinates[1], lng: this.state.client.location.coordinates[0]}} 
+                    />
+                  </Map>
                 </div>
                 <div className="client-location">
                   <p>{this.state.client.street}<br/>{this.state.client.city}, ON <span className="capitalize">{this.state.client.postalCode}</span></p>
@@ -104,7 +130,8 @@ class View extends React.Component {
           </div>
           <div className="row">
             <div className="md-6 column">
-              <h2 className="card-title">{this.state.client.projects.length} Client Project(s) 
+              <h2 className="card-title">{this.state.client.projects.length} Client Project(s)
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: '/projects/add',
@@ -113,6 +140,7 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add Project
                 </Link>
+              }
               </h2>
               <div className="card">
               <table className="card__table">
@@ -138,7 +166,8 @@ class View extends React.Component {
               </div>
             </div>
             <div className="md-6 column">
-              <h2 className="card-title">{this.state.client.notes.length} Client Note(s) 
+              <h2 className="card-title">{this.state.client.notes.length} Client Note(s)
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/note`,
@@ -147,16 +176,19 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add Note
                 </Link>
+              }
               </h2>
               <div className="card">
               {this.state.client.notes.map((note, key) => {
                 return (
                   <div className="client-note" key={key}>
-                    <span className="client-note__details">Posted by <b>John Doe</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
+                    <span className="client-note__details">Posted by <b>{note.addedBy.name}</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
                     <p>
                       {note.description}
                     </p>
-                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
+                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    }
                   </div>
                 );
               })}

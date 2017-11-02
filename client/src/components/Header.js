@@ -3,7 +3,15 @@ import {Link} from 'react-router-dom';
 import Logo from '../logo.png';
 
 function Header(props) {
-  let menu, userMenu;
+  let menu, userMenu, username, level;
+  let sessionUser = JSON.parse(sessionStorage.getItem('user'));
+  if (sessionUser) {
+    username = sessionUser.name;
+    level = sessionUser.role.level;
+  } else {
+    username = '';
+    level = 0;
+  }
 
   function handleMenuToggle() {
     if (menu.classList.contains('active')) {
@@ -28,11 +36,11 @@ function Header(props) {
       </div>
 
       <div className="header__user">
-        <span className="header__usertoggle" onClick={handleUserMenuToggle}>Hello, Ryan <i className="fa fa-chevron-down" aria-hidden="true"></i></span>
+        <span className="header__usertoggle" onClick={handleUserMenuToggle}>Hello, {username} <i className="fa fa-chevron-down" aria-hidden="true"></i></span>
 
         <ul ref={ele => userMenu = ele}>
-            <li><Link to="/account">Account Settings</Link></li>
-            <li><Link to="/">Logout</Link></li>
+            <li><Link to='/account'>Account Settings</Link></li>
+            <li onClick={props.logout}><Link to="/">Logout</Link></li>
         </ul>
 
         <span className="header__menutoggle" onClick={handleMenuToggle}>
@@ -45,8 +53,12 @@ function Header(props) {
           <li><Link className={(props.activeTab === 1) ? 'header__link header__link--active' : 'header__link'} to="/">Home</Link></li>
           <li><Link className={(props.activeTab === 2) ? 'header__link header__link--active' : 'header__link'} to="/projects">Projects</Link></li>
           <li><Link className={(props.activeTab === 3) ? 'header__link header__link--active' : 'header__link'} to="/clients">Clients</Link></li>
+          {level >= 2 &&
           <li><Link className={(props.activeTab === 4) ? 'header__link header__link--active' : 'header__link'} to="/stats">Statistics</Link></li>
+          }
+          {level >= 2 &&
           <li><Link className={(props.activeTab === 5) ? 'header__link header__link--active' : 'header__link'} to="/settings">Settings</Link></li>
+          }
         </ul>
       </div>
     </div>

@@ -3,30 +3,35 @@
         "_id": "59cedd12e3f3442a08ebe619",
         "description": "Waiting on siding to be delivered; should be early next week.",
         "project": "59c44fbd3aba4a26846931b6",
-        "created": "2017-09-29 19:53:54.495"
+        "created": "2017-09-29 19:53:54.495",
+        "addedBy": "59f10b411426df3398e31ad7"
     },
     {
         "_id": "59cedd2be3f3442a08ebe61a",
         "description": "Back door window was delivered with a small crack, needs to be replaced...",
         "project": "59c45413ceabab24f06ea7b1",
-        "created": "2017-09-29 19:54:19.094"
+        "created": "2017-09-29 19:54:19.094",
+        "addedBy": "59f10b411426df3398e31ad7"
     },
     {
         "_id": "59cedd55e3f3442a08ebe61b",
         "description": "Client wants shed roof redone now as well.",
         "project": "59c84aa9aa442d126c3e0ba7",
-        "created": "2017-09-29 19:55:01.176"
+        "created": "2017-09-29 19:55:01.176",
+        "addedBy": "59f10b411426df3398e31ad7"
     },
     {
         "_id": "59cedd67e3f3442a08ebe61c",
         "description": "Need to pick tile colours in order to go ahead with bathroom remodel.",
         "project": "59c4546b9ccdb50e3496e63d",
-        "created": "2017-09-29 19:55:19.425"
+        "created": "2017-09-29 19:55:19.425",
+        "addedBy": "59f10b411426df3398e31ad7"
     },
     {
         "_id": "59cedd8ae3f3442a08ebe61d",
         "description": "Client decided on granite for bathroom counter. It should arrive within 3 days.",
         "project": "59c4546b9ccdb50e3496e63d",
-        "created": "2017-09-29 19:55:54.193"
+        "created": "2017-09-29 19:55:54.193",
+        "addedBy": "59f10b411426df3398e31ad7"
     }
 ]

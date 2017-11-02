@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "59f6795706d3a02b341d10fc",
+    "name": "Salesman",
+    "level": 1
+  },
+  {
+    "_id": "59f6795706d3a02b341d10fd",
+    "name": "Administration",
+    "level": 2
+  },
+  {
+    "_id": "59f6795706d3a02b341d10fe",
+    "name": "Super Admin",
+    "level": 3
+  }
+]

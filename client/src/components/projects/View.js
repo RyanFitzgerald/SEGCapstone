@@ -2,9 +2,9 @@ import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import moment from 'moment';
 import * as api from '../../api';
-import Lightbox from 'react-images';
-
+import Gallery from './Gallery';
 import Loading from '../Loading';
+import {Marker} from 'google-maps-react';
 import Map from '../Map';
 
 class View extends React.Component {
@@ -22,10 +22,12 @@ class View extends React.Component {
     this.getDollars = this.getDollars.bind(this);
     this.getUpdatedTotal = this.getUpdatedTotal.bind(this);
     this.renderCostUpdateButton = this.renderCostUpdateButton.bind(this);
+    this.closeLightbox = this.closeLightbox.bind(this);
 
     // Initial state
     this.state = {
       project: null,
+      lightboxIsOpen: false,
       redirect: null
     }
   }
@@ -35,11 +37,16 @@ class View extends React.Component {
     this.props.setActiveSubtab(0);
 
     // Get client
-    this.getProject(this.props.location.match.params.id);
+    this.getProject(this.props.location.match.params.id);    
   }
 
   getProject(id) {
-    api.getProject(id).then(project => {
+    const query = {
+      id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.getProject(query).then(project => {
       this.setState({ project }, () => {
         // Set title
         document.title = `${this.state.project.name} | Renovaction`;
@@ -48,10 +55,15 @@ class View extends React.Component {
   }
 
   deleteProject() {
-    const id = this.props.location.match.params.id;
-    api.deleteProject(id).then(result => {
+    const query = {
+      id: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.deleteProject(query).then(result => {
       if (result) {
-        this.props.removeFromProjects(id);
+        this.props.removeFromProjects(query.id);
+        this.props.addNotification('Successfully deleted project!', 'success');        
         this.setState({
           redirect: '/projects'
         });
@@ -62,10 +74,13 @@ class View extends React.Component {
   deleteNote(id) {
     const note = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deleteProjectNote(note).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted note!', 'success');
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -74,10 +89,13 @@ class View extends React.Component {
   deleteUpdate(id) {
     const update = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deleteUpdate(update).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted cost update!', 'success');        
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -86,10 +104,13 @@ class View extends React.Component {
   deletePhoto(id) {
     const photo = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deletePhoto(photo).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted photo!', 'success');        
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -98,10 +119,13 @@ class View extends React.Component {
   deleteProduct(id) {
     const product = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
+
     api.deleteProduct(product).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted product!', 'success');        
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -110,10 +134,12 @@ class View extends React.Component {
   deleteFile(id) {
     const file = {
       id,
-      project: this.props.location.match.params.id
+      project: this.props.location.match.params.id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
     api.deleteFile(file).then(result => {
       if (result) {
+        this.props.addNotification('Successfully deleted file!', 'success');        
         this.getProject(this.props.location.match.params.id);
       }
     });
@@ -156,6 +182,12 @@ class View extends React.Component {
       }
     });
     return this.getDollars(updatedTotal);
+  }
+
+  closeLightbox () {
+		this.setState({
+			lightboxIsOpen: false
+		});
   }
 
   render() {
@@ -209,15 +241,20 @@ class View extends React.Component {
                   <li><b>Nickname:</b> {this.state.project.name}  <span className={`status status--${this.state.project.status.replace(/\s+/g, '').toLowerCase()}`}>{this.state.project.status}</span></li>
                   <li><b>Type:</b> {types.join(', ')}</li>
                   <li><b>Client:</b> <Link to={`/clients/${this.state.project.client._id}`}>{this.state.project.client.name}</Link></li>
-                  <li><b>Sold Date:</b> {dates.soldDate} / <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
-                  <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} / <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
-                  <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} / <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
-                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} / <b>Actual Cost:</b> {(actualCost) ? `$${this.getUpdatedTotal(actualCost)}` : 'Not available'}</li>
+                  <li><b>Sold Date:</b> {dates.soldDate} &#8226; <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
+                  <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} &#8226; <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
+                  <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} &#8226; <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
+                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} &#8226; <b>Actual Cost:</b> {(actualCost) ? `$${this.getUpdatedTotal(actualCost)}` : 'Not available'}</li>
                   <li><b>Commission:</b> {(commission !== -1) ? `$${this.getDollars(commission)}` : 'Not available'}</li>
+                  <li><b>Added by:</b> {this.state.project.addedBy.name}</li>
                 </ul>
                 <div className="project-actions">
+                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
                   <Link to={{ pathname: `/projects/${this.props.location.match.params.id}/edit`, query: {project: this.state.project}}} className="btn btn--primary">Edit Project</Link>
+                }
+                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
                   <button className="btn btn--danger" onClick={() => {if (window.confirm('Are you sure you want to delete this project?')) {this.deleteProject()};}}>Delete Project</button>
+                }
                 </div>
               </div>
             </div>
@@ -225,7 +262,12 @@ class View extends React.Component {
               <h2 className="card-title">Project Location</h2>
               <div className="card">
                 <div id="map" className="project-map">
-                  <Map google={window.google} lat={this.state.project.location.coordinates[1]} long={this.state.project.location.coordinates[0]} />
+                  <Map google={window.google} lat={this.state.project.location.coordinates[1]} long={this.state.project.location.coordinates[0]}>
+                    <Marker 
+                      title={this.state.project.name}
+                      position={{lat: this.state.project.location.coordinates[1], lng: this.state.project.location.coordinates[0]}} 
+                    />
+                  </Map>
                 </div>
                 <div className="project-location">
                   <p>{this.state.project.street}<br/>{this.state.project.city}, ON <span className="capitalize">{this.state.project.postalCode}</span></p>
@@ -237,6 +279,7 @@ class View extends React.Component {
           <div className="row">
             <div className="column">
               <h2 className="card-title">{this.state.project.photos.length} Project Photo(s) 
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/photo`,
@@ -245,20 +288,25 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add Photo
                 </Link>
+              }
               </h2>
               <div className="card">
-              {this.state.project.photos.map((photo, key) => {
-                return (
-                  <img key={key} src={`../../uploads/photos/${photo.photo}`}/>
-                );
-              })}
+              <Gallery images={this.state.project.photos.map((photo, key) => ({
+                src: `../../uploads/photos/${photo.photo}`,
+                thumbnail: `../../uploads/photos/${photo.thumb}`,
+                caption: `${photo.name} - ${photo.description} - Added by ${photo.addedBy.name}`,
+                orientation: 'landscape',
+                useForDemo: true
+              }))} />
               </div>
             </div>
           </div>
           <div className="row">
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.updates.length} Cost Update(s)
-                {this.renderCostUpdateButton()}
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
+                this.renderCostUpdateButton()
+              }
               </h2>
               <div className="card">
               {this.state.project.updates.map((update, key) => {
@@ -269,14 +317,17 @@ class View extends React.Component {
                       <li><b>Reason:</b> {update.reason}</li>
                       <li><b>Type:</b> {update.type}</li>
                     </ul>
-                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this update?')) {this.deleteUpdate(update._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
+                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this update?')) {this.deleteUpdate(update._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    }
                   </div>
                 );
               })}
               </div>
             </div>
             <div className="md-6 column">
-              <h2 className="card-title">{this.state.project.products.length} Project Product(s) 
+              <h2 className="card-title">{this.state.project.products.length} Project Product(s)
+                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/product`,
@@ -285,6 +336,7 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add Product
                 </Link>
+                }
               </h2>
               <div className="card">
               {this.state.project.products.map((product, key) => {
@@ -296,7 +348,9 @@ class View extends React.Component {
                       <li><b>Colour:</b> {product.colour}</li>
                       <li><b>Style:</b> {product.style}</li>
                     </ul>
-                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this product?')) {this.deleteProduct(product._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
+                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this product?')) {this.deleteProduct(product._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    }
                   </div>
                 );
               })}
@@ -306,6 +360,7 @@ class View extends React.Component {
           <div className="row">
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.files.length} Project File(s)
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/file`,
@@ -314,15 +369,18 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add File
                 </Link>
+              }
               </h2>
               <div className="card">
                 {this.state.project.files.map((file, key) => {
                   return (
                     <div key={key} className="project-note">
                       <a href={`../../uploads/files/${file.file}`} download>{file.name}</a>  
-                      <span className="project-note__details">Posted by <b>John Doe</b> on <b>{moment(file.created).format('MMMM Do, YYYY')}</b></span>
+                      <span className="project-note__details">Posted by <b>{file.addedBy.name}</b> on <b>{moment(file.created).format('MMMM Do, YYYY')}</b></span>
                       <p>{file.description}</p>
-                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this file?')) {this.deleteFile(file._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                      {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
+                        <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this file?')) {this.deleteFile(file._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                      }
                     </div>
                   );
                 })}
@@ -330,6 +388,7 @@ class View extends React.Component {
             </div>
             <div className="md-6 column">
               <h2 className="card-title">{this.state.project.notes.length} Project Note(s) 
+              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/note`,
@@ -338,16 +397,19 @@ class View extends React.Component {
                   className="btn btn--primary btn--small">
                   Add Note
                 </Link>
+              }
               </h2>
               <div className="card">
               {this.state.project.notes.map((note, key) => {
                 return (
                   <div className="project-note" key={key}>
-                    <span className="project-note__details">Posted by <b>John Doe</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
+                    <span className="project-note__details">Posted by <b>{note.addedBy.name}</b> on <b>{moment(note.created).format('MMMM Do, YYYY')}</b></span>
                     <p>
                       {note.description}
                     </p>
-                    <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
+                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                    }
                   </div>
                 );
               })}

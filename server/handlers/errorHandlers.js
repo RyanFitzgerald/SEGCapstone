@@ -33,6 +33,7 @@ exports.developmentErrors = (err, req, res, next) => {
   const errorDetails = {
     message: err.message,
     status: err.status,
+    error: err,
     stack: err.stack
   };
   res.status(err.status || 500);

@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 require('dotenv').config({ path: 'variables.env' });
 
 // Connect to our Database and handle an bad connections
-mongoose.connect(process.env.DATABASE);
+if (process.env.NODE_ENV === 'test') {
+  mongoose.connect(process.env.DATABASE_TEST);
+} else {
+  mongoose.connect(process.env.DATABASE);
+}
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on('error', (err) => {
   console.error(`ERROR → ${err.message}`);
@@ -20,6 +24,8 @@ require('./models/CostUpdate');
 require('./models/Photo');
 require('./models/File');
 require('./models/Type');
+require('./models/User');
+require('./models/Role');
 
 // Require app with config
 const app = require('./app');
@@ -31,3 +37,5 @@ app.set('port', process.env.PORT || 7777);
 const server = app.listen(app.get('port'), () => {
   console.log(`Express running on PORT ${server.address().port}`);
 });
+
+module.exports = server;

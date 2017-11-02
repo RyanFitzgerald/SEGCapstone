@@ -22,10 +22,20 @@ const photoSchema = new mongoose.Schema({
     required: 'A link must be provided!',
     trim: true
   },
+  thumb: {
+    type: String,
+    required: 'A link must be provided!',
+    trim: true
+  },
   project: {
     type: mongoose.Schema.ObjectId,
     ref: 'Project',
     required: 'A project must be provided!'
+  },
+  addedBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'A user must be provided'
   }
 });
 

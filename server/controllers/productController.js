@@ -8,11 +8,11 @@ const Product = mongoose.model('Product');
 
 exports.addProduct = async (req, res) => {
   const product = await (new Product(req.body)).save();
-  res.send(true);
+  res.send(product);
 };
 
 exports.deleteProduct = async (req, res) => {
   const product = await Product.findById(req.params.product);
   product.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});  
 };

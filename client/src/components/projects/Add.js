@@ -21,7 +21,8 @@ class Add extends React.Component {
     this.state = {
       redirect: false,
       clients: false,
-      types: false
+      types: false,
+      formError: false
     }
   }
 
@@ -68,7 +69,9 @@ class Add extends React.Component {
       actualCost: this.getCents(this.actualCost.value),
       status: this.status.value,
       type: types,
-      client: this.client.value
+      client: this.client.value,
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -77,12 +80,23 @@ class Add extends React.Component {
 
   addProject(project) {
     api.addProject(project).then(resp => {
+      if (resp.status === 500) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+
       // Update parent state
-      this.props.getProjects();
+      this.props.getProjects({search: false});
 
       // Redirect
       this.setState({
-        redirect: `/projects/${resp}`
+        redirect: {
+          location: `/projects/${resp}`,
+          message: 'Successfully added project!',
+          type: 'success'
+        }
       });
     });
   }
@@ -98,8 +112,9 @@ class Add extends React.Component {
   render() {
 
     if (this.state.redirect) {
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);      
       return (
-        <Redirect to={this.state.redirect}/>
+        <Redirect to={this.state.redirect.location}/>
       );
     }
 
@@ -115,6 +130,7 @@ class Add extends React.Component {
           <div className="column">
             <h2 className="card-title">Add a New Project</h2>
             <div className="card">
+            {this.props.renderError(this.state.formError)}
               <form onSubmit={this.handleSubmit}>
                 <div className="row form-section">
                   <div className="md-4 column form-section__title no-left">

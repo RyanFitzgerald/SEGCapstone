@@ -12,7 +12,8 @@ class Note extends React.Component {
 
     // Set state
     this.state = {
-      redirect: null
+      redirect: null,
+      formError: false
     };
   }
 
@@ -31,7 +32,9 @@ class Note extends React.Component {
     // Get form data
     const note = {
       description: this.description.value,
-      client: this.props.location.match.params.id
+      client: this.props.location.match.params.id,
+      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -40,8 +43,19 @@ class Note extends React.Component {
 
   addNote(note) {
     api.addClientNote(note).then(resp => {
+      if (resp.status === 500) {
+        this.setState({
+          formError: 'There was an error when submitting the form, please try again.'
+        })
+        return;
+      }
+
       this.setState({
-        redirect: `/clients/${this.props.location.match.params.id}`
+        redirect: {
+          location: `/clients/${this.props.location.match.params.id}`,
+          message: 'Successfully added note!',
+          type: 'success'
+        }
       });      
     });
   }
@@ -54,8 +68,9 @@ class Note extends React.Component {
     }
 
     if (this.state.redirect) {
+      this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
       return (
-        <Redirect to={this.state.redirect} />
+        <Redirect to={this.state.redirect.location}/>
       );
     }
     
@@ -66,6 +81,7 @@ class Note extends React.Component {
             <div className="column">
               <h2 className="card-title">Add Note For <b>{name}</b></h2>
               <div className="card">
+                {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit}>
                   <div className="row">
                     <div className="md-4 column form-section__title no-left">
@@ -76,7 +92,7 @@ class Note extends React.Component {
                     </div>
                     <div className="md-8 column no-right">
                       <label className="form-label" htmlFor="description">Note Description <span className="form-required">*</span></label>
-                      <textarea ref={input => this.description = input} name="description" className="form-textarea"></textarea>
+                      <textarea ref={input => this.description = input} name="description" className="form-textarea" required></textarea>
                     </div>
                   </div>
                   <div className="text-center">

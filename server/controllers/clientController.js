@@ -8,10 +8,8 @@ const Client = mongoose.model('Client');
 
 exports.getClients = async (req, res) => {
   const filter = {};
-  let skip = 0;
-  let limit = 10;
 
-  //Check for name search
+  // Check for name search
   if (req.query.q) {
     filter.name = { $regex: new RegExp(req.query.q), $options: 'i' };
   }
@@ -31,23 +29,21 @@ exports.getClients = async (req, res) => {
     filter.street = { $regex: new RegExp(req.query.street), $options: 'i' };
   }
 
-  // Check for page
-  if (req.query.page) {
-    skip = (req.query.page - 1) * 10;
-    if (req.query.page === 'all') {
-      limit = 999999;
-    }
-  }
+  const clients = await Client.find(filter).populate('projects').sort({ 'created': -1 });
 
-  const clientsPromise = await Client.find(filter).populate('projects').sort({ 'created': -1 }).limit(limit).skip(skip);
-  const countPromise = Client.find(filter).count();
-
-  const [clients, count] = await Promise.all([clientsPromise, countPromise]);
-  res.send({clients, count});
+  res.send(clients);
 };
 
 exports.getClient = async (req, res) => {
-  const client = await Client.findById(req.params.id).populate('notes projects');
+  const client = await Client.findById(req.params.id).populate('projects addedBy').populate({
+    path: 'notes',
+    model: 'ClientNote',
+    populate: {
+      path: 'addedBy',
+      select: 'name',
+      model: 'User'
+    }
+  });
   res.send(client);
 };
 
@@ -58,13 +54,14 @@ exports.addClient = async (req, res) => {
 
 exports.editClient = async (req, res) => {
   const client = await Client.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    new: true,
     runValidators: true
   }).exec();
-  res.send(req.params.id);
+  res.send(client);
 };
 
 exports.deleteClient = async (req, res) => {
   const client = await Client.findById(req.params.id);
   client.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});
 }

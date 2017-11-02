@@ -31,12 +31,16 @@ exports.resize = async (req, res, next) => {
   }
 
   const extension = req.file.mimetype.split('/')[1];
-  req.body.photo = `${uuid.v4()}.${extension}`;
+  const genID = uuid.v4();
+  req.body.photo = `${genID}.${extension}`;
+  req.body.thumb = `${genID}-thumb.${extension}`;
   
-  // Now we resize
+  // Now we resize and crop as needed
   const photo = await jimp.read(req.file.buffer);
   await photo.resize(800, jimp.AUTO);
   await photo.write(`./client/public/uploads/photos/${req.body.photo}`);
+  await photo.cover(200, 200);
+  await photo.write(`./client/public/uploads/photos/${req.body.thumb}`)
 
   // Once written to filesystem, keep going
   next();
@@ -50,5 +54,5 @@ exports.addPhoto = async (req, res) => {
 exports.deletePhoto = async (req, res) => {
   const photo = await Photo.findById(req.params.photo);
   photo.remove();
-  res.send(true);
+  res.send({message: 'Deleted Successfully!', deleted: true});  
 };
