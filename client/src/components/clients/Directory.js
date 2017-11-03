@@ -63,7 +63,7 @@ class Directory extends React.Component {
     const clients = this.props.clients || [];
 
     // Get fields needed
-    const fields = ['name', 'email', 'telephone', 'street', 'postalCode', 'city', 'created'];
+    const fields = ['firstName', 'lastName', 'email', 'homePhone', 'mobilePhone', 'workPhone', 'houseNumber', 'street', 'city', 'postalCode', 'created'];
 
     // Convert to csv
     const csvContent = json2csv({data: clients, fields});
@@ -141,7 +141,7 @@ class Directory extends React.Component {
           <div className="column">
             <h2 className="card-title">Filter Clients</h2>
             <div className="card">
-              <input ref={input => this.q = input} className="form-text" type="text" placeholder="Enter the client name" onKeyUp={this.handleSearch}/>
+              <input ref={input => this.q = input} className="form-text" type="text" placeholder="Enter the client last name" onKeyUp={this.handleSearch}/>
               <button className="advanced__toggle" id="advanced-toggle" onClick={this.handleAdvanced}>Toggle Advanced Search</button>
               <div ref={el => this.advanced = el} id="advanced-fields" className="row card__advanced">
                 <div className="md-6 column">
@@ -185,9 +185,8 @@ class Directory extends React.Component {
                   <tr>
                     <th onClick={() => this.props.sortByKey(clients, 'name')}>Name</th>
                     <th>Street</th>
-                    <th>Postal Code</th>
                     <th onClick={() => this.props.sortByKey(clients, 'city')}>City</th>
-                    <th>Telephone</th>
+                    <th>Postal Code</th>       
                     <th onClick={() => this.props.sortByKey(clients, 'email')}>Email</th>
                     <th>Actions</th>
                   </tr>
@@ -196,11 +195,10 @@ class Directory extends React.Component {
                   {visibleClients.map((client, key) => {
                     return (
                       <tr key={key}>
-                        <td>{client.name}</td>
-                        <td>{client.street}</td>
-                        <td className="capitalize">{client.postalCode}</td>
+                        <td>{client.firstName} {client.lastName}</td>
+                        <td>{client.houseNumber} {client.street}</td>
                         <td>{client.city}</td>
-                        <td><a href={'tel:' + client.telephone}>{client.telephone}</a></td>
+                        <td className="capitalize">{client.postalCode}</td>                       
                         <td><a href={'mailto:' + client.email}>{client.email}</a></td>
                         <td><Link to={`/clients/${client._id}`} className="btn btn--small btn--primary">View Client</Link></td>
                       </tr>

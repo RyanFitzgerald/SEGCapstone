@@ -39,7 +39,7 @@ class View extends React.Component {
     api.getClient(query).then(client => {
       this.setState({ client }, () => {
         // Set title
-        document.title = `${this.state.client.name} | Renovaction`;
+        document.title = `${this.state.client.firstName} ${this.state.client.lastName} | Renovaction`;
       })
     });
   }
@@ -94,9 +94,19 @@ class View extends React.Component {
               <div className="card">
                 <ul className="client-overview">
                   <li><b>Date Created:</b> {moment(this.state.client.created).format('MMMM Do, YYYY')}</li>
-                  <li><b>Name:</b> {this.state.client.name}</li>
+                  <li><b>Name:</b> {this.state.client.firstName} {this.state.client.lastName}</li>
+                  {this.state.client.email &&
                   <li><b>Email:</b> <a href={'mailto:' + this.state.client.email}>{this.state.client.email}</a></li>
-                  <li><b>Telephone:</b> <a href={'tel:' + this.state.client.telephone}>{this.state.client.telephone}</a></li>
+                  }
+                  {this.state.client.homePhone &&
+                  <li><b>Home Phone:</b> <a href={'tel:' + this.state.client.homePhone}>{this.state.client.homePhone}</a></li>
+                  }
+                  {this.state.client.mobilePhone &&
+                  <li><b>Mobile Phone:</b> <a href={'tel:' + this.state.client.mobilePhone}>{this.state.client.mobilePhone}</a></li>
+                  }
+                  {this.state.client.workPhone &&
+                  <li><b>Work Phone:</b> <a href={'tel:' + this.state.client.workPhone}>{this.state.client.workPhone}</a></li>
+                  }
                   <li><b>Sold by:</b> Joseph Doe</li>
                   <li><b>Added by:</b> {this.state.client.addedBy.name}</li>
                 </ul>
@@ -116,14 +126,14 @@ class View extends React.Component {
                 <div id="map" className="client-map">
                   <Map google={window.google} lat={this.state.client.location.coordinates[1]} long={this.state.client.location.coordinates[0]}>
                     <Marker 
-                      title={this.state.client.name}
+                      title={`${this.state.client.firstName} ${this.state.client.lastName}`}
                       position={{lat: this.state.client.location.coordinates[1], lng: this.state.client.location.coordinates[0]}} 
                     />
                   </Map>
                 </div>
                 <div className="client-location">
-                  <p>{this.state.client.street}<br/>{this.state.client.city}, ON <span className="capitalize">{this.state.client.postalCode}</span></p>
-                  <a href={`https://www.google.com/maps?saddr=My+Location&daddr=${encodeURI(this.state.client.street)}+${this.state.client.city}`} target="_blank">Get Directions</a>
+                  <p>{this.state.client.houseNumber} {this.state.client.street}<br/>{this.state.client.city}, ON <span className="capitalize">{this.state.client.postalCode}</span></p>
+                  <a href={`https://www.google.com/maps?saddr=My+Location&daddr=${encodeURI(this.state.client.houseNumber)}+${encodeURI(this.state.client.street)}+${this.state.client.city}`} target="_blank">Get Directions</a>
                 </div>
               </div>
             </div>

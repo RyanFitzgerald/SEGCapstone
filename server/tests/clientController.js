@@ -41,10 +41,12 @@ describe('Clients', () => {
   describe('/POST client', () => {
     it('it should not POST a client with a required field missing', (done) => {
       const client = {
-        name: 'John Doe',
-        telephone: '613-123-4567',
+        firstName: 'John',
+        lastName: 'Doe',
+        homePhone: '613-123-4567',
         email: 'jdoe@test.com',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M5',
         addedBy: '59f10b411426df3398e31ad7',
         access_token: token
@@ -64,12 +66,14 @@ describe('Clients', () => {
 
     it('it should POST a client ', (done) => {
       const client = {
-        name: 'John Doe',
-        telephone: '613-123-4567',
+        firstName: 'John',
+        lastName: 'Doe',
+        homePhone: '613-123-4567',
         email: 'jdoe@test.com',
-        street: '123 Main Street',
-        postalCode: 'K1A2M5',
+        houseNumber: '123',
+        street: 'Main Street',
         city: 'Ottawa',
+        postalCode: 'K1A2M5',
         addedBy: '59f10b411426df3398e31ad7',
         access_token: token
       };
@@ -88,10 +92,12 @@ describe('Clients', () => {
   describe('/GET/:id client', () => {
     it('it should GET a client by the given id', (done) => {
       let client = new Client({
-        name: 'John Doe',
-        telephone: '613-123-4567',
+        firstName: 'John',
+        lastName: 'Doe',
+        homePhone: '613-123-4567',
         email: 'john_doe@test.com',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M5',
         city: 'Ottawa',
         addedBy: '59f10b411426df3398e31ad7',
@@ -104,9 +110,11 @@ describe('Clients', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('name');
-          res.body.should.have.property('telephone');
+          res.body.should.have.property('firstName');
+          res.body.should.have.property('lastName');
+          res.body.should.have.property('homePhone');
           res.body.should.have.property('email');
+          res.body.should.have.property('houseNumber');
           res.body.should.have.property('street');
           res.body.should.have.property('postalCode');
           res.body.should.have.property('city');
@@ -126,10 +134,12 @@ describe('Clients', () => {
   describe('/POST/:id client', () => {
     it('it should UPDATE a client by the given id', (done) => {
       let client = new Client({
-        name: 'Tom Doe',
-        telephone: '613-123-4567',
+        firstName: 'Tom',
+        lastName: 'Doe',
+        homePhone: '613-123-4567',
         email: 'tom_doe@test.com',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M5',
         city: 'Ottawa',
         addedBy: '59f10b411426df3398e31ad7',
@@ -138,11 +148,11 @@ describe('Clients', () => {
       client.save((err, client) => {
         chai.request(server)
         .post(`/api/clients/${client.id}`)
-        .send({name: 'Tommy Doe', access_token: token})
+        .send({firstName: 'Tommy', access_token: token})
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('name').eql('Tommy Doe');
+          res.body.should.have.property('firstName').eql('Tommy');
           res.body.should.have.property('_id').eql(client.id);
           done();
         });
@@ -154,10 +164,12 @@ describe('Clients', () => {
   describe('/DELETE/:id client', () => {
     it('it should DELETE a client by the given id', (done) => {
       let client = new Client({
-        name: 'Martha Doe',
+        firstName: 'Martha',
+        lastName: 'Doe',
         telephone: '613-123-4567',
         email: 'martha_doe@test.com',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M5',
         city: 'Ottawa',
         addedBy: '59f10b411426df3398e31ad7',

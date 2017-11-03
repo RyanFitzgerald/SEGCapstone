@@ -28,10 +28,12 @@ describe('Client Notes', () => {
   describe('/POST/:id clientNote', () => {
     it('it should NOT POST a clientNote with a missing required field', (done) => {
       let client = new Client({
-        name: 'John Doe',
-        telephone: '613-123-4567',
-        email: 'john_doe@test.com',
-        street: '123 Main Street',
+        firstName: 'Martha',
+        lastName: 'Doe',
+        homePhone: '613-123-4567',
+        email: 'martha_doe@test.com',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M5',
         city: 'Ottawa',
         addedBy: '59f10b411426df3398e31ad7',
@@ -58,10 +60,12 @@ describe('Client Notes', () => {
 
     it('it should POST a clientNote to a client by the given id', (done) => {
       let client = new Client({
-        name: 'Johnny Doe',
-        telephone: '613-123-4567',
-        email: 'j_doe@test.com',
-        street: '123 Main Street',
+        firstName: 'John',
+        lastName: 'Doe',
+        homePhone: '613-123-4567',
+        email: 'johnnn1@test.com',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M5',
         city: 'Ottawa',
         addedBy: '59f10b411426df3398e31ad7',
@@ -91,10 +95,12 @@ describe('Client Notes', () => {
   describe('/DELETE/:id clientNote', () => {
     it('it should DELETE a clientNote from a client by the given id', (done) => {
       let client = new Client({
-        name: 'Marcus Doe',
-        telephone: '613-123-4567',
+        firstName: 'Marcus',
+        lastName: 'Doe',
+        homePhone: '613-123-4567',
         email: 'marcus_doe@test.com',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M5',
         city: 'Ottawa',
         addedBy: '59f10b411426df3398e31ad7',

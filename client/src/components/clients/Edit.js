@@ -36,12 +36,17 @@ class Edit extends React.Component {
 
     // Get form data
     const client = {
-      name: this.name.value,
-      telephone: this.telephone.value,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      homePhone: this.homePhone.value,
+      mobilePhone: this.mobilePhone.value,
+      workPhone: this.workPhone.value,
       email: this.email.value,
+      houseNumber: this.houseNumber.value,
       street: this.street.value,
+      city: this.city.value,
       postalCode: this.postalCode.value,
-      city: this.city.value
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -49,7 +54,12 @@ class Edit extends React.Component {
   }
 
   getClient(id) {
-    api.getClient(id).then(client => {
+    const query = {
+      id,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    }
+
+    api.getClient(query).then(client => {
       this.setState({ client }, () => {
         // Set title
         document.title = `Edit ${this.state.client.name} | Renovaction`;
@@ -66,16 +76,13 @@ class Edit extends React.Component {
         return;
       }
 
-      // Append id
-      client._id = resp;
-
       // Update parent state
-      this.props.updateClients(client);
+      this.props.updateClients(resp);
 
       // Redirect
       this.setState({
         redirect: {
-          location: `/clients/${resp}`,
+          location: `/clients/${resp._id}`,
           message: 'Successfully updated client!',
           type: 'success'
         }
@@ -112,8 +119,10 @@ class Edit extends React.Component {
                       </p>
                     </div>
                     <div className="md-8 column no-right">
-                      <label className="form-label" htmlFor="name"> Name <span className="form-required">*</span></label>
-                      <input ref={input => this.name = input} name="name" className="form-text form-text--full" type="text" defaultValue={this.state.client.name} required />
+                      <label className="form-label" htmlFor="firstName"> First Name <span className="form-required">*</span></label>
+                      <input ref={input => this.firstName = input} name="firstName" className="form-text form-text--full" type="text" defaultValue={this.state.client.firstName} required />
+                      <label className="form-label" htmlFor="lastName"> Last Name <span className="form-required">*</span></label>
+                      <input ref={input => this.lastName = input} name="lastName" className="form-text form-text--full" type="text" defaultValue={this.state.client.lastName} required />
                       <label className="form-label" htmlFor="salesman">Sold by <span className="form-required">*</span></label>
                       <span className="form-select">
                         <select ref={input => this.soldBy = input} name="salesman" required>
@@ -130,10 +139,14 @@ class Edit extends React.Component {
                           </p>
                       </div>
                       <div className="md-8 column no-right">
-                          <label className="form-label" htmlFor="email">Email <span className="form-required">*</span></label>
-                          <input ref={input => this.email = input} name="email" className="form-text form-text--full" type="email" defaultValue={this.state.client.email} required/>
-                          <label className="form-label" htmlFor="phone">Phone Number <span className="form-required">*</span></label>
-                          <input ref={input => this.telephone = input} name="phone" className="form-text form-text--full" type="text" onKeyUp={this.handlePhone} maxLength="12" defaultValue={this.state.client.telephone} required/>
+                          <label className="form-label" htmlFor="email">Email</label>
+                          <input ref={input => this.email = input} name="email" className="form-text form-text--full" type="email" defaultValue={this.state.client.email}/>
+                          <label className="form-label" htmlFor="homePhone">Home Phone</label>
+                        <input ref={input => this.homePhone = input} name="homePhone" className="form-text form-text--full" type="text" defaultValue={this.state.client.homePhone} onKeyUp={this.handlePhone} maxLength="12"/>
+                        <label className="form-label" htmlFor="mobilePhone">Mobile Phone</label>
+                        <input ref={input => this.mobilePhone = input} name="mobilePhone" className="form-text form-text--full" type="text" defaultValue={this.state.client.mobilePhone} onKeyUp={this.handlePhone} maxLength="12"/>
+                        <label className="form-label" htmlFor="workPhone">Work Phone</label>
+                        <input ref={input => this.workPhone = input} name="workPhone" className="form-text form-text--full" type="text" defaultValue={this.state.client.workPhone} onKeyUp={this.handlePhone} maxLength="12"/>
                       </div>
                   </div>
                   <div className="row form-section no-border">
@@ -144,16 +157,14 @@ class Edit extends React.Component {
                         </p>
                     </div>
                     <div className="md-8 column no-right">
+                      <label className="form-label" htmlFor="houseNumber">House Number <span className="form-required">*</span></label>
+                      <input ref={input => this.houseNumber = input} name="houseNumber" className="form-text form-text--full" type="text" defaultValue={this.state.client.houseNumber} required/>
                       <label className="form-label" htmlFor="street">Street <span className="form-required">*</span></label>
                       <input ref={input => this.street = input} name="street" className="form-text form-text--full" type="text" defaultValue={this.state.client.street} required/>
+                      <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
+                      <input ref={input => this.city = input} name="city" className="form-text form-text--full" type="text" defaultValue={this.state.client.city} required/>
                       <label className="form-label" htmlFor="postal-code">Postal Code <span className="form-required">*</span></label>
                       <input ref={input => this.postalCode = input} name="postal-code" className="form-text form-text--full capitalize" type="text" maxLength="6" defaultValue={this.state.client.postalCode} required/>
-                      <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
-                      <span className="form-select">
-                        <select ref={input => this.city = input} name="city" defaultValue={this.state.client.city} required>
-                          <option value="Ottawa">Ottawa</option>
-                        </select>
-                      </span>
                     </div>
                   </div>
                   <div className="text-center">

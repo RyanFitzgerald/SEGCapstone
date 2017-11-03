@@ -63,10 +63,12 @@ class Edit extends React.Component {
 
     // Get form data
     const project = {
+      fileNumber: this.fileNumber.value,
       name: this.name.value,
+      houseNumber: this.houseNumber.value,
       street: this.street.value,
-      postalCode: this.postalCode.value,
       city: this.city.value,
+      postalCode: this.postalCode.value,
       soldDate: this.soldDate.field.value,
       startDate: this.startDate.field.value,
       endDate: this.endDate.field.value,
@@ -108,12 +110,12 @@ class Edit extends React.Component {
       }
 
       // Update parent state
-      this.props.getProjects();
+      this.props.getProjects({search: false});
 
       // Redirect
       this.setState({
         redirect: {
-          location: `/projects/${resp}`,
+          location: `/projects/${resp._id}`,
           message: 'Successfully updated project!',
           type: 'success'
         }
@@ -171,6 +173,8 @@ class Edit extends React.Component {
                     </p>
                   </div>
                   <div className="md-8 column no-right">
+                    <label className="form-label" htmlFor="fileNumber">Project File Number <span className="form-required">*</span></label>
+                    <input name="fileNumber" ref={input => this.fileNumber = input} className="form-text form-text--full" type="text" placeholder="E.g. 2017-435" defaultValue={this.state.project.fileNumber} required/>
                     <label className="form-label" htmlFor="name">Project Nickname <span className="form-required">*</span></label>
                     <input name="name" ref={input => this.name = input} className="form-text form-text--full" type="text" placeholder="E.g. Doe Roofing Project" defaultValue={this.state.project.name} required/>
                     <label className="form-label" htmlFor="client">Project Client <span className="form-required">*</span></label>
@@ -199,16 +203,14 @@ class Edit extends React.Component {
                     </p>
                   </div>
                   <div className="md-8 column no-right">
+                    <label className="form-label" htmlFor="houseNumber">House Number <span className="form-required">*</span></label>
+                    <input name="houseNumber" ref={input => this.houseNumber = input} className="form-text form-text--full" type="text" defaultValue={this.state.project.houseNumber} required/>
                     <label className="form-label" htmlFor="street">Street <span className="form-required">*</span></label>
                     <input name="street" ref={input => this.street = input} className="form-text form-text--full" type="text" defaultValue={this.state.project.street} required/>
+                    <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
+                    <input name="city" ref={input => this.city = input} className="form-text form-text--full" type="text" defaultValue={this.state.project.city} required/>
                     <label className="form-label" htmlFor="postal-code">Postal Code <span className="form-required">*</span></label>
                     <input name="postal-code" ref={input => this.postalCode = input} className="form-text form-text--full capitalize" maxLength="6" type="text" defaultValue={this.state.project.postalCode} required/>
-                    <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
-                    <span className="form-select" required>
-                      <select name="city" ref={input => this.city = input} defaultValue={this.state.project.city}>
-                        <option value="Ottawa">Ottawa</option>
-                      </select>
-                    </span>
                   </div>
                 </div>
                 <div className="row form-section">

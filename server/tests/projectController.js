@@ -41,8 +41,10 @@ describe('Projects', () => {
   describe('/POST project', () => {
     it('it should not POST a project with a required field missing', (done) => {
       const project = {
+        fileNumber: '1234567',
         name: 'Walker Roofing Project',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         soldDate: '2017-09-19T04:00:00.000Z',
         status: 'Not Started',
@@ -66,8 +68,10 @@ describe('Projects', () => {
 
     it('it should POST a project ', (done) => {
       const project = {
+        fileNumber: '123456',
         name: 'Walker Roofing Project',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',
@@ -92,8 +96,10 @@ describe('Projects', () => {
   describe('/GET/:id project', () => {
     it('it should GET a project by the given id', (done) => {
       const project = new Project({
+        fileNumber: '12345',
         name: 'Bobert Roofing Project',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',
@@ -110,7 +116,9 @@ describe('Projects', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
+          res.body.should.have.property('fileNumber');
           res.body.should.have.property('name');
+          res.body.should.have.property('houseNumber');
           res.body.should.have.property('street');
           res.body.should.have.property('postalCode');
           res.body.should.have.property('city');
@@ -137,8 +145,10 @@ describe('Projects', () => {
   describe('/POST/:id project', () => {
     it('it should UPDATE a project by the given id', (done) => {
       const project = new Project({
+        fileNumber: '1234',
         name: 'Bobert Roofing Project',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',
@@ -167,8 +177,10 @@ describe('Projects', () => {
   describe('/DELETE/:id project', () => {
     it('it should DELETE a project by the given id', (done) => {
       const project = new Project({
+        fileNumber: '123',
         name: 'Bobert Roofing Project',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',
