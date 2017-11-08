@@ -4,7 +4,7 @@ import moment from 'moment';
 import * as api from '../../api';
 import Gallery from './Gallery';
 import Loading from '../Loading';
-import {Marker} from 'google-maps-react';
+import {Marker} from 'react-google-maps';
 import Map from '../Map';
 
 class View extends React.Component {
@@ -263,7 +263,12 @@ class View extends React.Component {
               <h2 className="card-title">Project Location</h2>
               <div className="card">
                 <div id="map" className="project-map">
-                  <Map google={window.google} lat={this.state.project.location.coordinates[1]} long={this.state.project.location.coordinates[0]}>
+                  <Map
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `400px` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                  >
                     <Marker 
                       title={this.state.project.name}
                       position={{lat: this.state.project.location.coordinates[1], lng: this.state.project.location.coordinates[0]}} 

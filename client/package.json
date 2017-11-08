@@ -8,12 +8,13 @@
     "array-sort": "^0.1.4",
     "axios": "^0.16.2",
     "font-awesome": "^4.7.0",
-    "google-maps-react": "^1.1.0",
     "history": "^4.7.2",
     "json2csv": "^3.11.5",
     "pikaday": "^1.6.1",
     "prop-types": "^15.5.10",
-    "react": "^15.6.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-google-maps": "^9.2.2",
     "react-images": "^0.5.8",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13",
@@ -27,12 +28,17 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.9.0",
+    "enzyme": "^3.1.1",
+    "enzyme-adapter-react-16": "^1.0.4",
+    "enzyme-to-json": "^3.2.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
-    "gulp-wait": "0.0.2"
+    "gulp-wait": "0.0.2",
+    "react-test-renderer": "^16.0.0"
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {Marker} from 'google-maps-react';
+import {Marker} from 'react-google-maps';
 import Map from '../Map';
 import json2csv from 'json2csv';
 
@@ -217,7 +217,12 @@ class Directory extends React.Component {
             <h2 className="card-title">Map</h2>
             <div className="card">
               <div id="map" className="project-map project-map--small">
-                <Map google={window.google} zoom={10} lat={45.4215296} long={-75.69719309999999}>
+                <Map
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `400px` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                >
                   {visibleClients.map((client, key) => {
                     return (
                       <Marker 
