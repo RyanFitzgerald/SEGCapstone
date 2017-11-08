@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Settings /> should render correctly 1`] = `
+<div>
+  <ToastContainer
+    autoClose={3000}
+    bodyClassName=""
+    className={null}
+    closeButton={<DefaultCloseButton />}
+    closeOnClick={true}
+    hideProgressBar={true}
+    newestOnTop={true}
+    pauseOnHover={true}
+    position="top-right"
+    progressClassName=""
+    style={null}
+    toastClassName=""
+    transition={[Function]}
+    type="success"
+  />
+  <Submenu
+    activeSubtab={1}
+  />
+  <Switch>
+    <Route
+      exact={true}
+      path="/settings"
+      render={[Function]}
+    />
+    <Route
+      path="/settings/users/add"
+      render={[Function]}
+    />
+    <Route
+      path="/settings/users/:id/edit"
+      render={[Function]}
+    />
+    <Route
+      path="/settings/users/:id"
+      render={[Function]}
+    />
+    <Route
+      path="/settings/users"
+      render={[Function]}
+    />
+  </Switch>
+</div>
+`;

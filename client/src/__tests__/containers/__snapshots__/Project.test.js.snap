@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Project /> should render correctly 1`] = `
+<div>
+  <Submenu
+    activeSubtab={1}
+  />
+  <Switch>
+    <Route
+      exact={true}
+      path="/projects"
+      render={[Function]}
+    />
+    <Route
+      path="/projects/add"
+      render={[Function]}
+    />
+    <Route
+      path="/projects/:id/edit"
+      render={[Function]}
+    />
+    <Route
+      path="/projects/:id/note"
+      render={[Function]}
+    />
+    <Route
+      path="/projects/:id/product"
+      render={[Function]}
+    />
+    <Route
+      path="/projects/:id/photo"
+      render={[Function]}
+    />
+    <Route
+      path="/projects/:id/file"
+      render={[Function]}
+    />
+    <Route
+      path="/projects/:id/update"
+      render={[Function]}
+    />
+    <Route
+      path="/projects/:id"
+      render={[Function]}
+    />
+  </Switch>
+</div>
+`;

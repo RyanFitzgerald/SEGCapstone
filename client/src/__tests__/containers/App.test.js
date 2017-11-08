@@ -13,11 +13,22 @@ const mock = new MockAdapter(axios);
 
 describe('<App />', () => {
   it('should render correctly', () => {
+    // Mock axios requests
     mock.onGet('/auth/isLoggedIn').reply(200, true);
+
+    // Spy on IsLoggedIn
+    const isLoggedInSpy = jest.spyOn(App.prototype, 'isLoggedIn');
+    
+    // Shallow render it
     const output = shallow(
       <App/>
     );
+
+    // Compare to old snapshot
     expect(shallowToJson(output)).toMatchSnapshot();
+
+    // Check if component mounting methods were called
+    expect(isLoggedInSpy).toHaveBeenCalled();
   });
 });
 
