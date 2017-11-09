@@ -36,12 +36,16 @@ class Add extends React.Component {
 
     // Get form data
     const client = {
-      name: this.name.value,
-      telephone: this.telephone.value,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      homePhone: this.homePhone.value,
+      mobilePhone: this.mobilePhone.value,
+      workPhone: this.workPhone.value,
       email: this.email.value,
+      houseNumber: this.houseNumber.value,
       street: this.street.value,
-      postalCode: this.postalCode.value,
       city: this.city.value,
+      postalCode: this.postalCode.value,
       addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
       access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
@@ -55,7 +59,8 @@ class Add extends React.Component {
       if (resp.status === 500) {
         this.setState({
           formError: 'There was an error when submitting the form, please try again.'
-        })
+        });
+        console.log(resp);
         return;
       }
 
@@ -104,8 +109,10 @@ class Add extends React.Component {
                     </p>
                   </div>
                   <div className="md-8 column no-right">
-                    <label className="form-label" htmlFor="name"> Name <span className="form-required">*</span></label>
-                    <input ref={input => this.name = input} name="name" className="form-text form-text--full" type="text" required/>
+                    <label className="form-label" htmlFor="firstName"> First Name <span className="form-required">*</span></label>
+                    <input ref={input => this.firstName = input} name="firstName" className="form-text form-text--full" type="text" required/>
+                    <label className="form-label" htmlFor="lastName"> Last Name <span className="form-required">*</span></label>
+                    <input ref={input => this.lastName = input} name="lastName" className="form-text form-text--full" type="text" required/>
                     <label className="form-label" htmlFor="salesman">Sold by <span className="form-required">*</span></label>
                     <span className="form-select">
                       <select ref={input => this.soldBy = input} name="salesman" required>
@@ -122,10 +129,14 @@ class Add extends React.Component {
                         </p>
                     </div>
                     <div className="md-8 column no-right">
-                        <label className="form-label" htmlFor="email">Email <span className="form-required">*</span></label>
-                        <input ref={input => this.email = input} name="email" className="form-text form-text--full" type="email" required/>
-                        <label className="form-label" htmlFor="phone">Phone Number <span className="form-required">*</span></label>
-                        <input ref={input => this.telephone = input} name="phone" className="form-text form-text--full" type="text" onKeyUp={this.handlePhone} maxLength="12" required/>
+                        <label className="form-label" htmlFor="email">Email</label>
+                        <input ref={input => this.email = input} name="email" className="form-text form-text--full" type="email"/>
+                        <label className="form-label" htmlFor="homePhone">Home Phone</label>
+                        <input ref={input => this.homePhone = input} name="homePhone" className="form-text form-text--full" type="text" onKeyUp={this.handlePhone} maxLength="12"/>
+                        <label className="form-label" htmlFor="mobilePhone">Mobile Phone</label>
+                        <input ref={input => this.mobilePhone = input} name="mobilePhone" className="form-text form-text--full" type="text" onKeyUp={this.handlePhone} maxLength="12"/>
+                        <label className="form-label" htmlFor="workPhone">Work Phone</label>
+                        <input ref={input => this.workPhone = input} name="workPhone" className="form-text form-text--full" type="text" onKeyUp={this.handlePhone} maxLength="12"/>
                     </div>
                 </div>
                 <div className="row form-section no-border">
@@ -136,16 +147,14 @@ class Add extends React.Component {
                       </p>
                   </div>
                   <div className="md-8 column no-right">
+                    <label className="form-label" htmlFor="houseNumber">House Number <span className="form-required">*</span></label>
+                    <input ref={input => this.houseNumber = input} name="houseNumber" className="form-text form-text--full" type="text" required/>
                     <label className="form-label" htmlFor="street">Street <span className="form-required">*</span></label>
                     <input ref={input => this.street = input} name="street" className="form-text form-text--full" type="text" required/>
+                    <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
+                    <input ref={input => this.city = input} name="city" className="form-text form-text--full" type="text" required/>
                     <label className="form-label" htmlFor="postal-code">Postal Code <span className="form-required">*</span></label>
                     <input ref={input => this.postalCode = input} name="postal-code" className="form-text form-text--full capitalize" type="text" maxLength="6" required/>
-                    <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
-                    <span className="form-select">
-                      <select ref={input => this.city = input} name="city" required>
-                        <option value="Ottawa">Ottawa</option>
-                      </select>
-                    </span>
                   </div>
                 </div>
                 <div className="text-center">

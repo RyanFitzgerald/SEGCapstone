@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Client /> should render correctly 1`] = `
+<div>
+  <Submenu
+    activeSubtab={1}
+  />
+  <Switch>
+    <Route
+      exact={true}
+      path="/clients"
+      render={[Function]}
+    />
+    <Route
+      path="/clients/add"
+      render={[Function]}
+    />
+    <Route
+      path="/clients/:id/note"
+      render={[Function]}
+    />
+    <Route
+      path="/clients/:id/edit"
+      render={[Function]}
+    />
+    <Route
+      path="/clients/:id"
+      render={[Function]}
+    />
+  </Switch>
+</div>
+`;

@@ -1297,6 +1297,14 @@ a:hover {
   padding-top: 0;
 }
 
+.project-overview b {
+  margin-right: 8px;
+}
+
+.project-overview--divider {
+  margin: 0 15px;
+}
+
 .project-actions {
   margin-top: 15px;
   text-align: right;
@@ -1434,6 +1442,10 @@ a:hover {
 
 .client-overview li:first-child {
   padding-top: 0;
+}
+
+.client-overview b {
+  margin-right: 8px;
 }
 
 .client-actions {

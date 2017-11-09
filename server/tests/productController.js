@@ -30,8 +30,10 @@ describe('Products', () => {
   describe('/POST/:id product', () => {
     it('it should NOT POST a product with a missing required field', (done) => {
       let project = new Project({
+        fileNumber: '12345',
         name: 'Bobert Roofing Project',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',
@@ -65,8 +67,10 @@ describe('Products', () => {
 
     it('it should POST a product to a project by the given id', (done) => {
       let project = new Project({
+        fileNumber: '12345',
         name: 'Doe Roofing Project',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',
@@ -106,8 +110,10 @@ describe('Products', () => {
   describe('/DELETE/:id product', () => {
     it('it should DELETE a product from a project by the given id', (done) => {
       let project = new Project({
+        fileNumber: '12345',
         name: 'Mitchell Roofing Project',
-        street: '123 Main Street',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',

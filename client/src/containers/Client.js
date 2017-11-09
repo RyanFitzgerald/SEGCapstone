@@ -136,7 +136,7 @@ class Client extends React.Component {
     const level = JSON.parse(sessionStorage.getItem('user')).role.level;
     return (
       <div>
-        <Submenu activeSubtab={this.state.activeSubtab} level={this.props.level} checkLevel={this.props.checkLevel}/>
+        <Submenu activeSubtab={this.state.activeSubtab} />
 
         <Switch>
           <Route exact path="/clients" render={() =>

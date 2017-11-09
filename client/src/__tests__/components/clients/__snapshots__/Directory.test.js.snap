@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Directory /> should render correctly 1`] = `
+<div
+  className="content"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="column"
+    >
+      <h2
+        className="card-title"
+      >
+        Filter Clients
+      </h2>
+      <div
+        className="card"
+      >
+        <input
+          className="form-text"
+          onKeyUp={[Function]}
+          placeholder="Enter the client last name"
+          type="text"
+        />
+        <button
+          className="advanced__toggle"
+          id="advanced-toggle"
+          onClick={[Function]}
+        >
+          Toggle Advanced Search
+        </button>
+        <div
+          className="row card__advanced"
+          id="advanced-fields"
+        >
+          <div
+            className="md-6 column"
+          >
+            <label
+              className="form-label"
+              htmlFor="street"
+            >
+              Street
+            </label>
+            <input
+              className="form-text"
+              id="street"
+              name="street"
+              onKeyUp={[Function]}
+              type="text"
+            />
+          </div>
+          <div
+            className="md-6 column"
+          >
+            <label
+              className="form-label"
+              htmlFor="postal-code"
+            >
+              Postal Code
+            </label>
+            <input
+              className="form-text capitalize"
+              id="postal-code"
+              name="postal-code"
+              onKeyUp={[Function]}
+              type="text"
+            />
+          </div>
+          <div
+            className="md-6 column"
+          >
+            <label
+              className="form-label"
+              htmlFor="city"
+            >
+              City
+            </label>
+            <span
+              className="form-select"
+            >
+              <select
+                id="city"
+                name="city"
+                onChange={[Function]}
+              >
+                <option
+                  value=""
+                >
+                  All Cities
+                </option>
+              </select>
+            </span>
+          </div>
+          <div
+            className="md-6 column"
+          >
+            <label
+              className="form-label"
+              htmlFor="salesman"
+            >
+              Salesman
+            </label>
+            <span
+              className="form-select"
+            >
+              <select
+                id="salesman"
+                name="salesman"
+              >
+                <option>
+                  All Salesmen
+                </option>
+              </select>
+            </span>
+          </div>
+          <button
+            className="advanced__toggle"
+            id="advanced-toggle"
+            onClick={[Function]}
+          >
+            Reset Form
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="column"
+    >
+      <h2
+        className="card-title"
+      >
+        0
+         Client(s)
+      </h2>
+      <div
+        className="card"
+      >
+        <table
+          className="card__table"
+        >
+          <thead
+            className="card__tablehead"
+          >
+            <tr>
+              <th
+                onClick={[Function]}
+              >
+                Name
+              </th>
+              <th>
+                Street
+              </th>
+              <th
+                onClick={[Function]}
+              >
+                City
+              </th>
+              <th>
+                Postal Code
+              </th>
+              <th
+                onClick={[Function]}
+              >
+                Email
+              </th>
+              <th>
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            className="card__tablebody"
+          />
+        </table>
+        <Loading />
+        <button
+          className="advanced__toggle"
+          onClick={[Function]}
+        >
+          Download Client List (CSV)
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="column"
+    >
+      <h2
+        className="card-title"
+      >
+        Map
+      </h2>
+      <div
+        className="card"
+      >
+        <div
+          className="project-map project-map--small"
+          id="map"
+        >
+          <withScriptjs(withGoogleMap(Component))
+            containerElement={
+              <div
+                style={
+                  Object {
+                    "height": "400px",
+                  }
+                }
+              />
+            }
+            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={
+              <div
+                style={
+                  Object {
+                    "height": "100%",
+                  }
+                }
+              />
+            }
+            mapElement={
+              <div
+                style={
+                  Object {
+                    "height": "100%",
+                  }
+                }
+              />
+            }
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

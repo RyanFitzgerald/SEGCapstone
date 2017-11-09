@@ -1,9 +1,6 @@
 import React from 'react';
-import Logo from '../../logo.png';
 import { Redirect } from 'react-router-dom';
 import * as api from '../../api';
-
-import Loading from '../Loading';
 
 class Add extends React.Component {
   constructor() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {Marker} from 'google-maps-react';
+import {Marker} from 'react-google-maps';
 import Map from '../Map';
 import json2csv from 'json2csv';
 
@@ -74,7 +74,7 @@ class Directory extends React.Component {
     });
 
     // Get fields needed
-    const fields = ['name', 'type', 'street', 'postalCode', 'city', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'actualCost', 'labourCost', 'materialCost'];
+    const fields = ['fileNumber', 'name', 'type', 'houseNumber', 'street', 'city', 'postalCode', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'actualCost', 'labourCost', 'materialCost'];
 
     // Convert to csv
     const csvContent = json2csv({data: projects, fields});
@@ -139,12 +139,6 @@ class Directory extends React.Component {
   render() {
     // Variables
     const projects = this.props.projects || [];
-    const cities = [];
-    projects.forEach(ele => {
-      if (cities.indexOf(ele.city) === -1) {
-        cities.push(ele.city);
-      }
-    });
     const types = this.props.types || [];
     const visibleProjects = projects.slice(((this.state.activePage - 1) * this.state.projectsPerPage), this.state.activePage * this.state.projectsPerPage);
 
@@ -162,19 +156,12 @@ class Directory extends React.Component {
                   <input ref={input => this.street = input} id="street" name="street" className="form-text" type="text" onKeyUp={this.handleSearch}/>
                 </div>
                 <div className="md-4 column">
-                  <label className="form-label" htmlFor="postal-code">Postal Code</label>
-                  <input ref={input => this.postalCode = input} id="postal-code" name="postal-code" className="form-text capitalize" type="text" onKeyUp={this.handleSearch}/>
+                  <label className="form-label" htmlFor="city">City</label>
+                  <input ref={input => this.city = input} id="city" name="city" className="form-text" type="text" onKeyUp={this.handleSearch}/>
                 </div>
                 <div className="md-4 column">
-                  <label className="form-label" htmlFor="city">City</label>
-                  <span className="form-select">
-                    <select ref={input => this.city = input} id="city" name="city" onChange={this.handleSearch}>
-                      <option value="">All Cities</option>
-                      {cities.map((city, key) => {
-                        return <option key={key} value={city}>{city}</option>;
-                      })}
-                    </select>
-                  </span>
+                  <label className="form-label" htmlFor="postal-code">Postal Code</label>
+                  <input ref={input => this.postalCode = input} id="postal-code" name="postal-code" className="form-text capitalize" type="text" onKeyUp={this.handleSearch}/>
                 </div>
                 <div className="md-6 column">
                   <label className="form-label" htmlFor="city">Status</label>
@@ -231,8 +218,8 @@ class Directory extends React.Component {
                         <td className="card__table--max">{project.name}</td>
                         <td>{types.join(', ')}</td>
                         <td><span className={`status status--${project.status.replace(/\s+/g, '').toLowerCase()}`}>{project.status}</span></td>                
-                        <td><Link to={`/clients/${project.client._id}`}>{project.client.name}</Link></td>
-                        <td>{project.street}</td>
+                        <td><Link to={`/clients/${project.client._id}`}>{project.client.firstName} {project.client.lastName}</Link></td>
+                        <td>{project.houseNumber} {project.street}</td>
                         <td>{project.postalCode}</td>
                         <td><Link to={`/projects/${project._id}`} className="btn btn--small btn--primary">View Project</Link></td>
                       </tr>
@@ -251,7 +238,12 @@ class Directory extends React.Component {
             <h2 className="card-title">Map</h2>
             <div className="card">
               <div id="map" className="project-map project-map--small">
-                <Map google={window.google} zoom={10} lat={45.4215296} long={-75.69719309999999}>
+                <Map
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `400px` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                >
                   {visibleProjects.map((project, key) => {
                     return (
                       <Marker 

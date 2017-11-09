@@ -4,7 +4,7 @@ import moment from 'moment';
 import * as api from '../../api';
 import Gallery from './Gallery';
 import Loading from '../Loading';
-import {Marker} from 'google-maps-react';
+import {Marker} from 'react-google-maps';
 import Map from '../Map';
 
 class View extends React.Component {
@@ -238,13 +238,14 @@ class View extends React.Component {
               <div className="card">
                 <ul className="project-overview">
                   <li><b>Date Created:</b> {moment(this.state.project.created).format('MMMM DD, YYYY')}</li>
+                  <li><b>File Number:</b> {this.state.project.fileNumber}</li>
                   <li><b>Nickname:</b> {this.state.project.name}  <span className={`status status--${this.state.project.status.replace(/\s+/g, '').toLowerCase()}`}>{this.state.project.status}</span></li>
                   <li><b>Type:</b> {types.join(', ')}</li>
                   <li><b>Client:</b> <Link to={`/clients/${this.state.project.client._id}`}>{this.state.project.client.name}</Link></li>
-                  <li><b>Sold Date:</b> {dates.soldDate} &#8226; <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
-                  <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} &#8226; <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
-                  <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} &#8226; <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
-                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} &#8226; <b>Actual Cost:</b> {(actualCost) ? `$${this.getUpdatedTotal(actualCost)}` : 'Not available'}</li>
+                  <li><b>Sold Date:</b> {dates.soldDate} <span className="project-overview--divider">&#8226;</span> <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
+                  <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
+                  <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
+                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Actual Cost:</b> {(actualCost) ? `$${this.getUpdatedTotal(actualCost)}` : 'Not available'}</li>
                   <li><b>Commission:</b> {(commission !== -1) ? `$${this.getDollars(commission)}` : 'Not available'}</li>
                   <li><b>Added by:</b> {this.state.project.addedBy.name}</li>
                 </ul>
@@ -262,7 +263,12 @@ class View extends React.Component {
               <h2 className="card-title">Project Location</h2>
               <div className="card">
                 <div id="map" className="project-map">
-                  <Map google={window.google} lat={this.state.project.location.coordinates[1]} long={this.state.project.location.coordinates[0]}>
+                  <Map
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `400px` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                  >
                     <Marker 
                       title={this.state.project.name}
                       position={{lat: this.state.project.location.coordinates[1], lng: this.state.project.location.coordinates[0]}} 
@@ -270,8 +276,8 @@ class View extends React.Component {
                   </Map>
                 </div>
                 <div className="project-location">
-                  <p>{this.state.project.street}<br/>{this.state.project.city}, ON <span className="capitalize">{this.state.project.postalCode}</span></p>
-                  <a href={`https://www.google.com/maps?saddr=My+Location&daddr=${encodeURI(this.state.project.street)}+${this.state.project.city}`} target="_blank">Get Directions</a>
+                  <p>{this.state.project.houseNumber} {this.state.project.street}<br/>{this.state.project.city}, ON <span className="capitalize">{this.state.project.postalCode}</span></p>
+                  <a href={`https://www.google.com/maps?saddr=My+Location&daddr=${encodeURI(this.state.project.houseNumber)}+${encodeURI(this.state.project.street)}+${this.state.project.city}`} target="_blank">Get Directions</a>
                 </div>
               </div>
             </div>

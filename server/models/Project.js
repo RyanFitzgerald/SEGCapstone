@@ -20,10 +20,21 @@ const projectSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  fileNumber: {
+    type: String,
+    unique: true,
+    required: 'A file number must be provided',
+    trim: true
+  },
   name: {
     type: String,
     unique: true,
     required: 'A project name must be provided!',
+    trim: true
+  },
+  houseNumber: {
+    type: String,
+    required: 'A house number must be provided!',
     trim: true
   },
   street: {
@@ -31,14 +42,14 @@ const projectSchema = new mongoose.Schema({
     required: 'A street must be provided!',
     trim: true
   },
-  postalCode: {
-    type: String,
-    required: 'A postal code must be provided!',
-    trim: true
-  },
   city: {
     type: String,
     required: 'A city must be provided!',
+    trim: true
+  },
+  postalCode: {
+    type: String,
+    required: 'A postal code must be provided!',
     trim: true
   },
   soldDate: {
@@ -119,17 +130,17 @@ projectSchema.virtual('files', {
 });
 
 projectSchema.pre('save', async function(next) {
-  const street = this.street;
+  const address = `${this.houseNumber} ${this.street}`;
   const postalCode = this.postalCode;
 
-  geocoder.geocode({address: street, country: 'Canada', zipcode: postalCode})
+  geocoder.geocode({address, country: 'Canada', zipcode: postalCode})
     .then(res => {
       let long = res[0].longitude;
       let lat = res[0].latitude;
-      let address = res[0].formattedAddress;
+      let formattedAddress = res[0].formattedAddress;
 
       this.location.coordinates = [long, lat];
-      this.location.address = address;
+      this.location.address = formattedAddress;
 
       next();
     })

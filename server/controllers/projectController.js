@@ -38,7 +38,7 @@ exports.getProjects = async (req, res) => {
     filter.type = req.query.type;
   }
 
-  const projects = await Project.find(filter).populate('client type', '_id name').sort({ 'created': -1 });
+  const projects = await Project.find(filter).populate('client type', '_id firstName lastName').sort({ 'created': -1 });
 
   res.send(projects);
 };

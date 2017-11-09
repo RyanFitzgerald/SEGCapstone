@@ -21,43 +21,59 @@ const clientSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  name: {
+  firstName: {
     type: String,
-    required: 'A name must be provided!',
+    required: 'A first name must be provided!',
     trim: true
   },
-  telephone: {
+  lastName: {
     type: String,
-    required: 'A telephone must be provided!',
+    required: 'A last name must be provided!',
+    trim: true
+  },
+  homePhone: {
+    type: String,
+    trim: true
+  },
+  mobilePhone: {
+    type: String,
+    trim: true
+  },
+  workPhone: {
+    type: String,
     trim: true
   },
   email: {
     type: String,
-    unique: true,
     lowercase: true,
-    required: 'A email must be provided!',
     trim: true,
     validate: {
       isAsync: true,
       validator: function(email) {
+        if (email === '') return true;
         return validator.isEmail(email);
       },
       message: '{VALUE} is not a valid email!'
     }
+  },
+  houseNumber: {
+    type: String,
+    required: 'A house number must be provided!',
+    trim: true
   },
   street: {
     type: String,
     required: 'A street must be provided!',
     trim: true
   },
-  postalCode: {
-    type: String,
-    required: 'A postal code must be provided!',
-    trim: true
-  },
   city: {
     type: String,
     required: 'A city must be provided!',
+    trim: true
+  },
+  postalCode: {
+    type: String,
+    required: 'A postal code must be provided!',
     trim: true
   },
   location: {
@@ -99,17 +115,17 @@ clientSchema.virtual('projects', {
 clientSchema.plugin(mongodbErrorHandler);
 
 clientSchema.pre('save', async function(next) {
-  const street = this.street;
+  const address = `${this.houseNumber} ${this.street}`;
   const postalCode = this.postalCode;
 
-  geocoder.geocode({address: street, country: 'Canada', zipcode: postalCode})
+  geocoder.geocode({address, country: 'Canada', zipcode: postalCode})
     .then(res => {
       let long = res[0].longitude;
       let lat = res[0].latitude;
-      let address = res[0].formattedAddress;
+      let formattedAddress = res[0].formattedAddress;
 
       this.location.coordinates = [long, lat];
-      this.location.address = address;
+      this.location.address = formattedAddress;
 
       next();
     })

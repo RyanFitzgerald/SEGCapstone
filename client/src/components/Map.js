@@ -1,17 +1,13 @@
 import React from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-require('dotenv').config({ path: 'variables.env' });
+import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps"
 
-class MapContainer extends React.Component {
-  render() {
-    return (
-      <Map google={this.props.google} zoom={this.props.zoom} clickableIcons={true} initialCenter={{lat: this.props.lat, lng: this.props.long}}>
-        {this.props.children}
-      </Map>
-    );
-  }
-}
+const Map = withScriptjs(withGoogleMap((props) => 
+  <GoogleMap
+    defaultZoom={8}
+    defaultCenter={{ lat: 45.4215, lng: -75.6972 }}
+  >
+    {props.children}
+  </GoogleMap>
+));
 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyArcer_H0GBqow2FBqyO3N_BLVXfXkg6ys'
-})(MapContainer)
+export default Map;

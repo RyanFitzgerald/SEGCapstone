@@ -30,8 +30,10 @@ describe('Project Notes', () => {
   describe('/POST/:id projectNote', () => {
     it('it should NOT POST a projectNote with a missing required field', (done) => {
       let project = new Project({
-        name: 'Bobert Roofing Project',
-        street: '123 Main Street',
+        fileNumber: '12345',
+        name: 'Tonison Roofing Project',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',
@@ -62,8 +64,10 @@ describe('Project Notes', () => {
 
     it('it should POST a projectNote to a project by the given id', (done) => {
       let project = new Project({
-        name: 'Doe Roofing Project',
-        street: '123 Main Street',
+        fileNumber: '12345',
+        name: 'Bobert Roofing Project',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',
@@ -97,8 +101,10 @@ describe('Project Notes', () => {
   describe('/DELETE/:id projectNote', () => {
     it('it should DELETE a projectNote from a project by the given id', (done) => {
       let project = new Project({
-        name: 'Mitchell Roofing Project',
-        street: '123 Main Street',
+        fileNumber: '12345',
+        name: 'Jones Roofing Project',
+        houseNumber: '123',
+        street: 'Main Street',
         postalCode: 'K1A2M1',
         city: 'Ottawa',
         soldDate: '2017-09-19T04:00:00.000Z',

@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> should render correctly 1`] = `
+<div
+  className="header clearfix"
+>
+  <div
+    className="header__logo"
+  >
+    <Link
+      replace={false}
+      to="/"
+    >
+      <img
+        alt="Renovaction"
+        src="logo.png"
+      />
+    </Link>
+  </div>
+  <div
+    className="header__user"
+  >
+    <span
+      className="header__usertoggle"
+      onClick={[Function]}
+    >
+      Hello, 
+      John
+       
+      <i
+        aria-hidden="true"
+        className="fa fa-chevron-down"
+      />
+    </span>
+    <ul>
+      <li>
+        <Link
+          replace={false}
+          to="/account"
+        >
+          Account Settings
+        </Link>
+      </li>
+      <li>
+        <Link
+          replace={false}
+          to="/"
+        >
+          Logout
+        </Link>
+      </li>
+    </ul>
+    <span
+      className="header__menutoggle"
+      onClick={[Function]}
+    >
+      <i
+        aria-hidden="true"
+        className="fa fa-bars"
+      />
+    </span>
+  </div>
+  <div
+    className="header__nav"
+  >
+    <ul>
+      <li>
+        <Link
+          className="header__link"
+          replace={false}
+          to="/"
+        >
+          Home
+        </Link>
+      </li>
+      <li>
+        <Link
+          className="header__link"
+          replace={false}
+          to="/projects"
+        >
+          Projects
+        </Link>
+      </li>
+      <li>
+        <Link
+          className="header__link"
+          replace={false}
+          to="/clients"
+        >
+          Clients
+        </Link>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
