@@ -148,9 +148,11 @@ class Directory extends React.Component {
     // Variables
     const projects = this.props.projects || [];
     const types = this.props.types || [];
-    const nameSortClass = this.sortIcon(this.props.sort.name);
-    const clientSortClass = this.sortIcon(this.props.sort.client);
-    const statusSortClass = this.sortIcon(this.props.sort.status);
+    const sort = this.props.sort || [];
+    const nameSortClass = this.sortIcon(sort.name || '');
+    const clientSortClass = this.sortIcon(sort.client || '');
+    const statusSortClass = this.sortIcon(sort.status || '');
+
     const visibleProjects = projects.slice(((this.state.activePage - 1) * this.state.projectsPerPage), this.state.activePage * this.state.projectsPerPage);
 
     return (

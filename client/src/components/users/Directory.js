@@ -103,9 +103,10 @@ class Directory extends React.Component {
     // Variables
     const users = this.props.users || [];
     const roles = this.props.roles || [];
-
-    const nameSortClass = this.sortIcon(this.props.sort.name);
-    const emailSortClass = this.sortIcon(this.props.sort.email);
+    const sort = this.props.sort || [];
+    const nameSortClass = this.sortIcon(sort.name || '');
+    const emailSortClass = this.sortIcon(sort.email || '');
+  
     const visibleUsers = users.slice(((this.state.activePage - 1) * this.state.usersPerPage), this.state.activePage * this.state.usersPerPage);
 
     return (
