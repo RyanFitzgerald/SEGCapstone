@@ -158,6 +158,27 @@ class Project extends React.Component {
           <Route exact path="/projects" render={() =>
             <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sort={this.state.sort} sortByKey={this.sortByKey} />
           }/>
+          <Route path="/projects/add" render={(location) =>
+            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects}/>
+          }/>
+          <Route path="/projects/:id/edit" render={(location) =>
+            <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects}/>
+          }/>
+          <Route path="/projects/:id/note" render={(location) =>
+            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
+          }/>
+          <Route path="/projects/:id/product" render={(location) =>
+            <Product setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
+          }/>
+          <Route path="/projects/:id/photo" render={(location) =>
+            <Photo setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
+          }/>
+          <Route path="/projects/:id/file" render={(location) =>
+            <File setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
+          }/>
+          <Route path="/projects/:id/update" render={(location) =>
+            <CostUpdate setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
+          }/>
           <Route path="/projects/add" render={(location) => (
             (level < 2) ? (
               <Redirect to='/'/>

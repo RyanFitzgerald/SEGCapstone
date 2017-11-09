@@ -145,9 +145,14 @@ class Directory extends React.Component {
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
+<<<<<<< HEAD
                     <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(users, 'name')}>Name <i className={`fa ${nameSortClass}`}></i></th>
                     <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(users, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
                     <th onClick={() => this.props.sortByKey(users, 'role.name')}>Role</th>
+=======
+                    <th style={{cursor: 'pointer'}} onClick={(e) => this.props.sortByKey(users, 'name')}>Name <i className={`fa ${nameSortClass}`}></i></th>
+                    <th style={{cursor: 'pointer'}} onClick={(e) => this.props.sortByKey(users, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
+>>>>>>> 4a5a9c5cf8733e8695e63760a35c45c446591b7f
                     <th>Actions</th>
                   </tr>
                 </thead>

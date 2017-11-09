@@ -142,6 +142,15 @@ class Client extends React.Component {
           <Route exact path="/clients" render={() =>
             <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sort={this.state.sort} sortByKey={this.sortByKey} />
           }/>
+          <Route path="/clients/add" render={() =>
+            <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} addToClients={this.addToClients}/>
+          }/>
+          <Route path="/clients/:id/note" render={(location) =>
+            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
+          }/>
+          <Route path="/clients/:id/edit" render={(location) =>
+            <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients}/>
+          }/>
           <Route path="/clients/add" render={() => (
             (level < 2) ? (
               <Redirect to='/'/>
