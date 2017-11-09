@@ -1,15 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { shallowToJson } from 'enzyme-to-json';
-import { MemoryRouter, Route } from 'react-router-dom';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-
-// Import components
 import Project from '../../Containers/Project';
-
-// Setup axios mock
-const mock = new MockAdapter(axios);
 
 describe('<Project />', () => {
   beforeAll(() => {

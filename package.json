@@ -33,7 +33,7 @@
     "watch": "concurrently \"nodemon ./server/index.js\" \"cd client && npm start\"",
     "data:add": "node ./server/data/load-sample-data.js",
     "data:remove": "node ./server/data/load-sample-data.js --delete",
-    "test": "mocha server/tests --exit && cd client && npm test"
+    "test": "mocha server/tests --exit"
   },
   "devDependencies": {
     "chai": "^4.1.2",

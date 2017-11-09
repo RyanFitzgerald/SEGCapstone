@@ -1,15 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { shallowToJson } from 'enzyme-to-json';
-import { MemoryRouter, Route } from 'react-router-dom';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-
-// Import components
 import App from '../../Containers/App';
-
-// Setup axios mock
-const mock = new MockAdapter(axios);
 
 describe('<App />', () => {
   it('should render correctly', () => {
@@ -20,12 +10,12 @@ describe('<App />', () => {
     const isLoggedInSpy = jest.spyOn(App.prototype, 'isLoggedIn');
     
     // Shallow render it
-    const output = shallow(
+    const wrapper = shallow(
       <App/>
     );
 
     // Compare to old snapshot
-    expect(shallowToJson(output)).toMatchSnapshot();
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
 
     // Check if component mounting methods were called
     expect(isLoggedInSpy).toHaveBeenCalled();

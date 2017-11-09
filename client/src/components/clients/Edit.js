@@ -62,7 +62,7 @@ class Edit extends React.Component {
     api.getClient(query).then(client => {
       this.setState({ client }, () => {
         // Set title
-        document.title = `Edit ${this.state.client.name} | Renovaction`;
+        document.title = `Edit ${this.state.client.firstName} ${this.state.client.lastName} | Renovaction`;
       })
     });
   }
