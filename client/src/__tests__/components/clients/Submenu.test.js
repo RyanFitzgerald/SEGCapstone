@@ -1,11 +1,10 @@
 import React from 'react';
-import Header from '../../Components/Header';
+import Submenu from '../../../Components/clients/Submenu';
 
-describe('<Header />', () => {
+describe('<Submenu />', () => {
   beforeAll(() => {
     // Add necessary info to user
     const user = {
-      name: 'John',
       role: {
         level: 1
       }
@@ -13,16 +12,17 @@ describe('<Header />', () => {
     sessionStorage.setItem('user', JSON.stringify(user));
   });
 
-  it('should render correctly', () => {
+  it('should render correctly', () => {   
     // Shallow render it
     const wrapper = shallow(
-      <Header/>
+      <Submenu/>
     );
 
     // Compare to old snapshot
     expect(shallowToJson(wrapper)).toMatchSnapshot();
 
-    // Ensure username is in header
-    expect(wrapper.find('.header__usertoggle').prop('children')).toContain('John');
-  })
+    // Check that levels hide elements correctly
+    expect(wrapper.find('li')).toHaveLength(1);
+  });
 });
+
