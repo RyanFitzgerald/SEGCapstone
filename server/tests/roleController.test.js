@@ -35,5 +35,27 @@ describe('Roles', () => {
           done();
         });
     });
+
+    it('it should NOT GET all the roles with token missing', (done) => {
+      chai.request(server)
+        .get('/api/roles')
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Invalid Token or Key');
+          done();
+        });
+    });
+
+    it('it should NOT GET all the roles with invalid token', (done) => {
+      chai.request(server)
+        .get(`/api/roles?access_token=123`)
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Oops something went wrong');
+          done();
+        });
+    });
   });
 });

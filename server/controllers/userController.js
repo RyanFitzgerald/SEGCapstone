@@ -45,6 +45,7 @@ exports.addUser = async (req, res) => {
 
 exports.editUser = async (req, res) => {
   const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    new: true,
     runValidators: true
   }).exec();
 
@@ -54,7 +55,7 @@ exports.editUser = async (req, res) => {
     await user.save();
   }
 
-  res.send(req.params.id);
+  res.send(user);
 };
 
 exports.deleteUser = async (req, res) => {

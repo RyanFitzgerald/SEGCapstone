@@ -69,7 +69,7 @@ class Edit extends React.Component {
       }
 
       // Append id
-      user._id = resp;
+      user._id = resp._id;
 
       // Update parent state
       this.props.updateUsers(user);
