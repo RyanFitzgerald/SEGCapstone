@@ -106,6 +106,7 @@ class Directory extends React.Component {
     const sort = this.props.sort || [];
     const nameSortClass = this.sortIcon(sort.name || '');
     const emailSortClass = this.sortIcon(sort.email || '');
+    const roleSortClass = this.sortIcon(sort.role || '');
   
     const visibleUsers = users.slice(((this.state.activePage - 1) * this.state.usersPerPage), this.state.activePage * this.state.usersPerPage);
 
@@ -147,7 +148,7 @@ class Directory extends React.Component {
                   <tr>
                     <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(users, 'name')}>Name <i className={`fa ${nameSortClass}`}></i></th>
                     <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(users, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
-                    <th onClick={() => this.props.sortByKey(users, 'role.name')}>Role</th>
+                    <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(users, 'role.name')}>Role <i className={`fa ${roleSortClass}`}></i></th>
                     <th>Actions</th>
                   </tr>
                 </thead>

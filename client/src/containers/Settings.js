@@ -193,7 +193,7 @@ class Settings extends React.Component {
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-              <Directory setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey}/>
+              <Directory setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} users={this.state.users} getUsers={this.getUsers} sort={this.state.sort} sortByKey={this.sortByKey}/>
             )
           )}/>
         </Switch>
