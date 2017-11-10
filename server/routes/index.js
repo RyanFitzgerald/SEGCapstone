@@ -50,6 +50,8 @@ router.delete('/api/projects/:id/files/:file', catchErrors(fileController.delete
 
 // --- Type Routes ---
 router.get('/api/types', catchErrors(typeController.getTypes));
+router.post('/api/types', catchErrors(typeController.addType));
+router.delete('/api/types/:id', catchErrors(typeController.deleteType));
 
 // --- Authenticaiton Routes ---
 router.get('/auth/isLoggedIn', authController.isLoggedIn);

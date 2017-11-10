@@ -24,7 +24,7 @@ exports[`<Settings /> should render correctly 1`] = `
   <Switch>
     <Route
       exact={true}
-      path="/settings"
+      path="/settings/types"
       render={[Function]}
     />
     <Route

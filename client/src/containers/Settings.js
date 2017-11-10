@@ -4,7 +4,7 @@ import * as api from '../api';
 import arraySort from 'array-sort';
 
 // Import setting components
-import Options from '../components/settings/Options';
+import Types from '../components/settings/Types';
 import Submenu from '../components/settings/Submenu';
 import Add from '../components/users/Add';
 import Edit from '../components/users/Edit';
@@ -161,11 +161,11 @@ class Settings extends React.Component {
         <Submenu activeSubtab={this.state.activeSubtab} level={this.props.level} checkLevel={this.props.checkLevel}/>
 
         <Switch>
-          <Route exact path="/settings" render={() => (
+          <Route exact path="/settings/types" render={() => (
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-              <Options setActiveSubtab={this.setActiveSubtab}/>
+              <Types setActiveSubtab={this.setActiveSubtab} renderError={this.renderError}/>
             )
           )}/>
           <Route path="/settings/users/add" render={() => (

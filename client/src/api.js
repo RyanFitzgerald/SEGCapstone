@@ -185,6 +185,20 @@ export const getTypes = query => {
     .then(resp => resp.data);
 };
 
+export const addType = type => {
+  return axios
+    .post('/api/types', type)
+    .then(resp => resp.data)
+    .catch(error => error.response);
+};
+
+export const deleteType = type => {
+  return axios
+    .delete(`/api/types/${type.id}?access_token=${type.access_token}`)
+    .then(resp => resp.data)
+    .catch(error => error.response);
+};
+
 // --- User Authentication API ---
 export const isLoggedIn = () => {
   return axios

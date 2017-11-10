@@ -38,13 +38,13 @@ exports.getProjects = async (req, res) => {
     filter.type = req.query.type;
   }
 
-  const projects = await Project.find(filter).populate('client type', '_id firstName lastName').sort({ 'created': -1 });
+  const projects = await Project.find(filter).populate('client', '_id firstName lastName').populate('type').sort({ 'created': -1 });
 
   res.send(projects);
 };
 
 exports.getProject = async (req, res) => {
-  const project = await Project.findById(req.params.id).populate('client type addedBy', '_id name').populate([{
+  const project = await Project.findById(req.params.id).populate('type addedBy', '_id name').populate([{
     path: 'notes',
     model: 'ProjectNote',
     populate: {
@@ -74,6 +74,9 @@ exports.getProject = async (req, res) => {
       select: 'name',
       model: 'User'
     }
+  }, {
+    path: 'client',
+    model: 'Client'
   }]);
   res.send(project);
 };

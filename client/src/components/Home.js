@@ -16,21 +16,14 @@ class Home extends React.Component {
           <div className="column">
             <h2 className="card-title">Quick Actions</h2>
             <div className="card">
-              Content to be determined
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="md-6 column">
-            <h2 className="card-title">Projects Summary</h2>
-            <div className="card">
-              Content to be determined
-            </div>
-          </div>
-          <div className="md-6 column">
-            <h2 className="card-title">Clients Summary</h2>
-            <div className="card">
-              Content to be determined
+              <ul className="quick-actions">
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+              </ul>
             </div>
           </div>
         </div>

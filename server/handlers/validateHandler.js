@@ -23,28 +23,8 @@ module.exports = function(req, res, next) {
         return;
       }
  
-      // Authorize the user to see if s/he can access our resources
-      if (true) {
- 
-        if (true) {
-          next(); // To move to next middleware
-        } else {
-          res.status(403);
-          res.json({
-            "status": 403,
-            "message": "Not Authorized"
-          });
-          return;
-        }
-      } else {
-        // No user with this name exists, respond back with a 401
-        res.status(401);
-        res.json({
-          "status": 401,
-          "message": "Invalid User"
-        });
-        return;
-      }
+      // Move to next middleware
+      next();
  
     } catch (err) {
       res.status(500);

@@ -181,7 +181,7 @@ class Edit extends React.Component {
                     <span className="form-select">
                       <select name="client" ref={input => this.client = input} defaultValue={this.state.project.client.id} required>
                       {this.state.clients.map((client, key) => {
-                        return <option key={key} value={client._id}>{client.name}</option>;
+                        return <option key={key} value={client._id}>{client.firstName} {client.lastName}</option>;
                       })}
                       </select>
                     </span>
