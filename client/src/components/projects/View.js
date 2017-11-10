@@ -241,7 +241,7 @@ class View extends React.Component {
                   <li><b>File Number:</b> {this.state.project.fileNumber}</li>
                   <li><b>Nickname:</b> {this.state.project.name}  <span className={`status status--${this.state.project.status.replace(/\s+/g, '').toLowerCase()}`}>{this.state.project.status}</span></li>
                   <li><b>Type:</b> {types.join(', ')}</li>
-                  <li><b>Client:</b> <Link to={`/clients/${this.state.project.client._id}`}>{this.state.project.client.name}</Link></li>
+                  <li><b>Client:</b> <Link to={`/clients/${this.state.project.client._id}`}>{this.state.project.client.firstName} {this.state.project.client.lastName}</Link></li>
                   <li><b>Sold Date:</b> {dates.soldDate} <span className="project-overview--divider">&#8226;</span> <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
                   <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
                   <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>

@@ -1241,6 +1241,52 @@ a:hover {
   color: #ff0000;
 }
 
+.type-list {
+  border: 1px solid #e2e2e2;
+  color: #637280;
+}
+
+.type-list ul {
+  padding: 0;
+  margin: 0;
+}
+
+.type-list li {
+  border-bottom: 1px solid #e2e2e2;
+  list-style: none;
+  padding: 15px 35px 15px 15px;
+  position: relative;
+}
+
+.type-list li i {
+  cursor: pointer;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+}
+
+.type-list li i:hover {
+  color: #e74c3c;
+}
+
+.type-add {
+  margin-top: 15px;
+}
+
+.type-add input {
+  border-radius: 0;
+  width: 70%;
+}
+
+.type-add button {
+  background: #3498db;
+  border: 1px solid #3498db;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  width: 30%;
+}
+
 .tagselector-tag {
   border: 1px solid #e2e2e2;
   border-radius: 4px;

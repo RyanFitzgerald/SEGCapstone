@@ -57,7 +57,7 @@ function Header(props) {
           <li><Link className={(props.activeTab === 4) ? 'header__link header__link--active' : 'header__link'} to="/stats">Statistics</Link></li>
           }
           {level >= 2 &&
-          <li><Link className={(props.activeTab === 5) ? 'header__link header__link--active' : 'header__link'} to="/settings">Settings</Link></li>
+          <li><Link className={(props.activeTab === 5) ? 'header__link header__link--active' : 'header__link'} to="/settings/users">Settings</Link></li>
           }
         </ul>
       </div>
