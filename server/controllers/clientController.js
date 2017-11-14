@@ -35,7 +35,7 @@ exports.getClients = async (req, res) => {
 };
 
 exports.getClient = async (req, res) => {
-  const client = await Client.findById(req.params.id).populate('projects addedBy').populate({
+  const client = await Client.findById(req.params.id).populate('projects referral soldBy addedBy').populate({
     path: 'notes',
     model: 'ClientNote',
     populate: {

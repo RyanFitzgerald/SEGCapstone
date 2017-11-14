@@ -107,7 +107,8 @@ class View extends React.Component {
                   {this.state.client.workPhone &&
                   <li><b>Work Phone:</b> <a href={'tel:' + this.state.client.workPhone}>{this.state.client.workPhone}</a></li>
                   }
-                  <li><b>Sold by:</b> Joseph Doe</li>
+                  <li><b>Sold by:</b> {this.state.client.soldBy.name}</li>
+                  <li><b>Referral Source:</b> {this.state.client.referral.name}</li>
                   <li><b>Added by:</b> {this.state.client.addedBy.name}</li>
                 </ul>
                 <div className="client-actions">

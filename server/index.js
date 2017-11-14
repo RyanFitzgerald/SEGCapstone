@@ -24,6 +24,7 @@ require('./models/CostUpdate');
 require('./models/Photo');
 require('./models/File');
 require('./models/Type');
+require('./models/Referral');
 require('./models/User');
 require('./models/Role');
 

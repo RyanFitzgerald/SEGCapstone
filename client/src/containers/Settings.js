@@ -5,6 +5,7 @@ import arraySort from 'array-sort';
 
 // Import setting components
 import Types from '../components/settings/Types';
+import Referrals from '../components/settings/Referrals';
 import Submenu from '../components/settings/Submenu';
 import Add from '../components/users/Add';
 import Edit from '../components/users/Edit';
@@ -194,6 +195,13 @@ class Settings extends React.Component {
               <Redirect to='/'/>
             ) : (
               <Directory setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey}/>
+            )
+          )}/>
+          <Route path="/settings/referrals" render={() => (
+            (level < 2) ? (
+              <Redirect to='/'/>
+            ) : (
+              <Referrals setActiveSubtab={this.setActiveSubtab} renderError={this.renderError}/>
             )
           )}/>
         </Switch>

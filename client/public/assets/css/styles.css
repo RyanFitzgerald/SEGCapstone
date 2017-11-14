@@ -899,6 +899,35 @@ a:hover {
   background: #eee;
 }
 
+.quick-actions {
+  margin: 0;
+  padding: 0;
+}
+
+.quick-actions li {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 1.2em;
+  list-style: none;
+  margin-right: 10px;
+}
+
+.quick-actions li:hover {
+  border: 1px solid #7f8598;
+}
+
+.quick-actions a {
+  color: #637280;
+  display: block;
+  padding: 15px;
+}
+
+.quick-actions i {
+  color: #d6dade;
+  margin-right: 5px;
+}
+
 .card__pagination {
   font-size: 1.2em;
   padding: 30px 0;

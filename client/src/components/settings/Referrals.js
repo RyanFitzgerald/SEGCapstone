@@ -8,31 +8,31 @@ class Settings extends React.Component {
     super();
     
     // Bind functions
-    this.getTypes = this.getTypes.bind(this);
+    this.getReferrals = this.getReferrals.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
 
     // Set state
     this.state = {
-      types: false,
+      referrals: false,
       formError: false
     }
   }
 
   componentDidMount() {
     // Set title
-    document.title = 'Edit Types | Renovaction';
+    document.title = 'Edit Referrals | Renovaction';
 
     // Update active tab
-    this.props.setActiveSubtab(1);
+    this.props.setActiveSubtab(4);
 
     // Get types
-    this.getTypes();
+    this.getReferrals();
   }
 
-  getTypes() {
-    api.getTypes({access_token: JSON.parse(sessionStorage.getItem('user')).access_token}).then(types => {
-      this.setState({ types });
+  getReferrals() {
+    api.getReferrals({access_token: JSON.parse(sessionStorage.getItem('user')).access_token}).then(referrals => {
+      this.setState({ referrals });
     });
   }
 
@@ -42,13 +42,12 @@ class Settings extends React.Component {
     // If there is no input, return
     if (!input) return;
 
-    const type = {
+    const referral = {
       name: input,
       access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
-    api.addType(type).then(resp => {
-      console.log(resp);
+    api.addReferral(referral).then(resp => {
       if (resp.status === 500) {
         this.setState({
           formError: 'There was an error when submitting the form, please try again.'
@@ -56,26 +55,26 @@ class Settings extends React.Component {
         return;
       }
 
-      this.getTypes();
+      this.getReferrals();
     });
   }
 
   handleDelete(id) {
-    const type = {
+    const referral = {
       id,
       access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
-    api.deleteType(type).then(result => {
+    api.deleteReferral(referral).then(result => {
       if (result) {     
-        this.getTypes();
+        this.getReferrals();
       }
     });
   }
 
   render() {
 
-    if (!this.state.types) {
+    if (!this.state.referrals) {
       return (
         <Loading />
       );
@@ -85,29 +84,29 @@ class Settings extends React.Component {
       <div className="content">
         <div className="row">
           <div className="column">
-            <h2 className="card-title">Edit Project Types</h2>
+            <h2 className="card-title">Edit Referral Types</h2>
             <div className="card">
             {this.props.renderError(this.state.formError)}
               <div className="row">
                 <div className="md-4 column form-section__title no-left">
-                  <h3>Project Types</h3>
+                  <h3>Client Referral</h3>
                   <p>
-                    All or remove project types from the list
+                    All or remove referral sources from the list
                   </p>
                 </div>
                 <div className="md-8 column no-right">
                   <div className="type-list">
                     <ul>
-                    {this.state.types.map((type, key) => {
+                    {this.state.referrals.map((referral, key) => {
                       return (
-                        <li key={key}><span>{type.name}</span> <i className="fa fa-times" aria-hidden="true" onClick={() => {if (window.confirm('Are you sure you want to delete this type?')) {this.handleDelete(type._id)};}}></i></li>
+                        <li key={key}><span>{referral.name}</span> <i className="fa fa-times" aria-hidden="true" onClick={() => {if (window.confirm('Are you sure you want to delete this referral source?')) {this.handleDelete(referral._id)};}}></i></li>
                       );
                     })}
                     </ul>
                   </div>
                   <div className="type-add">
                     <input className="form-text" type="text" name="name" ref={input => this.name = input} placeholder="Enter Type Name"/>
-                    <button onClick={this.handleAdd}>Add Type</button>
+                    <button onClick={this.handleAdd}>Add Referral Source</button>
                   </div>
                 </div>
               </div>

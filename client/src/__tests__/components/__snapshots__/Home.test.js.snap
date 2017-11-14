@@ -22,22 +22,28 @@ exports[`<Home /> should render correctly 1`] = `
           className="quick-actions"
         >
           <li>
-            test
+            <Link
+              replace={false}
+              to="/projects"
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-building"
+              />
+               View Projects
+            </Link>
           </li>
           <li>
-            test
-          </li>
-          <li>
-            test
-          </li>
-          <li>
-            test
-          </li>
-          <li>
-            test
-          </li>
-          <li>
-            test
+            <Link
+              replace={false}
+              to="/clients"
+            >
+              <i
+                aria-hidden="true"
+                className="fa fa-address-card"
+              />
+               View Clients
+            </Link>
           </li>
         </ul>
       </div>

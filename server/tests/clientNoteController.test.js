@@ -36,7 +36,9 @@ describe('Client Notes', () => {
         street: 'Main Street',
         postalCode: 'K1A2M5',
         city: 'Ottawa',
+        referral: '5a0a2285bb83dd1e2472e33e',
         addedBy: '59f10b411426df3398e31ad7',
+        soldBy: '59f10b411426df3398e31ad7',
         access_token: token
       });
       client.save((err, client) => {
@@ -68,7 +70,9 @@ describe('Client Notes', () => {
         street: 'Main Street',
         postalCode: 'K1A2M5',
         city: 'Ottawa',
+        referral: '5a0a2285bb83dd1e2472e33e',
         addedBy: '59f10b411426df3398e31ad7',
+        soldBy: '59f10b411426df3398e31ad7',
         access_token: token
       });
       client.save((err, client) => {
@@ -103,7 +107,9 @@ describe('Client Notes', () => {
         street: 'Main Street',
         postalCode: 'K1A2M5',
         city: 'Ottawa',
+        referral: '5a0a2285bb83dd1e2472e33e',
         addedBy: '59f10b411426df3398e31ad7',
+        soldBy: '59f10b411426df3398e31ad7',
         access_token: token
       });
       client.save((err, client) => {
