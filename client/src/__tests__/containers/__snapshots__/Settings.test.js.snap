@@ -43,6 +43,10 @@ exports[`<Settings /> should render correctly 1`] = `
       path="/settings/users"
       render={[Function]}
     />
+    <Route
+      path="/settings/referrals"
+      render={[Function]}
+    />
   </Switch>
 </div>
 `;

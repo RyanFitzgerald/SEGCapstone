@@ -90,6 +90,16 @@ const clientSchema = new mongoose.Schema({
       default: 'Ottawa, ON, Canada'
     }
   },
+  referral: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Referral',
+    required: 'A referral source must be provided'
+  },
+  soldBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'A salesman must be provided'
+  },
   addedBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
