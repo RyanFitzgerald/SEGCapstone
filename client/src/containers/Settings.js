@@ -71,7 +71,7 @@ class Settings extends React.Component {
 
     api.getUsers(query).then(result => {
       const users = result;
-      this.setState({ users });
+      this.setState({ users, sort: {name: null, email: null, role: null} });
     });
   }
 
@@ -121,7 +121,7 @@ class Settings extends React.Component {
         sortedArray = arraySort(arr, key, {reverse: true});
       } else {
         sortOrder.email = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     } else if (key === 'role.name') {
       if (this.state.sort.role === asc) {
@@ -129,7 +129,7 @@ class Settings extends React.Component {
         sortedArray = arraySort(arr, key, {reverse: true});
       } else {
         sortOrder.role = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     }
     
@@ -194,7 +194,7 @@ class Settings extends React.Component {
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-              <Directory setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey}/>
+              <Directory setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} users={this.state.users} getUsers={this.getUsers} sortByKey={this.sortByKey} sort={this.state.sort}/>
             )
           )}/>
           <Route path="/settings/referrals" render={() => (

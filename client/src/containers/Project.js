@@ -85,7 +85,7 @@ class Project extends React.Component {
 
     api.getProjects(query).then(result => {
       const projects = result;
-      this.setState({ projects });
+      this.setState({ projects, sort: {name:null, client:null, status:null} });
     });
   }
 
@@ -102,7 +102,7 @@ class Project extends React.Component {
     let desc = 'desc'
     let sortOrder = {name: null, client: null, status: null};
     const arr = Object.keys(array).map((k) => array[k]);
-    var sortedArray = [];
+    let sortedArray = [];
 
     if (key === 'name') {
       if (this.state.sort.name === asc) {
@@ -112,13 +112,13 @@ class Project extends React.Component {
         sortOrder.name = asc;
         sortedArray = arraySort(arr, key);
       }
-    } else if (key === 'client.name') {
+    } else if (key === 'client.lastName') {
       if (this.state.sort.client === asc) {
         sortOrder.client = desc;
         sortedArray = arraySort(arr, key, {reverse: true});
       } else {
         sortOrder.client = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     } else if (key === 'status') {
       if (this.state.sort.status === asc) {
@@ -126,7 +126,7 @@ class Project extends React.Component {
         sortedArray = arraySort(arr, key, {reverse: true});
       } else {
         sortOrder.status = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     }
 
@@ -156,7 +156,7 @@ class Project extends React.Component {
 
         <Switch>
           <Route exact path="/projects" render={() => 
-            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sortByKey={this.sortByKey} />
+            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sortByKey={this.sortByKey} sort={this.state.sort} />
           }/>
           <Route path="/projects/add" render={(location) => (
             (level < 2) ? (

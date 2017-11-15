@@ -152,7 +152,10 @@ exports[`<Directory /> should render correctly 1`] = `
               <th
                 onClick={[Function]}
               >
-                Name
+                Name 
+                <i
+                  className="fa "
+                />
               </th>
               <th>
                 Street
@@ -160,7 +163,10 @@ exports[`<Directory /> should render correctly 1`] = `
               <th
                 onClick={[Function]}
               >
-                City
+                City 
+                <i
+                  className="fa "
+                />
               </th>
               <th>
                 Postal Code
@@ -168,7 +174,10 @@ exports[`<Directory /> should render correctly 1`] = `
               <th
                 onClick={[Function]}
               >
-                Email
+                Email 
+                <i
+                  className="fa "
+                />
               </th>
               <th>
                 Actions
