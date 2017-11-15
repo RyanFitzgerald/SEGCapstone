@@ -187,7 +187,10 @@ exports[`<Directory /> should render correctly 1`] = `
               <th
                 onClick={[Function]}
               >
-                Nickname
+                Nickname 
+                <i
+                  className="fa "
+                />
               </th>
               <th>
                 Type(s)
@@ -195,12 +198,18 @@ exports[`<Directory /> should render correctly 1`] = `
               <th
                 onClick={[Function]}
               >
-                Status
+                Status 
+                <i
+                  className="fa "
+                />
               </th>
               <th
                 onClick={[Function]}
               >
-                Client
+                Client 
+                <i
+                  className="fa "
+                />
               </th>
               <th>
                 Street

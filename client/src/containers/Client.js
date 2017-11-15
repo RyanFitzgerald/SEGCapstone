@@ -65,7 +65,7 @@ class Client extends React.Component {
     
     api.getClients(query).then(result => {
       const clients = result;
-      this.setState({ clients });
+      this.setState({ clients, sort: {name:null, email:null, city:null} });
     });
   }
 
@@ -114,12 +114,12 @@ class Client extends React.Component {
 
   sortByKey(array, key) {
     let asc = 'asc';
-    let desc = 'desc'
+    let desc = 'desc';
     let sortOrder = {name: null, email: null, city: null};
     const arr = Object.keys(array).map((k) => array[k]);
-    var sortedArray = [];
+    let sortedArray = [];
 
-    if (key === 'name') {
+    if (key === 'lastName') {
       if(this.state.sort.name === asc) {
         sortOrder.name = desc;
         sortedArray = arraySort(arr, key, {reverse: true});
@@ -136,7 +136,7 @@ class Client extends React.Component {
       }
       else {
         sortOrder.email = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     }
     else if (key === 'city') {
@@ -146,7 +146,7 @@ class Client extends React.Component {
       }
       else {
         sortOrder.city = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     }
     
@@ -170,7 +170,7 @@ class Client extends React.Component {
 
         <Switch>
           <Route exact path="/clients" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sortByKey={this.sortByKey} />
+            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sortByKey={this.sortByKey} sort={this.state.sort} />
           }/>
           <Route path="/clients/add" render={() => (
             (level < 2) ? (

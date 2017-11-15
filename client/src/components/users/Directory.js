@@ -56,9 +56,16 @@ class Directory extends React.Component {
     this.email.value = '';
     this.role.value = '';
     this.handleSearch();
-	}
+  }
   
-	// TODO Allow user to decide number of items per page by setting usersPerPage
+  sortIcon(order) {
+    switch(order) {
+      case 'asc': return 'fa-caret-down';
+      case 'desc': return 'fa-caret-up';
+      default: return '';
+    }
+  }
+  
   renderPagination(count) {
     const pages = Math.ceil(count / this.state.usersPerPage);
 
@@ -95,7 +102,10 @@ class Directory extends React.Component {
     // Variables
     const users = this.props.users || [];
     const roles = this.props.roles || [];
-
+    const nameSortClass = this.sortIcon(this.props.sort.name);
+    const emailSortClass = this.sortIcon(this.props.sort.email);
+    const roleSortClass = this.sortIcon(this.props.sort.role);
+    
     const visibleUsers = users.slice(((this.state.activePage - 1) * this.state.usersPerPage), this.state.activePage * this.state.usersPerPage);
 
     return (
@@ -134,9 +144,9 @@ class Directory extends React.Component {
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
-                    <th onClick={() => this.props.sortByKey(users, 'name')}>Name</th>
-                    <th onClick={() => this.props.sortByKey(users, 'email')}>Email</th>
-                    <th onClick={() => this.props.sortByKey(users, 'role.name')}>Role</th>
+                    <th onClick={() => this.props.sortByKey(users, 'name')}>Name <i className={`fa ${nameSortClass}`}></i></th>
+                    <th onClick={() => this.props.sortByKey(users, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
+                    <th onClick={() => this.props.sortByKey(users, 'role.name')}>Role <i className={`fa ${roleSortClass}`}></i></th>
                     <th>Actions</th>
                   </tr>
                 </thead>
