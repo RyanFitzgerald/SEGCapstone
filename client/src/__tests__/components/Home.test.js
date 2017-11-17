@@ -2,6 +2,17 @@ import React from 'react';
 import Home from '../../Components/Home';
 
 describe('<Home />', () => {
+  beforeAll(() => {
+    // Add necessary info to user
+    const user = {
+      name: 'John',
+      role: {
+        level: 1
+      }
+    };
+    sessionStorage.setItem('user', JSON.stringify(user));
+  });
+  
   it('should render correctly', () => {
     // Create mock functions / spies
     const setActiveTabMock = jest.fn();

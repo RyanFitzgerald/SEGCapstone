@@ -764,18 +764,33 @@ a:hover {
   width: 100%;
 }
 
+.delete-small {
+  background: none;
+  border: 1px solid #637280;
+  border-radius: 10px;
+  color: #637280;
+  cursor: pointer;
+  display: none;
+  font-size: 0.9em;
+  padding: 2px 10px;
+}
+
+.delete-small:hover {
+  border: 1px solid #f76d5f;
+}
+
+.toastify {
+  font-size: 1.5em;
+}
+
 .flash {
   background: #fff;
   border-radius: 4px;
   color: #637280;
-  font-size: 1.5em;
-  padding: 25px 15px;
+  font-size: 1.25em;
+  padding: 15px;
   position: relative;
-  margin-top: 30px;
-  margin-bottom: -20px;
   text-align: center;
-  -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.02), 0 1px 10px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 1px 10px rgba(0, 0, 0, 0.02), 0 1px 10px rgba(0, 0, 0, 0.1);
   -webkit-transition: 0.5s ease all;
   transition: 0.5s ease all;
 }
@@ -882,6 +897,75 @@ a:hover {
 
 .card__tablebody tr:hover {
   background: #eee;
+}
+
+.quick-actions {
+  margin: 0;
+  padding: 0;
+}
+
+.quick-actions li {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 1.2em;
+  list-style: none;
+  margin-right: 10px;
+}
+
+.quick-actions li:hover {
+  border: 1px solid #7f8598;
+}
+
+.quick-actions a {
+  color: #637280;
+  display: block;
+  padding: 15px;
+}
+
+.quick-actions i {
+  color: #d6dade;
+  margin-right: 5px;
+}
+
+.card__pagination {
+  font-size: 1.2em;
+  padding: 30px 0;
+}
+
+.card__pagination ul {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.card__pagination-title {
+  display: inline-block;
+  font-weight: 700;
+  list-style: none;
+  margin-right: 10px;
+}
+
+.card__pagination-btn {
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  list-style: none;
+  margin: 0 5px;
+  padding: 5px 15px;
+}
+
+.card__pagination-btn:hover {
+  background: #eee;
+}
+
+.card__pagination-btn--active {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.card__pagination-btn--active:hover {
+  background: #e74c3c;
 }
 
 @media only screen and (max-width: 639px) {
@@ -1186,6 +1270,52 @@ a:hover {
   color: #ff0000;
 }
 
+.type-list {
+  border: 1px solid #e2e2e2;
+  color: #637280;
+}
+
+.type-list ul {
+  padding: 0;
+  margin: 0;
+}
+
+.type-list li {
+  border-bottom: 1px solid #e2e2e2;
+  list-style: none;
+  padding: 15px 35px 15px 15px;
+  position: relative;
+}
+
+.type-list li i {
+  cursor: pointer;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+}
+
+.type-list li i:hover {
+  color: #e74c3c;
+}
+
+.type-add {
+  margin-top: 15px;
+}
+
+.type-add input {
+  border-radius: 0;
+  width: 70%;
+}
+
+.type-add button {
+  background: #3498db;
+  border: 1px solid #3498db;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  width: 30%;
+}
+
 .tagselector-tag {
   border: 1px solid #e2e2e2;
   border-radius: 4px;
@@ -1242,6 +1372,14 @@ a:hover {
   padding-top: 0;
 }
 
+.project-overview b {
+  margin-right: 8px;
+}
+
+.project-overview--divider {
+  margin: 0 15px;
+}
+
 .project-actions {
   margin-top: 15px;
   text-align: right;
@@ -1264,6 +1402,10 @@ a:hover {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.project-map--small {
+  padding-bottom: 30%;
 }
 
 .project-location {
@@ -1295,6 +1437,10 @@ a:hover {
   padding-bottom: 0;
 }
 
+.project-note:hover .delete-small {
+  display: block;
+}
+
 .project-note__details {
   display: block;
 }
@@ -1324,6 +1470,10 @@ a:hover {
   padding-bottom: 0;
 }
 
+.project-update:hover .delete-small {
+  display: block;
+}
+
 .project-product {
   border-bottom: 1px solid #e2e2e2;
   padding: 15px 0;
@@ -1349,6 +1499,10 @@ a:hover {
   padding-bottom: 0;
 }
 
+.project-product:hover .delete-small {
+  display: block;
+}
+
 .client-overview {
   margin: 0;
   padding: 0;
@@ -1363,6 +1517,10 @@ a:hover {
 
 .client-overview li:first-child {
   padding-top: 0;
+}
+
+.client-overview b {
+  margin-right: 8px;
 }
 
 .client-actions {
@@ -1411,4 +1569,18 @@ a:hover {
 .client-note:last-child {
   border: none;
   padding-bottom: 0;
+}
+
+.client-note:hover .delete-small {
+  display: block;
+}
+
+.login {
+  margin: 50px auto 0 auto;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login img {
+  margin-bottom: 15px;
 }

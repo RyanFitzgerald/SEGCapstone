@@ -14,6 +14,7 @@ const userController = require('../controllers/userController');
 const photoController = require('../controllers/photoController');
 const fileController = require('../controllers/fileController');
 const typeController = require('../controllers/typeController');
+const referralController = require('../controllers/referralController');
 const authController = require('../controllers/authController');
 const roleController = require('../controllers/roleController');
 
@@ -50,6 +51,13 @@ router.delete('/api/projects/:id/files/:file', catchErrors(fileController.delete
 
 // --- Type Routes ---
 router.get('/api/types', catchErrors(typeController.getTypes));
+router.post('/api/types', catchErrors(typeController.addType));
+router.delete('/api/types/:id', catchErrors(typeController.deleteType));
+
+// --- Referral Routes ---
+router.get('/api/referrals', catchErrors(referralController.getReferrals));
+router.post('/api/referrals', catchErrors(referralController.addReferral));
+router.delete('/api/referrals/:id', catchErrors(referralController.deleteReferral));
 
 // --- Authenticaiton Routes ---
 router.get('/auth/isLoggedIn', authController.isLoggedIn);

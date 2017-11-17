@@ -85,7 +85,7 @@ class Project extends React.Component {
 
     api.getProjects(query).then(result => {
       const projects = result;
-      this.setState({ projects, sort:{name:null, client:null, status:null} });
+      this.setState({ projects, sort: {name:null, client:null, status:null} });
     });
   }
 
@@ -102,7 +102,7 @@ class Project extends React.Component {
     let desc = 'desc'
     let sortOrder = {name: null, client: null, status: null};
     const arr = Object.keys(array).map((k) => array[k]);
-    var sortedArray = [];
+    let sortedArray = [];
 
     if (key === 'name') {
       if (this.state.sort.name === asc) {
@@ -112,13 +112,13 @@ class Project extends React.Component {
         sortOrder.name = asc;
         sortedArray = arraySort(arr, key);
       }
-    } else if (key === 'client.name') {
+    } else if (key === 'client.lastName') {
       if (this.state.sort.client === asc) {
         sortOrder.client = desc;
         sortedArray = arraySort(arr, key, {reverse: true});
       } else {
         sortOrder.client = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     } else if (key === 'status') {
       if (this.state.sort.status === asc) {
@@ -155,29 +155,8 @@ class Project extends React.Component {
         <Submenu activeSubtab={this.state.activeSubtab} level={this.props.level} checkLevel={this.props.checkLevel}/>
 
         <Switch>
-          <Route exact path="/projects" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sort={this.state.sort} sortByKey={this.sortByKey} />
-          }/>
-          <Route path="/projects/add" render={(location) =>
-            <Add setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects}/>
-          }/>
-          <Route path="/projects/:id/edit" render={(location) =>
-            <Edit setActiveSubtab={this.setActiveSubtab} types={this.state.types} clients={this.state.clients} addNotification={this.addNotification} renderError={this.renderError} location={location} getProjects={this.getProjects}/>
-          }/>
-          <Route path="/projects/:id/note" render={(location) =>
-            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
-          }/>
-          <Route path="/projects/:id/product" render={(location) =>
-            <Product setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
-          }/>
-          <Route path="/projects/:id/photo" render={(location) =>
-            <Photo setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
-          }/>
-          <Route path="/projects/:id/file" render={(location) =>
-            <File setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
-          }/>
-          <Route path="/projects/:id/update" render={(location) =>
-            <CostUpdate setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
+          <Route exact path="/projects" render={() => 
+            <Directory setActiveSubtab={this.setActiveSubtab} projects={this.state.projects} types={this.state.types} getProjects={this.getProjects} sortByKey={this.sortByKey} sort={this.state.sort} />
           }/>
           <Route path="/projects/add" render={(location) => (
             (level < 2) ? (

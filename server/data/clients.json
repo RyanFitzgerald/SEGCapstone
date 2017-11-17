@@ -9,7 +9,9 @@
     "street": "King Edward Avenue",
     "postalCode": "K1N6N5",
     "city": "Ottawa",
-    "addedBy": "59f10b411426df3398e31ad7"
+    "referral": "5a0a2314bb83dd1e2472e33f",
+    "addedBy": "59f10b411426df3398e31ad7",
+    "soldBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59beb0c6a34cca325454209a",
@@ -21,7 +23,9 @@
     "street": "Bank Street",
     "postalCode": "K1S3W4",
     "city": "Ottawa",
-    "addedBy": "59f10b411426df3398e31ad7"
+    "referral": "5a0a2319bb83dd1e2472e340",
+    "addedBy": "59f10b411426df3398e31ad7",
+    "soldBy": "59f10b411426df3398e31ad7"
   },
   {
     "_id": "59beb1179f0a52193c42bf7a",
@@ -33,6 +37,8 @@
     "street": "Wellington Street West",
     "postalCode": "K1A0G9",
     "city": "Ottawa",
+    "referral": "5a0a236bbb83dd1e2472e341",
+    "soldBy": "59f10b411426df3398e31ad7",
     "addedBy": "59f10b411426df3398e31ad7"
   },
   {
@@ -45,6 +51,8 @@
     "street": "Innes Road",
     "postalCode": "K4A3W3",
     "city": "Orleans",
+    "referral": "5a0a2285bb83dd1e2472e33e",
+    "soldBy": "59f10b411426df3398e31ad7",
     "addedBy": "59f10b411426df3398e31ad7"
   },
   {
@@ -57,6 +65,8 @@
     "street": "Innes Road",
     "postalCode": "K4A5E6",
     "city": "Orleans",
+    "referral": "5a0a236bbb83dd1e2472e341",
+    "soldBy": "59f10b411426df3398e31ad7",
     "addedBy": "59f10b411426df3398e31ad7"
   }
 ]

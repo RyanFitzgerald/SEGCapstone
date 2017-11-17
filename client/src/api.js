@@ -185,6 +185,42 @@ export const getTypes = query => {
     .then(resp => resp.data);
 };
 
+export const addType = type => {
+  return axios
+    .post('/api/types', type)
+    .then(resp => resp.data)
+    .catch(error => error.response);
+};
+
+export const deleteType = type => {
+  return axios
+    .delete(`/api/types/${type.id}?access_token=${type.access_token}`)
+    .then(resp => resp.data)
+    .catch(error => error.response);
+};
+
+// --- Referrals API ---
+export const getReferrals = query => {
+  return axios
+    .get(`/api/referrals?access_token=${query.access_token}`)
+    .then(resp => resp.data);
+};
+
+export const addReferral = type => {
+  return axios
+    .post('/api/referrals', type)
+    .then(resp => resp.data)
+    .catch(error => error.response);
+};
+
+export const deleteReferral = type => {
+  return axios
+    .delete(`/api/referrals/${type.id}?access_token=${type.access_token}`)
+    .then(resp => resp.data)
+    .catch(error => error.response);
+};
+
+
 // --- User Authentication API ---
 export const isLoggedIn = () => {
   return axios

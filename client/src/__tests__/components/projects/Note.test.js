@@ -33,3 +33,4 @@ describe('<Note />', () => {
     expect(setActiveSubtabMock.mock.calls[0][0]).toBe(0);
   });
 });
+

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Note /> should render correctly 1`] = `
+<Redirect
+  push={false}
+  to="/projects"
+/>
+`;

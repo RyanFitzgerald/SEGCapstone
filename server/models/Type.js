@@ -10,7 +10,8 @@ const typeSchema = new mongoose.Schema({
   name: {
     type: String,
     required: 'A name must be provided!',
-    trim: true
+    trim: true,
+    unique: true
   }
 });
 

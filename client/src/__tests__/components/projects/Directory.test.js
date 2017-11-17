@@ -2,13 +2,14 @@ import React from 'react';
 import Directory from '../../../Components/projects/Directory';
 
 describe('<Directory />', () => {
-  it('should render correctly', () => {   
+  it('should render correctly', () => {
     // Create mock functions / spies
     const setActiveSubtabMock = jest.fn();
+    const sort = {name:null, client:null, status:null};
     
     // Shallow render it
     const wrapper = shallow(
-      <Directory setActiveSubtab={setActiveSubtabMock}/>
+      <Directory setActiveSubtab={setActiveSubtabMock} sort={sort}/>
     );
 
     // Compare to old snapshot
@@ -19,3 +20,4 @@ describe('<Directory />', () => {
     expect(setActiveSubtabMock.mock.calls[0][0]).toBe(1);
   });
 });
+

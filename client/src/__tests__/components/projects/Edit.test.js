@@ -48,3 +48,4 @@ describe('<Edit />', () => {
     expect(getProjectSpy).toHaveBeenCalled();
   });
 });
+

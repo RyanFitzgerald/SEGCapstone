@@ -1,5 +1,5 @@
 import React from 'react';
-import Add from '../../../Components/projects/Add'
+import Add from '../../../Components/projects/Add';
 
 describe('<Add />', () => {
   it('should render correctly', () => {   
@@ -19,4 +19,5 @@ describe('<Add />', () => {
     expect(setActiveSubtabMock).toHaveBeenCalledTimes(1);
     expect(setActiveSubtabMock.mock.calls[0][0]).toBe(2);
   });
-})
+});
+

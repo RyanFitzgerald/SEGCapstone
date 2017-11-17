@@ -91,13 +91,12 @@ class Directory extends React.Component {
 
   sortIcon(order) {
     switch(order) {
-      case "asc": return "fa-caret-down";
-      case "desc": return "fa-caret-up";
-      default: return "";
+      case 'asc': return 'fa-caret-down';
+      case 'desc': return 'fa-caret-up';
+      default: return '';
     }
   }
 
-  // TODO Allow user to decide number of items per page by setting clientsPerPage
   renderPagination(count) {
     const pages = Math.ceil(count / this.state.clientsPerPage);
 
@@ -134,11 +133,9 @@ class Directory extends React.Component {
   render() {
     // Variables
     const clients = this.props.clients || [];
-    const sort = this.props.sort || [];
-    const nameSortClass = this.sortIcon(sort.name || '');
-    const emailSortClass = this.sortIcon(sort.email || '');
-    const citySortClass = this.sortIcon(sort.city || '');
-
+    const nameSortClass = this.sortIcon(this.props.sort.name);
+    const emailSortClass = this.sortIcon(this.props.sort.email);
+    const citySortClass = this.sortIcon(this.props.sort.city);
     const cities = [];
     clients.forEach(ele => {
       if (cities.indexOf(ele.city) === -1) {
@@ -196,12 +193,11 @@ class Directory extends React.Component {
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
-                    <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(clients, 'name')}>Name <i className={`fa ${nameSortClass}`}></i></th>
+                    <th onClick={() => this.props.sortByKey(clients, 'lastName')}>Name <i className={`fa ${nameSortClass}`}></i></th>
                     <th>Street</th>
-                    <th>Postal Code</th>
-                    <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(clients, 'city')}>City <i className={`fa ${citySortClass}`}></i></th>
-                    <th>Telephone</th>
-                    <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(clients, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
+                    <th onClick={() => this.props.sortByKey(clients, 'city')}>City <i className={`fa ${citySortClass}`}></i></th>
+                    <th>Postal Code</th>       
+                    <th onClick={() => this.props.sortByKey(clients, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
                     <th>Actions</th>
                   </tr>
                 </thead>

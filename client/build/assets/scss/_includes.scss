@@ -141,19 +141,35 @@ a {
   width: 100%;
 }
 
+.delete-small {
+  background: none;
+  border: 1px solid $colour-text-medium;
+  border-radius: 10px;
+  color: $colour-text-medium;
+  cursor: pointer;
+  display: none;
+  font-size: 0.9em;
+  padding: 2px 10px;
+
+  &:hover {
+    border: 1px solid $colour-warn;
+  }
+}
+
+.toastify {
+  font-size: 1.5em;
+}
+
 // --- Flash Styles ---
 
 .flash {
   background: #fff;
   border-radius: 4px;
   color: $colour-text-medium;
-  font-size: 1.5em;
-  padding: 25px 15px;
+  font-size: 1.25em;
+  padding: 15px;
   position: relative;
-  margin-top: 30px;
-  margin-bottom: -20px;
   text-align: center;
-  @include shadow();
   @include transition();
 
   p {
@@ -262,6 +278,79 @@ a {
     &:hover {
       background: #eee;
     }
+  }
+}
+
+// --- Quick Actions ---
+
+.quick-actions {
+  margin: 0;
+  padding: 0;
+
+  li {
+    border: 1px solid $colour-border-alt;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 1.2em;
+    list-style: none;
+    margin-right: 10px;
+
+    &:hover {
+      border: 1px solid $colour-border-dark;
+    }
+  }
+
+  a {
+    color: $colour-text-medium;
+    display: block;
+    padding: 15px;
+  }
+
+  i {
+    color: $colour-text-light;
+    margin-right: 5px;
+  }
+}
+
+// --- Pagination Styles ---
+
+.card__pagination {
+  font-size: 1.2em;
+  padding: 30px 0;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    text-align: center;  
+  }
+}
+
+.card__pagination-title {
+  display: inline-block;
+  font-weight: 700;
+  list-style: none;
+  margin-right: 10px;
+}
+
+.card__pagination-btn {
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  list-style: none;
+  margin: 0 5px;
+  padding: 5px 15px;
+
+  &:hover {
+    background: #eee;
+  }
+}
+
+.card__pagination-btn--active {
+  background: $colour-main;
+  color: #fff;
+
+  &:hover {
+    background: $colour-main;
   }
 }
 

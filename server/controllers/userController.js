@@ -54,6 +54,7 @@ exports.editUser = async (req, res) => {
     await setPassword(req.body.password);
     await user.save();
   }
+
   res.send(user);
 };
 

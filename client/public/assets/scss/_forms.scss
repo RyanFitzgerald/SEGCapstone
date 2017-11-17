@@ -83,6 +83,54 @@
   color: #ff0000;
 }
 
+// --- Type Edit Styles ---
+
+.type-list {
+  border: 1px solid $colour-border-main;
+  color: $colour-text-medium;
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    border-bottom: 1px solid $colour-border-main;
+    list-style: none;
+    padding: 15px 35px 15px 15px;
+    position: relative;
+
+    i {
+      cursor: pointer;
+      position: absolute;
+      top: 18px;
+      right: 15px;
+
+      &:hover {
+        color: $colour-main;
+      }
+    }
+  }
+}
+
+.type-add {
+  margin-top: 15px;
+
+  input {
+    border-radius: 0;
+    width: 70%;
+  }
+
+  button {
+    background: $colour-alt;
+    border: 1px solid $colour-alt;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    width: 30%;
+  }
+}
+
 // --- Tag Selector Styles ---
 
 .tagselector-tag {

@@ -24,5 +24,5 @@ describe('<Header />', () => {
 
     // Ensure username is in header
     expect(wrapper.find('.header__usertoggle').prop('children')).toContain('John');
-  });
+  })
 });

@@ -5,10 +5,11 @@ describe('<Directory />', () => {
   it('should render correctly', () => {   
     // Create mock functions / spies
     const setActiveSubtabMock = jest.fn();
+    const sort = {name:null, email:null, city:null};
     
     // Shallow render it
     const wrapper = shallow(
-      <Directory setActiveSubtab={setActiveSubtabMock}/>
+      <Directory setActiveSubtab={setActiveSubtabMock} sort={sort}/>
     );
 
     // Compare to old snapshot

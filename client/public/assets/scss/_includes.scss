@@ -281,6 +281,37 @@ a {
   }
 }
 
+// --- Quick Actions ---
+
+.quick-actions {
+  margin: 0;
+  padding: 0;
+
+  li {
+    border: 1px solid $colour-border-alt;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 1.2em;
+    list-style: none;
+    margin-right: 10px;
+
+    &:hover {
+      border: 1px solid $colour-border-dark;
+    }
+  }
+
+  a {
+    color: $colour-text-medium;
+    display: block;
+    padding: 15px;
+  }
+
+  i {
+    color: $colour-text-light;
+    margin-right: 5px;
+  }
+}
+
 // --- Pagination Styles ---
 
 .card__pagination {

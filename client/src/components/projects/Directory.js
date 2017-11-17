@@ -104,13 +104,12 @@ class Directory extends React.Component {
 
   sortIcon(order) {
     switch(order) {
-      case "asc": return "fa-caret-down";
-      case "desc": return "fa-caret-up";
-      default: return "";
+      case 'asc': return 'fa-caret-down';
+      case 'desc': return 'fa-caret-up';
+      default: return '';
     }
   }
 
-  // TODO Allow user to decide number of items per page by setting projectsPerPage
   renderPagination(count) {
     const pages = Math.ceil(count / this.state.projectsPerPage);
 
@@ -148,11 +147,9 @@ class Directory extends React.Component {
     // Variables
     const projects = this.props.projects || [];
     const types = this.props.types || [];
-    const sort = this.props.sort || [];
-    const nameSortClass = this.sortIcon(sort.name || '');
-    const clientSortClass = this.sortIcon(sort.client || '');
-    const statusSortClass = this.sortIcon(sort.status || '');
-
+    const nameSortClass = this.sortIcon(this.props.sort.name);
+    const clientSortClass = this.sortIcon(this.props.sort.client);
+    const statusSortClass = this.sortIcon(this.props.sort.status);
     const visibleProjects = projects.slice(((this.state.activePage - 1) * this.state.projectsPerPage), this.state.activePage * this.state.projectsPerPage);
 
     return (
@@ -210,10 +207,10 @@ class Directory extends React.Component {
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
-                    <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(projects, 'name')}>Nickname <i className={`fa ${nameSortClass}`}></i></th>
+                    <th onClick={() => this.props.sortByKey(projects, 'name')}>Nickname <i className={`fa ${nameSortClass}`}></i></th>
                     <th>Type(s)</th>
-                    <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(projects, 'status')}>Status <i className={`fa ${statusSortClass}`}></i></th>
-                    <th style={{cursor: 'pointer'}} onClick={() => this.props.sortByKey(projects, 'client.name')}>Client <i className={`fa ${clientSortClass}`}></i></th>
+                    <th onClick={() => this.props.sortByKey(projects, 'status')}>Status <i className={`fa ${statusSortClass}`}></i></th>
+                    <th onClick={() => this.props.sortByKey(projects, 'client.lastName')}>Client <i className={`fa ${clientSortClass}`}></i></th>
                     <th>Street</th>
                     <th>Postal Code</th>
                     <th>Actions</th>

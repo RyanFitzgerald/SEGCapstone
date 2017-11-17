@@ -18,6 +18,7 @@ class Client extends React.Component {
     // Bind functions
     this.setActiveSubtab = this.setActiveSubtab.bind(this);
     this.getClients = this.getClients.bind(this);
+    this.getReferrals = this.getReferrals.bind(this);
     this.addToClients = this.addToClients.bind(this);
     this.updateClients = this.updateClients.bind(this);
     this.removeFromClients = this.removeFromClients.bind(this);
@@ -27,7 +28,8 @@ class Client extends React.Component {
     // State
     this.state = {
       activeSubtab: 1,
-      clients: null,     
+      clients: null,
+      referrals: null,  
       sort: {
         name: null,
         email: null,
@@ -45,6 +47,12 @@ class Client extends React.Component {
 
     // Get clients
     this.getClients({search: false});
+
+    // Get users
+    this.getUsers({search: false});
+
+    // Get referrals
+    this.getReferrals();
   }
 
   setActiveSubtab(tab) {
@@ -57,7 +65,29 @@ class Client extends React.Component {
     
     api.getClients(query).then(result => {
       const clients = result;
-      this.setState({ clients, sort:{name:null, email:null, city:null} });
+      this.setState({ clients, sort: {name:null, email:null, city:null} });
+    });
+  }
+
+  getUsers(query) {
+    // Append access token
+    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+    
+    api.getUsers(query).then(result => {
+      const users = result;
+      this.setState({ users });
+    });
+  }
+
+  getReferrals() {
+    // Append access token
+    const query = {
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    };
+    
+    api.getReferrals(query).then(result => {
+      const referrals = result;
+      this.setState({ referrals });
     });
   }
 
@@ -84,12 +114,12 @@ class Client extends React.Component {
 
   sortByKey(array, key) {
     let asc = 'asc';
-    let desc = 'desc'
+    let desc = 'desc';
     let sortOrder = {name: null, email: null, city: null};
     const arr = Object.keys(array).map((k) => array[k]);
-    var sortedArray = [];
+    let sortedArray = [];
 
-    if (key === 'name') {
+    if (key === 'lastName') {
       if(this.state.sort.name === asc) {
         sortOrder.name = desc;
         sortedArray = arraySort(arr, key, {reverse: true});
@@ -106,7 +136,7 @@ class Client extends React.Component {
       }
       else {
         sortOrder.email = asc;
-        sortedArray = arraySort(arr, key);;
+        sortedArray = arraySort(arr, key);
       }
     }
     else if (key === 'city') {
@@ -140,22 +170,13 @@ class Client extends React.Component {
 
         <Switch>
           <Route exact path="/clients" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sort={this.state.sort} sortByKey={this.sortByKey} />
-          }/>
-          <Route path="/clients/add" render={() =>
-            <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} addToClients={this.addToClients}/>
-          }/>
-          <Route path="/clients/:id/note" render={(location) =>
-            <Note setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} />
-          }/>
-          <Route path="/clients/:id/edit" render={(location) =>
-            <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients}/>
+            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sortByKey={this.sortByKey} sort={this.state.sort} />
           }/>
           <Route path="/clients/add" render={() => (
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-              <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} addToClients={this.addToClients} level={this.props.level} checkLevel={this.props.checkLevel}/>
+              <Add setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} addToClients={this.addToClients} level={this.props.level} checkLevel={this.props.checkLevel} users={this.state.users} referrals={this.state.referrals}/>
             )
           )}/>
           <Route path="/clients/:id/note" render={(location) => (

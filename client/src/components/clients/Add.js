@@ -2,6 +2,8 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import * as api from '../../api';
 
+import Loading from '../Loading';
+
 class Add extends React.Component {
   constructor() {
     super();
@@ -14,6 +16,8 @@ class Add extends React.Component {
     // Set state
     this.state = {
       redirect: false,
+      referrals: false,
+      salesmen: false,
       formError: false
     }
   }
@@ -24,6 +28,18 @@ class Add extends React.Component {
 
     // Update tab
     this.props.setActiveSubtab(2);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.referrals !== null && nextProps.referrals !== this.state.referrals) {
+      this.setState({ referrals: nextProps.referrals });
+    }
+
+    if (nextProps.users && nextProps.users !== null && nextProps.users !== this.state.salesmen) {
+      console.log(nextProps.users);
+      const salesmen = nextProps.users.filter(user => user.role.name === 'Salesman');
+      this.setState({ salesmen });
+    }
   }
 
   componentWillUnmount() {
@@ -46,6 +62,8 @@ class Add extends React.Component {
       street: this.street.value,
       city: this.city.value,
       postalCode: this.postalCode.value,
+      referral: this.referral.value,
+      soldBy: this.soldBy.value,
       addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
       access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
@@ -93,6 +111,12 @@ class Add extends React.Component {
       );
     }
 
+    if (!(this.state.referrals && this.state.salesmen)) {
+      return (
+        <Loading/>
+      );
+    }
+
     return (
       <div className="content">
         <div className="row">
@@ -115,8 +139,18 @@ class Add extends React.Component {
                     <input ref={input => this.lastName = input} name="lastName" className="form-text form-text--full" type="text" required/>
                     <label className="form-label" htmlFor="salesman">Sold by <span className="form-required">*</span></label>
                     <span className="form-select">
-                      <select ref={input => this.soldBy = input} name="salesman" required>
-                        <option>John Doe</option>
+                      <select ref={input => this.soldBy = input} name="solBy" required>
+                      {this.state.salesmen.map((salesman, key) => {
+                        return <option key={key} value={salesman._id}>{salesman.name}</option>;
+                      })}
+                      </select>
+                    </span>
+                    <label className="form-label" htmlFor="salesman">Referred by <span className="form-required">*</span></label>
+                    <span className="form-select">
+                      <select ref={input => this.referral = input} name="referral" required>
+                      {this.state.referrals.map((referral, key) => {
+                        return <option key={key} value={referral._id}>{referral.name}</option>;
+                      })}
                       </select>
                     </span>
                   </div>
