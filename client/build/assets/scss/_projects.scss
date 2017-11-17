@@ -40,6 +40,14 @@
       padding-top: 0;
     }
   }
+
+  b {
+    margin-right: 8px;
+  }
+}
+
+.project-overview--divider {
+  margin: 0 15px;
 }
 
 .project-actions {
@@ -64,6 +72,10 @@
     width: 100%;
     height: 100%;
   }
+}
+
+.project-map--small {
+  padding-bottom: 30%;
 }
 
 .project-location {
@@ -92,6 +104,12 @@
   &:last-child {
     border: none;
     padding-bottom: 0;
+  }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
   }
 }
 
@@ -122,6 +140,12 @@
     border: none;
     padding-bottom: 0;
   }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
+  }
 }
 
 .project-product {
@@ -146,5 +170,11 @@
   &:last-child {
     border: none;
     padding-bottom: 0;
+  }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
   }
 }

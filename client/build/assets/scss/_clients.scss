@@ -14,6 +14,10 @@
       padding-top: 0;
     }
   }
+
+  b {
+    margin-right: 8px;
+  }
 }
 
 .client-actions {
@@ -61,5 +65,11 @@
   &:last-child {
     border: none;
     padding-bottom: 0;
+  }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
   }
 }
