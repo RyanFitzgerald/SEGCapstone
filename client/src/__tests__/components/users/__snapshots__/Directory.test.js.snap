@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Directory /> should render correctly 1`] = `
+<div
+  className="content"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="column"
+    >
+      <h2
+        className="card-title"
+      >
+        Filter Users
+      </h2>
+      <div
+        className="card"
+      >
+        <input
+          className="form-text"
+          onKeyUp={[Function]}
+          placeholder="Enter the user's name"
+          type="text"
+        />
+        <button
+          className="advanced__toggle"
+          id="advanced-toggle"
+          onClick={[Function]}
+        >
+          Toggle Advanced Search
+        </button>
+        <div
+          className="row card__advanced"
+          id="advanced-fields"
+        >
+          <div
+            className="md-6 column"
+          >
+            <label
+              className="form-label"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className="form-text"
+              id="email"
+              name="email"
+              onKeyUp={[Function]}
+              type="text"
+            />
+          </div>
+          <div
+            className="md-6 column"
+          >
+            <label
+              className="form-label"
+              htmlFor="role"
+            >
+              Role
+            </label>
+            <span
+              className="form-select"
+            >
+              <select
+                id="role"
+                name="role"
+                onChange={[Function]}
+              >
+                <option
+                  value=""
+                >
+                  All Roles
+                </option>
+              </select>
+            </span>
+          </div>
+          <button
+            className="advanced__toggle"
+            id="advanced-toggle"
+            onClick={[Function]}
+          >
+            Reset Form
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="column"
+    >
+      <h2
+        className="card-title"
+      >
+        0
+         Users(s)
+      </h2>
+      <div
+        className="card"
+      >
+        <table
+          className="card__table"
+        >
+          <thead
+            className="card__tablehead"
+          >
+            <tr>
+              <th
+                onClick={[Function]}
+              >
+                Name 
+                <i
+                  className="fa "
+                />
+              </th>
+              <th
+                onClick={[Function]}
+              >
+                Email 
+                <i
+                  className="fa "
+                />
+              </th>
+              <th
+                onClick={[Function]}
+              >
+                Role 
+                <i
+                  className="fa "
+                />
+              </th>
+              <th>
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            className="card__tablebody"
+          />
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+`;

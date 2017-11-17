@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Add /> should render correctly 1`] = `
+<div
+  className="content"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="column"
+    >
+      <h2
+        className="card-title"
+      >
+        Add New User
+      </h2>
+      <div
+        className="card"
+      >
+        <form
+          onSubmit={[Function]}
+        >
+          <div
+            className="row"
+          >
+            <div
+              className="md-4 column form-section__title no-left"
+            >
+              <h3>
+                Basic Information
+              </h3>
+              <p>
+                Enter all the basic information about this user
+              </p>
+            </div>
+            <div
+              className="md-8 column no-right"
+            >
+              <label
+                className="form-label"
+                htmlFor="name"
+              >
+                 Name 
+                <span
+                  className="form-required"
+                >
+                  *
+                </span>
+              </label>
+              <input
+                className="form-text form-text--full"
+                name="name"
+                placeholder="Name"
+                required={true}
+                type="text"
+              />
+              <label
+                className="form-label"
+                htmlFor="email"
+              >
+                Email 
+                <span
+                  className="form-required"
+                >
+                  *
+                </span>
+              </label>
+              <input
+                className="form-text form-text--full"
+                name="email"
+                placeholder="Email"
+                required={true}
+                type="email"
+              />
+              <label
+                className="form-label"
+                htmlFor="password"
+              >
+                Password 
+                <span
+                  className="form-required"
+                >
+                  *
+                </span>
+              </label>
+              <input
+                className="form-text form-text--full"
+                name="password"
+                placeholder="Password"
+                required={true}
+                type="password"
+              />
+              <label
+                className="form-label"
+                htmlFor="role"
+              >
+                Role 
+                <span
+                  className="form-required"
+                >
+                  *
+                </span>
+              </label>
+              <span
+                className="form-select"
+                required={true}
+              >
+                <select
+                  name="role"
+                />
+              </span>
+            </div>
+          </div>
+          <div
+            className="text-center"
+          >
+            <input
+              className="btn btn--primary btn--large"
+              type="submit"
+              value="Add User"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;
