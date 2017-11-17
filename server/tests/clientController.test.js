@@ -88,7 +88,7 @@ describe('Clients', () => {
       });
     });
 
-    it('it should POST a client ', (done) => {
+    it('it should POST a client', (done) => {
       const client = {
         firstName: 'John',
         lastName: 'Doe',
