@@ -1584,3 +1584,20 @@ a:hover {
 .login img {
   margin-bottom: 15px;
 }
+
+.stats-number {
+  color: #333c4e;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.stats-number span {
+  font-size: 3em;
+  font-weight: 700;
+}
+
+.stats-number h3 {
+  color: #637280;
+  font-weight: 500;
+  margin: 0;
+}
