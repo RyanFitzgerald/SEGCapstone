@@ -133,11 +133,9 @@ class Directory extends React.Component {
   render() {
     // Variables
     const clients = this.props.clients || [];
-    const sort = this.props.sort || [];
-    const nameSortClass = this.sortIcon(sort.name || '');
-    const emailSortClass = this.sortIcon(sort.email || '');
-    const citySortClass = this.sortIcon(sort.city || '');
-
+    const nameSortClass = this.sortIcon(this.props.sort.name);
+    const emailSortClass = this.sortIcon(this.props.sort.email);
+    const citySortClass = this.sortIcon(this.props.sort.city);
     const cities = [];
     clients.forEach(ele => {
       if (cities.indexOf(ele.city) === -1) {

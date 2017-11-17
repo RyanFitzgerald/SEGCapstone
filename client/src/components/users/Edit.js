@@ -72,12 +72,12 @@ class Edit extends React.Component {
       user._id = resp._id;
 
       // Update parent state
-      this.props.updateUsers(resp);
+      this.props.updateUsers(user);
 
       // Redirect
       this.setState({
         redirect: {
-          location: `/settings/users/${resp._id}`,
+          location: `/settings/users/${resp}`,
           message: 'Successfully updated user!',
           type: 'success'
         }
