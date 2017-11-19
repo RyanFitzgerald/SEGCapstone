@@ -10,7 +10,7 @@ exports.getProjects = async (req, res) => {
 
   //Check for name search
   if (req.query.q) {
-    filter.name = { $regex: new RegExp(req.query.q), $options: 'i' };
+    filter.fileNumber = { $regex: new RegExp(req.query.q), $options: 'i' };
   }
 
   // Check for city

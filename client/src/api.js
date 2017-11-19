@@ -286,3 +286,16 @@ export const getRoles = query => {
     .get(`/api/roles?access_token=${query.access_token}`)
     .then(resp => resp.data);
 };
+
+// --- Stats API ---
+export const getTotalVolume = query => {
+  return axios
+    .get(`/stats/api/total?access_token=${query.access_token}`)
+    .then(resp => resp.data);
+}
+
+export const getTotalVolumeByType = query => {
+  return axios
+    .get(`/stats/api/types?access_token=${query.access_token}`)
+    .then(resp => resp.data);
+}

@@ -64,7 +64,6 @@ class Edit extends React.Component {
     // Get form data
     const project = {
       fileNumber: this.fileNumber.value,
-      name: this.name.value,
       houseNumber: this.houseNumber.value,
       street: this.street.value,
       city: this.city.value,
@@ -75,7 +74,7 @@ class Edit extends React.Component {
       cashinDate: this.cashinDate.field.value,
       labourCost: this.getCents(this.labourCost.value),
       materialsCost: this.getCents(this.materialsCost.value),
-      actualCost: this.getCents(this.actualCost.value),
+      contractCost: this.getCents(this.contractCost.value),
       status: this.status.value,
       type: types,
       client: this.client.value,
@@ -175,8 +174,6 @@ class Edit extends React.Component {
                   <div className="md-8 column no-right">
                     <label className="form-label" htmlFor="fileNumber">Project File Number <span className="form-required">*</span></label>
                     <input name="fileNumber" ref={input => this.fileNumber = input} className="form-text form-text--full" type="text" placeholder="E.g. 2017-435" defaultValue={this.state.project.fileNumber} required/>
-                    <label className="form-label" htmlFor="name">Project Nickname <span className="form-required">*</span></label>
-                    <input name="name" ref={input => this.name = input} className="form-text form-text--full" type="text" placeholder="E.g. Doe Roofing Project" defaultValue={this.state.project.name} required/>
                     <label className="form-label" htmlFor="client">Project Client <span className="form-required">*</span></label>
                     <span className="form-select">
                       <select name="client" ref={input => this.client = input} defaultValue={this.state.project.client.id} required>
@@ -259,8 +256,8 @@ class Edit extends React.Component {
                     <input name="labour-cost" ref={input => this.labourCost = input} defaultValue={this.getDollars(this.state.project.labourCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
                     <label className="form-label" htmlFor="materials-cost">Materials Cost</label>
                     <input name="materials-cost" ref={input => this.materialsCost = input} defaultValue={this.getDollars(this.state.project.materialsCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
-                    <label className="form-label" htmlFor="actual-cost">Actual Cost</label>
-                    <input name="actual-cost" ref={input => this.actualCost = input} defaultValue={this.getDollars(this.state.project.actualCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
+                    <label className="form-label" htmlFor="actual-cost">Contract Cost</label>
+                    <input name="actual-cost" ref={input => this.contractCost = input} defaultValue={this.getDollars(this.state.project.contractCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
                   </div>
                 </div>
                 <div className="text-center">

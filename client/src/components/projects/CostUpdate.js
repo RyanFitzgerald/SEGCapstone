@@ -53,13 +53,40 @@ class CostUpdate extends React.Component {
         return;
       }
 
-      this.setState({
-        redirect: {
-          location: `/projects/${this.props.location.match.params.id}`,
-          message: 'Successfully added cost update!',
-          type: 'success'
+      let contractCost = this.props.location.location.query.contractCost;
+
+      if (update.type === 'Addition') {
+        contractCost = contractCost + update.amount;
+      } else {
+        contractCost = contractCost - update.amount;
+      }
+
+      const project = {
+        contractCost,
+        access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      }
+
+      api.updateProject(project, this.props.location.match.params.id).then(resp => {
+        console.log(resp);
+        if (resp.status === 500) {
+          this.setState({
+            formError: 'There was an error when submitting the form, please try again.'
+          })
+          return;
         }
-      });      
+  
+        // Update parent state
+        this.props.getProjects({search: false});
+  
+        // Redirect
+        this.setState({
+          redirect: {
+            location: `/projects/${resp._id}`,
+            message: 'Successfully updated project!',
+            type: 'success'
+          }
+        });
+      });     
     });
   }
 
@@ -69,9 +96,12 @@ class CostUpdate extends React.Component {
   
   render() {
     const id = this.props.location.match.params.id;
-    let name = false;
+    let fileNumber = false;
+    let contractCost = false;
+
     if (this.props.location.location && this.props.location.location.query) {
-      name = this.props.location.location.query.name;
+      fileNumber = this.props.location.location.query.fileNumber;
+      contractCost = this.props.location.location.query.contractCost;
     }
 
     if (this.state.redirect) {
@@ -81,12 +111,12 @@ class CostUpdate extends React.Component {
       );
     }
     
-    if (id && name) {
+    if (id && fileNumber && contractCost) {
       return (
         <div className="content">
           <div className="row">
             <div className="column">
-              <h2 className="card-title">Add Cost Update For <b>{name}</b></h2>
+              <h2 className="card-title">Add Cost Update For <b>{fileNumber}</b></h2>
               <div className="card">
               {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit}>

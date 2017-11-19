@@ -17,6 +17,7 @@ const typeController = require('../controllers/typeController');
 const referralController = require('../controllers/referralController');
 const authController = require('../controllers/authController');
 const roleController = require('../controllers/roleController');
+const statsController = require('../controllers/statsController');
 
 // --- Static Routes ---
 router.get('/', (req, res) => {
@@ -71,8 +72,17 @@ router.post('/api/users', catchErrors(userController.addUser));
 router.post('/api/users/:id', catchErrors(userController.editUser));
 router.delete('/api/users/:id',catchErrors(userController.deleteUser));
 
-// --- Role Roles ---
+// --- Role Routes ---
 router.get('/api/roles', catchErrors(roleController.getRoles));
+
+// --- Stats Routes ---
+router.get('/stats/api/total', catchErrors(statsController.getTotal));
+
+router.get('/stats/api/types', catchErrors(statsController.getTotalByType));
+
+router.get('/stats/api/salesmen', catchErrors(statsController.getTotalBySalesman));
+
+router.get('/stats/api/referrals', catchErrors(statsController.getTotalByReferral));
 
 // Export the router
 module.exports = router;
