@@ -36,7 +36,6 @@ class Add extends React.Component {
     }
 
     if (nextProps.users && nextProps.users !== null && nextProps.users !== this.state.salesmen) {
-      console.log(nextProps.users);
       const salesmen = nextProps.users.filter(user => user.role.name === 'Salesman');
       this.setState({ salesmen });
     }
@@ -78,7 +77,6 @@ class Add extends React.Component {
         this.setState({
           formError: 'There was an error when submitting the form, please try again.'
         });
-        console.log(resp);
         return;
       }
 

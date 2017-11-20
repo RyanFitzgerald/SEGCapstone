@@ -21,7 +21,7 @@ exports[`<Directory /> should render correctly 1`] = `
         <input
           className="form-text"
           onKeyUp={[Function]}
-          placeholder="Enter the project name"
+          placeholder="Enter the project file number"
           type="text"
         />
         <button
@@ -187,7 +187,15 @@ exports[`<Directory /> should render correctly 1`] = `
               <th
                 onClick={[Function]}
               >
-                Nickname 
+                File # 
+                <i
+                  className="fa "
+                />
+              </th>
+              <th
+                onClick={[Function]}
+              >
+                Client 
                 <i
                   className="fa "
                 />
@@ -199,14 +207,6 @@ exports[`<Directory /> should render correctly 1`] = `
                 onClick={[Function]}
               >
                 Status 
-                <i
-                  className="fa "
-                />
-              </th>
-              <th
-                onClick={[Function]}
-              >
-                Client 
                 <i
                   className="fa "
                 />

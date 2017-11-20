@@ -4,7 +4,14 @@ import '../../node_modules/pikaday/css/pikaday.css';
 
 class PikadayWrapper extends React.Component {
   componentDidMount() {
-    this.picker = new Pikaday({field: this.field, format: 'MMMM DD, YYYY'});
+    this.picker = new Pikaday({
+      field: this.field,
+      format: 'MMMM DD, YYYY',
+      onSelect: (date) => {
+        let onSelect = this.props.onSelect || null;
+        if (onSelect) this.props.onSelect();
+      }
+    });
   }
 
   componentWillUnmount() {

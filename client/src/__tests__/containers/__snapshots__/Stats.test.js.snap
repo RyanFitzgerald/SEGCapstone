@@ -2,6 +2,27 @@
 
 exports[`<Stats /> should render correctly 1`] = `
 <div>
-  test
+  <Submenu
+    activeSubtab={1}
+  />
+  <Switch>
+    <Route
+      exact={true}
+      path="/stats"
+      render={[Function]}
+    />
+    <Route
+      path="/stats/type"
+      render={[Function]}
+    />
+    <Route
+      path="/stats/salesmen"
+      render={[Function]}
+    />
+    <Route
+      path="/stats/referral"
+      render={[Function]}
+    />
+  </Switch>
 </div>
 `;

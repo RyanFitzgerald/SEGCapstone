@@ -3,6 +3,7 @@ import moment from 'moment';
 import * as api from '../../api';
 
 import Loading from '../Loading';
+import Filter from './Filter';
 import ChartsWrapper from '../ChartsWrapper';
 
 class Total extends React.Component {
@@ -67,8 +68,9 @@ class Total extends React.Component {
     return dollarString.join('.');
   }
 
-  handleFilter() {
-
+  handleFilter(startDate, endDate, postalCode) {
+    // TO DO
+    console.log({startDate, endDate, postalCode})
   }
 
   render() {
@@ -108,41 +110,7 @@ class Total extends React.Component {
 
     return (
       <div className="content">
-        <div className="row">
-          <div className="column">
-            <h2 className="card-title">Filter Data</h2>
-            <div className="card">
-              <div className="row">
-                <div className="sm-4 column">
-                  <label className="form-label" htmlFor="month">Month</label>
-                  <span className="form-select">
-                    <select ref={input => this.month = input} id="month" name="month" onChange={this.handleFilter}>
-                      <option value="">All</option>
-                      <option value="january">January</option>
-                      <option value="february">February</option>
-                      <option value="march">March</option>
-                    </select>
-                  </span>
-                </div>
-                <div className="sm-4 column">
-                  <label className="form-label" htmlFor="year">Year</label>
-                  <span className="form-select">
-                    <select ref={input => this.month = input} id="year" name="year" onChange={this.handleFilter}>
-                      <option value="">All</option>
-                      <option value="2017">2017</option>
-                      <option value="2016">2016</option>
-                      <option value="2015">2015</option>
-                    </select>
-                  </span>
-                </div>
-                <div className="sm-4 column">
-                  <label className="form-label" htmlFor="postalCode">Postal Code</label>
-                  <input ref={input => this.postalCode = input} id="postalCode" name="postalCode" className="form-text" type="text" onKeyUp={this.handleFilter}/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Filter handleFilter={this.handleFilter}/>
         <div className="row">
           <div className="column">
             <h2 className="card-title">Total Sales Volume</h2>

@@ -190,7 +190,7 @@ class Client extends React.Component {
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-              <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients}/>
+              <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} updateClients={this.updateClients} users={this.state.users} referrals={this.state.referrals}/>
             )
           )}/>
           <Route path="/clients/:id" render={(location) =>

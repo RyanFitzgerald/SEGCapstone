@@ -67,7 +67,6 @@ class CostUpdate extends React.Component {
       }
 
       api.updateProject(project, this.props.location.match.params.id).then(resp => {
-        console.log(resp);
         if (resp.status === 500) {
           this.setState({
             formError: 'There was an error when submitting the form, please try again.'

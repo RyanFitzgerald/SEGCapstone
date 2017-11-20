@@ -18,6 +18,8 @@ class Edit extends React.Component {
     this.state = {
       redirect: false,
       client: null,
+      referrals: false,
+      salesmen: false,
       formError: false
     }
   }
@@ -30,6 +32,17 @@ class Edit extends React.Component {
     this.getClient(this.props.location.match.params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.referrals !== null && nextProps.referrals !== this.state.referrals) {
+      this.setState({ referrals: nextProps.referrals });
+    }
+
+    if (nextProps.users && nextProps.users !== null && nextProps.users !== this.state.salesmen) {
+      const salesmen = nextProps.users.filter(user => user.role.name === 'Salesman');
+      this.setState({ salesmen });
+    }
+  }
+
   handleSubmit(e) {
     // Stop form submission
     e.preventDefault();
@@ -38,6 +51,8 @@ class Edit extends React.Component {
     const client = {
       firstName: this.firstName.value,
       lastName: this.lastName.value,
+      soldBy: this.soldBy.value,
+      referral: this.referral.value,
       homePhone: this.homePhone.value,
       mobilePhone: this.mobilePhone.value,
       workPhone: this.workPhone.value,
@@ -102,6 +117,12 @@ class Edit extends React.Component {
       );
     }
 
+    if (!(this.state.referrals && this.state.salesmen)) {
+      return (
+        <Loading/>
+      );
+    }
+
     if (this.state.client) {
       return (
         <div className="content">
@@ -125,8 +146,18 @@ class Edit extends React.Component {
                       <input ref={input => this.lastName = input} name="lastName" className="form-text form-text--full" type="text" defaultValue={this.state.client.lastName} required />
                       <label className="form-label" htmlFor="salesman">Sold by <span className="form-required">*</span></label>
                       <span className="form-select">
-                        <select ref={input => this.soldBy = input} name="salesman" required>
-                          <option>John Doe</option>
+                        <select ref={input => this.soldBy = input} name="salesman" defaultValue={this.state.client.soldBy._id} required>
+                        {this.state.salesmen.map((salesman, key) => {
+                          return <option key={key} value={salesman._id}>{salesman.name}</option>;
+                        })}
+                        </select>
+                      </span>
+                      <label className="form-label" htmlFor="salesman">Referred by <span className="form-required">*</span></label>
+                      <span className="form-select">
+                        <select ref={input => this.referral = input} name="referral" defaultValue={this.state.client.referral._id} required>
+                        {this.state.referrals.map((referral, key) => {
+                          return <option key={key} value={referral._id}>{referral.name}</option>;
+                        })}
                         </select>
                       </span>
                     </div>

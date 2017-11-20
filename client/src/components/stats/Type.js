@@ -3,6 +3,7 @@ import moment from 'moment';
 import * as api from '../../api';
 
 import Loading from '../Loading';
+import Filter from './Filter';
 import ChartsWrapper from '../ChartsWrapper';
 
 class Type extends React.Component {
@@ -24,7 +25,7 @@ class Type extends React.Component {
 
   componentDidMount() {
     // Set title
-    document.title = 'Total Sales Volume by Type | Renovaction';
+    document.title = 'Totals by Type | Renovaction';
 
     // Update active tab
     this.props.setActiveSubtab(2);
@@ -44,35 +45,49 @@ class Type extends React.Component {
   }
 
   prepareData(volume) {
-    const dataPoints = [];
+    const dataPointsVolume = [];
+    const dataPointsCount = [];
     const labelTotals = {};
+    const labelCounts = {};
     const dataLabels = [];
     let totalVolume = 0;
     
+    // Loop over all projects
     volume.forEach(ele => {
+      // Iterate over each type per project
       ele.type.forEach(type => {
         const typeName = type.name;
 
+        // Only push label if not already there
         if (!dataLabels.includes(typeName)) {
           dataLabels.push(typeName);
         }
 
+        // If not already in totals, set both arrays to 0
         if (!(typeName in labelTotals)) {
           labelTotals[typeName] = 0;
+          labelCounts[typeName] = 0;
         }
 
+        // Increment both
         labelTotals[typeName] += ele.contractCost;
+        labelCounts[typeName] += 1;
       });
 
       // Add to total volume
       totalVolume = totalVolume + ele.contractCost;
     });
 
+    // Loop over sales volume totals and push to array
     Object.keys(labelTotals).forEach(label => {
-      dataPoints.push((labelTotals[label]/totalVolume)*100);
+      dataPointsVolume.push((labelTotals[label]/totalVolume)*100);
     });
 
-    return {dataPoints, dataLabels, totalVolume};
+    Object.keys(labelCounts).forEach(label => {
+      dataPointsCount.push(labelCounts[label]);
+    });
+
+    return {dataPointsVolume, dataPointsCount, dataLabels};
   }
 
   getDollars(cents) {
@@ -86,8 +101,9 @@ class Type extends React.Component {
     return dollarString.join('.');
   }
 
-  handleFilter() {
-
+  handleFilter(startDate, endDate, postalCode) {
+    // TO DO
+    console.log({startDate, endDate, postalCode})
   }
 
   handleSubFilter() {
@@ -112,10 +128,18 @@ class Type extends React.Component {
       'rgba(255, 159, 64, 1)'
     ];
 
-    const allData = {
+    const allDataVolume = {
       datasets: [{
-        data: preparedData.dataPoints,
-        backgroundColor: pieColours.slice(0, preparedData.dataPoints.length)
+        data: preparedData.dataPointsVolume,
+        backgroundColor: pieColours.slice(0, preparedData.dataPointsVolume.length)
+      }],
+      labels: preparedData.dataLabels
+    };
+
+    const allDataCount = {
+      datasets: [{
+        data: preparedData.dataPointsCount,
+        backgroundColor: pieColours.slice(0, preparedData.dataPointsCount.length)
       }],
       labels: preparedData.dataLabels
     };
@@ -147,41 +171,7 @@ class Type extends React.Component {
 
     return (
       <div className="content">
-        <div className="row">
-          <div className="column">
-            <h2 className="card-title">Filter Data</h2>
-            <div className="card">
-              <div className="row">
-                <div className="sm-4 column">
-                  <label className="form-label" htmlFor="month">Month</label>
-                  <span className="form-select">
-                    <select ref={input => this.month = input} id="month" name="month" onChange={this.handleFilter}>
-                      <option value="">All</option>
-                      <option value="january">January</option>
-                      <option value="february">February</option>
-                      <option value="march">March</option>
-                    </select>
-                  </span>
-                </div>
-                <div className="sm-4 column">
-                  <label className="form-label" htmlFor="year">Year</label>
-                  <span className="form-select">
-                    <select ref={input => this.month = input} id="year" name="year" onChange={this.handleFilter}>
-                      <option value="">All</option>
-                      <option value="2017">2017</option>
-                      <option value="2016">2016</option>
-                      <option value="2015">2015</option>
-                    </select>
-                  </span>
-                </div>
-                <div className="sm-4 column">
-                  <label className="form-label" htmlFor="postalCode">Postal Code</label>
-                  <input ref={input => this.postalCode = input} id="postalCode" name="postalCode" className="form-text" type="text" onKeyUp={this.handleFilter}/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Filter handleFilter={this.handleFilter}/>
         <div className="row">
           <div className="column">
             <h2 className="card-title">Totals by Type</h2>
@@ -189,11 +179,11 @@ class Type extends React.Component {
               <div className="row">
                 <div className="md-6 column stats-chart">
                   <h3>Sales Volume by Type</h3>
-                  <ChartsWrapper type="pie" data={allData}/>
+                  <ChartsWrapper type="pie" data={allDataVolume}/>
                 </div>
                 <div className="md-6 column stats-chart">
                   <h3>Number of Projects by Type</h3>
-                  <ChartsWrapper type="pie" data={allData}/>
+                  <ChartsWrapper type="pie" data={allDataCount}/>
                 </div>
               </div>
             </div>

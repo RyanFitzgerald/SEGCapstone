@@ -124,7 +124,7 @@ class Directory extends React.Component {
                 <div className="md-6 column">
                   <label className="form-label" htmlFor="role">Role</label>
                   <span className="form-select">
-                    <select ref={input => this.role = input} id="role" name="role" id="role" onChange={this.handleSearch}>
+                    <select ref={input => this.role = input} id="role" name="role" onChange={this.handleSearch}>
 											<option value="">All Roles</option>
                       {roles.map((role, key) => {
                         return <option key={key} value={role._id}>{role.name}</option>;

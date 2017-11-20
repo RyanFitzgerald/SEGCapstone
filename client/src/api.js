@@ -292,10 +292,22 @@ export const getTotalVolume = query => {
   return axios
     .get(`/stats/api/total?access_token=${query.access_token}`)
     .then(resp => resp.data);
-}
+};
 
 export const getTotalVolumeByType = query => {
   return axios
     .get(`/stats/api/types?access_token=${query.access_token}`)
     .then(resp => resp.data);
-}
+};
+
+export const getTotalVolumeBySalesmen = query => {
+  return axios
+    .get(`/stats/api/salesmen?access_token=${query.access_token}`)
+    .then(resp => resp.data);
+};
+
+export const getTotalVolumeByReferral = query => {
+  return axios
+    .get(`/stats/api/referrals?access_token=${query.access_token}`)
+    .then(resp => resp.data);
+};
