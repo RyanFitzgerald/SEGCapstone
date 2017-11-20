@@ -1,24 +1,41 @@
 import React from 'react';
 import Chart from 'chart.js';
-//import '../../node_modules/pikaday/css/pikaday.css';
 
 class ChartsWrapper extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      chart: null
+    }
+  }
+
   componentDidMount() {
-    const ctx = this.chart.getContext('2d');
-    this.statsChart = new Chart(ctx, {
+    const ctx = this.chartEle.getContext('2d');
+    const chart = new Chart(ctx, {
       type: this.props.type,
       data: this.props.data,
       options: this.props.options
     });
+
+    this.setState({ chart });
   }
 
   componentWillUnmount() {
-    this.statsChart.destroy();
+    this.state.chart.destroy();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data !== this.state.chart.data) {
+      const chart = this.state.chart;
+      chart.data = nextProps.data;
+      chart.update();
+    }
   }
 
   render() {
     return (
-      <canvas ref={input => this.chart = input}></canvas>
+      <canvas ref={input => this.chartEle = input}></canvas>
     );
   }
 }

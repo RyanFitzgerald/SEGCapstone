@@ -15,7 +15,7 @@ class TagSelectorWrapper extends React.Component {
     const defaults = [];
     defaultArr.forEach(ele => defaults.push(ele._id));
     return (
-      <select name={this.props.name} id={this.props.id} ref={ele => this.selectField = ele} required={(this.props.required) ? true : false} defaultValue={defaults} multiple>
+      <select name={this.props.name} id={this.props.id} ref={ele => this.selectField = ele} defaultValue={defaults} multiple>
         {this.props.children}
       </select>
     );

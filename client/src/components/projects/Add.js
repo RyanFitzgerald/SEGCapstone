@@ -188,7 +188,7 @@ class Add extends React.Component {
                   </div>
                   <div className="md-8 column no-right">
                     <label className="form-label" htmlFor="type">Type(s) <span className="form-required">*</span></label>
-                    <TagSelectorWrapper name="type" id="project-type" ref={input => this.projectType = input} required="true">
+                    <TagSelectorWrapper name="type" id="project-type" ref={input => this.projectType = input}>
                       {this.state.types.map((type, key) => {
                         return <option key={key} value={type._id}>{type.name}</option>;
                       })}

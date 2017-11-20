@@ -19,7 +19,7 @@ class Type extends React.Component {
 
     // Set state
     this.state = {
-      volume: null
+      result: null
     }
   }
 
@@ -40,7 +40,7 @@ class Type extends React.Component {
     };
 
     api.getTotalVolumeByType(query).then(result => {
-      this.setState({volume: result});
+      this.prepareData(result);
     });
   }
 
@@ -80,14 +80,21 @@ class Type extends React.Component {
 
     // Loop over sales volume totals and push to array
     Object.keys(labelTotals).forEach(label => {
-      dataPointsVolume.push((labelTotals[label]/totalVolume)*100);
+      dataPointsVolume.push(((labelTotals[label]/totalVolume)*100).toFixed(2));
     });
 
     Object.keys(labelCounts).forEach(label => {
       dataPointsCount.push(labelCounts[label]);
     });
 
-    return {dataPointsVolume, dataPointsCount, dataLabels};
+    this.setState({
+      result: {
+        dataPointsCount,
+        dataPointsVolume,
+        dataLabels,
+        totalVolume
+      }
+    });
   }
 
   getDollars(cents) {
@@ -101,9 +108,24 @@ class Type extends React.Component {
     return dollarString.join('.');
   }
 
-  handleFilter(startDate, endDate, postalCode) {
-    // TO DO
-    console.log({startDate, endDate, postalCode})
+  handleFilter(startDateEle, endDateEle, postalCodeEle) {
+    // Get values
+    const startDate = (startDateEle.field.value !== '') ? new Date(startDateEle.field.value) : '';
+    const endDate = (endDateEle.field.value !== '') ? new Date(endDateEle.field.value) : '';
+    const postalCode = postalCodeEle.value;
+
+    // Build query
+    const query = {
+      search: true,
+      startDate,
+      endDate,
+      postalCode,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    };
+
+    api.getTotalVolumeByType(query).then(result => {
+      this.prepareData(result);
+    });
   }
 
   handleSubFilter() {
@@ -111,14 +133,12 @@ class Type extends React.Component {
   }
 
   render() {
-    if (!this.state.volume) {
+    if (!this.state.result) {
       return(
         <Loading/>
       );
     }
 
-    // Get prepared data
-    const preparedData = this.prepareData(this.state.volume);
     const pieColours = [
       'rgba(255, 99, 132, 1)',
       'rgba(54, 162, 235, 1)',
@@ -130,18 +150,18 @@ class Type extends React.Component {
 
     const allDataVolume = {
       datasets: [{
-        data: preparedData.dataPointsVolume,
-        backgroundColor: pieColours.slice(0, preparedData.dataPointsVolume.length)
+        data: this.state.result.dataPointsVolume,
+        backgroundColor: pieColours.slice(0, this.state.result.dataPointsVolume.length)
       }],
-      labels: preparedData.dataLabels
+      labels: this.state.result.dataLabels
     };
 
     const allDataCount = {
       datasets: [{
-        data: preparedData.dataPointsCount,
-        backgroundColor: pieColours.slice(0, preparedData.dataPointsCount.length)
+        data: this.state.result.dataPointsCount,
+        backgroundColor: pieColours.slice(0, this.state.result.dataPointsCount.length)
       }],
-      labels: preparedData.dataLabels
+      labels: this.state.result.dataLabels
     };
 
     const singleData = {
@@ -171,7 +191,7 @@ class Type extends React.Component {
 
     return (
       <div className="content">
-        <Filter handleFilter={this.handleFilter}/>
+        <Filter handleFilter={this.handleFilter} resetFilter={this.getTotalVolumeByType}/>
         <div className="row">
           <div className="column">
             <h2 className="card-title">Totals by Type</h2>

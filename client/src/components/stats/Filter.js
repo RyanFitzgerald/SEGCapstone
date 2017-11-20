@@ -14,6 +14,9 @@ const Filter = (props) => {
     startDate.field.value = '';
     endDate.field.value = '';
     postalCode.value = '';
+
+    // Call specific prop function
+    props.resetFilter();
   }
 
   return (

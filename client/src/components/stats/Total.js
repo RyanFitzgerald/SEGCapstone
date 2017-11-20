@@ -18,8 +18,8 @@ class Total extends React.Component {
 
     // Set state
     this.state = {
-      volume: null
-    }
+      result: null
+    };
   }
 
   componentDidMount() {
@@ -39,7 +39,7 @@ class Total extends React.Component {
     };
 
     api.getTotalVolume(query).then(result => {
-      this.setState({volume: result});
+      this.prepareData(result);
     });
   }
 
@@ -50,11 +50,17 @@ class Total extends React.Component {
     
     volume.forEach(ele => {
       totalVolume = totalVolume + ele.contractCost;
-      dataPoints.push((totalVolume).toFixed(2));
+      dataPoints.push((totalVolume/100).toFixed(2));
       dataLabels.push(moment(ele.soldDate).format('MMMM DD, YYYY'));
     });
 
-    return {dataPoints, dataLabels, totalVolume};
+    this.setState({
+      result: {
+        dataPoints,
+        dataLabels,
+        totalVolume
+      }
+    });
   }
 
   getDollars(cents) {
@@ -68,26 +74,38 @@ class Total extends React.Component {
     return dollarString.join('.');
   }
 
-  handleFilter(startDate, endDate, postalCode) {
-    // TO DO
-    console.log({startDate, endDate, postalCode})
+  handleFilter(startDateEle, endDateEle, postalCodeEle) {
+    // Get values
+    const startDate = (startDateEle.field.value !== '') ? new Date(startDateEle.field.value) : '';
+    const endDate = (endDateEle.field.value !== '') ? new Date(endDateEle.field.value) : '';
+    const postalCode = postalCodeEle.value;
+
+    // Build query
+    const query = {
+      search: true,
+      startDate,
+      endDate,
+      postalCode,
+      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+    };
+
+    api.getTotalVolume(query).then(result => {
+      this.prepareData(result);
+    });
   }
 
   render() {
-    if (!this.state.volume) {
+    if (!this.state.result) {
       return(
         <Loading/>
       );
     }
-    
-    // Get prepared data
-    const preparedData = this.prepareData(this.state.volume);
 
     const data = {
-      labels: preparedData.dataLabels,
+      labels: this.state.result.dataLabels,
       datasets: [{
         label: 'Sales Volume',
-        data: preparedData.dataPoints,
+        data: this.state.result.dataPoints,
         backgroundColor: [
           'rgba(54, 162, 235, 0.4)'
         ],
@@ -110,14 +128,14 @@ class Total extends React.Component {
 
     return (
       <div className="content">
-        <Filter handleFilter={this.handleFilter}/>
+        <Filter handleFilter={this.handleFilter} resetFilter={this.getTotalVolume}/>
         <div className="row">
           <div className="column">
             <h2 className="card-title">Total Sales Volume</h2>
             <div className="card">
               <div className="row">
                 <div className="md-4 column stats-number">
-                  <span>${this.getDollars(preparedData.totalVolume)}</span>
+                  <span>${this.getDollars(this.state.result.totalVolume)}</span>
                   <h3>Total Sales</h3>
                 </div>
                 <div className="md-8 column stats-chart">

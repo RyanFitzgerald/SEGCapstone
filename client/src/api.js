@@ -289,25 +289,49 @@ export const getRoles = query => {
 
 // --- Stats API ---
 export const getTotalVolume = query => {
-  return axios
-    .get(`/stats/api/total?access_token=${query.access_token}`)
-    .then(resp => resp.data);
+  if (query.search) {
+    return axios
+      .get(`/stats/api/total?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
+      .then(resp => resp.data);
+  } else {
+    return axios
+      .get(`/stats/api/total?access_token=${query.access_token}`)
+      .then(resp => resp.data);
+  }
 };
 
 export const getTotalVolumeByType = query => {
-  return axios
-    .get(`/stats/api/types?access_token=${query.access_token}`)
-    .then(resp => resp.data);
+  if (query.search) {
+    return axios
+      .get(`/stats/api/types?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
+      .then(resp => resp.data);
+  } else {
+    return axios
+      .get(`/stats/api/types?access_token=${query.access_token}`)
+      .then(resp => resp.data);
+  }
 };
 
 export const getTotalVolumeBySalesmen = query => {
-  return axios
-    .get(`/stats/api/salesmen?access_token=${query.access_token}`)
-    .then(resp => resp.data);
+  if (query.search) {
+    return axios
+      .get(`/stats/api/salesmen?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
+      .then(resp => resp.data);
+  } else {
+    return axios
+      .get(`/stats/api/salesmen?access_token=${query.access_token}`)
+      .then(resp => resp.data);
+  }
 };
 
 export const getTotalVolumeByReferral = query => {
-  return axios
-    .get(`/stats/api/referrals?access_token=${query.access_token}`)
-    .then(resp => resp.data);
+  if (query.search) {
+    return axios
+      .get(`/stats/api/referrals?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
+      .then(resp => resp.data);
+  } else {
+    return axios
+      .get(`/stats/api/referrals?access_token=${query.access_token}`)
+      .then(resp => resp.data);
+  }
 };
