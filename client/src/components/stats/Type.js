@@ -15,11 +15,14 @@ class Type extends React.Component {
     this.handleSubFilter = this.handleSubFilter.bind(this);
     this.getTotalVolumeByType = this.getTotalVolumeByType.bind(this);
     this.prepareData = this.prepareData.bind(this);
+    this.prepareSubData = this.prepareSubData.bind(this);
     this.getDollars = this.getDollars.bind(this);
 
     // Set state
     this.state = {
-      result: null
+      volume: null,
+      result: null,
+      subresult: null
     }
   }
 
@@ -40,6 +43,7 @@ class Type extends React.Component {
     };
 
     api.getTotalVolumeByType(query).then(result => {
+      this.setState({ volume: result });
       this.prepareData(result);
     });
   }
@@ -95,6 +99,32 @@ class Type extends React.Component {
         totalVolume
       }
     });
+
+    this.prepareSubData(volume, dataLabels[0]);
+  }
+
+  prepareSubData(volume, label) {
+    const dataPoints = [];
+    const dataLabels = [];
+    let totalVolume = 0;
+    
+    volume.forEach(ele => {
+      ele.type.forEach(type => {
+        if (type.name === label) {
+          totalVolume = totalVolume + ele.contractCost;
+          dataPoints.push((totalVolume/100).toFixed(2));
+          dataLabels.push(moment(ele.soldDate).format('MMMM DD, YYYY'));
+        }
+      });
+    });
+
+    this.setState({
+      subresult: {
+        dataPoints,
+        dataLabels,
+        totalVolume
+      }
+    });
   }
 
   getDollars(cents) {
@@ -124,16 +154,18 @@ class Type extends React.Component {
     };
 
     api.getTotalVolumeByType(query).then(result => {
+      this.setState({ volume: result });
       this.prepareData(result);
     });
   }
 
-  handleSubFilter() {
-    
+  handleSubFilter(e) {
+    const label = e.target.value;
+    this.prepareSubData(this.state.volume, label);
   }
 
   render() {
-    if (!this.state.result) {
+    if (!this.state.result || !this.state.subresult) {
       return(
         <Loading/>
       );
@@ -164,26 +196,16 @@ class Type extends React.Component {
       labels: this.state.result.dataLabels
     };
 
-    const singleData = {
-      labels: ["January", "February", "March", "April", "May", "June"],
+    const singleDataVolume = {
+      labels: this.state.subresult.dataLabels,
       datasets: [{
         label: 'Sales Volume',
-        data: [12, 19, 3, 5, 2, 3],
+        data: this.state.subresult.dataPoints,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
+          'rgba(54, 162, 235, 0.4)'
         ],
         borderColor: [
-          'rgba(255,99,132,1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
+          'rgba(54, 100, 235, 1)'
         ],
         borderWidth: 1
       }]
@@ -217,16 +239,20 @@ class Type extends React.Component {
                 <div className="column">
                   <span className="form-select">
                     <select ref={input => this.month = input} id="year" name="year" onChange={this.handleSubFilter}>
-                      <option value="">Roofing</option>
+                    {this.state.result.dataLabels.map((label, key) => {
+                      return (
+                        <option key={key} value={label}>{label}</option>
+                      );
+                    })}  
                     </select>
                   </span>
                 </div>
                 <div className="md-4 column stats-number">
-                  <span>$23,232.00</span>
+                  <span>${this.getDollars(this.state.subresult.totalVolume)}</span>
                   <h3>Total Sales</h3>
                 </div>
                 <div className="md-8 column stats-chart">
-                  <ChartsWrapper type="line" data={singleData}/>
+                  <ChartsWrapper type="line" data={singleDataVolume}/>
                 </div>
               </div>
             </div>
