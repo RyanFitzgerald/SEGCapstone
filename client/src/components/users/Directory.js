@@ -141,28 +141,30 @@ class Directory extends React.Component {
           <div className="column">
             <h2 className="card-title">{users.length} Users(s)</h2>
             <div className="card">
-              <table className="card__table">
-                <thead className="card__tablehead">
-                  <tr>
-                    <th onClick={() => this.props.sortByKey(users, 'name')}>Name <i className={`fa ${nameSortClass}`}></i></th>
-                    <th onClick={() => this.props.sortByKey(users, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
-                    <th onClick={() => this.props.sortByKey(users, 'role.name')}>Role <i className={`fa ${roleSortClass}`}></i></th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="card__tablebody">
-                  {visibleUsers.map((user, key) => {
-                    return (
-                      <tr key={key}>
-                        <td>{user.name}</td>
-                        <td><a href={'mailto:' + user.email}>{user.email}</a></td>
-                        <td>{user.role.name}</td>
-                        <td><Link to={`/settings/users/${user._id}`} className="btn btn--small btn--primary">View User</Link></td>
-                      </tr>
-                    );
-                  })}
-                </tbody> 
-              </table>
+              <div className="card__table-wrapper">
+                <table className="card__table">
+                  <thead className="card__tablehead">
+                    <tr>
+                      <th onClick={() => this.props.sortByKey(users, 'name')}>Name <i className={`fa ${nameSortClass}`}></i></th>
+                      <th onClick={() => this.props.sortByKey(users, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
+                      <th onClick={() => this.props.sortByKey(users, 'role.name')}>Role <i className={`fa ${roleSortClass}`}></i></th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="card__tablebody">
+                    {visibleUsers.map((user, key) => {
+                      return (
+                        <tr key={key}>
+                          <td>{user.name}</td>
+                          <td><a href={'mailto:' + user.email}>{user.email}</a></td>
+                          <td>{user.role.name}</td>
+                          <td><Link to={`/settings/users/${user._id}`} className="btn btn--small btn--primary">View User</Link></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody> 
+                </table>
+              </div>
               {this.renderPagination(users.length)}
             </div>
           </div>

@@ -245,6 +245,10 @@ a {
 
 // --- Table Styles ---
 
+.card__table-wrapper {
+  overflow-x: auto;
+}
+
 .card__table {
   border-collapse: collapse;
   color: $colour-text-medium;

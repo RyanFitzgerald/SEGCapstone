@@ -204,39 +204,42 @@ class Directory extends React.Component {
           <div className="column">
             <h2 className="card-title">{projects.length} Project(s)</h2>
             <div className="card">
-              <table className="card__table">
-                <thead className="card__tablehead">
-                  <tr>
-                    <th onClick={() => this.props.sortByKey(projects, 'fileNumber')}>File # <i className={`fa ${fileSortClass}`}></i></th>
-                    <th onClick={() => this.props.sortByKey(projects, 'client.lastName')}>Client <i className={`fa ${clientSortClass}`}></i></th>
-                    <th>Type(s)</th>
-                    <th onClick={() => this.props.sortByKey(projects, 'status')}>Status <i className={`fa ${statusSortClass}`}></i></th>
-                    <th>Street</th>
-                    <th>Postal Code</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="card__tablebody">
-                  {visibleProjects.map((project, key) => {
-                    const types = [];
-                    project.type.forEach(ele => {
-                      types.push(ele.name);
-                    });
+              <div className="card__table-wrapper">
+                <table className="card__table">
+                  <thead className="card__tablehead">
+                    <tr>
+                      <th onClick={() => this.props.sortByKey(projects, 'fileNumber')}>File # <i className={`fa ${fileSortClass}`}></i></th>
+                      <th onClick={() => this.props.sortByKey(projects, 'client.lastName')}>Client <i className={`fa ${clientSortClass}`}></i></th>
+                      <th>Type(s)</th>
+                      <th onClick={() => this.props.sortByKey(projects, 'status')}>Status <i className={`fa ${statusSortClass}`}></i></th>
+                      <th>Street</th>
+                      <th>Postal Code</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="card__tablebody">
+                    {visibleProjects.map((project, key) => {
+                      const types = [];
+                      project.type.forEach(ele => {
+                        types.push(ele.name);
+                      });
 
-                    return (
-                      <tr key={key}>
-                        <td className="card__table--max">{project.fileNumber}</td>
-                        <td><Link to={`/clients/${project.client._id}`}>{project.client.firstName} {project.client.lastName}</Link></td>
-                        <td>{types.join(', ')}</td>
-                        <td><span className={`status status--${project.status.replace(/\s+/g, '').toLowerCase()}`}>{project.status}</span></td>                
-                        <td>{project.houseNumber} {project.street}</td>
-                        <td>{project.postalCode}</td>
-                        <td><Link to={`/projects/${project._id}`} className="btn btn--small btn--primary">View Project</Link></td>
-                      </tr>
-                    );
-                  })}
-                </tbody> 
-              </table>
+                      return (
+                        <tr key={key}>
+                          <td className="card__table--max">{project.fileNumber}</td>
+                          <td><Link to={`/clients/${project.client._id}`}>{project.client.firstName} {project.client.lastName}</Link></td>
+                          <td>{types.join(', ')}</td>
+                          <td><span className={`status status--${project.status.replace(/\s+/g, '').toLowerCase()}`}>{project.status}</span></td>                
+                          <td>{project.houseNumber} {project.street}</td>
+                          <td>{project.postalCode}</td>
+                          <td><Link to={`/projects/${project._id}`} className="btn btn--small btn--primary">View Project</Link></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody> 
+                </table>
+              </div>
+              
               {this.renderLoading(projects)}
               {this.renderPagination(projects.length)}
               <button className="advanced__toggle" onClick={this.handleDownload}>Download Project List (CSV)</button>

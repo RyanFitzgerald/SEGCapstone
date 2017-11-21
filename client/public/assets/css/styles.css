@@ -863,6 +863,10 @@ a:hover {
   outline: none;
 }
 
+.card__table-wrapper {
+  overflow-x: auto;
+}
+
 .card__table {
   border-collapse: collapse;
   color: #637280;

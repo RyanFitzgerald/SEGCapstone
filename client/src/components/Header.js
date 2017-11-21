@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Logo from '../logo.png';
+import ClickOutside from './ClickOutside';
 
 function Header(props) {
   let menu, userMenu, username, level;
@@ -29,6 +30,12 @@ function Header(props) {
     }
   }
 
+  function closeMenu() {
+    if (userMenu.classList.contains('active')) {
+      userMenu.classList.remove('active');
+    }
+  }
+
   return (
     <div className="header clearfix">
       <div className="header__logo">
@@ -38,10 +45,12 @@ function Header(props) {
       <div className="header__user">
         <span className="header__usertoggle" onClick={handleUserMenuToggle}>Hello, {username} <i className="fa fa-chevron-down" aria-hidden="true"></i></span>
 
-        <ul ref={ele => userMenu = ele}>
-            <li><Link to='/account'>Account Settings</Link></li>
-            <li onClick={props.logout}><Link to="/">Logout</Link></li>
-        </ul>
+        <ClickOutside clickOutsideEvent={closeMenu}>
+          <ul ref={ele => userMenu = ele} onClick={closeMenu}>
+              <li><Link to='/account'>Account Settings</Link></li>
+              <li onClick={props.logout}><Link to="/">Logout</Link></li>
+          </ul>
+        </ClickOutside>
 
         <span className="header__menutoggle" onClick={handleMenuToggle}>
             <i className="fa fa-bars" aria-hidden="true"></i>

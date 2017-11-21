@@ -61,6 +61,13 @@ class Edit extends React.Component {
       }
     }
 
+    if (types.length < 1) {
+      this.setState({
+        formError: 'You must select a project type.'
+      });
+      return;
+    }
+
     // Get form data
     const project = {
       fileNumber: this.fileNumber.value,
