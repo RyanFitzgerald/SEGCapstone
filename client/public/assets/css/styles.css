@@ -863,6 +863,10 @@ a:hover {
   outline: none;
 }
 
+.card__table-wrapper {
+  overflow-x: auto;
+}
+
 .card__table {
   border-collapse: collapse;
   color: #637280;
@@ -1583,4 +1587,28 @@ a:hover {
 
 .login img {
   margin-bottom: 15px;
+}
+
+.stats-number {
+  color: #333c4e;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.stats-number span {
+  font-size: 3em;
+  font-weight: 700;
+}
+
+.stats-number h3 {
+  color: #637280;
+  font-weight: 500;
+  margin: 0;
+}
+
+.stats-chart h3 {
+  color: #333c4e;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
 }

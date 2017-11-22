@@ -36,7 +36,6 @@ class Add extends React.Component {
     }
 
     if (nextProps.users && nextProps.users !== null && nextProps.users !== this.state.salesmen) {
-      console.log(nextProps.users);
       const salesmen = nextProps.users.filter(user => user.role.name === 'Salesman');
       this.setState({ salesmen });
     }
@@ -78,7 +77,6 @@ class Add extends React.Component {
         this.setState({
           formError: 'There was an error when submitting the form, please try again.'
         });
-        console.log(resp);
         return;
       }
 
@@ -100,7 +98,14 @@ class Add extends React.Component {
   }
 
   handlePhone(e) {
-    e.target.value = e.target.value.replace(/^(\d{3})(\d{3})(\d)+$/, '$1-$2-$3');
+    e.target.value = e.target.value.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+  }
+
+  onlyNumbers(e) {
+  }
+
+  handlePostalCode(e) {
+    e.target.value = e.target.value.replace(/^([0-9A-Za-z]{3})([0-9A-Za-z]{3})$/, '$1 $2');
   }
 
   render() {
@@ -166,7 +171,7 @@ class Add extends React.Component {
                         <label className="form-label" htmlFor="email">Email</label>
                         <input ref={input => this.email = input} name="email" className="form-text form-text--full" type="email"/>
                         <label className="form-label" htmlFor="homePhone">Home Phone</label>
-                        <input ref={input => this.homePhone = input} name="homePhone" className="form-text form-text--full" type="text" onKeyUp={this.handlePhone} maxLength="12"/>
+                        <input ref={input => this.homePhone = input} name="homePhone" className="form-text form-text--full" type="text" onKeyUp={this.handlePhone} onKeyPress={this.onlyNumbers} maxLength="12"/>
                         <label className="form-label" htmlFor="mobilePhone">Mobile Phone</label>
                         <input ref={input => this.mobilePhone = input} name="mobilePhone" className="form-text form-text--full" type="text" onKeyUp={this.handlePhone} maxLength="12"/>
                         <label className="form-label" htmlFor="workPhone">Work Phone</label>
@@ -188,7 +193,7 @@ class Add extends React.Component {
                     <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
                     <input ref={input => this.city = input} name="city" className="form-text form-text--full" type="text" required/>
                     <label className="form-label" htmlFor="postal-code">Postal Code <span className="form-required">*</span></label>
-                    <input ref={input => this.postalCode = input} name="postal-code" className="form-text form-text--full capitalize" type="text" maxLength="6" required/>
+                    <input ref={input => this.postalCode = input} name="postal-code" className="form-text form-text--full capitalize" type="text" onKeyUp={this.handlePostalCode} maxLength="7" required/>
                   </div>
                 </div>
                 <div className="text-center">

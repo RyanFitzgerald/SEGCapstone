@@ -48,7 +48,6 @@ class Settings extends React.Component {
     };
 
     api.addType(type).then(resp => {
-      console.log(resp);
       if (resp.status === 500) {
         this.setState({
           formError: 'There was an error when submitting the form, please try again.'

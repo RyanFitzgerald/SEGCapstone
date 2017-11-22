@@ -26,12 +26,6 @@ const projectSchema = new mongoose.Schema({
     required: 'A file number must be provided',
     trim: true
   },
-  name: {
-    type: String,
-    unique: true,
-    required: 'A project name must be provided!',
-    trim: true
-  },
   houseNumber: {
     type: String,
     required: 'A house number must be provided!',
@@ -59,9 +53,22 @@ const projectSchema = new mongoose.Schema({
   startDate: Date,
   endDate: Date,
   cashinDate: Date,
-  labourCost: Number,
-  materialsCost: Number,
-  actualCost: Number,
+  labourCost: {
+    type: Number,
+    default: 0
+  },
+  materialsCost: {
+    type: Number,
+    default: 0
+  },
+  actualCost: {
+    type: Number,
+    default: 0
+  },
+  contractCost: {
+    type: Number,
+    default: 0
+  },
   status: String,
   type: [{
     type: mongoose.Schema.ObjectId,
@@ -147,7 +154,29 @@ projectSchema.pre('save', async function(next) {
     .catch(err => {
       console.error(err);
       next();
-    });  
+    });
+});
+
+projectSchema.pre('save', async function(next) {
+  const materialsCost = this.materialsCost;
+  const labourCost = this.labourCost;
+  
+  if (labourCost !== 0 && materialsCost !== 0) {
+    this.actualCost = (labourCost + materialsCost) * 2.1;
+  }  
+
+  next();
+});
+
+projectSchema.pre('findOneAndUpdate', async function(next) {
+  const materialsCost = this._update.materialsCost;
+  const labourCost = this._update.labourCost;
+  
+  if (labourCost && labourCost !== 0 && materialCost && materialsCost !== 0) {
+    this._update.actualCost = (labourCost + materialsCost) * 2.1;
+  }
+
+  next();
 });
 
 module.exports = mongoose.model('Project', projectSchema);

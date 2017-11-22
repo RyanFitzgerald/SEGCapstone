@@ -36,7 +36,7 @@ class Project extends React.Component {
       clients: null,
       projects: null,
       sort: {
-        name: null,
+        fileNumber: null,
         client: null,
         status: null
       }
@@ -100,16 +100,16 @@ class Project extends React.Component {
   sortByKey(array, key) {
     let asc = 'asc';
     let desc = 'desc'
-    let sortOrder = {name: null, client: null, status: null};
+    let sortOrder = {fileNumber: null, client: null, status: null};
     const arr = Object.keys(array).map((k) => array[k]);
     let sortedArray = [];
 
-    if (key === 'name') {
-      if (this.state.sort.name === asc) {
-        sortOrder.name = desc;
+    if (key === 'fileNumber') {
+      if (this.state.sort.fileNumber === asc) {
+        sortOrder.fileNumber = desc;
         sortedArray = arraySort(arr, key, {reverse: true});
       } else {
-        sortOrder.name = asc;
+        sortOrder.fileNumber = asc;
         sortedArray = arraySort(arr, key);
       }
     } else if (key === 'client.lastName') {
@@ -204,7 +204,7 @@ class Project extends React.Component {
             (level < 2) ? (
               <Redirect to='/'/>
             ) : (
-            <CostUpdate setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} location={location} />
+            <CostUpdate setActiveSubtab={this.setActiveSubtab} addNotification={this.props.addNotification} renderError={this.renderError} getProjects={this.getProjects} location={location} />
             )
           )}/>
           <Route path="/projects/:id" render={(location) =>

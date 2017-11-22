@@ -31,7 +31,6 @@ describe('Products', () => {
     it('it should NOT POST a product with a missing required field', (done) => {
       let project = new Project({
         fileNumber: '12345',
-        name: 'Bobert Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',
@@ -68,7 +67,6 @@ describe('Products', () => {
     it('it should POST a product to a project by the given id', (done) => {
       let project = new Project({
         fileNumber: '12345',
-        name: 'Doe Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',
@@ -111,7 +109,6 @@ describe('Products', () => {
     it('it should DELETE a product from a project by the given id', (done) => {
       let project = new Project({
         fileNumber: '12345',
-        name: 'Mitchell Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',

@@ -32,24 +32,30 @@ exports[`<Header /> should render correctly 1`] = `
         className="fa fa-chevron-down"
       />
     </span>
-    <ul>
-      <li>
-        <Link
-          replace={false}
-          to="/account"
-        >
-          Account Settings
-        </Link>
-      </li>
-      <li>
-        <Link
-          replace={false}
-          to="/"
-        >
-          Logout
-        </Link>
-      </li>
-    </ul>
+    <ClickOutside
+      clickOutsideEvent={[Function]}
+    >
+      <ul
+        onClick={[Function]}
+      >
+        <li>
+          <Link
+            replace={false}
+            to="/account"
+          >
+            Account Settings
+          </Link>
+        </li>
+        <li>
+          <Link
+            replace={false}
+            to="/"
+          >
+            Logout
+          </Link>
+        </li>
+      </ul>
+    </ClickOutside>
     <span
       className="header__menutoggle"
       onClick={[Function]}

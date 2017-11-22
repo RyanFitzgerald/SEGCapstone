@@ -1,0 +1,27 @@
+// --- Stats Styles ---
+
+.stats-number {
+  color: $colour-text-dark;
+  padding: 50px 0;
+  text-align: center;
+
+  span {
+    font-size: 3em;
+    font-weight: 700;
+  }
+
+  h3 {
+    color: $colour-text-medium;
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+.stats-chart {
+  h3 {
+    color: $colour-text-dark;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+  }
+}

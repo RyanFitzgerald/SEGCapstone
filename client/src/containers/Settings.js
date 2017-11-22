@@ -159,7 +159,7 @@ class Settings extends React.Component {
           closeOnClick
           pauseOnHover
         />
-        <Submenu activeSubtab={this.state.activeSubtab} level={this.props.level} checkLevel={this.props.checkLevel}/>
+        <Submenu activeSubtab={this.state.activeSubtab}/>
 
         <Switch>
           <Route exact path="/settings/types" render={() => (

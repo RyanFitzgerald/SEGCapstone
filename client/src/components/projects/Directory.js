@@ -74,7 +74,7 @@ class Directory extends React.Component {
     });
 
     // Get fields needed
-    const fields = ['fileNumber', 'name', 'type', 'houseNumber', 'street', 'city', 'postalCode', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'actualCost', 'labourCost', 'materialCost'];
+    const fields = ['fileNumber', 'type', 'houseNumber', 'street', 'city', 'postalCode', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'contractCost', 'labourCost', 'materialCost'];
 
     // Convert to csv
     const csvContent = json2csv({data: projects, fields});
@@ -147,7 +147,7 @@ class Directory extends React.Component {
     // Variables
     const projects = this.props.projects || [];
     const types = this.props.types || [];
-    const nameSortClass = this.sortIcon(this.props.sort.name);
+    const fileSortClass = this.sortIcon(this.props.sort.fileNumber);
     const clientSortClass = this.sortIcon(this.props.sort.client);
     const statusSortClass = this.sortIcon(this.props.sort.status);
     const visibleProjects = projects.slice(((this.state.activePage - 1) * this.state.projectsPerPage), this.state.activePage * this.state.projectsPerPage);
@@ -158,7 +158,7 @@ class Directory extends React.Component {
           <div className="column">
             <h2 className="card-title">Filter Projects</h2>
             <div className="card">
-              <input ref={input => this.q = input} className="form-text" type="text" placeholder="Enter the project name" onKeyUp={this.handleSearch}/>
+              <input ref={input => this.q = input} className="form-text" type="text" placeholder="Enter the project file number" onKeyUp={this.handleSearch}/>
               <button className="advanced__toggle" id="advanced-toggle" onClick={this.handleAdvanced}>Toggle Advanced Search</button>
               <div ref={el => this.advanced = el} id="advanced-fields" className="row card__advanced">
                 <div className="md-4 column">
@@ -204,39 +204,42 @@ class Directory extends React.Component {
           <div className="column">
             <h2 className="card-title">{projects.length} Project(s)</h2>
             <div className="card">
-              <table className="card__table">
-                <thead className="card__tablehead">
-                  <tr>
-                    <th onClick={() => this.props.sortByKey(projects, 'name')}>Nickname <i className={`fa ${nameSortClass}`}></i></th>
-                    <th>Type(s)</th>
-                    <th onClick={() => this.props.sortByKey(projects, 'status')}>Status <i className={`fa ${statusSortClass}`}></i></th>
-                    <th onClick={() => this.props.sortByKey(projects, 'client.lastName')}>Client <i className={`fa ${clientSortClass}`}></i></th>
-                    <th>Street</th>
-                    <th>Postal Code</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="card__tablebody">
-                  {visibleProjects.map((project, key) => {
-                    const types = [];
-                    project.type.forEach(ele => {
-                      types.push(ele.name);
-                    });
+              <div className="card__table-wrapper">
+                <table className="card__table">
+                  <thead className="card__tablehead">
+                    <tr>
+                      <th onClick={() => this.props.sortByKey(projects, 'fileNumber')}>File # <i className={`fa ${fileSortClass}`}></i></th>
+                      <th onClick={() => this.props.sortByKey(projects, 'client.lastName')}>Client <i className={`fa ${clientSortClass}`}></i></th>
+                      <th>Type(s)</th>
+                      <th onClick={() => this.props.sortByKey(projects, 'status')}>Status <i className={`fa ${statusSortClass}`}></i></th>
+                      <th>Street</th>
+                      <th>Postal Code</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="card__tablebody">
+                    {visibleProjects.map((project, key) => {
+                      const types = [];
+                      project.type.forEach(ele => {
+                        types.push(ele.name);
+                      });
 
-                    return (
-                      <tr key={key}>
-                        <td className="card__table--max">{project.name}</td>
-                        <td>{types.join(', ')}</td>
-                        <td><span className={`status status--${project.status.replace(/\s+/g, '').toLowerCase()}`}>{project.status}</span></td>                
-                        <td><Link to={`/clients/${project.client._id}`}>{project.client.firstName} {project.client.lastName}</Link></td>
-                        <td>{project.houseNumber} {project.street}</td>
-                        <td>{project.postalCode}</td>
-                        <td><Link to={`/projects/${project._id}`} className="btn btn--small btn--primary">View Project</Link></td>
-                      </tr>
-                    );
-                  })}
-                </tbody> 
-              </table>
+                      return (
+                        <tr key={key}>
+                          <td className="card__table--max">{project.fileNumber}</td>
+                          <td><Link to={`/clients/${project.client._id}`}>{project.client.firstName} {project.client.lastName}</Link></td>
+                          <td>{types.join(', ')}</td>
+                          <td><span className={`status status--${project.status.replace(/\s+/g, '').toLowerCase()}`}>{project.status}</span></td>                
+                          <td>{project.houseNumber} {project.street}</td>
+                          <td>{project.postalCode}</td>
+                          <td><Link to={`/projects/${project._id}`} className="btn btn--small btn--primary">View Project</Link></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody> 
+                </table>
+              </div>
+              
               {this.renderLoading(projects)}
               {this.renderPagination(projects.length)}
               <button className="advanced__toggle" onClick={this.handleDownload}>Download Project List (CSV)</button>

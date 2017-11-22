@@ -20,7 +20,6 @@ class View extends React.Component {
     this.deleteProduct = this.deleteProduct.bind(this);
     this.deleteFile = this.deleteFile.bind(this);
     this.getDollars = this.getDollars.bind(this);
-    this.getUpdatedTotal = this.getUpdatedTotal.bind(this);
     this.renderCostUpdateButton = this.renderCostUpdateButton.bind(this);
     this.closeLightbox = this.closeLightbox.bind(this);
 
@@ -49,7 +48,7 @@ class View extends React.Component {
     api.getProject(query).then(project => {
       this.setState({ project }, () => {
         // Set title
-        document.title = `${this.state.project.name} | Renovaction`;
+        document.title = `${this.state.project.fileNumber} | Renovaction`;
       })
     });
   }
@@ -86,17 +85,38 @@ class View extends React.Component {
     });
   }
 
-  deleteUpdate(id) {
+  deleteUpdate(updateObj) {
     const update = {
-      id,
+      id: updateObj._id,
       project: this.props.location.match.params.id,
       access_token: JSON.parse(sessionStorage.getItem('user')).access_token
     };
 
     api.deleteUpdate(update).then(result => {
       if (result) {
-        this.props.addNotification('Successfully deleted cost update!', 'success');        
-        this.getProject(this.props.location.match.params.id);
+        this.props.addNotification('Successfully deleted cost update!', 'success');
+
+        let contractCost = this.state.project.contractCost;
+
+        if (updateObj.type === 'Addition') {
+          contractCost = contractCost - updateObj.amount;
+        } else {
+          contractCost = contractCost + updateObj.amount;
+        }
+  
+        const project = {
+          contractCost,
+          access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+        }
+  
+        api.updateProject(project, this.props.location.match.params.id).then(resp => {
+          if (resp.status === 500) {
+            return;
+          }
+    
+          // Update parent state
+          this.getProject(this.props.location.match.params.id);
+        });   
       }
     });
   }
@@ -146,12 +166,15 @@ class View extends React.Component {
   }
 
   renderCostUpdateButton() {
-    if (this.state.project.actualCost) {
+    if (this.state.project.contractCost) {
       return (
         <Link 
           to={{
             pathname: `${this.props.location.match.url}/update`,
-            query: {name: this.state.project.name}
+            query: {
+              fileNumber: this.state.project.fileNumber,
+              contractCost: this.state.project.contractCost
+            }
           }}
           className="btn btn--primary btn--small">
           Add Update
@@ -169,19 +192,6 @@ class View extends React.Component {
     }
 
     return dollarString.join('.');
-  }
-
-  getUpdatedTotal(total) {
-    let updatedTotal = total;
-    const updates = this.state.project.updates;
-    updates.forEach(ele => {
-      if (ele.type === 'Addition') {
-        updatedTotal += ele.amount;
-      } else if (ele.type === 'Subtraction') {
-        updatedTotal -= ele.amount;
-      }
-    });
-    return this.getDollars(updatedTotal);
   }
 
   closeLightbox () {
@@ -208,16 +218,13 @@ class View extends React.Component {
       // Cost breakdowns
       const labourCost = this.state.project.labourCost || false;
       const materialsCost = this.state.project.materialsCost || false;
+      const contractCost = this.state.project.contractCost || false;
       const actualCost = this.state.project.actualCost || false;
-      let contractCost = false;
       let commission = -1;
 
-      if (labourCost && materialsCost) {
-        contractCost = (labourCost + materialsCost) * 2.1;
-      }
-
+      // Check for commission
       if (actualCost && contractCost) {
-        let difference = actualCost - contractCost;
+        let difference = contractCost - actualCost;
         if (difference > 0) {
           commission = difference;
         } else {
@@ -239,13 +246,13 @@ class View extends React.Component {
                 <ul className="project-overview">
                   <li><b>Date Created:</b> {moment(this.state.project.created).format('MMMM DD, YYYY')}</li>
                   <li><b>File Number:</b> {this.state.project.fileNumber}</li>
-                  <li><b>Nickname:</b> {this.state.project.name}  <span className={`status status--${this.state.project.status.replace(/\s+/g, '').toLowerCase()}`}>{this.state.project.status}</span></li>
+                  <li><b>Status:</b> <span className={`status status--${this.state.project.status.replace(/\s+/g, '').toLowerCase()}`}>{this.state.project.status}</span></li>
                   <li><b>Type:</b> {types.join(', ')}</li>
                   <li><b>Client:</b> <Link to={`/clients/${this.state.project.client._id}`}>{this.state.project.client.firstName} {this.state.project.client.lastName}</Link></li>
                   <li><b>Sold Date:</b> {dates.soldDate} <span className="project-overview--divider">&#8226;</span> <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
                   <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
                   <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
-                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Actual Cost:</b> {(actualCost) ? `$${this.getUpdatedTotal(actualCost)}` : 'Not available'}</li>
+                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Actual Cost:</b> {(actualCost) ? `$${this.getDollars(actualCost)}` : 'Not available'}</li>
                   <li><b>Commission:</b> {(commission !== -1) ? `$${this.getDollars(commission)}` : 'Not available'}</li>
                   <li><b>Added by:</b> {this.state.project.addedBy.name}</li>
                 </ul>
@@ -324,7 +331,7 @@ class View extends React.Component {
                       <li><b>Type:</b> {update.type}</li>
                     </ul>
                     {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
-                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this update?')) {this.deleteUpdate(update._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
+                      <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this update?')) {this.deleteUpdate(update)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
                     }
                   </div>
                 );

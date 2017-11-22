@@ -64,7 +64,6 @@ describe('Projects', () => {
     it('it should not POST a project with a required field missing', (done) => {
       const project = {
         fileNumber: '1234567',
-        name: 'Walker Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',
@@ -91,7 +90,6 @@ describe('Projects', () => {
     it('it should POST a project ', (done) => {
       const project = {
         fileNumber: '123456',
-        name: 'Walker Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',
@@ -119,7 +117,6 @@ describe('Projects', () => {
     it('it should GET a project by the given id', (done) => {
       const project = new Project({
         fileNumber: '12345',
-        name: 'Bobert Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',
@@ -139,7 +136,6 @@ describe('Projects', () => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('fileNumber');
-          res.body.should.have.property('name');
           res.body.should.have.property('houseNumber');
           res.body.should.have.property('street');
           res.body.should.have.property('postalCode');
@@ -168,7 +164,6 @@ describe('Projects', () => {
     it('it should UPDATE a project by the given id', (done) => {
       const project = new Project({
         fileNumber: '1234',
-        name: 'Bobert Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',
@@ -200,7 +195,6 @@ describe('Projects', () => {
     it('it should DELETE a project by the given id', (done) => {
       const project = new Project({
         fileNumber: '123',
-        name: 'Bobert Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',

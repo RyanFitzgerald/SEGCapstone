@@ -1,0 +1,150 @@
+// --- Form Component Styles ---
+
+.form-label {
+  color: $colour-text-dark;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-text {
+  background: $colour-bg-form;
+  border: 1px solid $colour-border-main;
+  border-radius: 4px;
+  color: $colour-text-medium;
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+  @include transition();
+
+  &:focus {
+    border-color: $colour-border-dark;
+    outline: none;
+  }
+}
+
+.form-textarea {
+  @extend .form-text;
+  height: 150px;
+  resize: vertical;
+}
+
+.form-select {
+  position: relative;
+
+  select {
+    appearance: none;
+    background: $colour-bg-form;
+    border: 1px solid $colour-border-main;
+    border-radius: 4px;
+    color: $colour-text-medium;
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    @include transition();
+
+    &:focus {
+      border-color: $colour-border-dark;
+      outline: none;
+    }
+  }
+
+  &:after {
+    color: $colour-text-medium;
+    content: '\f078';
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 16px;
+    position: absolute;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    top: 3px;
+    right: 10px;
+  }
+}
+
+.form-section {
+  border-bottom: 1px solid $colour-border-alt;
+  padding: 20px 0;
+}
+
+.form-section__title {
+  h3 {
+    color: $colour-text-dark;
+    margin: 0;
+  }
+
+  p {
+    color: $colour-text-medium;
+    font-size: 0.9em;
+  }
+}
+
+.form-required {
+  color: #ff0000;
+}
+
+// --- Type Edit Styles ---
+
+.type-list {
+  border: 1px solid $colour-border-main;
+  color: $colour-text-medium;
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    border-bottom: 1px solid $colour-border-main;
+    list-style: none;
+    padding: 15px 35px 15px 15px;
+    position: relative;
+
+    i {
+      cursor: pointer;
+      position: absolute;
+      top: 18px;
+      right: 15px;
+
+      &:hover {
+        color: $colour-main;
+      }
+    }
+  }
+}
+
+.type-add {
+  margin-top: 15px;
+
+  input {
+    border-radius: 0;
+    width: 70%;
+  }
+
+  button {
+    background: $colour-alt;
+    border: 1px solid $colour-alt;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    width: 30%;
+  }
+}
+
+// --- Tag Selector Styles ---
+
+.tagselector-tag {
+  border: 1px solid $colour-border-main;
+  border-radius: 4px;
+  color: $colour-text-medium;
+  cursor: pointer;
+  display: inline-block;
+  margin: 10px 10px 10px 0;
+  padding: 10px;
+  transition: 0.25s ease all;
+
+  &:hover,
+  &.active {
+    border: 1px solid $colour-border-dark;
+  }
+}

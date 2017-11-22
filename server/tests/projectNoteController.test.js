@@ -31,7 +31,6 @@ describe('Project Notes', () => {
     it('it should NOT POST a projectNote with a missing required field', (done) => {
       let project = new Project({
         fileNumber: '12345',
-        name: 'Tonison Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',
@@ -65,7 +64,6 @@ describe('Project Notes', () => {
     it('it should POST a projectNote to a project by the given id', (done) => {
       let project = new Project({
         fileNumber: '12345',
-        name: 'Bobert Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',
@@ -102,7 +100,6 @@ describe('Project Notes', () => {
     it('it should DELETE a projectNote from a project by the given id', (done) => {
       let project = new Project({
         fileNumber: '12345',
-        name: 'Jones Roofing Project',
         houseNumber: '123',
         street: 'Main Street',
         postalCode: 'K1A2M1',

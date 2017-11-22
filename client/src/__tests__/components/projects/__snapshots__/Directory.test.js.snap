@@ -21,7 +21,7 @@ exports[`<Directory /> should render correctly 1`] = `
         <input
           className="form-text"
           onKeyUp={[Function]}
-          placeholder="Enter the project name"
+          placeholder="Enter the project file number"
           type="text"
         />
         <button
@@ -177,55 +177,59 @@ exports[`<Directory /> should render correctly 1`] = `
       <div
         className="card"
       >
-        <table
-          className="card__table"
+        <div
+          className="card__table-wrapper"
         >
-          <thead
-            className="card__tablehead"
+          <table
+            className="card__table"
           >
-            <tr>
-              <th
-                onClick={[Function]}
-              >
-                Nickname 
-                <i
-                  className="fa "
-                />
-              </th>
-              <th>
-                Type(s)
-              </th>
-              <th
-                onClick={[Function]}
-              >
-                Status 
-                <i
-                  className="fa "
-                />
-              </th>
-              <th
-                onClick={[Function]}
-              >
-                Client 
-                <i
-                  className="fa "
-                />
-              </th>
-              <th>
-                Street
-              </th>
-              <th>
-                Postal Code
-              </th>
-              <th>
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody
-            className="card__tablebody"
-          />
-        </table>
+            <thead
+              className="card__tablehead"
+            >
+              <tr>
+                <th
+                  onClick={[Function]}
+                >
+                  File # 
+                  <i
+                    className="fa "
+                  />
+                </th>
+                <th
+                  onClick={[Function]}
+                >
+                  Client 
+                  <i
+                    className="fa "
+                  />
+                </th>
+                <th>
+                  Type(s)
+                </th>
+                <th
+                  onClick={[Function]}
+                >
+                  Status 
+                  <i
+                    className="fa "
+                  />
+                </th>
+                <th>
+                  Street
+                </th>
+                <th>
+                  Postal Code
+                </th>
+                <th>
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              className="card__tablebody"
+            />
+          </table>
+        </div>
         <Loading />
         <button
           className="advanced__toggle"

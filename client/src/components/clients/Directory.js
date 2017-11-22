@@ -190,32 +190,34 @@ class Directory extends React.Component {
           <div className="column">
             <h2 className="card-title">{clients.length} Client(s)</h2>
             <div className="card">
-              <table className="card__table">
-                <thead className="card__tablehead">
-                  <tr>
-                    <th onClick={() => this.props.sortByKey(clients, 'lastName')}>Name <i className={`fa ${nameSortClass}`}></i></th>
-                    <th>Street</th>
-                    <th onClick={() => this.props.sortByKey(clients, 'city')}>City <i className={`fa ${citySortClass}`}></i></th>
-                    <th>Postal Code</th>       
-                    <th onClick={() => this.props.sortByKey(clients, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="card__tablebody">
-                  {visibleClients.map((client, key) => {
-                    return (
-                      <tr key={key}>
-                        <td>{client.firstName} {client.lastName}</td>
-                        <td>{client.houseNumber} {client.street}</td>
-                        <td>{client.city}</td>
-                        <td className="capitalize">{client.postalCode}</td>                       
-                        <td><a href={'mailto:' + client.email}>{client.email}</a></td>
-                        <td><Link to={`/clients/${client._id}`} className="btn btn--small btn--primary">View Client</Link></td>
-                      </tr>
-                    );
-                  })}
-                </tbody> 
-              </table>
+              <div className="card__table-wrapper">
+                <table className="card__table">
+                  <thead className="card__tablehead">
+                    <tr>
+                      <th onClick={() => this.props.sortByKey(clients, 'lastName')}>Name <i className={`fa ${nameSortClass}`}></i></th>
+                      <th>Street</th>
+                      <th onClick={() => this.props.sortByKey(clients, 'city')}>City <i className={`fa ${citySortClass}`}></i></th>
+                      <th>Postal Code</th>       
+                      <th onClick={() => this.props.sortByKey(clients, 'email')}>Email <i className={`fa ${emailSortClass}`}></i></th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="card__tablebody">
+                    {visibleClients.map((client, key) => {
+                      return (
+                        <tr key={key}>
+                          <td>{client.firstName} {client.lastName}</td>
+                          <td>{client.houseNumber} {client.street}</td>
+                          <td>{client.city}</td>
+                          <td className="capitalize">{client.postalCode}</td>                       
+                          <td><a href={'mailto:' + client.email}>{client.email}</a></td>
+                          <td><Link to={`/clients/${client._id}`} className="btn btn--small btn--primary">View Client</Link></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody> 
+                </table>
+              </div>
               {this.renderLoading(clients)}
               {this.renderPagination(clients.length)}
               <button className="advanced__toggle" onClick={this.handleDownload}>Download Client List (CSV)</button>
