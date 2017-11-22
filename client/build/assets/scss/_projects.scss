@@ -1,0 +1,180 @@
+// --- Project Search Styles ---
+
+.status {
+  background: #eee;
+  border-radius: 20px;
+  color: #fff;
+  display: inline-block;
+  font-size: 0.8em;
+  padding: 5px 15px;
+  min-width: 90px;
+  text-align: center;
+}
+
+.status--complete {
+  background: $colour-success;
+}
+
+.status--inprogress {
+  background: $colour-info;
+  text-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+}
+
+.status--notstarted {
+  background: $colour-warn;
+}
+
+// --- Project Styles ---
+
+.project-overview {
+  margin: 0;
+  padding: 0;
+
+  li {
+    border-bottom: 1px solid $colour-border-main;
+    color: $colour-text-dark;
+    list-style: none;
+    padding: 10px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  b {
+    margin-right: 8px;
+  }
+}
+
+.project-overview--divider {
+  margin: 0 15px;
+}
+
+.project-actions {
+  margin-top: 15px;
+  text-align: right;
+
+  a {
+    margin-right: 10px;
+  }
+}
+
+.project-map {
+  padding: 0 0 50% 0;
+  position: relative;
+  height: 0;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.project-map--small {
+  padding-bottom: 30%;
+}
+
+.project-location {
+  color: $colour-text-dark;
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+}
+
+.project-note {
+  color: $colour-text-dark;
+  border-bottom: 1px solid $colour-border-main;
+  padding: 30px 0 15px 0;
+
+  a {
+    display: block;
+    font-size: 1.2em;
+  }
+
+  &:first-child {
+    padding-top: 15px;
+  }
+
+  &:last-child {
+    border: none;
+    padding-bottom: 0;
+  }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
+  }
+}
+
+.project-note__details {
+  display: block;
+}
+
+.project-update {
+  border-bottom: 1px solid $colour-border-main;
+  padding: 15px 0;
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    color: $colour-text-dark;
+    list-style: none;
+    padding: 2px 0;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    border: none;
+    padding-bottom: 0;
+  }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
+  }
+}
+
+.project-product {
+  border-bottom: 1px solid $colour-border-main;
+  padding: 15px 0;
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    color: $colour-text-dark;
+    list-style: none;
+    padding: 2px 0;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    border: none;
+    padding-bottom: 0;
+  }
+
+  &:hover {
+    .delete-small {
+      display: block;
+    }
+  }
+}
