@@ -40,6 +40,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Prevent REST request caching
+app.use(function noCache(req, res, next) {
+  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.header("Pragma", "no-cache");
+  res.header("Expires", 0);
+  next();
+});
+
 // Pass variables to templates and all requests
 app.use((req, res, next) => {
   res.locals.h = helpers;

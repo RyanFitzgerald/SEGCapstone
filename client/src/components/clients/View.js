@@ -171,7 +171,7 @@ class View extends React.Component {
                   {this.state.client.projects.map((project, key) => {
                     return (
                       <tr key={key}>
-                        <td>{project.name}</td>
+                        <td>{project.fileNumber}</td>
                         <td><span className={`status status--${project.status.replace(/\s+/g, '').toLowerCase()}`}>{project.status}</span></td>             
                         <td><Link to={`/projects/${project._id}`} className="btn btn--small btn--primary">View Project</Link></td>
                       </tr>
