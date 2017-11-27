@@ -170,7 +170,7 @@ class Client extends React.Component {
 
         <Switch>
           <Route exact path="/clients" render={() =>
-            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} sortByKey={this.sortByKey} sort={this.state.sort} />
+            <Directory setActiveSubtab={this.setActiveSubtab} clients={this.state.clients} getClients={this.getClients} users={this.state.users} sortByKey={this.sortByKey} sort={this.state.sort} />
           }/>
           <Route path="/clients/add" render={() => (
             (level < 2) ? (

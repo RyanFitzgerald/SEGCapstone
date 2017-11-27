@@ -20,7 +20,7 @@ class Edit extends React.Component {
       redirect: false,
       client: null,
       referrals: false,
-      salesmen: false,
+      salesmen: [],
       formError: false
     }
   }

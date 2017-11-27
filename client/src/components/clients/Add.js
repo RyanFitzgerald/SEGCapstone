@@ -17,7 +17,7 @@ class Add extends React.Component {
     this.state = {
       redirect: false,
       referrals: false,
-      salesmen: false,
+      salesmen: [],
       formError: false
     }
   }

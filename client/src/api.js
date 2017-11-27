@@ -4,7 +4,7 @@ import axios from 'axios';
 export const getClients = (query) => {
   if (query.search) {
     return axios
-      .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&access_token=${query.access_token}`)
+      .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&salesman=${query.salesman}&access_token=${query.access_token}`)
       .then(resp => resp.data);
   } else {
     return axios

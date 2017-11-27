@@ -20,7 +20,8 @@ class Directory extends React.Component {
 
     this.state = {
       activePage: 1,
-      clientsPerPage: 10
+      clientsPerPage: 10,
+      salesmen: []
     };
   }
 
@@ -30,6 +31,13 @@ class Directory extends React.Component {
 
     // Update tab
     this.props.setActiveSubtab(1);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.users && nextProps.users !== null && nextProps.users !== this.state.salesmen) {
+      const salesmen = nextProps.users.filter(user => user.role.name === 'Salesman');
+      this.setState({ salesmen });
+    }
   }
 
   handleAdvanced(e) {
@@ -47,6 +55,7 @@ class Directory extends React.Component {
       city: this.city.value,
       postalCode: this.postalCode.value,
       street: this.street.value,
+      salesman: this.salesman.value,
       search: true
     };
     this.props.getClients(query);
@@ -86,6 +95,7 @@ class Directory extends React.Component {
     this.city.value = '';
     this.postalCode.value = '';
     this.street.value = '';
+    this.salesman.value = '';
     this.handleSearch();
   }
 
@@ -176,8 +186,11 @@ class Directory extends React.Component {
                 <div className="md-6 column">
                   <label className="form-label" htmlFor="salesman">Salesman</label>
                   <span className="form-select">
-                    <select id="salesman" name="salesman">
-                      <option>All Salesmen</option>
+                    <select ref={input => this.salesman = input} id="salesman" name="salesman" onChange={this.handleSearch}>
+                      <option value="">All Salesmen</option>
+                      {this.state.salesmen.map((salesman, key) => {
+                        return <option key={key} value={salesman._id}>{salesman.name}</option>;
+                      })}
                     </select>
                   </span>
                 </div>
