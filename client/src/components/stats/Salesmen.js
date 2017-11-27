@@ -75,11 +75,11 @@ class Salesmen extends React.Component {
         }
 
         // Increment both
-        labelTotals[salesman] += project.contractCost;
+        labelTotals[salesman] += project.salesPrice;
         labelCounts[salesman] += 1;
 
         // Add to total volume
-        totalVolume = totalVolume + project.contractCost;
+        totalVolume = totalVolume + project.salesPrice;
       });
     });
  
@@ -111,7 +111,7 @@ class Salesmen extends React.Component {
     volume.forEach(ele => {
       if (ele.soldBy.name === label) {
         ele.projects.forEach(project => {
-          totalVolume = totalVolume + project.contractCost;
+          totalVolume = totalVolume + project.salesPrice;
           dataPoints.push((totalVolume/100).toFixed(2));
           dataLabels.push(moment(project.soldDate).format('MMMM DD, YYYY'));
         });
@@ -174,12 +174,21 @@ class Salesmen extends React.Component {
 
     // Get prepared data
     const pieColours = [
-      'rgba(255, 99, 132, 1)',
-      'rgba(54, 162, 235, 1)',
-      'rgba(255, 206, 86, 1)',
-      'rgba(75, 192, 192, 1)',
-      'rgba(153, 102, 255, 1)',
-      'rgba(255, 159, 64, 1)'
+      'rgba(230, 25, 75, 1)',
+      'rgba(60, 180, 75, 1)',
+      'rgba(255, 225, 25, 1)',
+      'rgba(0, 130, 200, 1)',
+      'rgba(245, 130, 48, 1)',
+      'rgba(145, 30, 180, 1)',
+      'rgba(70, 240, 240, 1)',
+      'rgba(240, 50, 230, 1)',
+      'rgba(210, 245, 60, 1)',
+      'rgba(250, 190, 190, 1)',
+      'rgba(0, 128, 128, 1)',
+      'rgba(230, 190, 255, 1)',
+      'rgba(170, 110, 40, 1)',
+      'rgba(255, 250, 200, 1)',
+      'rgba(0, 0, 128, 1)'
     ];
 
     const allDataVolume = {

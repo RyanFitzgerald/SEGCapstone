@@ -49,7 +49,7 @@ class Total extends React.Component {
     let totalVolume = 0;
     
     volume.forEach(ele => {
-      totalVolume = totalVolume + ele.contractCost;
+      totalVolume = totalVolume + ele.salesPrice;
       dataPoints.push((totalVolume/100).toFixed(2));
       dataLabels.push(moment(ele.soldDate).format('MMMM DD, YYYY'));
     });

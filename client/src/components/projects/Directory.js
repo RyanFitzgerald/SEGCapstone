@@ -74,7 +74,7 @@ class Directory extends React.Component {
     });
 
     // Get fields needed
-    const fields = ['fileNumber', 'type', 'houseNumber', 'street', 'city', 'postalCode', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'contractCost', 'labourCost', 'materialCost'];
+    const fields = ['fileNumber', 'type', 'houseNumber', 'street', 'city', 'postalCode', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'labourCost', 'materialCost', 'par', 'salesPrice'];
 
     // Convert to csv
     const csvContent = json2csv({data: projects, fields});

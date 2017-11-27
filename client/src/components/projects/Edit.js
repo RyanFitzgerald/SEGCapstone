@@ -19,6 +19,7 @@ class Edit extends React.Component {
     this.getDollars = this.getDollars.bind(this);
     this.contentLoaded = this.contentLoaded.bind(this);
     this.getProject = this.getProject.bind(this);
+    this.handlePostalCode = this.handlePostalCode.bind(this);
 
     // Set state
     this.state = {
@@ -74,14 +75,14 @@ class Edit extends React.Component {
       houseNumber: this.houseNumber.value,
       street: this.street.value,
       city: this.city.value,
-      postalCode: this.postalCode.value,
+      postalCode: this.postalCode.value.toUpperCase(),
       soldDate: this.soldDate.field.value,
       startDate: this.startDate.field.value,
       endDate: this.endDate.field.value,
       cashinDate: this.cashinDate.field.value,
       labourCost: this.getCents(this.labourCost.value),
       materialsCost: this.getCents(this.materialsCost.value),
-      contractCost: this.getCents(this.contractCost.value),
+      salesPrice: this.getCents(this.salesPrice.value),
       status: this.status.value,
       type: types,
       client: this.client.value,
@@ -142,6 +143,10 @@ class Edit extends React.Component {
     }
 
     return dollarString.join('.');
+  }
+
+  handlePostalCode(e) {
+    e.target.value = e.target.value.replace(/^([0-9A-Za-z]{3})([0-9A-Za-z]{3})$/, '$1 $2');
   }
 
   contentLoaded() {
@@ -214,7 +219,7 @@ class Edit extends React.Component {
                     <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
                     <input name="city" ref={input => this.city = input} className="form-text form-text--full" type="text" defaultValue={this.state.project.city} required/>
                     <label className="form-label" htmlFor="postal-code">Postal Code <span className="form-required">*</span></label>
-                    <input name="postal-code" ref={input => this.postalCode = input} className="form-text form-text--full capitalize" maxLength="6" type="text" defaultValue={this.state.project.postalCode} required/>
+                    <input name="postal-code" ref={input => this.postalCode = input} className="form-text form-text--full capitalize" onKeyUp={this.handlePostalCode} maxLength="7" type="text" defaultValue={this.state.project.postalCode} required/>
                   </div>
                 </div>
                 <div className="row form-section">
@@ -263,8 +268,8 @@ class Edit extends React.Component {
                     <input name="labour-cost" ref={input => this.labourCost = input} defaultValue={this.getDollars(this.state.project.labourCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
                     <label className="form-label" htmlFor="materials-cost">Materials Cost</label>
                     <input name="materials-cost" ref={input => this.materialsCost = input} defaultValue={this.getDollars(this.state.project.materialsCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
-                    <label className="form-label" htmlFor="actual-cost">Contract Cost</label>
-                    <input name="actual-cost" ref={input => this.contractCost = input} defaultValue={this.getDollars(this.state.project.contractCost).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
+                    <label className="form-label" htmlFor="sales-price">Sales Price</label>
+                    <input name="sales-price" ref={input => this.salesPrice = input} defaultValue={this.getDollars(this.state.project.salesPrice).replace(/,/g, '')} className="form-text form-text--full" type="number" step="0.01" />
                   </div>
                 </div>
                 <div className="text-center">

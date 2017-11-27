@@ -60,7 +60,7 @@ class Add extends React.Component {
       houseNumber: this.houseNumber.value,
       street: this.street.value,
       city: this.city.value,
-      postalCode: this.postalCode.value,
+      postalCode: this.postalCode.value.toUpperCase(),
       referral: this.referral.value,
       soldBy: this.soldBy.value,
       addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
@@ -98,10 +98,7 @@ class Add extends React.Component {
   }
 
   handlePhone(e) {
-    e.target.value = e.target.value.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-  }
-
-  onlyNumbers(e) {
+    e.target.value = e.target.value.replace(/^(\d{3})(\d{3})(\d{4})$/, '$1-$2-$3');
   }
 
   handlePostalCode(e) {

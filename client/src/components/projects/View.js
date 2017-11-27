@@ -218,13 +218,13 @@ class View extends React.Component {
       // Cost breakdowns
       const labourCost = this.state.project.labourCost || false;
       const materialsCost = this.state.project.materialsCost || false;
-      const contractCost = this.state.project.contractCost || false;
-      const actualCost = this.state.project.actualCost || false;
+      const par = this.state.project.par || false;
+      const salesPrice = this.state.project.salesPrice || false;
       let commission = -1;
 
       // Check for commission
-      if (actualCost && contractCost) {
-        let difference = contractCost - actualCost;
+      if (par && salesPrice) {
+        let difference = salesPrice - par;
         if (difference > 0) {
           commission = difference;
         } else {
@@ -252,8 +252,8 @@ class View extends React.Component {
                   <li><b>Sold Date:</b> {dates.soldDate} <span className="project-overview--divider">&#8226;</span> <b>Cashin Date:</b> {(dates.cashinDate) ? moment(dates.cashinDate).format('MMMM DD, YYYY') : 'Not available'}</li>
                   <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
                   <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
-                  <li><b>Contract Cost:</b> {(contractCost) ? `$${this.getDollars(contractCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Actual Cost:</b> {(actualCost) ? `$${this.getDollars(actualCost)}` : 'Not available'}</li>
-                  <li><b>Commission:</b> {(commission !== -1) ? `$${this.getDollars(commission)}` : 'Not available'}</li>
+                  <li><b>Cost Total:</b> {(labourCost && materialsCost) ? `$${this.getDollars(labourCost + materialsCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>PAR:</b> {(par) ? `$${this.getDollars(par)}` : 'Not available'}</li>
+                  <li><b>Sales Price:</b> {(salesPrice) ? `$${this.getDollars(salesPrice)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Commission:</b> {(commission !== -1) ? `$${this.getDollars(commission)} (${(commission / salesPrice)*100}%)` : 'Not available'}</li>
                   <li><b>Added by:</b> {this.state.project.addedBy.name}</li>
                 </ul>
                 <div className="project-actions">

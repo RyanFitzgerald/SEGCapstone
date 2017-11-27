@@ -162,7 +162,7 @@ class View extends React.Component {
               <table className="card__table">
                 <thead className="card__tablehead">
                   <tr>
-                    <th>Nickname</th>
+                    <th>File Number</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
