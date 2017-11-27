@@ -7,6 +7,8 @@ import Loading from '../Loading';
 import {Marker} from 'react-google-maps';
 import Map from '../Map';
 
+import { mapAPIKey } from '../../config';
+
 class View extends React.Component {
   constructor() {
     super();
@@ -271,7 +273,7 @@ class View extends React.Component {
               <div className="card">
                 <div id="map" className="project-map">
                   <Map
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${mapAPIKey}`}
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div style={{ height: `400px` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
