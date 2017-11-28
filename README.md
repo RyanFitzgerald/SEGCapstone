@@ -10,6 +10,10 @@ If you wish to run automated tests, run `npm test` from the root and client foot
 
 For full technical documentation of the system, [click here](https://github.com/RyanFitzgerald/SEGCapstone/wiki/System-Documentation).
 
+## Test Data
+
+If you need to populate a database with test data, first run `npm run data:remove` from the root to ensure no duplicates exist (NOTE: this will remove ALL data in the database), followed by `npm run data:add`. Since these commands clear the database of all data, it should only be run for testing purposes and not in a production environment.
+
 ## Test Accounts
 *Here are several test accounts:*
 
