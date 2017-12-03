@@ -1,14 +1,14 @@
 
-let sessionStorage = {};
+let localStorage = {};
 
 export default {  
     setItem(key, value) {
-        return Object.assign(sessionStorage, {[key]: value});
+        return Object.assign(localStorage, {[key]: value});
     },
     getItem(key) {
-        return sessionStorage[key];
+        return localStorage[key];
     },
     clear() {
-        sessionStorage = {};
+        localStorage = {};
     }
 };

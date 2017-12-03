@@ -2,7 +2,7 @@ import { configure, shallow, mount, render } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import { MemoryRouter, Route } from 'react-router-dom';
 import Adapter from 'enzyme-adapter-react-16';
-import sessionStorageMock from './__mocks__/sessionStorage';
+import localStorageMock from './__mocks__/localStorage';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
@@ -19,5 +19,5 @@ global.render = render;
 global.mount = mount;
 global.shallowToJson = shallowToJson;
 
-// Make sessionStorage mock global
-global.sessionStorage = sessionStorageMock;
+// Make localStorage mock global
+global.localStorage = localStorageMock;

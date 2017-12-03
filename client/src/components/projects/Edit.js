@@ -86,7 +86,7 @@ class Edit extends React.Component {
       status: this.status.value,
       type: types,
       client: this.client.value,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -96,7 +96,7 @@ class Edit extends React.Component {
   getProject(id) {
     const query = {
       id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     }
 
     api.getProject(query).then(project => {

@@ -36,8 +36,8 @@ class CostUpdate extends React.Component {
       reason: this.reason.value,
       type: this.updateType.value,
       project: this.props.location.match.params.id,
-      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      addedBy: JSON.parse(localStorage.getItem('user'))._id,
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -63,7 +63,7 @@ class CostUpdate extends React.Component {
 
       const project = {
         contractCost,
-        access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+        access_token: JSON.parse(localStorage.getItem('user')).access_token
       }
 
       api.updateProject(project, this.props.location.match.params.id).then(resp => {

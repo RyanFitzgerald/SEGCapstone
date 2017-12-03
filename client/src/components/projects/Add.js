@@ -79,8 +79,8 @@ class Add extends React.Component {
       status: this.status.value,
       type: types,
       client: this.client.value,
-      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      addedBy: JSON.parse(localStorage.getItem('user'))._id,
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     // Call api

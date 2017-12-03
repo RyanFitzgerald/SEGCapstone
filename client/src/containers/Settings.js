@@ -39,6 +39,12 @@ class Settings extends React.Component {
       }
     };
   }
+
+  componentWillMount() {
+    if (localStorage.getItem('user') === null) {
+      this.props.logout();
+    }
+  }
   
   componentDidMount() {
     // Set Page Title
@@ -59,7 +65,7 @@ class Settings extends React.Component {
   }
 
   getRoles() {
-    api.getRoles({access_token: JSON.parse(sessionStorage.getItem('user')).access_token}).then(result => {
+    api.getRoles({access_token: JSON.parse(localStorage.getItem('user')).access_token}).then(result => {
       const roles = result;
       this.setState({ roles });
     });
@@ -67,7 +73,7 @@ class Settings extends React.Component {
 
   getUsers(query) {
     // Append access token
-    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+    query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
 
     api.getUsers(query).then(result => {
       const users = result;
@@ -146,7 +152,7 @@ class Settings extends React.Component {
   }
   
   render() {
-    const level = JSON.parse(sessionStorage.getItem('user')).role.level;
+    const level = JSON.parse(localStorage.getItem('user')).role.level;
 
     return (
       <div>

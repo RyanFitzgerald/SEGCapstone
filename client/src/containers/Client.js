@@ -38,6 +38,12 @@ class Client extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (localStorage.getItem('user') === null) {
+      this.props.logout();
+    }
+  }
+
   componentDidMount() {
     // Set Page Title
     document.title = 'Clients Overview | Renovaction';
@@ -61,7 +67,7 @@ class Client extends React.Component {
 
   getClients(query) {
     // Append access token
-    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+    query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
     
     api.getClients(query).then(result => {
       const clients = result;
@@ -71,7 +77,7 @@ class Client extends React.Component {
 
   getUsers(query) {
     // Append access token
-    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+    query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
     
     api.getUsers(query).then(result => {
       const users = result;
@@ -82,7 +88,7 @@ class Client extends React.Component {
   getReferrals() {
     // Append access token
     const query = {
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
     
     api.getReferrals(query).then(result => {
@@ -163,7 +169,7 @@ class Client extends React.Component {
   }
 
   render() {
-    const level = JSON.parse(sessionStorage.getItem('user')).role.level;
+    const level = JSON.parse(localStorage.getItem('user')).role.level;
     return (
       <div>
         <Submenu activeSubtab={this.state.activeSubtab} />

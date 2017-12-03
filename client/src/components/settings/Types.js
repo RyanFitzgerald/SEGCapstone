@@ -31,7 +31,7 @@ class Settings extends React.Component {
   }
 
   getTypes() {
-    api.getTypes({access_token: JSON.parse(sessionStorage.getItem('user')).access_token}).then(types => {
+    api.getTypes({access_token: JSON.parse(localStorage.getItem('user')).access_token}).then(types => {
       this.setState({ types });
     });
   }
@@ -44,7 +44,7 @@ class Settings extends React.Component {
 
     const type = {
       name: input,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     api.addType(type).then(resp => {
@@ -62,7 +62,7 @@ class Settings extends React.Component {
   handleDelete(id) {
     const type = {
       id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     api.deleteType(type).then(result => {

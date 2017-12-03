@@ -62,7 +62,7 @@ class Edit extends React.Component {
       street: this.street.value,
       city: this.city.value,
       postalCode: this.postalCode.value.toUpperCase(),
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -72,7 +72,7 @@ class Edit extends React.Component {
   getClient(id) {
     const query = {
       id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     }
 
     api.getClient(query).then(client => {

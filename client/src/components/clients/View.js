@@ -35,7 +35,7 @@ class View extends React.Component {
   getClient(id) {
     const query = {
       id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     }
 
     api.getClient(query).then(client => {
@@ -49,7 +49,7 @@ class View extends React.Component {
   deleteClient() {
     const query = {
       id: this.props.location.match.params.id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     }
 
     api.deleteClient(query).then(result => {
@@ -68,7 +68,7 @@ class View extends React.Component {
     const note = {
       id,
       client: this.props.location.match.params.id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     api.deleteClientNote(note).then(result => {
@@ -114,10 +114,10 @@ class View extends React.Component {
                   <li><b>Added by:</b> {this.state.client.addedBy.name}</li>
                 </ul>
                 <div className="client-actions">
-                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
+                {JSON.parse(localStorage.getItem('user')).role.level >= 2 &&
                   <Link to={`/clients/${this.props.location.match.params.id}/edit`} className="btn btn--primary">Edit Client</Link>
                 }
-                {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
+                {JSON.parse(localStorage.getItem('user')).role.level >= 2 &&
                   <button className="btn btn--danger" onClick={() => {if (window.confirm('Are you sure you want to delete this client?')) {this.deleteClient()};}}>Delete Client</button>
                 }
                 </div>
@@ -149,7 +149,7 @@ class View extends React.Component {
           <div className="row">
             <div className="md-6 column">
               <h2 className="card-title">{this.state.client.projects.length} Client Project(s)
-              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
+              {JSON.parse(localStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: '/projects/add',
@@ -185,7 +185,7 @@ class View extends React.Component {
             </div>
             <div className="md-6 column">
               <h2 className="card-title">{this.state.client.notes.length} Client Note(s)
-              {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
+              {JSON.parse(localStorage.getItem('user')).role.level >= 2 &&
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/note`,
@@ -204,7 +204,7 @@ class View extends React.Component {
                     <p>
                       {note.description}
                     </p>
-                    {JSON.parse(sessionStorage.getItem('user')).role.level >= 2 &&
+                    {JSON.parse(localStorage.getItem('user')).role.level >= 2 &&
                       <button className="delete-small" onClick={() => {if (window.confirm('Are you sure you want to delete this note?')) {this.deleteNote(note._id)};}}>Delete <i className="fa fa-trash-o" aria-hidden="true"></i></button>
                     }
                   </div>

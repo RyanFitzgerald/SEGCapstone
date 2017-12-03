@@ -31,7 +31,7 @@ class Settings extends React.Component {
   }
 
   getReferrals() {
-    api.getReferrals({access_token: JSON.parse(sessionStorage.getItem('user')).access_token}).then(referrals => {
+    api.getReferrals({access_token: JSON.parse(localStorage.getItem('user')).access_token}).then(referrals => {
       this.setState({ referrals });
     });
   }
@@ -44,7 +44,7 @@ class Settings extends React.Component {
 
     const referral = {
       name: input,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     api.addReferral(referral).then(resp => {
@@ -62,7 +62,7 @@ class Settings extends React.Component {
   handleDelete(id) {
     const referral = {
       id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     api.deleteReferral(referral).then(result => {

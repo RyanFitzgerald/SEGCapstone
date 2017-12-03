@@ -9,7 +9,7 @@ describe('<Stats />', () => {
         level: 1
       }
     };
-    sessionStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
   });
 
   it('should render correctly', () => {

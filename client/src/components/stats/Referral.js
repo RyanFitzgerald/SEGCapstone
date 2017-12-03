@@ -39,7 +39,7 @@ class Salesmen extends React.Component {
 
   getTotalVolumeByReferral() {
     const query = {
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     api.getTotalVolumeByReferral(query).then(result => {
@@ -150,7 +150,7 @@ class Salesmen extends React.Component {
       startDate,
       endDate,
       postalCode,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     api.getTotalVolumeByReferral(query).then(result => {

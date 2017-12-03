@@ -63,8 +63,8 @@ class Add extends React.Component {
       postalCode: this.postalCode.value.toUpperCase(),
       referral: this.referral.value,
       soldBy: this.soldBy.value,
-      addedBy: JSON.parse(sessionStorage.getItem('user'))._id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      addedBy: JSON.parse(localStorage.getItem('user'))._id,
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     // Call api
