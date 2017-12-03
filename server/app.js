@@ -76,6 +76,11 @@ app.all('/api/*', [validateHandler]);
 // After all middleware, handle routes
 app.use('/', routes);
 
+// If no route matches, render react build
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
+});
+
 // If above routes don't work, 404 and forward to error handler
 app.use(errorHandlers.notFound);
 
