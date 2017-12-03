@@ -268,7 +268,7 @@ exports[`<Directory /> should render correctly 1`] = `
                 }
               />
             }
-            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAjW3Bxo9peedeOmlbp_xcyk2kXcLzS1uw"
             loadingElement={
               <div
                 style={
