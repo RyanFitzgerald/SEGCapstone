@@ -4,7 +4,7 @@ import axios from 'axios';
 export const getClients = (query) => {
   if (query.search) {
     return axios
-      .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&access_token=${query.access_token}`)
+      .get(`/api/clients?q=${query.q}&postalCode=${query.postalCode}&city=${query.city}&street=${query.street}&salesman=${query.salesman}&access_token=${query.access_token}`)
       .then(resp => resp.data);
   } else {
     return axios
@@ -291,11 +291,11 @@ export const getRoles = query => {
 export const getTotalVolume = query => {
   if (query.search) {
     return axios
-      .get(`/stats/api/total?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
+      .get(`/api/stats/total?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
       .then(resp => resp.data);
   } else {
     return axios
-      .get(`/stats/api/total?access_token=${query.access_token}`)
+      .get(`/api/stats/total?access_token=${query.access_token}`)
       .then(resp => resp.data);
   }
 };
@@ -303,11 +303,11 @@ export const getTotalVolume = query => {
 export const getTotalVolumeByType = query => {
   if (query.search) {
     return axios
-      .get(`/stats/api/types?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
+      .get(`/api/stats/types?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
       .then(resp => resp.data);
   } else {
     return axios
-      .get(`/stats/api/types?access_token=${query.access_token}`)
+      .get(`/api/stats/types?access_token=${query.access_token}`)
       .then(resp => resp.data);
   }
 };
@@ -315,11 +315,11 @@ export const getTotalVolumeByType = query => {
 export const getTotalVolumeBySalesmen = query => {
   if (query.search) {
     return axios
-      .get(`/stats/api/salesmen?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
+      .get(`/api/stats/salesmen?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
       .then(resp => resp.data);
   } else {
     return axios
-      .get(`/stats/api/salesmen?access_token=${query.access_token}`)
+      .get(`/api/stats/salesmen?access_token=${query.access_token}`)
       .then(resp => resp.data);
   }
 };
@@ -327,11 +327,11 @@ export const getTotalVolumeBySalesmen = query => {
 export const getTotalVolumeByReferral = query => {
   if (query.search) {
     return axios
-      .get(`/stats/api/referrals?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
+      .get(`/api/stats/referrals?startDate=${query.startDate}&endDate=${query.endDate}&postalCode=${query.postalCode}&access_token=${query.access_token}`)
       .then(resp => resp.data);
   } else {
     return axios
-      .get(`/stats/api/referrals?access_token=${query.access_token}`)
+      .get(`/api/stats/referrals?access_token=${query.access_token}`)
       .then(resp => resp.data);
   }
 };

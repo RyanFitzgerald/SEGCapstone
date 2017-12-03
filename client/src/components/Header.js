@@ -5,7 +5,7 @@ import ClickOutside from './ClickOutside';
 
 function Header(props) {
   let menu, userMenu, username, level;
-  let sessionUser = JSON.parse(sessionStorage.getItem('user'));
+  let sessionUser = JSON.parse(localStorage.getItem('user'));
   if (sessionUser) {
     username = sessionUser.name;
     level = sessionUser.role.level;

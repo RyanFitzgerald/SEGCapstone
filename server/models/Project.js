@@ -61,11 +61,11 @@ const projectSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  actualCost: {
+  par: {
     type: Number,
     default: 0
   },
-  contractCost: {
+  salesPrice: {
     type: Number,
     default: 0
   },
@@ -162,7 +162,7 @@ projectSchema.pre('save', async function(next) {
   const labourCost = this.labourCost;
   
   if (labourCost !== 0 && materialsCost !== 0) {
-    this.actualCost = (labourCost + materialsCost) * 2.1;
+    this.par = (labourCost + materialsCost) * 2.1;
   }  
 
   next();
@@ -172,8 +172,8 @@ projectSchema.pre('findOneAndUpdate', async function(next) {
   const materialsCost = this._update.materialsCost;
   const labourCost = this._update.labourCost;
   
-  if (labourCost && labourCost !== 0 && materialCost && materialsCost !== 0) {
-    this._update.actualCost = (labourCost + materialsCost) * 2.1;
+  if (labourCost && labourCost !== 0 && materialsCost && materialsCost !== 0) {
+    this._update.par = (labourCost + materialsCost) * 2.1;
   }
 
   next();

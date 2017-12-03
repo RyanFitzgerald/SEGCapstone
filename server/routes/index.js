@@ -76,13 +76,13 @@ router.delete('/api/users/:id',catchErrors(userController.deleteUser));
 router.get('/api/roles', catchErrors(roleController.getRoles));
 
 // --- Stats Routes ---
-router.get('/stats/api/total', catchErrors(statsController.getTotal));
+router.get('/api/stats/total', catchErrors(statsController.getTotal));
 
-router.get('/stats/api/types', catchErrors(statsController.getTotalByType));
+router.get('/api/stats/types', catchErrors(statsController.getTotalByType));
 
-router.get('/stats/api/salesmen', catchErrors(statsController.getTotalBySalesman));
+router.get('/api/stats/salesmen', catchErrors(statsController.getTotalBySalesman));
 
-router.get('/stats/api/referrals', catchErrors(statsController.getTotalByReferral));
+router.get('/api/stats/referrals', catchErrors(statsController.getTotalByReferral));
 
 // Export the router
 module.exports = router;

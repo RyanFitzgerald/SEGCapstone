@@ -35,7 +35,7 @@ class Add extends React.Component {
 			name: this.name.value,
 			password: this.password.value,
 			role: this.role.value,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
 		};
 		
 		this.addUser(user);

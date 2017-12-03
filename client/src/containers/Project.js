@@ -43,6 +43,12 @@ class Project extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (localStorage.getItem('user') === null) {
+      this.props.logout();
+    }
+  }
+
   componentDidMount() {
     // Set Page Title
     document.title = 'Project Overview | Renovaction';
@@ -65,14 +71,14 @@ class Project extends React.Component {
   }
 
   getTypes() {
-    api.getTypes({access_token: JSON.parse(sessionStorage.getItem('user')).access_token}).then(types => {
+    api.getTypes({access_token: JSON.parse(localStorage.getItem('user')).access_token}).then(types => {
       this.setState({ types });
     });
   }
 
   getClients(query) {
     // Append access token
-    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+    query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
 
     api.getClients(query).then(result => {
       this.setState({ clients: result });
@@ -81,7 +87,7 @@ class Project extends React.Component {
 
   getProjects(query) {
     // Append access token
-    query.access_token = JSON.parse(sessionStorage.getItem('user')).access_token;
+    query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
 
     api.getProjects(query).then(result => {
       const projects = result;
@@ -148,7 +154,7 @@ class Project extends React.Component {
   }
 
   render() {
-    const level = JSON.parse(sessionStorage.getItem('user')).role.level;
+    const level = JSON.parse(localStorage.getItem('user')).role.level;
     
     return (
       <div>

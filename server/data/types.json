@@ -16,7 +16,23 @@
     "name": "Deck"
   },
   {
-    "_id": "59bad64bdc33910f9c652a24",
-    "name": "Interior Renovation"
+    "_id": "5a1b4015a9184e26f073acb7",
+    "name": "Other Exterior Renovation"
+  },
+  {
+    "_id": "5a1b3fd640338305448fd1db",
+    "name": "Repair"
+  },
+  {
+    "_id": "5a1b401ba9184e26f073acb8",
+    "name": "Kitchen"
+  },
+  {
+    "_id": "5a1b4020a9184e26f073acb9",
+    "name": "Bathroom"
+  },
+  {
+    "_id": "5a1b4025a9184e26f073acba",
+    "name": "Other Interior Renovation"
   }
 ]

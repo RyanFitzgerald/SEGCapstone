@@ -31,7 +31,7 @@ class View extends React.Component {
   getUser(id) {
     const query = {
       id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     }
 
     api.getUser(query).then(user => {
@@ -45,7 +45,7 @@ class View extends React.Component {
   deleteUser() {
     const query = {
       id: this.props.location.match.params.id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     }
 
     api.deleteUser(query).then(result => {
