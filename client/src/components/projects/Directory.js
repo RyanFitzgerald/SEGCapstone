@@ -6,6 +6,8 @@ import json2csv from 'json2csv';
 
 import Loading from '../Loading';
 
+import { mapAPIKey } from '../../config';
+
 class Directory extends React.Component {
   constructor() {
     super();
@@ -74,7 +76,7 @@ class Directory extends React.Component {
     });
 
     // Get fields needed
-    const fields = ['fileNumber', 'type', 'houseNumber', 'street', 'city', 'postalCode', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'contractCost', 'labourCost', 'materialCost'];
+    const fields = ['fileNumber', 'type', 'houseNumber', 'street', 'city', 'postalCode', 'created', 'soldDate', 'startDate', 'endDate', 'cashinDate', 'labourCost', 'materialCost', 'par', 'salesPrice'];
 
     // Convert to csv
     const csvContent = json2csv({data: projects, fields});
@@ -252,7 +254,7 @@ class Directory extends React.Component {
             <div className="card">
               <div id="map" className="project-map project-map--small">
                 <Map
-                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${mapAPIKey}`}
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={<div style={{ height: `400px` }} />}
                   mapElement={<div style={{ height: `100%` }} />}

@@ -35,7 +35,7 @@ class Total extends React.Component {
 
   getTotalVolume() {
     const query = {
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     api.getTotalVolume(query).then(result => {
@@ -49,7 +49,7 @@ class Total extends React.Component {
     let totalVolume = 0;
     
     volume.forEach(ele => {
-      totalVolume = totalVolume + ele.contractCost;
+      totalVolume = totalVolume + ele.salesPrice;
       dataPoints.push((totalVolume/100).toFixed(2));
       dataLabels.push(moment(ele.soldDate).format('MMMM DD, YYYY'));
     });
@@ -86,7 +86,7 @@ class Total extends React.Component {
       startDate,
       endDate,
       postalCode,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     api.getTotalVolume(query).then(result => {

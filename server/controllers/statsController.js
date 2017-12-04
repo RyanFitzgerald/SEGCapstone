@@ -33,7 +33,7 @@ exports.getTotal = async (req, res) => {
     filter.postalCode = { $regex: new RegExp(req.query.postalCode), $options: 'i' };
   }
 
-  const total = await Project.find(filter).select('contractCost soldDate').where('contractCost').gt(0);
+  const total = await Project.find(filter).select('salesPrice soldDate').where('salesPrice').gt(0);
   res.send(total);
 };
 
@@ -64,7 +64,7 @@ exports.getTotalByType = async (req, res) => {
     filter.postalCode = { $regex: new RegExp(req.query.postalCode), $options: 'i' };
   }
 
-  const total = await Project.find(filter).populate('type').select('contractCost soldDate type').where('contractCost').gt(0);
+  const total = await Project.find(filter).populate('type').select('salesPrice soldDate type').where('salesPrice').gt(0);
   res.send(total);
 };
 
@@ -72,8 +72,8 @@ exports.getTotalBySalesman = async (req, res) => {
   const filter = [{
     path: 'projects',
     model: 'Project',
-    select: 'contractCost soldDate',
-    match: { contractCost: { $gt: 0 } }
+    select: 'salesPrice soldDate',
+    match: { salesPrice: { $gt: 0 } }
   }, {
     path: 'soldBy',
     model: 'User'
@@ -115,8 +115,8 @@ exports.getTotalByReferral = async (req, res) => {
   const filter = [{
     path: 'projects',
     model: 'Project',
-    select: 'contractCost soldDate',
-    match: { contractCost: { $gt: 0 } }
+    select: 'salesPrice soldDate',
+    match: { salesPrice: { $gt: 0 } }
   }, {
     path: 'referral',
     model: 'Referral'

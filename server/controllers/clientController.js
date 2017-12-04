@@ -29,6 +29,11 @@ exports.getClients = async (req, res) => {
     filter.street = { $regex: new RegExp(req.query.street), $options: 'i' };
   }
 
+  // Check for salesman
+  if (req.query.salesman) {
+    filter.soldBy = req.query.salesman;
+  }
+
   const clients = await Client.find(filter).populate('projects').sort({ 'created': -1 });
 
   res.send(clients);

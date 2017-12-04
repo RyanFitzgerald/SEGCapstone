@@ -8,11 +8,23 @@
     "name": "Website"
   },
   {
-    "_id": "5a0a2319bb83dd1e2472e340",
-    "name": "Flyer"
+    "_id": "5a1b3eee860fc40fb0373e41",
+    "name": "Advertisement"
   },
   {
     "_id": "5a0a236bbb83dd1e2472e341",
     "name": "Previous Client"
+  },
+  {
+    "_id": "5a1b3ef5860fc40fb0373e42",
+    "name": "Homestars"
+  },
+  {
+    "_id": "5a1b3efa860fc40fb0373e43",
+    "name": "BBB"
+  },
+  {
+    "_id": "5a1b3eff860fc40fb0373e44",
+    "name": "Tradeshow"
   }
 ]

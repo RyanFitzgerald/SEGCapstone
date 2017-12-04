@@ -53,7 +53,7 @@ class App extends Component {
   }
 
   loggedIn(user) {
-    sessionStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
 
     this.setState({
       isLoggedIn: true
@@ -62,7 +62,7 @@ class App extends Component {
 
   logout() {
     api.logout().then(() => {
-      sessionStorage.removeItem('user');
+      localStorage.removeItem('user');
       window.location.reload();
     });
   }
@@ -84,22 +84,22 @@ class App extends Component {
   
           <Switch>
             <Route exact path="/" render={() =>
-              <Home setActiveTab={this.setActiveTab}/>
+              <Home setActiveTab={this.setActiveTab} logout={this.logout}/>
             } />
             <Route path="/clients" render={() =>
-              <Client setActiveTab={this.setActiveTab} addNotification={this.addNotification} />
+              <Client setActiveTab={this.setActiveTab} addNotification={this.addNotification} logout={this.logout} />
             } />
             <Route path="/projects" render={() =>
-              <Project setActiveTab={this.setActiveTab} addNotification={this.addNotification} />
+              <Project setActiveTab={this.setActiveTab} addNotification={this.addNotification} logout={this.logout} />
             } />
             <Route path="/stats" render={() =>
-              <Stats setActiveTab={this.setActiveTab} addNotification={this.addNotification} />
+              <Stats setActiveTab={this.setActiveTab} addNotification={this.addNotification} logout={this.logout} />
             } />
             <Route path="/settings" render={() =>
-              <Settings setActiveTab={this.setActiveTab} addNotification={this.addNotification} />
+              <Settings setActiveTab={this.setActiveTab} addNotification={this.addNotification} logout={this.logout} />
             } />
             <Route path="/account" render={() =>
-              <Account addNotification={this.addNotification} />
+              <Account addNotification={this.addNotification} logout={this.logout} />
             } />
             {/* Already logged-in so redirect to root path */}
             <Route path="/login" render={() =>

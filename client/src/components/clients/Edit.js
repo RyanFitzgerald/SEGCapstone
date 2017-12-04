@@ -13,13 +13,14 @@ class Edit extends React.Component {
     this.getClient = this.getClient.bind(this);
     this.updateClient = this.updateClient.bind(this);
     this.handlePhone = this.handlePhone.bind(this);
+    this.handlePostalCode = this.handlePostalCode.bind(this);
 
     // Set state
     this.state = {
       redirect: false,
       client: null,
       referrals: false,
-      salesmen: false,
+      salesmen: [],
       formError: false
     }
   }
@@ -60,8 +61,8 @@ class Edit extends React.Component {
       houseNumber: this.houseNumber.value,
       street: this.street.value,
       city: this.city.value,
-      postalCode: this.postalCode.value,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      postalCode: this.postalCode.value.toUpperCase(),
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -71,7 +72,7 @@ class Edit extends React.Component {
   getClient(id) {
     const query = {
       id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     }
 
     api.getClient(query).then(client => {
@@ -106,7 +107,11 @@ class Edit extends React.Component {
   }
 
   handlePhone(e) {
-    e.target.value = e.target.value.replace(/^(\d{3})(\d{3})(\d)+$/, '$1-$2-$3');
+    e.target.value = e.target.value.replace(/^(\d{3})(\d{3})(\d{4})$/, '$1-$2-$3');
+  }
+
+  handlePostalCode(e) {
+    e.target.value = e.target.value.replace(/^([0-9A-Za-z]{3})([0-9A-Za-z]{3})$/, '$1 $2');
   }
 
   render() {
@@ -195,7 +200,7 @@ class Edit extends React.Component {
                       <label className="form-label" htmlFor="city">City <span className="form-required">*</span></label>
                       <input ref={input => this.city = input} name="city" className="form-text form-text--full" type="text" defaultValue={this.state.client.city} required/>
                       <label className="form-label" htmlFor="postal-code">Postal Code <span className="form-required">*</span></label>
-                      <input ref={input => this.postalCode = input} name="postal-code" className="form-text form-text--full capitalize" type="text" maxLength="6" defaultValue={this.state.client.postalCode} required/>
+                      <input ref={input => this.postalCode = input} name="postal-code" className="form-text form-text--full capitalize" type="text" onKeyUp={this.handlePostalCode} maxLength="7" defaultValue={this.state.client.postalCode} required/>
                     </div>
                   </div>
                   <div className="text-center">

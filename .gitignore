@@ -22,3 +22,5 @@ yarn-error.log*
 
 variables.env
 variables.env.now
+
+/client/src/config.js

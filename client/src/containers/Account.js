@@ -19,11 +19,17 @@ class Account extends React.Component {
     }
   }
 
+  componentWillMount() {
+    if (localStorage.getItem('user') === null) {
+      this.props.logout();
+    }
+  }
+
   componentDidMount() {
     // Set title
     document.title = 'Account | Renovaction';
 
-    const user = JSON.parse(sessionStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
     this.setState({ user });
   }
 
@@ -52,11 +58,11 @@ class Account extends React.Component {
       }
 
       // Update session storage
-      const sessionUser = JSON.parse(sessionStorage.getItem('user'));
+      const sessionUser = JSON.parse(localStorage.getItem('user'));
       sessionUser.name = user.name;
       sessionUser.email = user.email;
-      sessionStorage.removeItem('user');
-      sessionStorage.setItem('user', JSON.stringify(sessionUser));
+      localStorage.removeItem('user');
+      localStorage.setItem('user', JSON.stringify(sessionUser));
 
       // Redirect
       this.setState({

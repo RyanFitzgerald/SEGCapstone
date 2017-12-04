@@ -4,7 +4,15 @@ This repo contains the code for the 2017 SEG4910 / SEG4911 project by Ryan Fitzg
 
 ## Setup Instructions
 
-In order to setup, clone or fork the repo and run `npm install` to install all the required dependencies in the root. You must also run `npm install` under the `client` directory. You will need to then create a `variables.env` file with the required credentials and keys. Finally, run `npm run watch` from the root in order to concurrently run the Node developement server and the client React server.
+In order to setup, clone or fork the repo and run `npm install` to install all the required dependencies in the root. You must also run `npm install` under the `client` directory. You will need to then create a `variables.env` file with the required credentials and keys. See `variables.env.example` to see necessary fields. Finally, run `npm run watch` from the root in order to concurrently run the Node developement server and the client React server.
+
+If you wish to run automated tests, run `npm test` from the root and client footer, respectively.
+
+For full technical documentation of the system, [click here](https://github.com/RyanFitzgerald/SEGCapstone/wiki/System-Documentation).
+
+## Test Data
+
+If you need to populate a database with test data, first run `npm run data:remove` from the root to ensure no duplicates exist (NOTE: this will remove ALL data in the database), followed by `npm run data:add`. Since these commands clear the database of all data, it should only be run for testing purposes and not in a production environment.
 
 ## Test Accounts
 *Here are several test accounts:*
@@ -29,42 +37,38 @@ password: user
 
 ## Additional Content
 
-### [Project Proposal](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Project-Proposal)
+### [Development](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Development)
 
-Contains the high level project proposal which includes such things as the project description, team members and their roles, objectives, and more.
+This page is the landing page for everything relating to how we manage development, including development environments and our development processes. 
 
-### [Project Links](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Project-Links)
+### [Architecture](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Architecture)
 
-Contains all the links that relate to this project for easy access. For example, it contains links to Trello, Slack, GitHub repos, servers, and more.
+This page is the landing page for everything relating to the architecture of our system, including the database schema and general architecture overview / breakdown.
 
-### [Development Processes](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Development-Processes)
+### [Project](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Project)
 
-Explains the development processes utilized throughout this project. These processes provide standards to improve the uniformity of the project.
-
-### [Development Environments](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Development-Environments)
-
-Explains the development environments used throughout this project and how they are incorporated.
-
-### [Project Architecture](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Project-Architecture)
-
-Explains the general architecture for the system that was developed for this project.
+This page is the landing page for everything to administration documents for the course and the project, including the project plan, proposal, and important links.
 
 ### [System Design Interaction Examples](https://github.com/RyanFitzgerald/SEGCapstone/wiki/System-Design-Interaction-Examples)
 
-Shows example design interactions for major system components.
-
-### [Project Plan](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Project-Plan)
-
-Explains each release / milestone and the features associated with them.
-
-### [Quality Assurance Report](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Quality-Assurance-Report)
-
-Showcases all tests needed for the system and their current state (pass / fail).
-
-### [Database Schema](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Database-Schema)
-
-Shows the most up-to-date version of the database schema.
+This page contains a number of hand-picked system design interaction examples to better understand how data flows through the system.
 
 ### [User Manual](https://github.com/RyanFitzgerald/SEGCapstone/wiki/User-Manual)
 
-Explains how the system works for the end user.
+This page contains the user manual that briefly explains how the system works and how to get the most effective use out of it. This is meant for the customer and any employees who may be using the system.
+
+### [Reports](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Reports)
+
+This page is the landing page for all reports, including the quality assurance report and the impact assessment report.
+
+### [System Documentation](https://github.com/RyanFitzgerald/SEGCapstone/wiki/System-Documentation)
+
+This page is the landing page for all system documentation, including server-side documentation, client-side documentation, and deployment documentation.
+
+### [Project Summary](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Project-Summary)
+
+This page includes the general project summary as well as a number of lessons learned along the way.
+
+### [Member Contributions](https://github.com/RyanFitzgerald/SEGCapstone/wiki/Member-Contributions)
+
+This page contains a list of the team members and their respective contributions to the project over the course of the two semesters.

@@ -25,6 +25,11 @@ const Role = require('../models/Role');
 
 // Delete all sample data
 async function deleteData() {
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Cannot run in production!');
+    return;
+  }
+
   try {
     console.log('Deleting Data...');
     await Client.remove();
@@ -45,6 +50,11 @@ async function deleteData() {
 
 // Add all sample data
 async function loadData() {
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Cannot run in production!');
+    return;
+  }
+  
   try {
     console.log('Adding Data...');
     await Type.insertMany(types);

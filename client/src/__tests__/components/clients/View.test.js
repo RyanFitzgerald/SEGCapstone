@@ -11,7 +11,7 @@ describe('<View />', () => {
         level: 1
       }
     };
-    sessionStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
 
     // Create location prop with needed data
     location = {

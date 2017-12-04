@@ -38,7 +38,7 @@ class Edit extends React.Component {
       name: this.name.value,
       email: this.email.value,
       password: this.password.value,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -48,7 +48,7 @@ class Edit extends React.Component {
   getUser(id) {
     const query = {
       id,
-      access_token: JSON.parse(sessionStorage.getItem('user')).access_token
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     }
 
     api.getUser(query).then(user => {

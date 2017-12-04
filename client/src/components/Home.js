@@ -2,6 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
+  componentWillMount() {
+    if (localStorage.getItem('user') === null) {
+      this.props.logout();
+    }
+  }
+  
   componentDidMount() {
     // Set title
     document.title = 'Home | Renovaction';
@@ -11,7 +17,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const level = JSON.parse(sessionStorage.getItem('user')).role.level;
+    const level = JSON.parse(localStorage.getItem('user')).role.level;
     return (
       <div className="content">
         <div className="row">
