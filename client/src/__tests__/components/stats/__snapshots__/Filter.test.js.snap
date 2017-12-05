@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Filter /> should render correctly 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="column"
+  >
+    <h2
+      className="card-title"
+    >
+      Filter Data
+    </h2>
+    <div
+      className="card"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="sm-4 column"
+        >
+          <label
+            className="form-label"
+            htmlFor="month"
+          >
+            Start Date
+          </label>
+          <PikadayWrapper
+            id="start-date"
+            name="start-date"
+            onSelect={[Function]}
+          />
+        </div>
+        <div
+          className="sm-4 column"
+        >
+          <label
+            className="form-label"
+            htmlFor="year"
+          >
+            End Date
+          </label>
+          <PikadayWrapper
+            id="end-date"
+            name="end-date"
+            onSelect={[Function]}
+          />
+        </div>
+        <div
+          className="sm-4 column"
+        >
+          <label
+            className="form-label"
+            htmlFor="postalCode"
+          >
+            Postal Code
+          </label>
+          <input
+            className="form-text"
+            id="postalCode"
+            name="postalCode"
+            onKeyUp={[Function]}
+            type="text"
+          />
+        </div>
+      </div>
+      <button
+        className="advanced__toggle"
+        id="advanced-toggle"
+        onClick={[Function]}
+      >
+        Reset Filter
+      </button>
+    </div>
+  </div>
+</div>
+`;
