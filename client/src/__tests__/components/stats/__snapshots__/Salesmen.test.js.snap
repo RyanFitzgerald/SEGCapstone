@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Salesmen /> should render correctly 1`] = `<Loading />`;
