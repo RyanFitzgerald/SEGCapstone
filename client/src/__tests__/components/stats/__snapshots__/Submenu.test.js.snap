@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Submenu /> should render correctly 1`] = `
+<div
+  className="submenu"
+>
+  <div
+    className="submenu__actions"
+  >
+    <ul>
+      <li>
+        <Link
+          className="submenu__action"
+          replace={false}
+          to="/settings/types"
+        >
+          <i
+            aria-hidden="true"
+            className="fa fa-pencil-square-o"
+          />
+           Edit Types
+        </Link>
+      </li>
+      <li>
+        <Link
+          className="submenu__action"
+          replace={false}
+          to="/settings/users"
+        >
+          <i
+            aria-hidden="true"
+            className="fa fa-list"
+          />
+           User Directory
+        </Link>
+      </li>
+      <li>
+        <Link
+          className="submenu__action"
+          replace={false}
+          to="/settings/referrals"
+        >
+          <i
+            aria-hidden="true"
+            className="fa fa-pencil-square-o"
+          />
+           Edit Referrals
+        </Link>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
