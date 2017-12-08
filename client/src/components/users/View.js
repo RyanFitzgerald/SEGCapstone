@@ -86,8 +86,12 @@ class View extends React.Component {
                   <li><b>Role:</b> {this.state.user.role.name}</li>
                 </ul>
                 <div className="client-actions">
+                {JSON.parse(localStorage.getItem('user')).role.level >= 3 &&
                   <Link to={`/settings/users/${this.props.location.match.params.id}/edit`} className="btn btn--primary">Edit User</Link>
+                }
+                {JSON.parse(localStorage.getItem('user')).role.level >= 3 &&
                   <button className="btn btn--danger" onClick={() => {if (window.confirm('Are you sure you want to delete this user?')) {this.deleteUser()};}}>Delete User</button>
+                }
                 </div>
               </div>
             </div>

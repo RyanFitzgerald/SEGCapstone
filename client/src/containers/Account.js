@@ -39,11 +39,19 @@ class Account extends React.Component {
     // Stop form submission
     e.preventDefault();
 
+    if (this.password.value !== this.confirmPassword.value) {
+      this.setState({
+        formError: 'Passwords do not match, please try again.'
+      })
+      return;
+    }
+
     // Get form data
     const user = {
       name: this.name.value,
       email: this.email.value,
-      password: this.password.value
+      password: this.password.value,
+      access_token: JSON.parse(localStorage.getItem('user')).access_token
     };
 
     // Call api
@@ -120,8 +128,10 @@ class Account extends React.Component {
                   <input ref={input => this.name = input} name="name" className="form-text form-text--full" type="text" defaultValue={this.state.user.name} required />
                   <label className="form-label" htmlFor="email">Email <span className="form-required">*</span></label>
                   <input ref={input => this.email = input} name="email" className="form-text form-text--full" type="email" defaultValue={this.state.user.email} required/>
-                  <label className="form-label" htmlFor="password">Password <span className="form-required">*</span></label>
-                  <input ref={input => this.password = input} name="password" className="form-text form-text--full" type="password" placeholder="(keep same password)" />
+                  <label className="form-label" htmlFor="password">New Password</label>
+                  <input ref={input => this.password = input} name="password" className="form-text form-text--full" type="password" placeholder="" />
+                  <label className="form-label" htmlFor="confirmPassword">Confirm New Password</label>
+                  <input ref={input => this.confirmPassword = input} name="confirmPassword" className="form-text form-text--full" type="password" placeholder="" />
                 </div>
               </div>
               <div className="text-center">

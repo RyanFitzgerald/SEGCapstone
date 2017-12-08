@@ -176,14 +176,14 @@ class Settings extends React.Component {
             )
           )}/>
           <Route path="/settings/users/add" render={() => (
-            (level < 2) ? (
+            (level < 3) ? (
               <Redirect to='/'/>
             ) : (
               <Add setActiveSubtab={this.setActiveSubtab} roles={this.state.roles} addNotification={this.addNotification} renderError={this.renderError} addToUsers={this.addToUsers}/>
             )
           )}/>
           <Route path="/settings/users/:id/edit" render={(location) => (
-            (level < 2) ? (
+            (level < 3) ? (
               <Redirect to='/'/>
             ) : (
               <Edit setActiveSubtab={this.setActiveSubtab} addNotification={this.addNotification} renderError={this.renderError} location={location} updateUsers={this.updateUsers}/>
