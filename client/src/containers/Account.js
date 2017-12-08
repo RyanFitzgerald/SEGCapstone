@@ -11,11 +11,13 @@ class Account extends React.Component {
     // Bind functions
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateUser = this.updateUser.bind(this);
+    this.renderError = this.renderError.bind(this);
 
     // Set state
     this.state = {
       user: null,
-      redirect: false
+      redirect: false,
+      formError: false
     }
   }
 
@@ -75,6 +77,15 @@ class Account extends React.Component {
     });
   }
 
+  renderError(formError) {
+    if (!formError) return;
+    return (
+      <div className="flash flash--warn">
+        <p>{formError}</p>
+      </div>
+    );
+  }
+
   render() {
     if (this.state.redirect) {
       this.props.addNotification(this.state.redirect.message, this.state.redirect.type);
@@ -95,7 +106,7 @@ class Account extends React.Component {
         <div className="column">
           <h2 className="card-title">Edit Account Settings</h2>
           <div className="card">
-            {/*this.props.renderError(this.state.formError)*/}
+            {this.renderError(this.state.formError)}
             <form onSubmit={this.handleSubmit}>
               <div className="row">
                 <div className="md-4 column form-section__title no-left">
