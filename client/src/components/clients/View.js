@@ -47,6 +47,12 @@ class View extends React.Component {
   }
 
   deleteClient() {
+
+    if (this.state.client.projects.length > 0) {
+      this.props.addNotification('You cannot delete a client with projects!', 'error');
+      return;
+    }
+
     const query = {
       id: this.props.location.match.params.id,
       access_token: JSON.parse(localStorage.getItem('user')).access_token
@@ -59,7 +65,7 @@ class View extends React.Component {
           redirect: '/clients'
         });
       } else {
-        this.props.addNotification('A problem was encountered when trying to delete the client', 'warn');
+        this.props.addNotification('A problem was encountered when trying to delete the client', 'error');
       }
     });
   }
@@ -189,7 +195,7 @@ class View extends React.Component {
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/note`,
-                    query: {name: this.state.client.name}
+                    query: {name: `${this.state.client.firstName} ${this.state.client.lastName}`}
                   }}
                   className="btn btn--primary btn--small">
                   Add Note

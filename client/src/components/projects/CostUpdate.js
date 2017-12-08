@@ -23,7 +23,7 @@ class CostUpdate extends React.Component {
     this.props.setActiveSubtab(0);
 
     // Set title
-    document.title = 'Add Product | Renovaction';
+    document.title = 'Add Price Update | Renovaction';
   }
 
   handleSubmit(e) {
@@ -96,11 +96,11 @@ class CostUpdate extends React.Component {
   render() {
     const id = this.props.location.match.params.id;
     let fileNumber = false;
-    let contractCost = false;
+    let salesPrice = false;
 
     if (this.props.location.location && this.props.location.location.query) {
       fileNumber = this.props.location.location.query.fileNumber;
-      contractCost = this.props.location.location.query.contractCost;
+      salesPrice = this.props.location.location.query.salesPrice;
     }
 
     if (this.state.redirect) {
@@ -110,12 +110,12 @@ class CostUpdate extends React.Component {
       );
     }
     
-    if (id && fileNumber && contractCost) {
+    if (id && fileNumber && salesPrice) {
       return (
         <div className="content">
           <div className="row">
             <div className="column">
-              <h2 className="card-title">Add Cost Update For <b>{fileNumber}</b></h2>
+              <h2 className="card-title">Add Price Update For <b>{fileNumber}</b></h2>
               <div className="card">
               {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit}>

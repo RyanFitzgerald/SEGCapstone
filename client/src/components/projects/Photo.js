@@ -64,9 +64,9 @@ class Photo extends React.Component {
   
   render() {
     const id = this.props.location.match.params.id;
-    let name = false;
+    let fileNumber = false;
     if (this.props.location.location && this.props.location.location.query) {
-      name = this.props.location.location.query.name;
+      fileNumber = this.props.location.location.query.fileNumber;
     }
 
     if (this.state.redirect) {
@@ -76,12 +76,12 @@ class Photo extends React.Component {
       );
     }
     
-    if (id && name) {
+    if (id && fileNumber) {
       return (
         <div className="content">
           <div className="row">
             <div className="column">
-              <h2 className="card-title">Add Note For <b>{name}</b></h2>
+              <h2 className="card-title">Add Photo For <b>{fileNumber}</b></h2>
               <div className="card">
               {this.props.renderError(this.state.formError)}
                 <form onSubmit={this.handleSubmit} encType="multipart/form-data">

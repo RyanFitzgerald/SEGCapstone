@@ -168,7 +168,7 @@ class View extends React.Component {
   }
 
   renderCostUpdateButton() {
-    if (this.state.project.contractCost) {
+    if (this.state.project.salesPrice) {
       return (
         <Link 
           to={{
@@ -255,7 +255,7 @@ class View extends React.Component {
                   <li><b>Start Date:</b> {(dates.startDate) ? moment(dates.startDate).format('MMMM DD, YYYY') : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>End Date:</b> {(dates.endDate) ? moment(dates.endDate).format('MMMM DD, YYYY') : 'Not available'}</li>
                   <li><b>Labour Cost:</b> {(labourCost) ? `$${this.getDollars(labourCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Materials Cost:</b> {(materialsCost) ? `$${this.getDollars(materialsCost)}` : 'Not available'}</li>
                   <li><b>Cost Total:</b> {(labourCost && materialsCost) ? `$${this.getDollars(labourCost + materialsCost)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>PAR:</b> {(par) ? `$${this.getDollars(par)}` : 'Not available'}</li>
-                  <li><b>Sales Price:</b> {(salesPrice) ? `$${this.getDollars(salesPrice)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Commission:</b> {(commission !== -1) ? `$${this.getDollars(commission)} (${(commission / salesPrice)*100}%)` : 'Not available'}</li>
+                  <li><b>Sales Price:</b> {(salesPrice) ? `$${this.getDollars(salesPrice)}` : 'Not available'} <span className="project-overview--divider">&#8226;</span> <b>Commission:</b> {(commission !== -1) ? `$${this.getDollars(commission)} (${((commission / salesPrice)*100).toFixed(2)}%)` : 'Not available'}</li>
                   <li><b>Added by:</b> {this.state.project.addedBy.name}</li>
                 </ul>
                 <div className="project-actions">
@@ -298,7 +298,7 @@ class View extends React.Component {
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/photo`,
-                    query: {name: this.state.project.name}
+                    query: {fileNumber: this.state.project.fileNumber}
                   }}
                   className="btn btn--primary btn--small">
                   Add Photo
@@ -318,7 +318,7 @@ class View extends React.Component {
           </div>
           <div className="row">
             <div className="md-6 column">
-              <h2 className="card-title">{this.state.project.updates.length} Cost Update(s)
+              <h2 className="card-title">{this.state.project.updates.length} Price Update(s)
               {JSON.parse(localStorage.getItem('user')).role.level >= 2 && this.state.project.status !== 'Complete' &&
                 this.renderCostUpdateButton()
               }
@@ -346,7 +346,7 @@ class View extends React.Component {
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/product`,
-                    query: {name: this.state.project.name}
+                    query: {fileNumber: this.state.project.fileNumber}
                   }}
                   className="btn btn--primary btn--small">
                   Add Product
@@ -379,7 +379,7 @@ class View extends React.Component {
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/file`,
-                    query: {name: this.state.project.name}
+                    query: {fileNumber: this.state.project.fileNumber}
                   }}
                   className="btn btn--primary btn--small">
                   Add File
@@ -407,7 +407,7 @@ class View extends React.Component {
                 <Link 
                   to={{
                     pathname: `${this.props.location.match.url}/note`,
-                    query: {name: this.state.project.name}
+                    query: {fileNumber: this.state.project.fileNumber}
                   }}
                   className="btn btn--primary btn--small">
                   Add Note
