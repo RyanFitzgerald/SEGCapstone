@@ -53,16 +53,16 @@ class CostUpdate extends React.Component {
         return;
       }
 
-      let contractCost = this.props.location.location.query.contractCost;
+      let salesPrice = this.props.location.location.query.salesPrice;
 
       if (update.type === 'Addition') {
-        contractCost = contractCost + update.amount;
+        salesPrice = salesPrice + update.amount;
       } else {
-        contractCost = contractCost - update.amount;
+        salesPrice = salesPrice - update.amount;
       }
 
       const project = {
-        contractCost,
+        salesPrice,
         access_token: JSON.parse(localStorage.getItem('user')).access_token
       }
 

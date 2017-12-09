@@ -98,16 +98,16 @@ class View extends React.Component {
       if (result) {
         this.props.addNotification('Successfully deleted cost update!', 'success');
 
-        let contractCost = this.state.project.contractCost;
+        let salesPrice = this.state.project.salesPrice;
 
         if (updateObj.type === 'Addition') {
-          contractCost = contractCost - updateObj.amount;
+          salesPrice = salesPrice - updateObj.amount;
         } else {
-          contractCost = contractCost + updateObj.amount;
+          salesPrice = salesPrice + updateObj.amount;
         }
   
         const project = {
-          contractCost,
+          salesPrice,
           access_token: JSON.parse(localStorage.getItem('user')).access_token
         }
   
