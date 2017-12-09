@@ -175,7 +175,7 @@ class View extends React.Component {
             pathname: `${this.props.location.match.url}/update`,
             query: {
               fileNumber: this.state.project.fileNumber,
-              contractCost: this.state.project.contractCost
+              salesPrice: this.state.project.salesPrice
             }
           }}
           className="btn btn--primary btn--small">
